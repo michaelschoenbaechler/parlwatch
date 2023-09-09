@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="layout/council-member"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ratsmitglied</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="!loading; else loadingScreen">
+    <ng-container *ngIf="!error; else errorScreen">
+      <app-council-member-card
+        [councilMember]="councilMember"
+      ></app-council-member-card>
+
+      <app-text-card
+        *ngIf="getMandatesAsHtmlList()"
+        title="Mandate"
+        [HtmlText]="getMandatesAsHtmlList()"
+      ></app-text-card>
+
+      <app-text-card
+        *ngIf="getAdditionalActivitiesAsHtmlList()"
+        title="Weitere Aktivitäten"
+        [HtmlText]="getAdditionalActivitiesAsHtmlList()"
+      ></app-text-card>
+
+      <app-text-card title="Stimmverhalten">
+        <p *ngIf="noVotes" class="no-votes-text">
+          <small
+            >Es konnten keine Abstimmungsdaten für diese Person gefunden
+            werden.</small
+          >
+        </p>
+        <ion-list *ngIf="!noVotes">
+          <ion-item
+            button
+            (click)="onClickBusiness(voting.BusinessNumber)"
+            [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
+            *ngFor="let voting of councilMemberVotings"
+          >
+            <ion-icon
+              size="small"
+              [color]="
+                voting.Decision === 1
+                  ? 'success'
+                  : voting.Decision === 2
+                  ? 'danger'
+                  : 'medium'
+              "
+              [name]="
+                voting.Decision === 1
+                  ? 'checkmark-outline'
+                  : voting.Decision === 2
+                  ? 'close-outline'
+                  : 'remove-outline'
+              "
+              slot="start"
+            ></ion-icon>
+            <ion-label class="ion-text-wrap">
+              {{ voting.BusinessTitle }}
+              <p class="ion-color-danger">
+                {{ voting.Subject }}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </app-text-card>
+    </ng-container>
+  </ng-container>
+</ion-content>
+
+<ng-template #loadingScreen>
+  <app-loading-screen></app-loading-screen>
+</ng-template>
+
+<ng-template #errorScreen>
+  <app-error-screen (retry)="retrySearch()"></app-error-screen>
+</ng-template>

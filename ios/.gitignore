@@ -1,0 +1,15 @@
+App/build
+App/Pods
+App/App/public
+App/App.xcarchive
+DerivedData
+xcuserdata
+
+# Cordova plugins for Capacitor
+capacitor-cordova-ios-plugins
+
+# Generated Config files
+App/App/capacitor.config.json
+App/App/config.xml
+App/archive.plist
+

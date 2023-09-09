@@ -1,0 +1,18 @@
+ion-item::part(native) {
+  padding-left: 0;
+}
+
+ion-select {
+  --padding-top: 0;
+  --padding-end: 0.25rem;
+  --padding-bottom: 0;
+}
+
+app-vote-card ion-button {
+  margin-top: 1rem;
+}
+
+.vote-flex-container {
+  display: flex;
+  justify-content: space-between;
+}

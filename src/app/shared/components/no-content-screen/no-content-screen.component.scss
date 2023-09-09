@@ -1,0 +1,12 @@
+.no-content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.no-content-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

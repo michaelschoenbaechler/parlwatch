@@ -1,0 +1,12 @@
+ion-modal ion-toolbar {
+  --background: var(--ion-color-step-150);
+  --color: var(--ion-color-secondary-contrast);
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}

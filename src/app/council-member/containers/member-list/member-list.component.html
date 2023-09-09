@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Ratsmitglieder </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      #searchBar
+      appHideKeyboardOnEnter
+      color="light"
+      enterkeyhint="search"
+      (ionChange)="onSearch($event)"
+    ></ion-searchbar>
+    <ion-icon
+      (click)="toggleFilterModal()"
+      slot="end"
+      size="large"
+      name="filter-outline"
+    ></ion-icon>
+  </ion-toolbar>
+  <div class="current-filter">
+    <ion-chip *ngFor="let council of selectedCouncils">
+      <ion-label>{{ council.councilName }}</ion-label>
+    </ion-chip>
+    <ion-chip *ngIf="filterForm.controls.inactiveMembers.value">
+      <ion-label>Inaktive anzeigen</ion-label>
+    </ion-chip>
+  </div>
+</ion-header>
+
+<ion-content role="feed" class="ion-padding">
+  <ng-container *ngIf="!loading; else loadingScreen">
+    <ng-container *ngIf="!error; else errorScreen">
+      <ng-container *ngIf="!noContent; else noContentScreen">
+        <app-council-member-card
+          *ngFor="let councileMember of members"
+          (click)="onClickPerson(councileMember.ID)"
+          [councilMember]="councileMember"
+        ></app-council-member-card>
+
+        <ion-infinite-scroll
+          threshold="100px"
+          (ionInfinite)="distanceReached($event)"
+        >
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ion-content>
+
+<ion-modal
+  handle="true"
+  [isOpen]="isModalOpen"
+  [presentingElement]="presentingElement"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Ratsmitglieder filtern</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="toggleFilterModal()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <form [formGroup]="filterForm">
+        <h3>Rat</h3>
+        <ion-list>
+          <ion-item *ngFor="let council of councils; let i = index">
+            <ion-checkbox
+              label-placement="start"
+              [formControl]="councilArray[i]"
+              >{{ council.councilName }}</ion-checkbox
+            >
+          </ion-item>
+        </ion-list>
+        <h3>Weitere Filter</h3>
+        <ion-list>
+          <ion-item>
+            <ion-toggle
+              label-placement="start"
+              formControlName="inactiveMembers"
+              >Inaktive anzeigen*</ion-toggle
+            >
+          </ion-item>
+        </ion-list>
+        <small>*Ehemalige Ratsmitglieder</small>
+      </form>
+
+      <div class="floating-button" *ngIf="showFilterButton">
+        <ion-button expand="block" (click)="applyFilter()"
+          >Filter anwenden</ion-button
+        >
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ng-template #loadingScreen>
+  <app-loading-screen></app-loading-screen>
+</ng-template>
+
+<ng-template #noContentScreen>
+  <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+</ng-template>
+
+<ng-template #errorScreen>
+  <app-error-screen (retry)="retrySearch()"></app-error-screen>
+</ng-template>

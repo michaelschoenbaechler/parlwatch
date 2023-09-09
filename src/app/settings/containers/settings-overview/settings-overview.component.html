@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Einstellungen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img
+    class="logo"
+    width="100"
+    src="assets/logo-caption.png"
+    alt="ParlWatch Logo"
+  />
+  <ion-card>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item slot="header">
+          <ion-label>Sprache</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <p>
+            Derzeit ist die App nur in deutscher Sprache verfügbar. Vielen Dank
+            für Ihr Verständnis und Ihre Geduld.
+          </p>
+          <ion-radio-group value="de">
+            <ion-item lines="full">
+              <ion-radio value="de" justify="space-between">Deutsch</ion-radio>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-radio disabled value="fr" justify="space-between"
+                >Französisch</ion-radio
+              >
+            </ion-item>
+            <ion-item lines="full">
+              <ion-radio disabled value="it" justify="space-between"
+                >Italienisch</ion-radio
+              >
+            </ion-item>
+            <ion-item lines="full">
+              <ion-radio disabled value="en" justify="space-between"
+                >English</ion-radio
+              >
+            </ion-item>
+          </ion-radio-group>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="second">
+        <ion-item slot="header">
+          <ion-label>ParlWatch</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <h3>Über die App</h3>
+          <p>
+            Diese App zielt darauf ab, den Menschen die Aktivitäten im Parlament
+            ohne grossen Aufwand und spezielles Vorwissen näher zu bringen. Das
+            Ziel ist es, den Bürgerinnen und Bürgern einen einfacheren und
+            direkten Zugang zu politischen Geschehnissen zu ermöglichen.
+          </p>
+
+          <h3>Open-Source und Mitwirkung</h3>
+          <p>
+            Diese App ist ein Open-Source-Projekt und steht unter der
+            GPLv3-Lizenz. Jeder ist ermutigt, sich an der Weiterentwicklung zu
+            beteiligen und so dazu beizutragen, tiefere Einblicke in die
+            politische Landschaft zu ermöglichen. Der Quellcode ist öffentlich
+            zugänglich und jede Unterstützung ist willkommen. Das Bestreben ist,
+            dass die App stets open source bleibt.
+          </p>
+
+          <h3>Datenquelle</h3>
+          <p>
+            Die App nutzt die Open Data/Webservices von parlament.ch. Diese
+            Schnittstelle ist öffentlich zugänglich. Bitte beachten Sie, dass
+            die Wartung dieser Schnittstelle nicht garantiert wird und keine
+            Zusicherungen bezüglich ihrer ständigen Verfügbarkeit gemacht werden
+            können.
+          </p>
+
+          <h3>Datenschutz</h3>
+          <p>
+            Es ist wichtig zu beachten, dass während der Nutzung der App
+            keinerlei User-Tracking stattfindet, um die Privatsphäre der Nutzer
+            zu gewährleisten.
+          </p>
+
+          <h3>GitHub-Repository</h3>
+          <p>
+            Für weitere Details und zur Beteiligung am Projekt besuchen Sie
+            bitte unser GitHub-Repository unter:
+            <a href="https://github.com/michaelschoenbaechler/parlwatch"
+              >https://github.com/michaelschoenbaechler/parlwatch</a
+            >
+          </p>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="third">
+        <ion-item slot="header">
+          <ion-label>Feedback</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          Bitte nehmen Sie sich einen Moment Zeit, um an der kurzen Umfrage
+          teilzunehmen. Ihr Feedback zu Features und Benutzererfahrung ist von
+          grossem Wert. Beachten Sie, dass keine persönlichen Daten angegeben
+          werden müssen und die Umfrage vollständig anonym ist. Vielen Dank für
+          Ihre Mitarbeit!
+          <ion-button
+            expand="block"
+            size="small"
+            fill="outline"
+            (click)="surveyClicked()"
+            >Zur Umfrage</ion-button
+          >
+          <p>
+            <small>Für die Umfrage wird kein Google Account benötigt</small>
+          </p>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-card>
+</ion-content>

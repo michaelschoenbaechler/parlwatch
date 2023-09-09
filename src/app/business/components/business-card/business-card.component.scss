@@ -1,0 +1,16 @@
+.business-label-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.business-label {
+  border-radius: 1rem;
+  border: 0.0625rem solid #666666;
+  color: #666666;
+  padding: 0.25rem 0.5rem;
+  font-size: 14px;
+}

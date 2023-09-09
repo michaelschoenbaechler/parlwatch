@@ -1,0 +1,22 @@
+ion-item::part(native) {
+  padding-left: 0;
+}
+
+app-text-card ion-list {
+  margin-top: 1rem;
+}
+
+.vote-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.votings-title {
+  text-align: center;
+}
+
+.no-votes-text {
+  text-align: center;
+  color: #666666;
+}

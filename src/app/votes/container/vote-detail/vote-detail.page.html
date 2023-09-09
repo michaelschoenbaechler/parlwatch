@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="layout/votes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Abstimmung</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="!loading; else loadingScreen">
+    <ng-container *ngIf="!error; else errorScreen">
+      <app-vote-card [vote]="vote">
+        <ion-button
+          expand="block"
+          size="small"
+          fill="outline"
+          (click)="goToBusiness()"
+          >Zum Geschäft</ion-button
+        >
+      </app-vote-card>
+
+      <app-text-card title="Stimmverhalten">
+        <ion-select
+          justify="end"
+          [formControl]="voteFilterControl"
+          interface="popover"
+          aria-label="Vote filter"
+          value="all"
+        >
+          <ion-select-option value="all">Alle anzeigen</ion-select-option>
+          <ion-select-option value="yes">Nur Ja stimmen</ion-select-option>
+          <ion-select-option value="no">Nur Nein stimmen</ion-select-option>
+          <ion-select-option value="no-vote">Enthaltungen</ion-select-option>
+        </ion-select>
+        <ion-list>
+          <ion-item
+            routerLink="/council-member/detail/{{ voting.PersonNumber }}"
+            [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
+            *ngFor="let voting of votingsFiltered"
+          >
+            <ion-icon
+              size="small"
+              [color]="
+                voting.Decision === 1 ? 'success' : voting.Decision === 2 ? 'danger' : 'medium'"
+              [name]="
+                voting.Decision === 1 ? 'checkmark-outline' : voting.Decision === 2 ? 'close-outline' : 'remove-outline'"
+              slot="start"
+            ></ion-icon>
+            <ion-label>
+              <h3>{{ voting.FirstName }} {{ voting.LastName }}</h3>
+              <p>
+                {{ partyMappingDE[voting.ParlGroupName] }} - {{
+                voting.CantonName }}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </app-text-card>
+    </ng-container>
+  </ng-container>
+</ion-content>
+
+<ng-template #loadingScreen>
+  <app-loading-screen></app-loading-screen>
+</ng-template>
+
+<ng-template #errorScreen>
+  <app-error-screen (click)="retrySearch()"></app-error-screen>
+</ng-template>

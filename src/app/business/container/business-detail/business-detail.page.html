@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="layout/business"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Geschäft</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="!loading; else loadingScreen">
+    <ng-container *ngIf="!error; else errorScreen">
+      <app-business-card [business]="business">
+        <ion-button
+          *ngIf="business.Votes.length > 0"
+          expand="block"
+          size="small"
+          fill="outline"
+          (click)="goToVote()"
+          >Zu den Abstimmungen</ion-button
+        >
+      </app-business-card>
+      <app-business-detail-text
+        [business]="business"
+      ></app-business-detail-text>
+    </ng-container>
+  </ng-container>
+</ion-content>
+
+<ng-template #loadingScreen>
+  <app-loading-screen></app-loading-screen>
+</ng-template>
+
+<ng-template #errorScreen>
+  <app-error-screen (retry)="retrySearch()"></app-error-screen>
+</ng-template>

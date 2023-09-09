@@ -1,0 +1,18 @@
+<app-text-card
+  [title]="
+    business.BusinessShortNumber +
+    ' - ' +
+    business.BusinessTypeName +
+    ' (' +
+    business.BusinessStatusText +
+    ')'
+  "
+  [HtmlText]="business.Title"
+>
+  <div *ngIf="getTagNames().length > 0" class="business-label-container">
+    <div class="business-label" *ngFor="let tagName of getTagNames()">
+      {{ tagName }}
+    </div>
+  </div>
+  <ng-content></ng-content>
+</app-text-card>

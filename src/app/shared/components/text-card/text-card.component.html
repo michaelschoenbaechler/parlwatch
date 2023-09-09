@@ -1,0 +1,11 @@
+<div class="text-card">
+  <div class="text-card-content">
+    <div *ngIf="title" class="text-card-title">{{ title }}</div>
+    <p
+      *ngIf="HtmlText"
+      [innerHTML]="HtmlText | safeHtml"
+      class="text-card-description"
+    ></p>
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="text-card">
+  <div class="text-card-content">
+    <div class="card-flex-container">
+      <div>
+        <div class="text-card-title">
+          {{ councilMember.FirstName }} {{ councilMember.LastName }} ({{
+            councilMember.CantonName
+          }})
+        </div>
+        <p class="text-card-description">
+          {{ councilMember.PartyAbbreviation }} {{ councilMember.CouncilName }}
+        </p>
+      </div>
+      <img
+        class="canton-flag"
+        [src]="'/assets/cantons/' + councilMember.CantonAbbreviation + '.svg'"
+        alt="canton flag"
+      />
+    </div>
+  </div>
+</div>
