@@ -7,7 +7,7 @@ import { BusinessService } from '../../services/business.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as _ from 'lodash';
-import { IonSearchbar } from '@ionic/angular';
+import { IonSearchbar, Platform } from '@ionic/angular';
 import { Keyboard } from '@capacitor/keyboard';
 
 @UntilDestroy()
@@ -70,6 +70,7 @@ export class BusinessListComponent implements OnInit {
   constructor(
     private businessService: BusinessService,
     private router: Router,
+    private platform: Platform,
     private fb: FormBuilder
   ) {}
 
@@ -184,9 +185,7 @@ export class BusinessListComponent implements OnInit {
         }
       });
 
-    Keyboard.addListener('keyboardWillHide', () => {
-      this.showSuggestedSearches = false;
-    });
+    this.addKeyBoardListener();
   }
 
   ionViewDidEnter() {
@@ -194,6 +193,13 @@ export class BusinessListComponent implements OnInit {
     if (this.businesses.length === 0) {
       this.trigger$.next();
     }
+  }
+
+  addKeyBoardListener() {
+    if (!this.platform.is('capacitor')) return;
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.showSuggestedSearches = false;
+    });
   }
 
   toggleFilterModal() {
