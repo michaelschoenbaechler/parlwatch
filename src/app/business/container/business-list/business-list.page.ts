@@ -8,6 +8,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as _ from 'lodash';
 import { IonSearchbar } from '@ionic/angular';
+import { Keyboard } from '@capacitor/keyboard';
 
 @UntilDestroy()
 @Component({
@@ -25,6 +26,26 @@ export class BusinessListComponent implements OnInit {
   isModalOpen = false;
   showFilterButton = false;
   presentingElement = null;
+  showSuggestedSearches: boolean = false;
+  suggestedSearchTerms: string[] = [
+    'Internationale Politik',
+    'Verkehr',
+    'Finanzwesen',
+    'Soziale Fragen',
+    'Umwelt',
+    'Bildung',
+    'Wirtschaft',
+    'Gesundheit',
+    'Staatspolitik',
+    'Migration',
+    'Gesundheit',
+    'Parlament',
+    'Strafrecht',
+    'Steuer',
+    'Europapolitik',
+    'Sicherheitspolitik',
+    'Raumplanung'
+  ];
 
   filterForm: FormGroup;
   filterError = false;
@@ -162,6 +183,10 @@ export class BusinessListComponent implements OnInit {
           this.showFilterButton = true;
         }
       });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.showSuggestedSearches = false;
+    });
   }
 
   ionViewDidEnter() {
@@ -176,11 +201,22 @@ export class BusinessListComponent implements OnInit {
   }
 
   onSearch(event: any) {
+    this.showSuggestedSearches = false;
     this.searchTerm$.next(event.target.value);
+  }
+
+  onSuggestedSearchTopic(searchTerm: string) {
+    this.showSuggestedSearches = false;
+    this.searchBar.value = searchTerm;
+    this.searchTerm$.next(searchTerm);
   }
 
   retrySearch() {
     this.trigger$.next();
+  }
+
+  onFocus() {
+    this.showSuggestedSearches = true;
   }
 
   resetFilter() {

@@ -8,6 +8,7 @@
       appHideKeyboardOnEnter
       color="light"
       enterkeyhint="search"
+      (ionFocus)="onFocus()"
       (ionChange)="onSearch($event)"
     ></ion-searchbar>
     <ion-icon
@@ -17,13 +18,24 @@
       name="filter-outline"
     ></ion-icon>
   </ion-toolbar>
-  <div class="current-filter">
+  <div
+    class="current-filter"
+    *ngIf="selectedBusinessTypes.length > 0 || selectedBusinessStatuses.length > 0"
+  >
     <ion-chip *ngFor="let businessType of selectedBusinessTypes">
       <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
     </ion-chip>
     <ion-chip *ngFor="let businesStatus of selectedBusinessStatuses">
       <ion-label>{{ businesStatus.BusinessStatusName }}</ion-label>
     </ion-chip>
+  </div>
+  <div class="search-suggestions" *ngIf="showSuggestedSearches">
+    <p><small>Nach Thema suchen</small></p>
+    <ion-chip
+      *ngFor="let term of suggestedSearchTerms"
+      (click)="onSuggestedSearchTopic(term)"
+      >{{ term }}</ion-chip
+    >
   </div>
 </ion-header>
 
