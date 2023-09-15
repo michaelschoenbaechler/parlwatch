@@ -13,7 +13,11 @@
       </div>
       <img
         class="canton-flag"
-        [src]="'/assets/cantons/' + councilMember.CantonAbbreviation + '.svg'"
+        [src]="
+          '/assets/cantons/' +
+          (councilMember.CantonAbbreviation | lowercase) +
+          '.svg'
+        "
         alt="canton flag"
       />
     </div>
