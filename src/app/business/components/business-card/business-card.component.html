@@ -2,11 +2,9 @@
   [title]="
     business.BusinessShortNumber +
     ' - ' +
-    business.BusinessTypeName +
-    ' (' +
-    business.BusinessStatusText +
-    ')'
+    business.BusinessTypeName
   "
+  [subtitle]="business.BusinessStatusText + ' am ' + (business.BusinessStatusDate | oDataDateTime)"
   [HtmlText]="business.Title"
 >
   <div *ngIf="getTagNames().length > 0" class="business-label-container">
