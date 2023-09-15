@@ -1,11 +1,11 @@
 <app-text-card
   [title]="
     vote.BusinessShortNumber +
-    (vote.Subject ? '- ' + vote.Subject : '') +
-    ' (' +
-    (vote.VoteEnd | oDataDateTime) +
-    ')'
+    (vote.Subject ? ' - ' + vote.Subject : '') +
+    ' - ' +
+    vote.SessionName
   "
+  [subtitle]="'Am ' + (vote.VoteEnd | oDataDateTime) + ' abgestimmt'"
   [HtmlText]="vote.BillTitle ? vote.BillTitle : vote.BusinessTitle"
 >
   <div class="voting-bar">
