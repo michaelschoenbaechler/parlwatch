@@ -87,6 +87,7 @@ export class BusinessListComponent implements OnInit {
     from(this.trigger$)
       .pipe(
         untilDestroyed(this),
+        tap(() => (this.filterError = false)),
         switchMap(() =>
           this.businessService.getBusinessStatus().pipe(
             catchError(() => {
@@ -98,6 +99,9 @@ export class BusinessListComponent implements OnInit {
         map((businessStatus) => _.uniqBy(businessStatus, 'BusinessStatusId'))
       )
       .subscribe((businessStatus) => {
+        if (businessStatus === null) {
+          return;
+        }
         businessStatus.forEach(() => {
           const control = new FormControl(false);
           (this.filterForm.controls.businessStatus as FormArray).push(control);
@@ -108,6 +112,7 @@ export class BusinessListComponent implements OnInit {
     from(this.trigger$)
       .pipe(
         untilDestroyed(this),
+        tap(() => (this.filterError = false)),
         switchMap(() =>
           this.businessService.getBusinessTypes().pipe(
             catchError(() => {
@@ -118,6 +123,9 @@ export class BusinessListComponent implements OnInit {
         )
       )
       .subscribe((businessTypes) => {
+        if (businessTypes === null) {
+          return;
+        }
         businessTypes.forEach((type) => {
           const control = new FormControl(false);
           (this.filterForm.controls.businessType as FormArray).push(control);
