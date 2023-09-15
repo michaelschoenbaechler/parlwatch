@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class TextCardComponent {
   @Input() title: string;
+  @Input() subtitle: string;
   @Input() HtmlText: string;
 
   constructor() {}
