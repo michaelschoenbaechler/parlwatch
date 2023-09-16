@@ -53,7 +53,6 @@
     "@commitlint/config-conventional": "^17.7.0",
     "@ionic/angular-toolkit": "^10.0.0",
     "@types/jasmine": "~4.3.5",
-    "@types/jasminewd2": "~2.0.3",
     "@types/node": "^20.5.7",
     "@typescript-eslint/eslint-plugin": "6.5.0",
     "@typescript-eslint/parser": "6.5.0",
