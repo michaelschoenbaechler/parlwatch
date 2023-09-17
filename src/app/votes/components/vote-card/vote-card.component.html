@@ -5,7 +5,7 @@
     ' - ' +
     vote.SessionName
   "
-  [subtitle]="'Am ' + (vote.VoteEnd | oDataDateTime) + ' abgestimmt'"
+  [subtitle]="'Abgestimmt am ' + (vote.VoteEnd | oDataDateTime)"
   [HtmlText]="vote.BillTitle ? vote.BillTitle : vote.BusinessTitle"
 >
   <div class="voting-bar">
