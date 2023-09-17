@@ -245,7 +245,28 @@ export class BusinessListComponent implements OnInit {
 
   distanceReached(event: any) {
     this.skip += this.top;
-    this.businessService
+    this.fetchBusinesses().subscribe((newBusinesses) => {
+      if (newBusinesses === null) {
+        return;
+      }
+      this.businesses = [...this.businesses, ...newBusinesses];
+      event.target.complete();
+    });
+  }
+
+  handleRefresh(event) {
+    this.skip = 0;
+    this.fetchBusinesses().subscribe((businesses) => {
+      if (businesses === null) {
+        return;
+      }
+      this.businesses = businesses;
+      event.target.complete();
+    });
+  }
+
+  fetchBusinesses() {
+    return this.businessService
       .getBusinesses({
         top: this.top,
         skip: this.skip,
@@ -259,14 +280,7 @@ export class BusinessListComponent implements OnInit {
           this.error = true;
           return of(null);
         })
-      )
-      .subscribe((newBusinesses) => {
-        if (newBusinesses === null) {
-          return;
-        }
-        this.businesses = [...this.businesses, ...newBusinesses];
-        event.target.complete();
-      });
+      );
   }
 
   onClickBusiness(id: number) {

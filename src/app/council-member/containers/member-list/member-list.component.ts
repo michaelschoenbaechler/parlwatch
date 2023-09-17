@@ -137,7 +137,28 @@ export class MemberListComponent implements OnInit {
 
   distanceReached(event: any) {
     this.skip += this.top;
-    this.memberService
+    this.fetchMembers().subscribe((newMembers) => {
+      if (newMembers === null) {
+        return;
+      }
+      this.members = [...this.members, ...newMembers];
+      event.target.complete();
+    });
+  }
+
+  handleRefresh(event) {
+    this.skip = 0;
+    this.fetchMembers().subscribe((members) => {
+      if (members === null) {
+        return;
+      }
+      this.members = members;
+      event.target.complete();
+    });
+  }
+
+  fetchMembers() {
+    return this.memberService
       .getMembers({
         top: this.top,
         skip: this.skip,
@@ -151,14 +172,7 @@ export class MemberListComponent implements OnInit {
           this.error = true;
           return of(null);
         })
-      )
-      .subscribe((newMembers) => {
-        if (newMembers === null) {
-          return;
-        }
-        this.members = [...this.members, ...newMembers];
-        event.target.complete();
-      });
+      );
   }
 
   toggleFilterModal() {

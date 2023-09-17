@@ -31,6 +31,9 @@
   <ng-container *ngIf="!loading; else loadingScreen">
     <ng-container *ngIf="!error; else errorScreen">
       <ng-container *ngIf="!noContent; else noContentScreen">
+        <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
         <app-council-member-card
           *ngFor="let councileMember of members"
           (click)="onClickPerson(councileMember.ID)"

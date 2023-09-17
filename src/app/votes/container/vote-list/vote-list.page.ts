@@ -101,7 +101,28 @@ export class VoteListComponent implements OnInit {
 
   distanceReached(event: any) {
     this.skip += this.top;
-    this.voteService
+    this.fetchVotes().subscribe((newVotes) => {
+      if (newVotes === null) {
+        return;
+      }
+      this.votes = [...this.votes, ...newVotes];
+      event.target.complete();
+    });
+  }
+
+  handleRefresh(event) {
+    this.skip = 0;
+    this.fetchVotes().subscribe((votes) => {
+      if (votes === null) {
+        return;
+      }
+      this.votes = votes;
+      event.target.complete();
+    });
+  }
+
+  fetchVotes() {
+    return this.voteService
       .getVotes({
         top: this.top,
         skip: this.skip,
@@ -114,14 +135,7 @@ export class VoteListComponent implements OnInit {
           this.error = true;
           return of(null);
         })
-      )
-      .subscribe((newVotes) => {
-        if (newVotes === null) {
-          return;
-        }
-        this.votes = [...this.votes, ...newVotes];
-        event.target.complete();
-      });
+      );
   }
 
   onClickVote(id: number) {

@@ -17,6 +17,9 @@
   <ng-container *ngIf="!loading; else loadingScreen">
     <ng-container *ngIf="!error; else errorScreen">
       <ng-container *ngIf="!noContent; else noContentScreen">
+        <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
         <app-vote-card
           *ngFor="let vote of votes"
           [vote]="vote"
