@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { map, retry, timeout } from 'rxjs/operators';
-import { fetchCollection, Vote, Voting } from 'swissparl';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SwissParlService } from '../../shared/services/swissparl.service';
+import { Vote, Voting } from 'swissparl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoteService {
-  constructor() {}
+  constructor(private swissParlService: SwissParlService) {}
 
   getVotes({
     top,
@@ -43,19 +44,17 @@ export class VoteService {
       }
     }
 
-    return from(
-      fetchCollection<Vote>('Vote', {
-        top,
-        skip,
-        filter,
-        orderby: { property: 'VoteEnd', order: 'desc' }
-      })
-    ).pipe(timeout(5000), retry(3));
+    return this.swissParlService.fetchCollection<Vote>('Vote', {
+      top,
+      skip,
+      filter,
+      orderby: { property: 'VoteEnd', order: 'desc' }
+    });
   }
 
   getVote(id: number): Observable<Vote> {
-    return from(
-      fetchCollection<Vote>(
+    return this.swissParlService
+      .fetchCollection<Vote>(
         'Vote',
         {
           filter: { eq: [{ ID: id, Language: 'DE' }] },
@@ -63,18 +62,12 @@ export class VoteService {
         },
         { deepParse: true }
       )
-    ).pipe(
-      timeout(5000),
-      retry(3),
-      map((list) => list[0])
-    );
+      .pipe(map((list) => list[0]));
   }
 
   getVotings(id: number): Observable<Voting[]> {
-    return from(
-      fetchCollection<Voting>('Voting', {
-        filter: { eq: [{ IdVote: id, Language: 'DE' }] }
-      })
-    ).pipe(timeout(5000), retry(3));
+    return this.swissParlService.fetchCollection<Voting>('Voting', {
+      filter: { eq: [{ IdVote: id, Language: 'DE' }] }
+    });
   }
 }

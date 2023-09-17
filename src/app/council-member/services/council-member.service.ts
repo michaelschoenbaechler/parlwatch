@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { map, retry, timeout } from 'rxjs/operators';
-import { MemberCouncil, fetchCollection, Voting } from 'swissparl';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SwissParlService } from '../../shared/services/swissparl.service';
+import { MemberCouncil, Voting } from 'swissparl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CouncilMemberService {
-  constructor() {}
+  constructor(private swissParlService: SwissParlService) {}
 
   getMembers({
     top,
@@ -54,35 +55,25 @@ export class CouncilMemberService {
       ];
     }
 
-    return from(
-      fetchCollection<MemberCouncil>('MemberCouncil', {
-        top,
-        skip,
-        filter,
-        orderby: { property: 'LastName' }
-      })
-    ).pipe(timeout(5000), retry(3));
-  }
-
-  getMemberById(id: number): Observable<MemberCouncil> {
-    return from(
-      fetchCollection<MemberCouncil>('MemberCouncil', {
-        filter: { eq: [{ ID: id, Language: 'DE' }] }
-      })
-    ).pipe(
-      timeout(5000),
-      retry(3),
-      map((list) => list[0])
+    return this.swissParlService.fetchCollection<MemberCouncil>(
+      'MemberCouncil',
+      { top, skip, filter, orderby: { property: 'LastName', order: 'asc' } }
     );
   }
 
-  getVotes(id: number): Observable<Voting[]> {
-    return from(
-      fetchCollection<Voting>('Voting', {
-        top: 100,
-        filter: { eq: [{ PersonNumber: id, Language: 'DE' }] },
-        orderby: { property: 'VoteEnd', order: 'desc' }
+  getMemberById(id: number): Observable<MemberCouncil> {
+    return this.swissParlService
+      .fetchCollection<MemberCouncil>('MemberCouncil', {
+        filter: { eq: [{ ID: id, Language: 'DE' }] }
       })
-    ).pipe(timeout(5000), retry(3));
+      .pipe(map((list) => list[0]));
+  }
+
+  getVotes(id: number): Observable<Voting[]> {
+    return this.swissParlService.fetchCollection<Voting>('Voting', {
+      top: 100,
+      filter: { eq: [{ PersonNumber: id, Language: 'DE' }] },
+      orderby: { property: 'VoteEnd', order: 'desc' }
+    });
   }
 }

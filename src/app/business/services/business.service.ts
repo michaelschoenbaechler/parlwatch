@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { map, retry, timeout } from 'rxjs/operators';
-import {
-  Business,
-  BusinessStatus,
-  BusinessType,
-  fetchCollection
-} from 'swissparl';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SwissParlService } from '../../shared/services/swissparl.service';
+import { Business, BusinessStatus, BusinessType } from 'swissparl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BusinessService {
-  constructor() {}
+  constructor(private swissparlService: SwissParlService) {}
 
   getBusinesses({
     top,
@@ -66,37 +62,34 @@ export class BusinessService {
       ];
     }
 
-    return from(
-      fetchCollection<Business>('Business', {
-        top,
-        skip,
-        filter,
-        orderby: { property: 'SubmissionDate', order: 'desc' }
-      })
-    ).pipe(timeout(5000), retry(3));
+    return this.swissparlService.fetchCollection<Business>('Business', {
+      top,
+      skip,
+      filter,
+      orderby: { property: 'SubmissionDate', order: 'desc' }
+    });
   }
 
   getBusinessStatus(): Observable<BusinessStatus[]> {
-    return from(
-      fetchCollection<BusinessStatus>('BusinessStatus', {
+    return this.swissparlService.fetchCollection<BusinessStatus>(
+      'BusinessStatus',
+      {
         select: ['BusinessStatusId', 'BusinessStatusName'],
         filter: { eq: [{ Language: 'DE' }] }
-      })
-    ).pipe(timeout(5000), retry(3));
+      }
+    );
   }
 
   getBusinessTypes(): Observable<BusinessType[]> {
-    return from(
-      fetchCollection<BusinessType>('BusinessType', {
-        select: ['ID', 'BusinessTypeName'],
-        filter: { eq: [{ Language: 'DE' }] }
-      })
-    ).pipe(timeout(5000), retry(3));
+    return this.swissparlService.fetchCollection<BusinessType>('BusinessType', {
+      select: ['ID', 'BusinessTypeName'],
+      filter: { eq: [{ Language: 'DE' }] }
+    });
   }
 
   getBusiness(id: number): Observable<Business> {
-    return from(
-      fetchCollection<Business>(
+    return this.swissparlService
+      .fetchCollection<Business>(
         'Business',
         {
           filter: { eq: [{ ID: id, Language: 'DE' }] },
@@ -104,10 +97,6 @@ export class BusinessService {
         },
         { deepParse: true }
       )
-    ).pipe(
-      timeout(5000),
-      retry(3),
-      map((list) => list[0])
-    );
+      .pipe(map((list) => list[0]));
   }
 }
