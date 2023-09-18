@@ -16,6 +16,6 @@
 - **shared:** extend text-card with subtitle input ([a79b359](https://github.com/michaelschoenbaechler/parlwatch/commit/a79b3598bbb6ee6a6fe00fcaf47e22799875b6b8))
 - **vote:** display date of vote ([bbef62e](https://github.com/michaelschoenbaechler/parlwatch/commit/bbef62edd8fafaafaf0f324f8decf77f00a3948d))
 
-## [1.0.0-rc.1] (2023-09-07)
+## 1.0.0-rc.1 (2023-09-07)
 
 - MVP with basic functionality
