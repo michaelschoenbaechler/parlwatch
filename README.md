@@ -1,8 +1,9 @@
 # ParlWatch
 
-ParlWatch is an open-source project designed to provide easy access to the parliamentary data of the Swiss government. Leveraging the power of Angular 16 and Ionic 5, it facilitates a seamless and comprehensive viewing experience. 
+ParlWatch is an open-source project designed to provide easy access to the parliamentary data of the Swiss government. Leveraging the power of Angular 16 and Ionic 5, it facilitates a seamless and comprehensive viewing experience.
 
 ## Features
+
 - **Real-time Data**: Fetch real-time parliamentary data directly from the Swiss government's API.
 - **User-friendly Interface**: Utilize the intuitive UI to navigate through vast amounts of data with ease.
 
@@ -24,10 +25,6 @@ ParlWatch is an open-source project designed to provide easy access to the parli
    npm run start
    ```
 
-## Usage
-
-Provide instructions on how to use the application, possibly with screenshots or video demonstrations.
-
 ## Contribution
 
 We welcome contributions from the community. Please refer to the CONTRIBUTING.md file for more details on how to contribute to this project.
@@ -39,7 +36,3 @@ The parliamentary data is sourced from the Swiss government's official API, whic
 ## Support
 
 For support, bug reporting, or to suggest new features, please open an issue on the GitHub project page.
-
-## License
-
-This project is open-source, licensed under the TODO
