@@ -23,6 +23,11 @@ ion-chip {
   padding: 0.5rem 1rem 0 1rem;
   color: #666666;
   background-color: var(--ion-color-primary-contrast);
+  height: 100vh;
+
+  p {
+    margin-top: 0.5rem;
+  }
 }
 
 .current-filter {
