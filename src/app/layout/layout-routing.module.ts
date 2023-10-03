@@ -32,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/layout/business',
+        redirectTo: '/layout/votes',
         pathMatch: 'full'
       }
     ]
@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/layout/business',
+    redirectTo: '/layout/votes',
     pathMatch: 'full'
   }
 ];
