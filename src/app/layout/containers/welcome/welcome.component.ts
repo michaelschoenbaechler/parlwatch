@@ -20,7 +20,7 @@ export class WelcomeComponent implements OnInit {
 
   onDiscover() {
     this.setStatusBarStyle(Style.Dark);
-    this.router.navigate(['/layout/business']);
+    this.router.navigate(['/layout/votes']);
   }
 
   setStatusBarStyle(style: Style) {
