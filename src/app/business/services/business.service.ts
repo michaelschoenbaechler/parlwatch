@@ -38,7 +38,7 @@ export class BusinessService {
     }
 
     const filter: {
-      eq: { Language: string }[];
+      eq: { Language?: string; ID?: number }[];
       ne: { BusinessShortNumber: string }[];
       substringOf?: {
         Title: string;
@@ -54,12 +54,21 @@ export class BusinessService {
     };
 
     if (searchTerm) {
-      filter.substringOf = [
-        {
-          Title: searchTerm,
-          TagNames: searchTerm
-        }
-      ];
+      const businessNumber =
+        this.detectShortBusinessNumberAndConvert(searchTerm);
+      if (businessNumber) {
+        // If the search term is a short business number, we need
+        // to change the filter as ID is indexed and therefore faster
+        filter.eq.push({ ID: businessNumber });
+        filter.ne.pop();
+      } else {
+        filter.substringOf = [
+          {
+            Title: searchTerm,
+            TagNames: searchTerm
+          }
+        ];
+      }
     }
 
     return this.swissparlService.fetchCollection<Business>('Business', {
@@ -98,5 +107,23 @@ export class BusinessService {
         { deepParse: true }
       )
       .pipe(map((list) => list[0]));
+  }
+
+  private detectShortBusinessNumberAndConvert(str: string) {
+    const regex = /^(\d{1,2})\.(\d{1,4})$/;
+    const match = str.match(regex);
+
+    if (match) {
+      let firstGroup = parseInt(match[1], 10) + 2000;
+
+      let secondGroup = match[2];
+      while (secondGroup.length < 4) {
+        secondGroup = `0${secondGroup}`;
+      }
+
+      return parseInt(`${firstGroup}${secondGroup}`, 10);
+    }
+
+    return null;
   }
 }
