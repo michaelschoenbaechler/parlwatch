@@ -14,7 +14,7 @@ ParlWatch is an open-source project designed to provide easy access to the parli
 - Node.js
 - Angular CLI
 
-### Installation
+### Installation (web)
 
 1. Install the dependencies
    ```
