@@ -36,6 +36,8 @@ export class CouncilMemberService {
         LastName?: string;
         FirstName?: string;
         PartyAbbreviation?: string;
+        CantonName?: string;
+        CantonAbbreviation?: string;
       }[];
     } = {
       eq: [{ Language: 'DE' }, ...councilFilterArray]
@@ -50,7 +52,9 @@ export class CouncilMemberService {
         {
           LastName: searchTerm,
           FirstName: searchTerm,
-          PartyAbbreviation: searchTerm
+          PartyAbbreviation: searchTerm,
+          CantonName: searchTerm,
+          CantonAbbreviation: searchTerm
         }
       ];
     }
