@@ -30,45 +30,49 @@
       ></app-text-card>
 
       <app-text-card title="Stimmverhalten">
-        <p *ngIf="noVotes" class="no-votes-text">
-          <small
-            >Es konnten keine Abstimmungsdaten für diese Person gefunden
-            werden.</small
-          >
-        </p>
-        <ion-list *ngIf="!noVotes">
-          <ion-item
-            button
-            (click)="onClickBusiness(voting.BusinessNumber)"
-            [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
-            *ngFor="let voting of councilMemberVotings"
-          >
-            <ion-icon
-              size="small"
-              [color]="
-                voting.Decision === 1
-                  ? 'success'
-                  : voting.Decision === 2
-                  ? 'danger'
-                  : 'medium'
-              "
-              [name]="
-                voting.Decision === 1
-                  ? 'checkmark-outline'
-                  : voting.Decision === 2
-                  ? 'close-outline'
-                  : 'remove-outline'
-              "
-              slot="start"
-            ></ion-icon>
-            <ion-label class="ion-text-wrap">
-              {{ voting.BusinessTitle }}
-              <p class="ion-color-danger">
-                {{ voting.Subject }}
-              </p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+        <ng-container
+          *ngIf="!loadingVotingRecords; else loadingVotingRecordTemplate"
+        >
+          <p *ngIf="noVotes" class="no-votes-text">
+            <small
+              >Es konnten keine Abstimmungsdaten für diese Person gefunden
+              werden.</small
+            >
+          </p>
+          <ion-list *ngIf="!noVotes">
+            <ion-item
+              button
+              (click)="onClickBusiness(voting.BusinessNumber)"
+              [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
+              *ngFor="let voting of councilMemberVotings"
+            >
+              <ion-icon
+                size="small"
+                [color]="
+                  voting.Decision === 1
+                    ? 'success'
+                    : voting.Decision === 2
+                    ? 'danger'
+                    : 'medium'
+                "
+                [name]="
+                  voting.Decision === 1
+                    ? 'checkmark-outline'
+                    : voting.Decision === 2
+                    ? 'close-outline'
+                    : 'remove-outline'
+                "
+                slot="start"
+              ></ion-icon>
+              <ion-label class="ion-text-wrap">
+                {{ voting.BusinessTitle }}
+                <p class="ion-color-danger">
+                  {{ voting.Subject }}
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ng-container>
       </app-text-card>
     </ng-container>
   </ng-container>
@@ -76,6 +80,12 @@
 
 <ng-template #loadingScreen>
   <app-loading-screen></app-loading-screen>
+</ng-template>
+
+<ng-template #loadingVotingRecordTemplate>
+  <div class="loading-voting-record-container">
+    <ion-spinner class="spinner"></ion-spinner>
+  </div>
 </ng-template>
 
 <ng-template #errorScreen>

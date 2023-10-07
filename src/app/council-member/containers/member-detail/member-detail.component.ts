@@ -18,6 +18,7 @@ export class MemberDetailComponent implements OnInit {
   noVotes = false;
   loading = true;
   error = false;
+  loadingVotingRecords = false;
 
   trigger$ = new Subject<void>();
 
@@ -56,7 +57,7 @@ export class MemberDetailComponent implements OnInit {
     from(this.trigger$)
       .pipe(
         untilDestroyed(this),
-        tap(() => (this.loading = true)),
+        tap(() => (this.loadingVotingRecords = true)),
         switchMap(() =>
           this.memberService
             .getVotes(parseInt(this.route.snapshot.params.id))
@@ -64,7 +65,7 @@ export class MemberDetailComponent implements OnInit {
               first(),
               catchError(() => {
                 this.error = true;
-                this.loading = false;
+                this.loadingVotingRecords = false;
                 return of(null);
               })
             )
@@ -76,6 +77,7 @@ export class MemberDetailComponent implements OnInit {
         }
         this.noVotes = votings.length === 0;
         this.councilMemberVotings = votings;
+        this.loadingVotingRecords = false;
       });
   }
 
