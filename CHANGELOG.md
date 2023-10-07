@@ -9,7 +9,7 @@
 
 - **council-member:** add loading spinner for voting record ([8241add](https://github.com/michaelschoenbaechler/parlwatch/commit/8241addfc0615b57fed932a023ae453dc0ea059d))
 - **council-member:** search for canton or canton abbreviation ([4d3a8af](https://github.com/michaelschoenbaechler/parlwatch/commit/4d3a8af396bbed6af7e16524634c56903e275781))
-- **_Layout_** switch votes and business tab ([8e2fb76](https://github.com/michaelschoenbaechler/parlwatch/commit/8e2fb766fd4e1e4c0583ef256c5fcd56b3c3d16c))
+- **layout:** switch votes and business tab ([8e2fb76](https://github.com/michaelschoenbaechler/parlwatch/commit/8e2fb766fd4e1e4c0583ef256c5fcd56b3c3d16c))
 - **vote:** remove session name in card ([8ec5aa2](https://github.com/michaelschoenbaechler/parlwatch/commit/8ec5aa2ff98301a094fd883040972eadc81bddd6))
 
 ## [1.0.0-rc.2](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.1...1.0.0-rc.2) (2023-09-18)
