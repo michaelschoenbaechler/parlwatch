@@ -19,7 +19,6 @@ export class VoteListComponent implements OnInit {
   error = false;
   noContent = false;
 
-  businessNumber$ = new BehaviorSubject<number>(null);
   searchTerm$ = new BehaviorSubject<string>('');
   trigger$ = new Subject<void>();
 
@@ -32,20 +31,19 @@ export class VoteListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    combineLatest([this.searchTerm$, this.businessNumber$, this.trigger$])
+    combineLatest([this.searchTerm$, this.trigger$])
       .pipe(
         tap(() => {
           this.skip = 0;
           this.error = false;
           this.loading = true;
         }),
-        switchMap(([searchTerm, businessNumber]) =>
+        switchMap(([searchTerm]) =>
           this.voteService
             .getVotes({
               top: this.top,
               skip: this.skip,
-              searchTerm,
-              businessNumber
+              searchTerm
             })
             .pipe(
               catchError(() => {
@@ -72,15 +70,16 @@ export class VoteListComponent implements OnInit {
       this.trigger$.next();
     }
 
-    const businessNumber = +this.route.snapshot.queryParams['BusinessNumber'];
-    if (businessNumber) {
-      this.businessNumber$.next(businessNumber);
+    const businessShortNumber =
+      +this.route.snapshot.queryParams['BusinessShortNumber'];
+    if (businessShortNumber) {
       this.router.navigate([], {
         relativeTo: this.route,
-        queryParams: { BusinessNumber: null },
+        queryParams: { BusinessShortNumber: null },
         queryParamsHandling: 'merge'
       });
-      this.searchBar.value = 'BN:' + businessNumber;
+      this.searchBar.value = businessShortNumber.toString();
+      this.searchTerm$.next(businessShortNumber.toString());
     }
   }
 
@@ -89,12 +88,10 @@ export class VoteListComponent implements OnInit {
   }
 
   onSearch(event: any) {
-    this.businessNumber$.next(null);
     this.searchTerm$.next(event.target.value);
   }
 
   resetFilter() {
-    this.businessNumber$.next(null);
     this.searchTerm$.next('');
     this.searchBar.value = '';
   }
@@ -126,8 +123,7 @@ export class VoteListComponent implements OnInit {
       .getVotes({
         top: this.top,
         skip: this.skip,
-        searchTerm: this.searchTerm$.getValue(),
-        businessNumber: this.businessNumber$.getValue()
+        searchTerm: this.searchTerm$.getValue()
       })
       .pipe(
         first(),

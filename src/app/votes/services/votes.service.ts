@@ -13,35 +13,28 @@ export class VoteService {
   getVotes({
     top,
     skip,
-    searchTerm,
-    businessNumber
+    searchTerm
   }: {
     top: number;
     skip?: number;
     searchTerm?: string;
-    businessNumber?: number;
   }): Observable<Vote[]> {
     const filter: {
       eq: { Language: string; BusinessNumber?: number }[];
       ne: { BusinessShortNumber: string }[];
-      substringOf?: { BusinessTitle: string }[];
+      substringOf?: { BusinessTitle: string; BusinessShortNumber: string }[];
     } = {
       eq: [{ Language: 'DE' }],
       ne: [{ BusinessShortNumber: '00.000' }]
     };
 
-    if (businessNumber) {
-      filter.eq = [{ Language: 'DE', BusinessNumber: businessNumber }];
-    }
-
     if (searchTerm) {
-      if (searchTerm.startsWith('BN:')) {
-        filter.eq = [
-          { Language: 'DE', BusinessNumber: parseInt(searchTerm.substring(3)) }
-        ];
-      } else {
-        filter.substringOf = [{ BusinessTitle: searchTerm }];
-      }
+      filter.substringOf = [
+        {
+          BusinessTitle: searchTerm,
+          BusinessShortNumber: searchTerm
+        }
+      ];
     }
 
     return this.swissParlService.fetchCollection<Vote>('Vote', {

@@ -60,7 +60,7 @@ export class BusinessDetailPage implements OnInit {
 
   goToVote() {
     this.router.navigate(['layout', 'votes'], {
-      queryParams: { BusinessNumber: this.business.ID }
+      queryParams: { BusinessShortNumber: this.business.BusinessShortNumber }
     });
   }
 
