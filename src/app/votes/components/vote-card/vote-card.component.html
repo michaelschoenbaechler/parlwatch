@@ -1,9 +1,6 @@
 <app-text-card
   [title]="
-    vote.BusinessShortNumber +
-    (vote.Subject ? ' - ' + vote.Subject : '') +
-    ' - ' +
-    vote.SessionName
+    vote.BusinessShortNumber + (vote.Subject ? ' - ' + vote.Subject : '')
   "
   [subtitle]="'Abgestimmt am ' + (vote.VoteEnd | oDataDateTime)"
   [HtmlText]="vote.BillTitle ? vote.BillTitle : vote.BusinessTitle"
