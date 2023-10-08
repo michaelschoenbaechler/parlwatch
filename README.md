@@ -36,3 +36,7 @@ The parliamentary data is sourced from the Swiss government's official API, whic
 ## Support
 
 For support, bug reporting, or to suggest new features, please open an issue on the GitHub project page.
+
+## Privacy Policy
+
+We believe in respecting your privacy. That's why we don't track or profile you in any way. Our project is designed to operate without collecting or storing any personal information.
