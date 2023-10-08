@@ -1,4 +1,10 @@
-# [1.0.0-rc.3](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.2...1.0.0-rc.3) (2023-10-07)
+## [1.0.0-rc.4](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.3...1.0.0-rc.4) (2023-10-08)
+
+### Bug Fixes
+
+- **business:** show search suggestions depending on keyboard state ([8013111](https://github.com/michaelschoenbaechler/parlwatch/commit/8013111391cf1ed961192b594768e82763774fab))
+
+## [1.0.0-rc.3](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.2...1.0.0-rc.3) (2023-10-07)
 
 ### Bug Fixes
 
