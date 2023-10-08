@@ -35,7 +35,6 @@ export class BusinessListComponent implements OnInit {
     'Umwelt',
     'Bildung',
     'Wirtschaft',
-    'Gesundheit',
     'Staatspolitik',
     'Migration',
     'Gesundheit',
@@ -208,6 +207,9 @@ export class BusinessListComponent implements OnInit {
     Keyboard.addListener('keyboardWillHide', () => {
       this.showSuggestedSearches = false;
     });
+    Keyboard.addListener('keyboardWillShow', () => {
+      this.showSuggestedSearches = true;
+    });
   }
 
   toggleFilterModal() {
@@ -227,10 +229,6 @@ export class BusinessListComponent implements OnInit {
 
   retrySearch() {
     this.trigger$.next();
-  }
-
-  onFocus() {
-    this.showSuggestedSearches = true;
   }
 
   resetFilter() {
