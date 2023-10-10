@@ -1,3 +1,7 @@
+## [1.0.0](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.4...1.0.0) (2023-10-09)
+
+- **Docs**: add privacy policy
+
 ## [1.0.0-rc.4](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.3...1.0.0-rc.4) (2023-10-08)
 
 ### Bug Fixes
