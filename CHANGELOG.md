@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.1...1.0.2) (2024-01-15)
+
+### Bug Fixes
+
+- **security**: update dependencies
+
 ## [1.0.1](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0...1.0.1) (2023-10-10)
 
 ### Bug Fixes
