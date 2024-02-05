@@ -5,12 +5,27 @@ import { BusinessService } from '../../services/business.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { Subject, from, of } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
+import { BusinessCardComponent } from '../../components/business-card/business-card.component';
+import { BusinessDetailTextComponent } from '../../components/business-detail-text/business-detail-text.component';
+import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { NgIf } from '@angular/common';
 
 @UntilDestroy()
 @Component({
   selector: 'app-business-detail',
   templateUrl: './business-detail.page.html',
-  styleUrls: ['./business-detail.page.scss']
+  styleUrls: ['./business-detail.page.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    IonicModule,
+    BusinessCardComponent,
+    BusinessDetailTextComponent,
+    LoadingScreenComponent,
+    ErrorScreenComponent
+  ]
 })
 export class BusinessDetailPage implements OnInit {
   business: Business = null;

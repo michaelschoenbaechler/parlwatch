@@ -3,7 +3,8 @@ import { Keyboard } from '@capacitor/keyboard';
 import { Platform } from '@ionic/angular';
 
 @Directive({
-  selector: '[appHideKeyboardOnEnter]'
+  selector: '[appHideKeyboardOnEnter]',
+  standalone: true
 })
 export class HideKeyboardOnEnterDirective {
   constructor(private platform: Platform) {}

@@ -4,15 +4,39 @@ import { BehaviorSubject, Subject, combineLatest, of } from 'rxjs';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { MemberCouncil } from 'swissparl';
 import { CouncilMemberService } from '../../services/council-member.service';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IonSearchbar } from '@ionic/angular';
+import { IonicModule, IonSearchbar } from '@ionic/angular';
+import { NgFor, NgIf } from '@angular/common';
+import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
+import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
+import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
+import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
+import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 
 @UntilDestroy()
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.scss']
+  styleUrls: ['./member-list.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    IonicModule,
+    ReactiveFormsModule,
+    CouncilMemberCardComponent,
+    HideKeyboardOnEnterDirective,
+    LoadingScreenComponent,
+    NoContentScreenComponent,
+    ErrorScreenComponent
+  ]
 })
 export class MemberListComponent implements OnInit {
   top = 50;

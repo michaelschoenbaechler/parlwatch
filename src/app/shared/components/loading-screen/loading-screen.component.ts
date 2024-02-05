@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { concat, interval, tap, timer } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
 
 @UntilDestroy()
 @Component({
   selector: 'app-loading-screen',
   templateUrl: './loading-screen.component.html',
-  styleUrls: ['./loading-screen.component.scss']
+  styleUrls: ['./loading-screen.component.scss'],
+  standalone: true,
+  imports: [IonicModule]
 })
 export class LoadingScreenComponent implements OnInit {
   currentFact: string;

@@ -4,17 +4,39 @@ import { BehaviorSubject, Subject, combineLatest, from, of } from 'rxjs';
 import { map, first, tap, catchError, switchMap } from 'rxjs/operators';
 import { Business, BusinessStatus, BusinessType } from 'swissparl';
 import { BusinessService } from '../../services/business.service';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as _ from 'lodash';
-import { IonSearchbar, Platform } from '@ionic/angular';
+import { IonicModule, IonSearchbar, Platform } from '@ionic/angular';
 import { Keyboard } from '@capacitor/keyboard';
+import { NgFor, NgIf } from '@angular/common';
+import { BusinessCardComponent } from '../../components/business-card/business-card.component';
+import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
 
 @UntilDestroy()
 @Component({
   selector: 'app-business-list',
   templateUrl: './business-list.page.html',
-  styleUrls: ['./business-list.page.scss']
+  styleUrls: ['./business-list.page.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    IonicModule,
+    ReactiveFormsModule,
+    BusinessCardComponent,
+    LoadingScreenComponent,
+    ErrorScreenComponent,
+    NoContentScreenComponent
+  ]
 })
 export class BusinessListComponent implements OnInit {
   top = 20;
@@ -125,7 +147,7 @@ export class BusinessListComponent implements OnInit {
         if (businessTypes === null) {
           return;
         }
-        businessTypes.forEach((type) => {
+        businessTypes.forEach(() => {
           const control = new FormControl(false);
           (this.filterForm.controls.businessType as FormArray).push(control);
         });

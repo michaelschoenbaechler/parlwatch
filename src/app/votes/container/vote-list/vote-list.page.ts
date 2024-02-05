@@ -4,12 +4,29 @@ import { catchError, first, tap, switchMap } from 'rxjs/operators';
 import { Vote } from 'swissparl';
 import { VoteService } from '../../services/votes.service';
 import { BehaviorSubject, Subject, combineLatest, of } from 'rxjs';
-import { IonSearchbar } from '@ionic/angular';
+import { IonicModule, IonSearchbar } from '@ionic/angular';
+import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
+import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
+import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-vote-list',
   templateUrl: './vote-list.page.html',
-  styleUrls: ['./vote-list.page.scss']
+  styleUrls: ['./vote-list.page.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    IonicModule,
+    VoteCardComponent,
+    HideKeyboardOnEnterDirective,
+    LoadingScreenComponent,
+    ErrorScreenComponent,
+    NoContentScreenComponent
+  ]
 })
 export class VoteListComponent implements OnInit {
   top = 10;

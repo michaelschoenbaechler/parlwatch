@@ -1,17 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Vote } from 'swissparl';
 import { VoteService } from '../../services/votes.service';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject, from, of } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
+import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
+import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
+import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { NgIf } from '@angular/common';
 
 @UntilDestroy()
 @Component({
   selector: 'app-vote-detail',
   templateUrl: './vote-detail.page.html',
-  styleUrls: ['./vote-detail.page.scss']
+  styleUrls: ['./vote-detail.page.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    RouterLink,
+    ReactiveFormsModule,
+    IonicModule,
+    VoteCardComponent,
+    TextCardComponent,
+    LoadingScreenComponent,
+    ErrorScreenComponent
+  ]
 })
 export class VoteDetailPage implements OnInit {
   vote: Vote = null;

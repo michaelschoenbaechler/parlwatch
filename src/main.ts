@@ -1,13 +1,30 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { provideRouter, RouteReuseStrategy } from '@angular/router';
+import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.log(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    importProvidersFrom(
+      BrowserModule,
+      IonicModule.forRoot(),
+      IonicStorageModule.forRoot()
+    ),
+    provideRouter([
+      {
+        path: '',
+        loadChildren: () =>
+          import('./app/layout/routes').then((m) => m.TAB_ROUTES)
+      }
+    ])
+  ]
+}).then(() => console.log('Application started'));

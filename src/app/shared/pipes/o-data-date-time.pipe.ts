@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'oDataDateTime'
+  name: 'oDataDateTime',
+  standalone: true
 })
 export class ODataDateTimePipe implements PipeTransform {
   constructor() {}

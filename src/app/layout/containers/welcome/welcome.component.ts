@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { Platform } from '@ionic/angular';
+import { IonicModule, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  styleUrls: ['./welcome.component.scss'],
+  standalone: true,
+  imports: [IonicModule]
 })
 export class WelcomeComponent implements OnInit {
   constructor(

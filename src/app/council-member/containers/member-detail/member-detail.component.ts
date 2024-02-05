@@ -5,12 +5,28 @@ import { CouncilMemberService } from '../../services/council-member.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { Subject, from, of } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
+import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
+import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
+import { NgFor, NgIf } from '@angular/common';
+import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 
 @UntilDestroy()
 @Component({
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.scss']
+  styleUrls: ['./member-detail.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    IonicModule,
+    CouncilMemberCardComponent,
+    TextCardComponent,
+    LoadingScreenComponent,
+    ErrorScreenComponent
+  ]
 })
 export class MemberDetailComponent implements OnInit {
   councilMember: MemberCouncil = null;
