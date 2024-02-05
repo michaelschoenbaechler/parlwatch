@@ -4,12 +4,12 @@ import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings-overview',
-  templateUrl: './settings-overview.component.html',
-  styleUrls: ['./settings-overview.component.scss'],
+  templateUrl: './settings-overview.page.html',
+  styleUrls: ['./settings-overview.page.scss'],
   standalone: true,
   imports: [IonicModule]
 })
-export class SettingsOverviewComponent {
+export class SettingsOverviewPage {
   constructor() {}
 
   surveyClicked() {

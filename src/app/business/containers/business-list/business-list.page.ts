@@ -38,7 +38,7 @@ import { NoContentScreenComponent } from '../../../shared/components/no-content-
     NoContentScreenComponent
   ]
 })
-export class BusinessListComponent implements OnInit {
+export class BusinessListPage implements OnInit {
   top = 20;
   skip = 0;
   businesses: Business[] = [];

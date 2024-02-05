@@ -5,12 +5,12 @@ import { IonicModule, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss'],
+  templateUrl: './welcome.page.html',
+  styleUrls: ['./welcome.page.scss'],
   standalone: true,
   imports: [IonicModule]
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomePage implements OnInit {
   constructor(
     private router: Router,
     private platform: Platform

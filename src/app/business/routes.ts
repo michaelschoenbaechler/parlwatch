@@ -4,14 +4,14 @@ export const BUSINESS_ROUTES: Route[] = [
   {
     path: 'list',
     loadComponent: () =>
-      import('./container/business-list/business-list.page').then(
-        (m) => m.BusinessListComponent
+      import('./containers/business-list/business-list.page').then(
+        (m) => m.BusinessListPage
       )
   },
   {
     path: 'detail/:id',
     loadComponent: () =>
-      import('./container/business-detail/business-detail.page').then(
+      import('./containers/business-detail/business-detail.page').then(
         (m) => m.BusinessDetailPage
       )
   },

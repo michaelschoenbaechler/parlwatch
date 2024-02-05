@@ -4,14 +4,14 @@ export const VOTE_ROUTES: Route[] = [
   {
     path: 'list',
     loadComponent: () =>
-      import('./container/vote-list/vote-list.page').then(
-        (m) => m.VoteListComponent
+      import('./containers/vote-list/vote-list.page').then(
+        (m) => m.VoteListPage
       )
   },
   {
     path: 'detail/:id',
     loadComponent: () =>
-      import('./container/vote-detail/vote-detail.page').then(
+      import('./containers/vote-detail/vote-detail.page').then(
         (m) => m.VoteDetailPage
       )
   },

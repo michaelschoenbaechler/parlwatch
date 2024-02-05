@@ -23,8 +23,8 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
 @UntilDestroy()
 @Component({
   selector: 'app-member-list',
-  templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.scss'],
+  templateUrl: './member-list.page.html',
+  styleUrls: ['./member-list.page.scss'],
   standalone: true,
   imports: [
     NgIf,
@@ -38,7 +38,7 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
     ErrorScreenComponent
   ]
 })
-export class MemberListComponent implements OnInit {
+export class MemberListPage implements OnInit {
   top = 50;
   skip = 0;
   members: MemberCouncil[] = [];

@@ -29,8 +29,8 @@ export const TAB_ROUTES: Routes = [
         path: 'settings',
         loadComponent: () =>
           import(
-            '../settings/containers/settings-overview/settings-overview.component'
-          ).then((mod) => mod.SettingsOverviewComponent)
+            '../settings/containers/settings-overview/settings-overview.page'
+          ).then((mod) => mod.SettingsOverviewPage)
       },
       {
         path: '',
@@ -42,9 +42,7 @@ export const TAB_ROUTES: Routes = [
   {
     path: 'welcome',
     loadComponent: () =>
-      import('./containers/welcome/welcome.component').then(
-        (mod) => mod.WelcomeComponent
-      )
+      import('./containers/welcome/welcome.page').then((mod) => mod.WelcomePage)
   },
   {
     path: '',

@@ -2,7 +2,7 @@ import { enableProdMode, importProvidersFrom } from '@angular/core';
 
 import { environment } from './environments/environment';
 import { provideRouter, RouteReuseStrategy } from '@angular/router';
-import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
@@ -14,11 +14,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    importProvidersFrom(
-      BrowserModule,
-      IonicModule.forRoot(),
-      IonicStorageModule.forRoot()
-    ),
+    importProvidersFrom(IonicModule.forRoot(), IonicStorageModule.forRoot()),
     provideRouter([
       {
         path: '',

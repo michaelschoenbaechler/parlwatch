@@ -28,7 +28,7 @@ import { NgFor, NgIf } from '@angular/common';
     NoContentScreenComponent
   ]
 })
-export class VoteListComponent implements OnInit {
+export class VoteListPage implements OnInit {
   top = 10;
   skip = 0;
   votes: Vote[] = [];

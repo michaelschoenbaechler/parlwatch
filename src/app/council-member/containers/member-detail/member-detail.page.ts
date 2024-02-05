@@ -15,8 +15,8 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
 @UntilDestroy()
 @Component({
   selector: 'app-member-detail',
-  templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.scss'],
+  templateUrl: './member-detail.page.html',
+  styleUrls: ['./member-detail.page.scss'],
   standalone: true,
   imports: [
     NgIf,
@@ -28,7 +28,7 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
     ErrorScreenComponent
   ]
 })
-export class MemberDetailComponent implements OnInit {
+export class MemberDetailPage implements OnInit {
   councilMember: MemberCouncil = null;
   councilMemberVotings = [];
   noVotes = false;
