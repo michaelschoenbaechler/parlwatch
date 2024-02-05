@@ -4,6 +4,14 @@ import { map } from 'rxjs/operators';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 import { Business, BusinessStatus, BusinessType } from 'swissparl';
 
+export type BusinessFilter = {
+  top: number;
+  skip?: number;
+  searchTerm?: string;
+  businessTypes?: BusinessType[];
+  businessStatuses?: BusinessStatus[];
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,23 +24,19 @@ export class BusinessService {
     searchTerm,
     businessTypes,
     businessStatuses
-  }: {
-    top: number;
-    skip?: number;
-    searchTerm?: string;
-    businessTypes?: number[];
-    businessStatuses?: number[];
-  }): Observable<Business[]> {
-    var businessTypeFilterArray = [];
-    if (businessTypes && businessTypes.length > 0) {
-      businessTypes.forEach((id) => {
+  }: BusinessFilter): Observable<Business[]> {
+    const businessTypeIds = businessTypes.map((bt) => bt.ID);
+    const businessTypeFilterArray = [];
+    if (businessTypeIds && businessTypes.length > 0) {
+      businessTypeIds.forEach((id) => {
         businessTypeFilterArray.push({ BusinessType: id });
       });
     }
 
-    var businessStatusFilterArray = [];
-    if (businessStatuses && businessStatuses.length > 0) {
-      businessStatuses.forEach((id) => {
+    const businessStatusIds = businessStatuses.map((bs) => bs.BusinessStatusId);
+    const businessStatusFilterArray = [];
+    if (businessStatusIds && businessStatuses.length > 0) {
+      businessStatusIds.forEach((id) => {
         businessStatusFilterArray.push({ BusinessStatus: id });
       });
     }

@@ -11,20 +11,21 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="!loading; else loadingScreen">
-    <ng-container *ngIf="!error; else errorScreen">
-      <app-business-card [business]="business">
+  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
+    <ng-container *ngIf="!store.hasError(); else errorScreen">
+      <app-business-card [business]="store.selectedBusiness()">
         <ion-button
-          *ngIf="business.Votes.length > 0"
+          *ngIf="store.selectedBusiness().Votes.length > 0"
           expand="block"
           size="small"
           fill="outline"
-          (click)="goToVote()"
+          [routerLink]="['/layout/votes']"
+          [queryParams]="{ BusinessShortNumber: store.selectedBusiness().BusinessShortNumber }"
           >Zu den Abstimmungen</ion-button
         >
       </app-business-card>
       <app-business-detail-text
-        [business]="business"
+        [business]="store.selectedBusiness()"
       ></app-business-detail-text>
     </ng-container>
   </ng-container>
@@ -35,5 +36,5 @@
 </ng-template>
 
 <ng-template #errorScreen>
-  <app-error-screen (retry)="retrySearch()"></app-error-screen>
+  <app-error-screen (retry)="retry()"></app-error-screen>
 </ng-template>
