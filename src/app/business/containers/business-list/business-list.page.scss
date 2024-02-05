@@ -11,10 +11,6 @@ ion-modal ion-toolbar {
   }
 }
 
-ion-modal ion-list:last-child {
-  padding-bottom: 4rem;
-}
-
 ion-chip {
   margin: 0 0.5rem 0.5rem 0;
 }
@@ -33,12 +29,4 @@ ion-chip {
 .current-filter {
   padding: 0.5rem 1rem 0 1rem;
   background-color: var(--ion-color-primary-contrast);
-}
-
-.floating-button {
-  position: fixed;
-  bottom: 1rem;
-  left: 0;
-  right: 0;
-  z-index: 999;
 }

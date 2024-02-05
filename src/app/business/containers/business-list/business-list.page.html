@@ -20,13 +20,13 @@
   </ion-toolbar>
   <div
     class="current-filter"
-    *ngIf="selectedBusinessTypes.length > 0 || selectedBusinessStatuses.length > 0"
+    *ngIf="store.query().businessTypes.length > 0 || store.query().businessStatuses.length > 0"
   >
-    <ion-chip *ngFor="let businessType of selectedBusinessTypes">
+    <ion-chip *ngFor="let businessType of store.query().businessTypes">
       <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
     </ion-chip>
-    <ion-chip *ngFor="let businesStatus of selectedBusinessStatuses">
-      <ion-label>{{ businesStatus.BusinessStatusName }}</ion-label>
+    <ion-chip *ngFor="let businessStatus of store.query().businessStatuses">
+      <ion-label>{{ businessStatus.BusinessStatusName }}</ion-label>
     </ion-chip>
   </div>
   <div class="search-suggestions" *ngIf="showSuggestedSearches">
@@ -40,14 +40,14 @@
 </ion-header>
 
 <ion-content role="feed" class="ion-padding">
-  <ng-container *ngIf="!loading; else loadingScreen">
-    <ng-container *ngIf="!error; else errorScreen">
-      <ng-container *ngIf="!noContent; else noContentScreen">
+  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
+    <ng-container *ngIf="!store.hasError(); else errorScreen">
+      <ng-container *ngIf="!store.hasNoContent(); else noContentScreen">
         <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
         <app-business-card
-          *ngFor="let business of businesses"
+          *ngFor="let business of store.businesses()"
           [business]="business"
           (click)="onClickBusiness(business.ID)"
         ></app-business-card>
@@ -72,42 +72,13 @@
       <ion-toolbar>
         <ion-title>Geschäfte filtern</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="toggleFilterModal()">Close</ion-button>
+          <ion-button (click)="toggleFilterModal()">schliessen</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ng-container *ngIf="!filterError; else errorScreen">
-        <form [formGroup]="filterForm">
-          <h3>Geschäftstyp</h3>
-          <ion-list>
-            <ion-item *ngFor="let businessType of businessTypes; let i = index">
-              <ion-checkbox
-                labelPlacement="start"
-                [formControl]="businessTypesArray[i]"
-                >{{ businessType.BusinessTypeName }}</ion-checkbox
-              >
-            </ion-item>
-          </ion-list>
-          <h3>Geschäftsstatus</h3>
-          <ion-list>
-            <ion-item
-              *ngFor="let businessStatus of businessStatuses; let i = index"
-            >
-              <ion-checkbox
-                labelPlacement="start"
-                [formControl]="businessStatusesArray[i]"
-                >{{ businessStatus.BusinessStatusName }}</ion-checkbox
-              >
-            </ion-item>
-          </ion-list>
-        </form>
-
-        <div class="floating-button" *ngIf="showFilterButton">
-          <ion-button expand="block" (click)="applyFilter()"
-            >Filter anwenden</ion-button
-          >
-        </div>
+      <ng-container *ngIf="!this.store.hasFilterError(); else errorScreen">
+        <app-business-filter-form (submitFilter)="toggleFilterModal()"></app-business-filter-form>
       </ng-container>
     </ion-content>
   </ng-template>

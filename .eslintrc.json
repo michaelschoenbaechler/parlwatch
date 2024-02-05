@@ -1,6 +1,11 @@
 {
   "root": true,
   "ignorePatterns": ["projects/**/*"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "overrides": [
     {
       "files": ["*.ts"],
