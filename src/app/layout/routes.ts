@@ -10,32 +10,32 @@ export const TAB_ROUTES: Routes = [
     children: [
       {
         path: 'votes',
-        loadChildren: () =>
-          import('../votes/routes').then((mod) => mod.VOTE_ROUTES)
-      },
-      {
-        path: 'council-member',
-        loadChildren: () =>
-          import('../council-member/routes').then(
-            (mod) => mod.COUNCIL_MEMBER_ROUTES
+        loadComponent: () =>
+          import('../votes/containers/vote-list/vote-list.page').then(
+            (m) => m.VoteListPage
           )
       },
       {
-        path: 'business',
-        loadChildren: () =>
-          import('../business/routes').then((mod) => mod.BUSINESS_ROUTES)
+        path: 'council-member',
+        loadComponent: () =>
+          import(
+            '../council-member/containers/member-list/member-list.page'
+          ).then((m) => m.MemberListPage)
       },
+      {
+        path: 'business',
+        loadComponent: () =>
+          import(
+            '../business/containers/business-list/business-list.page'
+          ).then((m) => m.BusinessListPage)
+      },
+
       {
         path: 'settings',
         loadComponent: () =>
           import(
             '../settings/containers/settings-overview/settings-overview.page'
           ).then((mod) => mod.SettingsOverviewPage)
-      },
-      {
-        path: '',
-        redirectTo: '/layout/votes/list',
-        pathMatch: 'full'
       }
     ]
   },

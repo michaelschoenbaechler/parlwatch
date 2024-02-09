@@ -11,7 +11,7 @@ import { VoteCardComponent } from '../../components/vote-card/vote-card.componen
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -21,6 +21,7 @@ import { NgIf } from '@angular/common';
   standalone: true,
   imports: [
     NgIf,
+    NgFor,
     RouterLink,
     ReactiveFormsModule,
     IonicModule,
