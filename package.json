@@ -7,6 +7,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:android": "npm run build && npx cap copy android && npx cap open android",
+    "start:ios": "npm run build && npx cap copy ios && npx cap open ios",
     "build": "ng build",
     "build:prd": "ng build --configuration=production",
     "lint": "ng lint && npx prettier -c \"src/**/*.ts\"",
@@ -21,6 +23,7 @@
     "@angular/platform-browser": "^17.0.9",
     "@angular/platform-browser-dynamic": "^17.0.9",
     "@angular/router": "^17.0.9",
+    "@capacitor/android": "^5.5.1",
     "@capacitor/app": "^5.0.0",
     "@capacitor/browser": "^5.0.6",
     "@capacitor/core": "^5.6.0",
