@@ -19,7 +19,7 @@
     ></ion-icon>
   </ion-toolbar>
   <div
-    class="current-filter"
+    class="active-filter-wrapper"
     *ngIf="store.query().businessTypes.length > 0 || store.query().businessStatuses.length > 0"
   >
     <ion-chip *ngFor="let businessType of store.query().businessTypes">
