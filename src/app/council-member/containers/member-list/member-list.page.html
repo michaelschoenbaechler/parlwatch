@@ -18,29 +18,28 @@
       name="filter-outline"
     ></ion-icon>
   </ion-toolbar>
-  <div class="current-filter">
-    <ion-chip *ngFor="let council of selectedCouncils">
+  <div class="active-filter-wrapper" *ngIf="store.query().council.length > 0 || store.query().showInactive">
+    <ion-chip *ngFor="let council of activeFilter.councils">
       <ion-label>{{ council.councilName }}</ion-label>
     </ion-chip>
-    <ion-chip *ngIf="filterForm.controls.inactiveMembers.value">
+    <ion-chip *ngIf="activeFilter.inactiveMembers">
       <ion-label>Inaktive anzeigen</ion-label>
     </ion-chip>
   </div>
 </ion-header>
 
 <ion-content role="feed" class="ion-padding">
-  <ng-container *ngIf="!loading; else loadingScreen">
-    <ng-container *ngIf="!error; else errorScreen">
-      <ng-container *ngIf="!noContent; else noContentScreen">
+  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
+    <ng-container *ngIf="!store.hasError(); else errorScreen">
+      <ng-container *ngIf="!store.hasNoContent(); else noContentScreen">
         <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
         <app-council-member-card
-          *ngFor="let councileMember of members"
-          (click)="onClickPerson(councileMember.ID)"
-          [councilMember]="councileMember"
+          *ngFor="let councilMember of store.councilMembers()"
+          [councilMember]="councilMember"
+          (click)="onClickPerson(councilMember.ID)"
         ></app-council-member-card>
-
         <ion-infinite-scroll
           threshold="100px"
           (ionInfinite)="distanceReached($event)"
@@ -67,35 +66,8 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <form [formGroup]="filterForm">
-        <h3>Rat</h3>
-        <ion-list>
-          <ion-item *ngFor="let council of councils; let i = index">
-            <ion-checkbox
-              label-placement="start"
-              [formControl]="councilArray[i]"
-              >{{ council.councilName }}</ion-checkbox
-            >
-          </ion-item>
-        </ion-list>
-        <h3>Weitere Filter</h3>
-        <ion-list>
-          <ion-item>
-            <ion-toggle
-              label-placement="start"
-              formControlName="inactiveMembers"
-              >Inaktive anzeigen*</ion-toggle
-            >
-          </ion-item>
-        </ion-list>
-        <small>*Ehemalige Ratsmitglieder</small>
-      </form>
-
-      <div class="floating-button" *ngIf="showFilterButton">
-        <ion-button expand="block" (click)="applyFilter()"
-          >Filter anwenden</ion-button
-        >
-      </div>
+      <app-council-member-filter-form  [preset]="activeFilter" (applyFilter)="onFilter($event)">
+      </app-council-member-filter-form>
     </ion-content>
   </ng-template>
 </ion-modal>

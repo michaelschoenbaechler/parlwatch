@@ -4,6 +4,14 @@ import { map } from 'rxjs/operators';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 import { MemberCouncil, Voting } from 'swissparl';
 
+export type CouncilMemberFilter = {
+  top: number;
+  skip?: number;
+  searchTerm?: string;
+  council?: number[];
+  showInactive?: boolean;
+};
+
 @Injectable({
   providedIn: 'root'
 })

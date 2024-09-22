@@ -1,0 +1,25 @@
+<form [formGroup]="filterForm">
+  <h3>Rat</h3>
+  <ion-list formArrayName="councils">
+    <ion-item *ngFor="let council of councils.controls; let i = index">
+      <ion-checkbox
+        label-placement="start"
+        [formControlName]="i"
+      >{{ councilList[i].councilName }}</ion-checkbox
+      >
+    </ion-item>
+  </ion-list>
+  <h3>Weitere Filter</h3>
+  <ion-list>
+    <ion-item>
+      <ion-toggle
+        label-placement="start"
+        formControlName="inactiveMembers"
+      >Inaktive anzeigen*</ion-toggle>
+    </ion-item>
+  </ion-list>
+  <small>*Ehemalige Ratsmitglieder</small>
+</form>
+<div class="floating-button" *ngIf="filterForm.dirty">
+  <ion-button expand="block" (click)="onSubmit()">Filter anwenden</ion-button>
+</div>

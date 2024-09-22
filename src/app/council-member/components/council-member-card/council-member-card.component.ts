@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MemberCouncil } from 'swissparl';
 import { LowerCasePipe } from '@angular/common';
 
@@ -10,7 +10,7 @@ import { LowerCasePipe } from '@angular/common';
   imports: [LowerCasePipe]
 })
 export class CouncilMemberCardComponent {
-  @Input() councilMember: MemberCouncil;
+  councilMember = input<MemberCouncil>();
 
   constructor() {}
 }

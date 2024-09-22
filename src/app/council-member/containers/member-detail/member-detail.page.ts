@@ -1,16 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MemberCouncil } from 'swissparl';
-import { CouncilMemberService } from '../../services/council-member.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { catchError, first, switchMap, tap } from 'rxjs/operators';
-import { Subject, from, of } from 'rxjs';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { IonicModule } from '@ionic/angular';
 import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { NgFor, NgIf } from '@angular/common';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { CouncilMemberStore } from '../../council-member.store';
 
 @UntilDestroy()
 @Component({
@@ -29,100 +26,41 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
   ]
 })
 export class MemberDetailPage implements OnInit {
-  councilMember: MemberCouncil = null;
-  councilMemberVotings = [];
-  noVotes = false;
-  loading = true;
-  error = false;
-  loadingVotingRecords = false;
-
-  trigger$ = new Subject<void>();
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private memberService: CouncilMemberService
-  ) {}
+  readonly store = inject(CouncilMemberStore);
+  readonly route = inject(ActivatedRoute);
+  readonly router = inject(Router);
 
   ngOnInit() {
-    from(this.trigger$)
-      .pipe(
-        untilDestroyed(this),
-        tap(() => (this.loading = true)),
-        switchMap(() =>
-          this.memberService
-            .getMemberById(parseInt(this.route.snapshot.params.id))
-            .pipe(
-              first(),
-              catchError(() => {
-                this.error = true;
-                this.loading = false;
-                return of(null);
-              })
-            )
-        )
-      )
-      .subscribe((councilMember) => {
-        if (councilMember === null) {
-          return;
-        }
-        this.councilMember = councilMember;
-        this.loading = false;
-      });
-
-    from(this.trigger$)
-      .pipe(
-        untilDestroyed(this),
-        tap(() => (this.loadingVotingRecords = true)),
-        switchMap(() =>
-          this.memberService
-            .getVotes(parseInt(this.route.snapshot.params.id))
-            .pipe(
-              first(),
-              catchError(() => {
-                this.error = true;
-                this.loadingVotingRecords = false;
-                return of(null);
-              })
-            )
-        )
-      )
-      .subscribe((votings) => {
-        if (votings === null) {
-          return;
-        }
-        this.noVotes = votings.length === 0;
-        this.councilMemberVotings = votings;
-        this.loadingVotingRecords = false;
-      });
+    const councilMemberId = parseInt(this.route.snapshot.params.id);
+    this.store.selectCouncilMember(councilMemberId);
+    this.store.loadVotingRecord(councilMemberId);
   }
 
-  ionViewDidEnter() {
-    if (this.councilMember === null) {
-      this.trigger$.next();
-    }
+  retry() {
+    this.store.selectCouncilMember(parseInt(this.route.snapshot.params.id));
   }
 
   onClickBusiness(id: number) {
-    this.router.navigate(['business', 'detail', id]);
+    this.router.navigate(['business', 'detail', id]).catch(console.error);
   }
 
   getMandatesAsHtmlList() {
+    const member = this.store.selectedCouncilMember();
     let mandates = '';
-    if (this.councilMember.Mandates) {
+    if (member.Mandates) {
       mandates =
         '<ul>' +
-        this.councilMember.Mandates.split(';')
+        member.Mandates.split(';')
           .map((mandate) => `<li>${mandate}</li>`)
           .join('') +
         '</ul>';
     }
 
     let additionalMandates = '';
-    if (this.councilMember.AdditionalMandate) {
+    if (member.AdditionalMandate) {
       additionalMandates =
         '<ul>' +
-        this.councilMember.AdditionalMandate.split(';')
+        member.AdditionalMandate.split(';')
           .map((mandate) => `<li>${mandate}</li>`)
           .join('') +
         '</ul>';
@@ -132,20 +70,17 @@ export class MemberDetailPage implements OnInit {
   }
 
   getAdditionalActivitiesAsHtmlList() {
+    const member = this.store.selectedCouncilMember();
     let additionalActivities = '';
-    if (this.councilMember.AdditionalActivity) {
+    if (member.AdditionalActivity) {
       additionalActivities =
         '<ul>' +
-        this.councilMember.AdditionalActivity.split(';')
+        member.AdditionalActivity.split(';')
           .map((activity) => `<li>${activity}</li>`)
           .join('') +
         '</ul>';
     }
 
     return additionalActivities;
-  }
-
-  retrySearch() {
-    this.trigger$.next();
   }
 }

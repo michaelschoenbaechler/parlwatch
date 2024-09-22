@@ -11,10 +11,10 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="!loading; else loadingScreen">
-    <ng-container *ngIf="!error; else errorScreen">
+  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
+    <ng-container *ngIf="!store.hasError(); else errorScreen">
       <app-council-member-card
-        [councilMember]="councilMember"
+        [councilMember]="store.selectedCouncilMember()"
       ></app-council-member-card>
 
       <app-text-card
@@ -31,20 +31,20 @@
 
       <app-text-card title="Stimmverhalten">
         <ng-container
-          *ngIf="!loadingVotingRecords; else loadingVotingRecordTemplate"
+          *ngIf="!store.isLoadingVotingRecord(); else loadingVotingRecordTemplate"
         >
-          <p *ngIf="noVotes" class="no-votes-text">
-            <small
-              >Es konnten keine Abstimmungsdaten für diese Person gefunden
-              werden.</small
-            >
+          <p *ngIf="!store.hasVotingRecord()" class="no-votes-text">
+            <small>
+              Es konnten keine Abstimmungsdaten für diese Person gefunden
+              werden.
+            </small>
           </p>
-          <ion-list *ngIf="!noVotes">
+          <ion-list *ngIf="store.hasVotingRecord()">
             <ion-item
               button
               (click)="onClickBusiness(voting.BusinessNumber)"
               [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
-              *ngFor="let voting of councilMemberVotings"
+              *ngFor="let voting of store.selectedCouncilMemberVotingRecord()"
             >
               <ion-icon
                 size="small"
@@ -89,5 +89,5 @@
 </ng-template>
 
 <ng-template #errorScreen>
-  <app-error-screen (retry)="retrySearch()"></app-error-screen>
+  <app-error-screen (retry)="retry()"></app-error-screen>
 </ng-template>

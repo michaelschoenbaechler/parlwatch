@@ -3,19 +3,19 @@
     <div class="card-flex-container">
       <div>
         <div class="text-card-title">
-          {{ councilMember.FirstName }} {{ councilMember.LastName }} ({{
-            councilMember.CantonName
+          {{ councilMember().FirstName }} {{ councilMember().LastName }} ({{
+            councilMember().CantonName
           }})
         </div>
         <p class="text-card-description">
-          {{ councilMember.PartyAbbreviation }} {{ councilMember.CouncilName }}
+          {{ councilMember().PartyAbbreviation }} {{ councilMember().CouncilName }}
         </p>
       </div>
       <img
         class="canton-flag"
         [src]="
           '/assets/cantons/' +
-          (councilMember.CantonAbbreviation | lowercase) +
+          (councilMember().CantonAbbreviation | lowercase) +
           '.svg'
         "
         alt="canton flag"
