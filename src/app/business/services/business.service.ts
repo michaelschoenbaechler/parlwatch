@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SwissParlService } from '../../shared/services/swissparl.service';
 import { Business, BusinessStatus, BusinessType } from 'swissparl';
+import { SwissParlService } from '../../shared/services/swissparl.service';
 
 export type BusinessFilter = {
   top: number;

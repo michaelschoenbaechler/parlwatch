@@ -10,11 +10,11 @@ import {
 import { Business, BusinessStatus, BusinessType } from 'swissparl';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { BusinessFilter, BusinessService } from './services/business.service';
 import { filter, pipe, switchMap, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 import * as _ from 'lodash';
+import { BusinessFilter, BusinessService } from './services/business.service';
 
 type BusinessState = {
   businesses: Business[];

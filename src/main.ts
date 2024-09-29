@@ -1,11 +1,10 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-
-import { environment } from './environments/environment';
 import { provideRouter, RouteReuseStrategy } from '@angular/router';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { AppComponent } from './app/app.component';
+import { environment } from './environments/environment';
 import { APP_ROUTES } from './routes';
 
 if (environment.production) {

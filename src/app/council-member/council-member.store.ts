@@ -10,12 +10,12 @@ import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { filter, pipe, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { MemberCouncil, Voting } from 'swissparl';
+import { tapResponse } from '@ngrx/operators';
 import {
   CouncilMemberFilter,
   CouncilMemberService
 } from './services/council-member.service';
-import { MemberCouncil, Voting } from 'swissparl';
-import { tapResponse } from '@ngrx/operators';
 
 type CouncilMemberState = {
   councilMembers: MemberCouncil[];

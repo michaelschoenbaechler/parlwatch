@@ -6,9 +6,9 @@ import {
   FormGroup,
   ReactiveFormsModule
 } from '@angular/forms';
-import { AllCouncils, Council } from '../../containers/member-list/councils';
 import { IonicModule } from '@ionic/angular';
 import { AsyncPipe } from '@angular/common';
+import { AllCouncils, Council } from '../../containers/member-list/councils';
 
 export type CouncilMemberFilterForm = {
   councils: Council[];

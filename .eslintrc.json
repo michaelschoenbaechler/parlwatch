@@ -16,11 +16,16 @@
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:import/recommended",
         "plugin:import/typescript",
-        "plugin:import/errors",
-        "plugin:import/warnings",
         "plugin:jsdoc/recommended-typescript"
       ],
+      "settings": {
+        "import/resolver": {
+          "typescript": true,
+          "node": true
+        }
+      },
       "plugins": ["import", "jsdoc", "unused-imports"],
       "rules": {
         "@angular-eslint/component-class-suffix": [
@@ -45,6 +50,8 @@
             "style": "camelCase"
           }
         ],
+        "import/newline-after-import": "error",
+        "import/order": "error",
         "unused-imports/no-unused-imports": "error"
       }
     },
