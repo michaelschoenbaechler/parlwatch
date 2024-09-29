@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { Business } from 'swissparl';
-import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { IonicModule } from '@ionic/angular';
+import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 
 @Component({
   selector: 'app-business-detail-text',

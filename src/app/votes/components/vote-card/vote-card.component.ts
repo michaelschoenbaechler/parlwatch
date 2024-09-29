@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Vote, Voting } from 'swissparl';
-import { VoteService } from '../../services/votes.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
+import { VoteService } from '../../services/votes.service';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 

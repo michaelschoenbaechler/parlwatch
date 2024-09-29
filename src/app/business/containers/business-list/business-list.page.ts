@@ -21,9 +21,9 @@ import { LoadingScreenComponent } from '../../../shared/components/loading-scree
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
 import { BusinessStore } from '../../business.store';
-import { SearchSuggestions } from './search-suggestions';
 import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
 import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
+import { SearchSuggestions } from './search-suggestions';
 
 @Component({
   selector: 'app-business-list',

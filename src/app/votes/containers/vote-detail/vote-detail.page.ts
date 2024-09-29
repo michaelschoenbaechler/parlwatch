@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Vote } from 'swissparl';
-import { VoteService } from '../../services/votes.service';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject, from, of } from 'rxjs';
 import { IonicModule } from '@ionic/angular';
+import { VoteService } from '../../services/votes.service';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
