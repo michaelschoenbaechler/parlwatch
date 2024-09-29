@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { AllCouncils, Council } from '../../containers/member-list/councils';
 import { IonicModule } from '@ionic/angular';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 export type CouncilMemberFilterForm = {
   councils: Council[];
@@ -19,7 +19,7 @@ export type CouncilMemberFilterForm = {
   selector: 'app-council-member-filter-form',
   templateUrl: './council-member-filter-form.component.html',
   styleUrls: ['./council-member-filter-form.component.scss'],
-  imports: [IonicModule, NgForOf, NgIf, AsyncPipe, ReactiveFormsModule],
+  imports: [IonicModule, AsyncPipe, ReactiveFormsModule],
   standalone: true
 })
 export class CouncilMemberFilterFormComponent implements OnInit {

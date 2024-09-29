@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { NgForOf, NgIf } from '@angular/common';
 import { BusinessStore } from '../../business.store';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 
@@ -16,14 +15,7 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
   templateUrl: './business-filter-form.component.html',
   styleUrls: ['./business-filter-form.component.scss'],
   standalone: true,
-  imports: [
-    FormsModule,
-    IonicModule,
-    NgForOf,
-    NgIf,
-    ReactiveFormsModule,
-    ErrorScreenComponent
-  ]
+  imports: [FormsModule, IonicModule, ReactiveFormsModule, ErrorScreenComponent]
 })
 export class BusinessFilterFormComponent {
   readonly store = inject(BusinessStore);

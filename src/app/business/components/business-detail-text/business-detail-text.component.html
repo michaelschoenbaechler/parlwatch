@@ -1,61 +1,70 @@
-<app-text-card
-  *ngIf="business.Description"
-  [title]="'Beschreibung'"
-  [HtmlText]="business.Description"
-></app-text-card>
+@if (business.Description) {
+  <app-text-card
+    [title]="'Beschreibung'"
+    [HtmlText]="business.Description"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.InitialSituation"
-  [title]="'Ausgangslage'"
-  [HtmlText]="business.InitialSituation"
-></app-text-card>
+@if (business.InitialSituation) {
+  <app-text-card
+    [title]="'Ausgangslage'"
+    [HtmlText]="business.InitialSituation"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.Proceedings"
-  [title]="'Verhandlungen'"
-  [HtmlText]="business.Proceedings"
-></app-text-card>
+@if (business.Proceedings) {
+  <app-text-card
+    [title]="'Verhandlungen'"
+    [HtmlText]="business.Proceedings"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.DraftText"
-  [title]="'Entwurf'"
-  [HtmlText]="business.DraftText"
-></app-text-card>
+@if (business.DraftText) {
+  <app-text-card
+    [title]="'Entwurf'"
+    [HtmlText]="business.DraftText"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.SubmittedText"
-  [title]="'Eingereichter Text'"
-  [HtmlText]="business.SubmittedText"
-></app-text-card>
+@if (business.SubmittedText) {
+  <app-text-card
+    [title]="'Eingereichter Text'"
+    [HtmlText]="business.SubmittedText"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.ReasonText"
-  [title]="'Begründung'"
-  [HtmlText]="business.ReasonText"
-></app-text-card>
+@if (business.ReasonText) {
+  <app-text-card
+    [title]="'Begründung'"
+    [HtmlText]="business.ReasonText"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.DocumentationText"
-  [title]="'Dokumentation'"
-  [HtmlText]="business.DocumentationText"
-></app-text-card>
+@if (business.DocumentationText) {
+  <app-text-card
+    [title]="'Dokumentation'"
+    [HtmlText]="business.DocumentationText"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.MotionText"
-  [title]="'Motionstext'"
-  [HtmlText]="business.MotionText"
-></app-text-card>
+@if (business.MotionText) {
+  <app-text-card
+    [title]="'Motionstext'"
+    [HtmlText]="business.MotionText"
+  ></app-text-card>
+}
 
-<app-text-card
-  *ngIf="business.FederalCouncilResponseText"
-  [title]="'Stellungnahme des Bundesrates'"
-  [HtmlText]="business.FederalCouncilResponseText"
-></app-text-card>
+@if (business.FederalCouncilResponseText) {
+  <app-text-card
+    [title]="'Stellungnahme des Bundesrates'"
+    [HtmlText]="business.FederalCouncilResponseText"
+  ></app-text-card>
+}
 
 <app-text-card
   title="Ergänzende Informationen"
   HtmlText="Besuchen Sie www.parlament.ch für detaillierte Informationen und Ressourcen"
->
+  >
   <ion-button
     expand="block"
     size="small"

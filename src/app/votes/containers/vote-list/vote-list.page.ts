@@ -10,7 +10,6 @@ import { VoteCardComponent } from '../../components/vote-card/vote-card.componen
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
-import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-vote-list',
@@ -18,8 +17,6 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrls: ['./vote-list.page.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     IonicModule,
     VoteCardComponent,
     HideKeyboardOnEnterDirective,

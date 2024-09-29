@@ -16,7 +16,6 @@ import {
   RefresherCustomEvent
 } from '@ionic/angular';
 import { Keyboard } from '@capacitor/keyboard';
-import { NgFor, NgIf } from '@angular/common';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
@@ -32,8 +31,6 @@ import { BusinessFilterFormComponent } from '../../components/business-filter-fo
   styleUrls: ['./business-list.page.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     IonicModule,
     ReactiveFormsModule,
     BusinessCardComponent,

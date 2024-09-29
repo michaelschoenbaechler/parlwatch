@@ -4,15 +4,16 @@
   "
   [subtitle]="'Abgestimmt am ' + (vote.VoteEnd | oDataDateTime)"
   [HtmlText]="vote.BillTitle ? vote.BillTitle : vote.BusinessTitle"
->
+  >
   <div class="voting-bar">
-    <div
-      *ngFor="let vote of voteCount"
-      class="fill"
-      [class]="vote.decision"
-      [style.width.%]="vote.percentage"
-      [style.left.%]="getLeftPosition(vote.decision)"
-    ></div>
+    @for (vote of voteCount; track vote) {
+      <div
+        class="fill"
+        [class]="vote.decision"
+        [style.width.%]="vote.percentage"
+        [style.left.%]="getLeftPosition(vote.decision)"
+      ></div>
+    }
   </div>
   <ng-content></ng-content>
 </app-text-card>

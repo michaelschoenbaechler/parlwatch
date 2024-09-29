@@ -11,43 +11,43 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
-    <ng-container *ngIf="!store.hasError(); else errorScreen">
+  @if (!store.isLoading()) {
+    @if (!store.hasError()) {
       <app-council-member-card
         [councilMember]="store.selectedCouncilMember()"
       ></app-council-member-card>
-
-      <app-text-card
-        *ngIf="getMandatesAsHtmlList()"
-        title="Mandate"
-        [HtmlText]="getMandatesAsHtmlList()"
-      ></app-text-card>
-
-      <app-text-card
-        *ngIf="getAdditionalActivitiesAsHtmlList()"
-        title="Weitere Aktivitäten"
-        [HtmlText]="getAdditionalActivitiesAsHtmlList()"
-      ></app-text-card>
-
+      @if (getMandatesAsHtmlList()) {
+        <app-text-card
+          title="Mandate"
+          [HtmlText]="getMandatesAsHtmlList()"
+        ></app-text-card>
+      }
+      @if (getAdditionalActivitiesAsHtmlList()) {
+        <app-text-card
+          title="Weitere Aktivitäten"
+          [HtmlText]="getAdditionalActivitiesAsHtmlList()"
+        ></app-text-card>
+      }
       <app-text-card title="Stimmverhalten">
-        <ng-container
-          *ngIf="!store.isLoadingVotingRecord(); else loadingVotingRecordTemplate"
-        >
-          <p *ngIf="!store.hasVotingRecord()" class="no-votes-text">
-            <small>
-              Es konnten keine Abstimmungsdaten für diese Person gefunden
-              werden.
-            </small>
-          </p>
-          <ion-list *ngIf="store.hasVotingRecord()">
-            <ion-item
-              button
-              (click)="onClickBusiness(voting.BusinessNumber)"
-              [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
-              *ngFor="let voting of store.selectedCouncilMemberVotingRecord()"
-            >
-              <ion-icon
-                size="small"
+        @if (!store.isLoadingVotingRecord()) {
+          @if (!store.hasVotingRecord()) {
+            <p class="no-votes-text">
+              <small>
+                Es konnten keine Abstimmungsdaten für diese Person gefunden
+                werden.
+              </small>
+            </p>
+          }
+          @if (store.hasVotingRecord()) {
+            <ion-list>
+              @for (voting of store.selectedCouncilMemberVotingRecord(); track voting) {
+                <ion-item
+                  button
+                  (click)="onClickBusiness(voting.BusinessNumber)"
+                  [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
+                  >
+                  <ion-icon
+                    size="small"
                 [color]="
                   voting.Decision === 1
                     ? 'success'
@@ -62,32 +62,31 @@
                     ? 'close-outline'
                     : 'remove-outline'
                 "
-                slot="start"
-              ></ion-icon>
-              <ion-label class="ion-text-wrap">
-                {{ voting.BusinessTitle }}
-                <p class="ion-color-danger">
-                  {{ voting.Subject }}
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </ng-container>
+                    slot="start"
+                  ></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{ voting.BusinessTitle }}
+                    <p class="ion-color-danger">
+                      {{ voting.Subject }}
+                    </p>
+                  </ion-label>
+                </ion-item>
+              }
+            </ion-list>
+          }
+        } @else {
+          <div class="loading-voting-record-container">
+            <ion-spinner class="spinner"></ion-spinner>
+          </div>
+        }
       </app-text-card>
-    </ng-container>
-  </ng-container>
+    } @else {
+      <app-error-screen (retry)="retry()"></app-error-screen>
+    }
+  } @else {
+    <app-loading-screen></app-loading-screen>
+  }
 </ion-content>
 
-<ng-template #loadingScreen>
-  <app-loading-screen></app-loading-screen>
-</ng-template>
 
-<ng-template #loadingVotingRecordTemplate>
-  <div class="loading-voting-record-container">
-    <ion-spinner class="spinner"></ion-spinner>
-  </div>
-</ng-template>
 
-<ng-template #errorScreen>
-  <app-error-screen (retry)="retry()"></app-error-screen>
-</ng-template>
