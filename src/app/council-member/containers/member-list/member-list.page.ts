@@ -8,7 +8,6 @@ import {
   IonSearchbar,
   RefresherCustomEvent
 } from '@ionic/angular';
-import { NgFor, NgIf } from '@angular/common';
 import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
 import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
@@ -27,8 +26,6 @@ import {
   styleUrls: ['./member-list.page.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     IonicModule,
     ReactiveFormsModule,
     CouncilMemberCardComponent,

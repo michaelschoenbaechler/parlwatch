@@ -18,44 +18,57 @@
       name="filter-outline"
     ></ion-icon>
   </ion-toolbar>
-  <div class="active-filter-wrapper" *ngIf="store.query().council.length > 0 || store.query().showInactive">
-    <ion-chip *ngFor="let council of activeFilter.councils">
-      <ion-label>{{ council.councilName }}</ion-label>
-    </ion-chip>
-    <ion-chip *ngIf="activeFilter.inactiveMembers">
-      <ion-label>Inaktive anzeigen</ion-label>
-    </ion-chip>
-  </div>
+  @if (store.query().council.length > 0 || store.query().showInactive) {
+    <div class="active-filter-wrapper">
+      @for (council of activeFilter.councils; track council) {
+        <ion-chip>
+          <ion-label>{{ council.councilName }}</ion-label>
+        </ion-chip>
+      }
+      @if (activeFilter.inactiveMembers) {
+        <ion-chip>
+          <ion-label>Inaktive anzeigen</ion-label>
+        </ion-chip>
+      }
+    </div>
+  }
 </ion-header>
 
 <ion-content role="feed" class="ion-padding">
-  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
-    <ng-container *ngIf="!store.hasError(); else errorScreen">
-      <ng-container *ngIf="!store.hasNoContent(); else noContentScreen">
+  @if (!store.isLoading()) {
+    @if (!store.hasError()) {
+      @if (!store.hasNoContent()) {
         <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <app-council-member-card
-          *ngFor="let councilMember of store.councilMembers()"
-          [councilMember]="councilMember"
-          (click)="onClickPerson(councilMember.ID)"
-        ></app-council-member-card>
+        @for (councilMember of store.councilMembers(); track councilMember) {
+          <app-council-member-card
+            [councilMember]="councilMember"
+            (click)="onClickPerson(councilMember.ID)"
+          ></app-council-member-card>
+        }
         <ion-infinite-scroll
           threshold="100px"
           (ionInfinite)="distanceReached($event)"
-        >
+          >
           <ion-infinite-scroll-content></ion-infinite-scroll-content>
         </ion-infinite-scroll>
-      </ng-container>
-    </ng-container>
-  </ng-container>
+      } @else {
+        <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+      }
+    } @else {
+      <app-error-screen (retry)="retrySearch()"></app-error-screen>
+    }
+  } @else {
+    <app-loading-screen></app-loading-screen>
+  }
 </ion-content>
 
 <ion-modal
   handle="true"
   [isOpen]="isModalOpen"
   [presentingElement]="presentingElement"
->
+  >
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -72,14 +85,5 @@
   </ng-template>
 </ion-modal>
 
-<ng-template #loadingScreen>
-  <app-loading-screen></app-loading-screen>
-</ng-template>
 
-<ng-template #noContentScreen>
-  <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
-</ng-template>
 
-<ng-template #errorScreen>
-  <app-error-screen (retry)="retrySearch()"></app-error-screen>
-</ng-template>

@@ -18,80 +18,88 @@
       name="filter-outline"
     ></ion-icon>
   </ion-toolbar>
-  <div
-    class="active-filter-wrapper"
-    *ngIf="store.query().businessTypes.length > 0 || store.query().businessStatuses.length > 0"
-  >
-    <ion-chip *ngFor="let businessType of store.query().businessTypes">
-      <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
-    </ion-chip>
-    <ion-chip *ngFor="let businessStatus of store.query().businessStatuses">
-      <ion-label>{{ businessStatus.BusinessStatusName }}</ion-label>
-    </ion-chip>
-  </div>
-  <div class="search-suggestions" *ngIf="showSuggestedSearches">
-    <p><small>Nach Thema suchen</small></p>
-    <ion-chip
-      *ngFor="let term of suggestedSearchTerms"
-      (click)="onSuggestedSearchTopic(term)"
-      >{{ term }}</ion-chip
+  @if (store.query().businessTypes.length > 0 || store.query().businessStatuses.length > 0) {
+    <div
+      class="active-filter-wrapper"
+      >
+      @for (businessType of store.query().businessTypes; track businessType) {
+        <ion-chip>
+          <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
+        </ion-chip>
+      }
+      @for (businessStatus of store.query().businessStatuses; track businessStatus) {
+        <ion-chip>
+          <ion-label>{{ businessStatus.BusinessStatusName }}</ion-label>
+        </ion-chip>
+      }
+    </div>
+  }
+  @if (showSuggestedSearches) {
+    <div class="search-suggestions">
+      <p><small>Nach Thema suchen</small></p>
+      @for (term of suggestedSearchTerms; track term) {
+        <ion-chip
+          (click)="onSuggestedSearchTopic(term)"
+          >{{ term }}</ion-chip
+          >
+        }
+      </div>
+    }
+  </ion-header>
+
+  <ion-content role="feed" class="ion-padding">
+    @if (!store.isLoading()) {
+      @if (!store.hasError()) {
+        @if (!store.hasNoContent()) {
+          <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+            <ion-refresher-content></ion-refresher-content>
+          </ion-refresher>
+          @for (business of store.businesses(); track business) {
+            <app-business-card
+              [business]="business"
+              (click)="onClickBusiness(business.ID)"
+            ></app-business-card>
+          }
+          <ion-infinite-scroll
+            threshold="100px"
+            (ionInfinite)="distanceReached($event)"
+            >
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        } @else {
+          <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+        }
+      } @else {
+        <app-error-screen (retry)="retrySearch()"></app-error-screen>
+      }
+    } @else {
+      <app-loading-screen></app-loading-screen>
+    }
+  </ion-content>
+
+  <ion-modal
+    handle="true"
+    [isOpen]="isModalOpen"
+    [presentingElement]="presentingElement"
     >
-  </div>
-</ion-header>
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Geschäfte filtern</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleFilterModal()">schliessen</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        @if (!this.store.hasFilterError()) {
+          <app-business-filter-form (submitFilter)="toggleFilterModal()"></app-business-filter-form>
+        } @else {
+          <app-error-screen (retry)="retrySearch()"></app-error-screen>
+        }
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
-<ion-content role="feed" class="ion-padding">
-  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
-    <ng-container *ngIf="!store.hasError(); else errorScreen">
-      <ng-container *ngIf="!store.hasNoContent(); else noContentScreen">
-        <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-          <ion-refresher-content></ion-refresher-content>
-        </ion-refresher>
-        <app-business-card
-          *ngFor="let business of store.businesses()"
-          [business]="business"
-          (click)="onClickBusiness(business.ID)"
-        ></app-business-card>
-        <ion-infinite-scroll
-          threshold="100px"
-          (ionInfinite)="distanceReached($event)"
-        >
-          <ion-infinite-scroll-content></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ng-container>
-    </ng-container>
-  </ng-container>
-</ion-content>
 
-<ion-modal
-  handle="true"
-  [isOpen]="isModalOpen"
-  [presentingElement]="presentingElement"
->
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Geschäfte filtern</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="toggleFilterModal()">schliessen</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ng-container *ngIf="!this.store.hasFilterError(); else errorScreen">
-        <app-business-filter-form (submitFilter)="toggleFilterModal()"></app-business-filter-form>
-      </ng-container>
-    </ion-content>
-  </ng-template>
-</ion-modal>
 
-<ng-template #loadingScreen>
-  <app-loading-screen></app-loading-screen>
-</ng-template>
-
-<ng-template #noContentScreen>
-  <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
-</ng-template>
-
-<ng-template #errorScreen>
-  <app-error-screen (retry)="retrySearch()"></app-error-screen>
-</ng-template>

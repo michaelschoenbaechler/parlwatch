@@ -4,7 +4,6 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { IonicModule } from '@ionic/angular';
 import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
-import { NgFor, NgIf } from '@angular/common';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { CouncilMemberStore } from '../../council-member.store';
@@ -16,8 +15,6 @@ import { CouncilMemberStore } from '../../council-member.store';
   styleUrls: ['./member-detail.page.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     IonicModule,
     CouncilMemberCardComponent,
     TextCardComponent,

@@ -1,30 +1,34 @@
 <form (ngSubmit)="onSubmit()">
   <h3>Geschäftstyp</h3>
   <ion-list>
-    <ion-item *ngFor="let businessType of businessTypeCheckboxes()">
-      <ion-checkbox
-        labelPlacement="start"
-        [name]="businessType.BusinessTypeName"
-        [(ngModel)]="businessType.checked"
-      >{{ businessType.BusinessTypeName }}</ion-checkbox
-      >
-    </ion-item>
-  </ion-list>
-  <h3>Geschäftsstatus</h3>
-  <ion-list>
-    <ion-item *ngFor="let businessStatus of businessStatusCheckboxes()">
-      <ion-checkbox
-        labelPlacement="start"
-        [name]="businessStatus.BusinessStatusName"
-        [(ngModel)]="businessStatus.checked"
-      >{{ businessStatus.BusinessStatusName }}</ion-checkbox
-      >
-    </ion-item>
-  </ion-list>
+    @for (businessType of businessTypeCheckboxes(); track businessType) {
+      <ion-item>
+        <ion-checkbox
+          labelPlacement="start"
+          [name]="businessType.BusinessTypeName"
+          [(ngModel)]="businessType.checked"
+          >{{ businessType.BusinessTypeName }}</ion-checkbox
+          >
+        </ion-item>
+      }
+    </ion-list>
+    <h3>Geschäftsstatus</h3>
+    <ion-list>
+      @for (businessStatus of businessStatusCheckboxes(); track businessStatus) {
+        <ion-item>
+          <ion-checkbox
+            labelPlacement="start"
+            [name]="businessStatus.BusinessStatusName"
+            [(ngModel)]="businessStatus.checked"
+            >{{ businessStatus.BusinessStatusName }}</ion-checkbox
+            >
+          </ion-item>
+        }
+      </ion-list>
 
-  <div class="floating-button">
-    <ion-button expand="block" type="submit">Filter anwenden</ion-button>
-  </div>
-</form>
+      <div class="floating-button">
+        <ion-button expand="block" type="submit">Filter anwenden</ion-button>
+      </div>
+    </form>
 
 

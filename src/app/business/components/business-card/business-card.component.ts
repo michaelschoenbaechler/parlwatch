@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Business } from 'swissparl';
-import { NgFor, NgIf } from '@angular/common';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 
@@ -9,7 +8,7 @@ import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
   templateUrl: './business-card.component.html',
   styleUrls: ['./business-card.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, TextCardComponent, ODataDateTimePipe]
+  imports: [TextCardComponent, ODataDateTimePipe]
 })
 export class BusinessCardComponent {
   @Input() business: Business;

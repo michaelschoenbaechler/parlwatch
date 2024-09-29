@@ -5,7 +5,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
-import { NgFor } from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -13,7 +12,7 @@ import { NgFor } from '@angular/common';
   templateUrl: './vote-card.component.html',
   styleUrls: ['./vote-card.component.scss'],
   standalone: true,
-  imports: [NgFor, TextCardComponent, ODataDateTimePipe]
+  imports: [TextCardComponent, ODataDateTimePipe]
 })
 export class VoteCardComponent implements OnInit {
   @Input() vote: Vote;

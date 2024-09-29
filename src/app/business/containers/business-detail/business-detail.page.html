@@ -11,30 +11,29 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="!store.isLoading(); else loadingScreen">
-    <ng-container *ngIf="!store.hasError(); else errorScreen">
+  @if (!store.isLoading()) {
+    @if (!store.hasError()) {
       <app-business-card [business]="store.selectedBusiness()">
-        <ion-button
-          *ngIf="store.selectedBusiness().Votes.length > 0"
-          expand="block"
-          size="small"
-          fill="outline"
-          [routerLink]="['/layout/votes']"
-          [queryParams]="{ BusinessShortNumber: store.selectedBusiness().BusinessShortNumber }"
-          >Zu den Abstimmungen</ion-button
-        >
-      </app-business-card>
-      <app-business-detail-text
-        [business]="store.selectedBusiness()"
-      ></app-business-detail-text>
-    </ng-container>
-  </ng-container>
-</ion-content>
+        @if (store.selectedBusiness().Votes.length > 0) {
+          <ion-button
+            expand="block"
+            size="small"
+            fill="outline"
+            [routerLink]="['/layout/votes']"
+            [queryParams]="{ BusinessShortNumber: store.selectedBusiness().BusinessShortNumber }"
+            >Zu den Abstimmungen</ion-button
+            >
+          }
+        </app-business-card>
+        <app-business-detail-text
+          [business]="store.selectedBusiness()"
+        ></app-business-detail-text>
+      } @else {
+        <app-error-screen (retry)="retry()"></app-error-screen>
+      }
+    } @else {
+      <app-loading-screen></app-loading-screen>
+    }
+  </ion-content>
 
-<ng-template #loadingScreen>
-  <app-loading-screen></app-loading-screen>
-</ng-template>
 
-<ng-template #errorScreen>
-  <app-error-screen (retry)="retry()"></app-error-screen>
-</ng-template>

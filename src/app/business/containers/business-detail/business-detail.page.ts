@@ -5,7 +5,6 @@ import { BusinessCardComponent } from '../../components/business-card/business-c
 import { BusinessDetailTextComponent } from '../../components/business-detail-text/business-detail-text.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
-import { NgIf } from '@angular/common';
 import { BusinessStore } from '../../business.store';
 
 @Component({
@@ -14,7 +13,6 @@ import { BusinessStore } from '../../business.store';
   styleUrls: ['./business-detail.page.scss'],
   standalone: true,
   imports: [
-    NgIf,
     IonicModule,
     BusinessCardComponent,
     BusinessDetailTextComponent,

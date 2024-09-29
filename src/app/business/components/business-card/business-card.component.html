@@ -6,11 +6,15 @@
   "
   [subtitle]="business.BusinessStatusText + ' am ' + (business.BusinessStatusDate | oDataDateTime)"
   [HtmlText]="business.Title"
->
-  <div *ngIf="getTagNames().length > 0" class="business-label-container">
-    <div class="business-label" *ngFor="let tagName of getTagNames()">
-      {{ tagName }}
+  >
+  @if (getTagNames().length > 0) {
+    <div class="business-label-container">
+      @for (tagName of getTagNames(); track tagName) {
+        <div class="business-label">
+          {{ tagName }}
+        </div>
+      }
     </div>
-  </div>
+  }
   <ng-content></ng-content>
 </app-text-card>

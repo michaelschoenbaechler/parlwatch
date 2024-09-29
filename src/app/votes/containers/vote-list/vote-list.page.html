@@ -15,37 +15,34 @@
 </ion-header>
 
 <ion-content role="feed" class="ion-padding">
-  <ng-container *ngIf="!loading; else loadingScreen">
-    <ng-container *ngIf="!error; else errorScreen">
-      <ng-container *ngIf="!noContent; else noContentScreen">
+  @if (!loading) {
+    @if (!error) {
+      @if (!noContent) {
         <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <app-vote-card
-          *ngFor="let vote of votes"
-          [vote]="vote"
-          (click)="onClickVote(vote.ID)"
-        ></app-vote-card>
-
+        @for (vote of votes; track vote) {
+          <app-vote-card
+            [vote]="vote"
+            (click)="onClickVote(vote.ID)"
+          ></app-vote-card>
+        }
         <ion-infinite-scroll
           threshold="100px"
           (ionInfinite)="distanceReached($event)"
-        >
+          >
           <ion-infinite-scroll-content></ion-infinite-scroll-content>
         </ion-infinite-scroll>
-      </ng-container>
-    </ng-container>
-  </ng-container>
+      } @else {
+        <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+      }
+    } @else {
+      <app-error-screen (retry)="retrySearch()"></app-error-screen>
+    }
+  } @else {
+    <app-loading-screen></app-loading-screen>
+  }
 </ion-content>
 
-<ng-template #loadingScreen>
-  <app-loading-screen></app-loading-screen>
-</ng-template>
 
-<ng-template #noContentScreen>
-  <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
-</ng-template>
 
-<ng-template #errorScreen>
-  <app-error-screen (retry)="retrySearch()"></app-error-screen>
-</ng-template>
