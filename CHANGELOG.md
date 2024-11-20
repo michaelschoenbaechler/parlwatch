@@ -1,3 +1,13 @@
+## [1.0.3](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.2...1.0.3) (2024-11-20)
+
+### Features
+
+- **performance**: introduce ngrx signals
+
+### Bug Fixes
+
+- **security**: update dependencies
+
 ## [1.0.2](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.1...1.0.2) (2024-01-15)
 
 ### Bug Fixes
