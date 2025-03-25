@@ -1,19 +1,21 @@
-<app-text-card
-  [title]="
+<ng-container *transloco="let t; prefix: 'votes.voteCard'">
+  <app-text-card
+    [title]="
     vote.BusinessShortNumber + (vote.Subject ? ' - ' + vote.Subject : '')
   "
-  [subtitle]="'Abgestimmt am ' + (vote.VoteEnd | oDataDateTime)"
-  [HtmlText]="vote.BillTitle ? vote.BillTitle : vote.BusinessTitle"
+    [subtitle]="t('votedOn', { date: vote.VoteEnd | oDataDateTime })"
+    [HtmlText]="vote.BillTitle ? vote.BillTitle : vote.BusinessTitle"
   >
-  <div class="voting-bar">
-    @for (vote of voteCount; track vote) {
-      <div
-        class="fill"
-        [class]="vote.decision"
-        [style.width.%]="vote.percentage"
-        [style.left.%]="getLeftPosition(vote.decision)"
-      ></div>
-    }
-  </div>
-  <ng-content></ng-content>
-</app-text-card>
+    <div class="voting-bar">
+      @for (vote of voteCount; track vote) {
+        <div
+          class="fill"
+          [class]="vote.decision"
+          [style.width.%]="vote.percentage"
+          [style.left.%]="getLeftPosition(vote.decision)"
+        ></div>
+      }
+    </div>
+    <ng-content></ng-content>
+  </app-text-card>
+</ng-container>

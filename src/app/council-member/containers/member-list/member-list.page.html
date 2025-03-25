@@ -1,89 +1,90 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title> Ratsmitglieder </ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar
-      #searchBar
-      appHideKeyboardOnEnter
-      color="light"
-      placeholder="Suche"
-      enterkeyhint="search"
-      (ionChange)="onSearch($event)"
-    ></ion-searchbar>
-    <ion-icon
-      (click)="toggleFilterModal()"
-      slot="end"
-      size="large"
-      name="filter-outline"
-    ></ion-icon>
-  </ion-toolbar>
-  @if (store.query().council.length > 0 || store.query().showInactive) {
-    <div class="active-filter-wrapper">
-      @for (council of activeFilter.councils; track council) {
-        <ion-chip>
-          <ion-label>{{ council.councilName }}</ion-label>
-        </ion-chip>
-      }
-      @if (activeFilter.inactiveMembers) {
-        <ion-chip>
-          <ion-label>Inaktive anzeigen</ion-label>
-        </ion-chip>
-      }
-    </div>
-  }
-</ion-header>
-
-<ion-content role="feed" class="ion-padding">
-  @if (!store.isLoading()) {
-    @if (!store.hasError()) {
-      @if (!store.hasNoContent()) {
-        <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-          <ion-refresher-content></ion-refresher-content>
-        </ion-refresher>
-        @for (councilMember of store.councilMembers(); track councilMember) {
-          <app-council-member-card
-            [councilMember]="councilMember"
-            (click)="onClickPerson(councilMember.ID)"
-          ></app-council-member-card>
+<ng-container *transloco="let t;">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ t('councilMember.list.title') }} Ratsmitglieder</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar
+        #searchBar
+        appHideKeyboardOnEnter
+        color="light"
+        placeholder="{{ t('common.search.placeholder') }}"
+        enterkeyhint="search"
+        (ionChange)="onSearch($event)"
+      ></ion-searchbar>
+      <ion-icon
+        (click)="toggleFilterModal()"
+        slot="end"
+        size="large"
+        name="filter-outline"
+      ></ion-icon>
+    </ion-toolbar>
+    @if (store.query().council.length > 0 || store.query().showInactive) {
+      <div class="active-filter-wrapper">
+        @for (council of activeFilter.councils; track council) {
+          <ion-chip>
+            <ion-label>{{ council.councilName }}</ion-label>
+          </ion-chip>
         }
-        <ion-infinite-scroll
-          threshold="100px"
-          (ionInfinite)="distanceReached($event)"
+        @if (activeFilter.inactiveMembers) {
+          <ion-chip>
+            <ion-label>{{ t('councilMember.list.showInactiveMembers') }}</ion-label>
+          </ion-chip>
+        }
+      </div>
+    }
+  </ion-header>
+
+  <ion-content role="feed" class="ion-padding">
+    @if (!store.isLoading()) {
+      @if (!store.hasError()) {
+        @if (!store.hasNoContent()) {
+          <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+            <ion-refresher-content></ion-refresher-content>
+          </ion-refresher>
+          @for (councilMember of store.councilMembers(); track councilMember) {
+            <app-council-member-card
+              [councilMember]="councilMember"
+              (click)="onClickPerson(councilMember.ID)"
+            ></app-council-member-card>
+          }
+          <ion-infinite-scroll
+            threshold="100px"
+            (ionInfinite)="distanceReached($event)"
           >
-          <ion-infinite-scroll-content></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        } @else {
+          <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+        }
       } @else {
-        <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+        <app-error-screen (retry)="retrySearch()"></app-error-screen>
       }
     } @else {
-      <app-error-screen (retry)="retrySearch()"></app-error-screen>
+      <app-loading-screen></app-loading-screen>
     }
-  } @else {
-    <app-loading-screen></app-loading-screen>
-  }
-</ion-content>
+  </ion-content>
 
-<ion-modal
-  handle="true"
-  [isOpen]="isModalOpen"
-  [presentingElement]="presentingElement"
+  <ion-modal
+    handle="true"
+    [isOpen]="isModalOpen"
+    [presentingElement]="presentingElement"
   >
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Ratsmitglieder filtern</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="toggleFilterModal()">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <app-council-member-filter-form  [preset]="activeFilter" (applyFilter)="onFilter($event)">
-      </app-council-member-filter-form>
-    </ion-content>
-  </ng-template>
-</ion-modal>
-
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ t('councilMember.list.filter') }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleFilterModal()">{{ t('common.close') }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <app-council-member-filter-form [preset]="activeFilter" (applyFilter)="onFilter($event)">
+        </app-council-member-filter-form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ng-container>
 
 

@@ -1,27 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button
-        text="Zurück"
-        defaultHref="layout/business"
-      ></ion-back-button>
-    </ion-buttons>
-    <ion-title>Geschäft</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *transloco="let t;">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button
+          text="Zurück"
+          defaultHref="layout/business"
+        ></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ t('business.detail.title') }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content class="ion-padding">
-  @if (!store.isLoading()) {
-    @if (!store.hasError()) {
-      <app-business-card [business]="store.selectedBusiness()">
-        @if (store.selectedBusiness().Votes.length > 0) {
-          <ion-button
-            expand="block"
-            size="small"
-            fill="outline"
-            [routerLink]="['/layout/votes']"
-            [queryParams]="{ BusinessShortNumber: store.selectedBusiness().BusinessShortNumber }"
-            >Zu den Abstimmungen</ion-button
+  <ion-content class="ion-padding">
+    @if (!store.isLoading()) {
+      @if (!store.hasError()) {
+        <app-business-card [business]="store.selectedBusiness()">
+          @if (store.selectedBusiness().Votes.length > 0) {
+            <ion-button
+              expand="block"
+              size="small"
+              fill="outline"
+              [routerLink]="['/layout/votes']"
+              [queryParams]="{ BusinessShortNumber: store.selectedBusiness().BusinessShortNumber }"
+            >{{ t('business.detail.toVotes') }}
+            </ion-button
             >
           }
         </app-business-card>
@@ -35,5 +37,5 @@
       <app-loading-screen></app-loading-screen>
     }
   </ion-content>
-
+</ng-container>
 

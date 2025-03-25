@@ -1,12 +1,14 @@
-<div class="error-container">
-  <div class="error-content">
-    <ion-icon name="bug-outline" size="large"></ion-icon>
-    <p class="ion-text-center">
-      Leider konnte Ihre Anfrage nicht bearbeitet werden. Bitte versuchen Sie es
-      später noch einmal.
-    </p>
-    <ion-button class="secondary" fill="outline" (click)="retryClicked()"
-      >Erneut versuchen</ion-button
-    >
+<ng-container *transloco="let t; prefix: 'shared.errorScreen'">
+  <div class="error-container">
+    <div class="error-content">
+      <ion-icon name="bug-outline" size="large"></ion-icon>
+      <p class="ion-text-center">
+        {{ t('retryLater') }}
+      </p>
+      <ion-button class="secondary" fill="outline" (click)="retryClicked()"
+      >{{ t('retry.button') }}
+      </ion-button
+      >
+    </div>
   </div>
-</div>
+</ng-container>

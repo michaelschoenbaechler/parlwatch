@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MemberCouncil, Voting } from 'swissparl';
+import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 
 export type CouncilMemberFilter = {
@@ -16,7 +17,8 @@ export type CouncilMemberFilter = {
   providedIn: 'root'
 })
 export class CouncilMemberService {
-  constructor(private swissParlService: SwissParlService) {}
+  translocoService = inject(TranslocoService);
+  swissParlService = inject(SwissParlService);
 
   getMembers({
     top,
@@ -48,7 +50,10 @@ export class CouncilMemberService {
         CantonAbbreviation?: string;
       }[];
     } = {
-      eq: [{ Language: 'DE' }, ...councilFilterArray]
+      eq: [
+        { Language: this.translocoService.getActiveLang().toUpperCase() },
+        ...councilFilterArray
+      ]
     };
 
     if (!showInactive) {
@@ -76,7 +81,14 @@ export class CouncilMemberService {
   getMemberById(id: number): Observable<MemberCouncil> {
     return this.swissParlService
       .fetchCollection<MemberCouncil>('MemberCouncil', {
-        filter: { eq: [{ ID: id, Language: 'DE' }] }
+        filter: {
+          eq: [
+            {
+              ID: id,
+              Language: this.translocoService.getActiveLang().toUpperCase()
+            }
+          ]
+        }
       })
       .pipe(map((list) => list[0]));
   }
@@ -84,7 +96,14 @@ export class CouncilMemberService {
   getVotes(id: number): Observable<Voting[]> {
     return this.swissParlService.fetchCollection<Voting>('Voting', {
       top: 100,
-      filter: { eq: [{ PersonNumber: id, Language: 'DE' }] },
+      filter: {
+        eq: [
+          {
+            PersonNumber: id,
+            Language: this.translocoService.getActiveLang().toUpperCase()
+          }
+        ]
+      },
       orderby: { property: 'VoteEnd', order: 'desc' }
     });
   }

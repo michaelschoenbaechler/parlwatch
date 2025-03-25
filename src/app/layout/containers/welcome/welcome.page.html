@@ -1,22 +1,19 @@
-<ion-content>
-  <img
-    class="logo"
-    width="100"
-    src="assets/logo-caption.png"
-    alt="ParlWatch Logo"
-  />
-  <div class="ion-padding">
-    <p class="welcome-text">
-      Diese App, ein Open-Source-Projekt unter GPLv3-Lizenz, bezieht ihre Daten
-      von den öffentlichen Webservices von parlament.ch. Bitte beachten Sie,
-      dass die ständige
-      <b>Verfügbarkeit dieser Schnittstelle nicht garantiert werden kann</b>.
-      Sie sind herzlich eingeladen, zur Weiterentwicklung beizutragen und so
-      tiefere Einblicke in die politische Landschaft zu ermöglichen. Vielen Dank
-      für Ihre Unterstützung, damit die App weiterhin Open Source bleibt.
-    </p>
-    <ion-button expand="block" color="primary" (click)="onDiscover()"
-      >Jetzt Entdecken</ion-button
-    >
-  </div>
-</ion-content>
+<ng-container *transloco="let t;">
+  <ion-content>
+    <img
+      class="logo"
+      width="100"
+      src="assets/logo-caption.png"
+      alt="ParlWatch Logo"
+    />
+    <div class="ion-padding">
+      <p class="welcome-text">
+        {{ t('welcome.text') }}
+      </p>
+      <ion-button expand="block" color="primary" (click)="onDiscover()"
+      >{{ t('welcome.discover') }}
+      </ion-button
+      >
+    </div>
+  </ion-content>
+</ng-container>

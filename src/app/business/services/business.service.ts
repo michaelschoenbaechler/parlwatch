@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Business, BusinessStatus, BusinessType } from 'swissparl';
+import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 
 export type BusinessFilter = {
@@ -16,7 +17,8 @@ export type BusinessFilter = {
   providedIn: 'root'
 })
 export class BusinessService {
-  constructor(private swissparlService: SwissParlService) {}
+  translocoService = inject(TranslocoService);
+  swissparlService = inject(SwissParlService);
 
   getBusinesses({
     top,
@@ -50,7 +52,7 @@ export class BusinessService {
       }[];
     } = {
       eq: [
-        { Language: 'DE' },
+        { Language: this.translocoService.getActiveLang().toUpperCase() },
         ...businessTypeFilterArray,
         ...businessStatusFilterArray
       ],
@@ -88,7 +90,11 @@ export class BusinessService {
       'BusinessStatus',
       {
         select: ['BusinessStatusId', 'BusinessStatusName'],
-        filter: { eq: [{ Language: 'DE' }] }
+        filter: {
+          eq: [
+            { Language: this.translocoService.getActiveLang().toUpperCase() }
+          ]
+        }
       }
     );
   }
@@ -96,7 +102,9 @@ export class BusinessService {
   getBusinessTypes(): Observable<BusinessType[]> {
     return this.swissparlService.fetchCollection<BusinessType>('BusinessType', {
       select: ['ID', 'BusinessTypeName'],
-      filter: { eq: [{ Language: 'DE' }] }
+      filter: {
+        eq: [{ Language: this.translocoService.getActiveLang().toUpperCase() }]
+      }
     });
   }
 
@@ -105,7 +113,14 @@ export class BusinessService {
       .fetchCollection<Business>(
         'Business',
         {
-          filter: { eq: [{ ID: id, Language: 'DE' }] },
+          filter: {
+            eq: [
+              {
+                ID: id,
+                Language: this.translocoService.getActiveLang().toUpperCase()
+              }
+            ]
+          },
           expand: ['Votes']
         },
         { deepParse: true }

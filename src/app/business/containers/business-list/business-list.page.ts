@@ -16,6 +16,7 @@ import {
   RefresherCustomEvent
 } from '@ionic/angular';
 import { Keyboard } from '@capacitor/keyboard';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
@@ -38,7 +39,8 @@ import { SearchSuggestions } from './search-suggestions';
     ErrorScreenComponent,
     NoContentScreenComponent,
     HideKeyboardOnEnterDirective,
-    BusinessFilterFormComponent
+    BusinessFilterFormComponent,
+    TranslocoDirective
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

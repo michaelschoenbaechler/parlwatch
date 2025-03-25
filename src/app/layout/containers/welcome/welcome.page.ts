@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonicModule, Platform } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.page.html',
   styleUrls: ['./welcome.page.scss'],
   standalone: true,
-  imports: [IonicModule]
+  imports: [IonicModule, TranslocoDirective]
 })
 export class WelcomePage implements OnInit {
   constructor(

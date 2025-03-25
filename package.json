@@ -11,7 +11,9 @@
     "build:prd": "ng build --configuration=production",
     "lint": "ng lint && npx prettier -c \"src/**/*.ts\"",
     "lint:fix": "ng lint --fix",
-    "prettier:fix": "npx prettier --write \"src/**/*.ts\""
+    "prettier:fix": "npx prettier --write \"src/**/*.ts\"",
+    "i18n:extract": "transloco-keys-manager extract --remove-extra-keys --sort",
+    "i18n:find": "transloco-keys-manager find"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +32,7 @@
     "@capacitor/status-bar": "^6.0.0",
     "@ionic/angular": "^7.6.4",
     "@ionic/storage-angular": "^4.0.0",
+    "@jsverse/transloco": "^7.6.1",
     "@ngneat/until-destroy": "^10.0.0",
     "@ngrx/operators": "^18.0.2",
     "@ngrx/signals": "^18.0.2",
@@ -54,6 +57,7 @@
     "@commitlint/cli": "^18.4.4",
     "@commitlint/config-conventional": "^18.4.4",
     "@ionic/angular-toolkit": "^12.1.1",
+    "@jsverse/transloco-keys-manager": "^5.1.0",
     "@types/jasmine": "~5.1.4",
     "@types/node": "^20.11.2",
     "@typescript-eslint/eslint-plugin": "6.18.1",

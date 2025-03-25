@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Vote, Voting } from 'swissparl';
+import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoteService {
-  constructor(private swissParlService: SwissParlService) {}
+  swissParlService = inject(SwissParlService);
+  translocoService = inject(TranslocoService);
 
   getVotes({
     top,
@@ -24,7 +26,7 @@ export class VoteService {
       ne: { BusinessShortNumber: string }[];
       substringOf?: { BusinessTitle: string; BusinessShortNumber: string }[];
     } = {
-      eq: [{ Language: 'DE' }],
+      eq: [{ Language: this.translocoService.getActiveLang().toUpperCase() }],
       ne: [{ BusinessShortNumber: '00.000' }]
     };
 
@@ -50,7 +52,14 @@ export class VoteService {
       .fetchCollection<Vote>(
         'Vote',
         {
-          filter: { eq: [{ ID: id, Language: 'DE' }] },
+          filter: {
+            eq: [
+              {
+                ID: id,
+                Language: this.translocoService.getActiveLang().toUpperCase()
+              }
+            ]
+          },
           expand: ['Votings']
         },
         { deepParse: true }
@@ -60,7 +69,14 @@ export class VoteService {
 
   getVotings(id: number): Observable<Voting[]> {
     return this.swissParlService.fetchCollection<Voting>('Voting', {
-      filter: { eq: [{ IdVote: id, Language: 'DE' }] }
+      filter: {
+        eq: [
+          {
+            IdVote: id,
+            Language: this.translocoService.getActiveLang().toUpperCase()
+          }
+        ]
+      }
     });
   }
 }

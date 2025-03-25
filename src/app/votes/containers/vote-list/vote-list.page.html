@@ -1,48 +1,50 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title> Abstimmungen </ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar
-      #searchBar
-      appHideKeyboardOnEnter
-      placeholder="Suche"
-      color="light"
-      enterkeyhint="search"
-      (ionChange)="onSearch($event)"
-    ></ion-searchbar>
-  </ion-toolbar>
-</ion-header>
+<ng-container *transloco="let t;">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ t('votes.voteList.title') }}</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar
+        #searchBar
+        appHideKeyboardOnEnter
+        placeholder="{{ t('common.search.placeholder') }}"
+        color="light"
+        enterkeyhint="search"
+        (ionChange)="onSearch($event)"
+      ></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content role="feed" class="ion-padding">
-  @if (!loading) {
-    @if (!error) {
-      @if (!noContent) {
-        <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-          <ion-refresher-content></ion-refresher-content>
-        </ion-refresher>
-        @for (vote of votes; track vote) {
-          <app-vote-card
-            [vote]="vote"
-            (click)="onClickVote(vote.ID)"
-          ></app-vote-card>
-        }
-        <ion-infinite-scroll
-          threshold="100px"
-          (ionInfinite)="distanceReached($event)"
+  <ion-content role="feed" class="ion-padding">
+    @if (!loading) {
+      @if (!error) {
+        @if (!noContent) {
+          <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+            <ion-refresher-content></ion-refresher-content>
+          </ion-refresher>
+          @for (vote of votes; track vote) {
+            <app-vote-card
+              [vote]="vote"
+              (click)="onClickVote(vote.ID)"
+            ></app-vote-card>
+          }
+          <ion-infinite-scroll
+            threshold="100px"
+            (ionInfinite)="distanceReached($event)"
           >
-          <ion-infinite-scroll-content></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        } @else {
+          <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+        }
       } @else {
-        <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+        <app-error-screen (retry)="retrySearch()"></app-error-screen>
       }
     } @else {
-      <app-error-screen (retry)="retrySearch()"></app-error-screen>
+      <app-loading-screen></app-loading-screen>
     }
-  } @else {
-    <app-loading-screen></app-loading-screen>
-  }
-</ion-content>
+  </ion-content>
+</ng-container>
 
 
 

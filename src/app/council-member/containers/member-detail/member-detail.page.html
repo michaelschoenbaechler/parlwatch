@@ -1,92 +1,93 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button
-        text="Zurück"
-        defaultHref="layout/council-member"
-      ></ion-back-button>
-    </ion-buttons>
-    <ion-title>Ratsmitglied</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *transloco="let t">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button
+          text="{{ t('councilMember.detail.back') }}"
+          defaultHref="layout/council-member"
+        ></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ t('councilMember.detail.title') }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content class="ion-padding">
-  @if (!store.isLoading()) {
-    @if (!store.hasError()) {
-      <app-council-member-card
-        [councilMember]="store.selectedCouncilMember()"
-      ></app-council-member-card>
-      @if (getMandatesAsHtmlList()) {
-        <app-text-card
-          title="Mandate"
-          [HtmlText]="getMandatesAsHtmlList()"
-        ></app-text-card>
-      }
-      @if (getAdditionalActivitiesAsHtmlList()) {
-        <app-text-card
-          title="Weitere Aktivitäten"
-          [HtmlText]="getAdditionalActivitiesAsHtmlList()"
-        ></app-text-card>
-      }
-      <app-text-card title="Stimmverhalten">
-        @if (!store.isLoadingVotingRecord()) {
-          @if (!store.hasVotingRecord()) {
-            <p class="no-votes-text">
-              <small>
-                Es konnten keine Abstimmungsdaten für diese Person gefunden
-                werden.
-              </small>
-            </p>
-          }
-          @if (store.hasVotingRecord()) {
-            <ion-list>
-              @for (voting of store.selectedCouncilMemberVotingRecord(); track voting) {
-                <ion-item
-                  button
-                  (click)="onClickBusiness(voting.BusinessNumber)"
-                  [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
+  <ion-content class="ion-padding">
+    @if (!store.isLoading()) {
+      @if (!store.hasError()) {
+        <app-council-member-card
+          [councilMember]="store.selectedCouncilMember()"
+        ></app-council-member-card>
+        @if (getMandatesAsHtmlList()) {
+          <app-text-card
+            title="{{ t('councilMember.detail.mandates') }}"
+            [HtmlText]="getMandatesAsHtmlList()"
+          ></app-text-card>
+        }
+        @if (getAdditionalActivitiesAsHtmlList()) {
+          <app-text-card
+            title="{{ t('councilMember.detail.otherActivities') }}"
+            [HtmlText]="getAdditionalActivitiesAsHtmlList()"
+          ></app-text-card>
+        }
+        <app-text-card title="{{ t('councilMember.detail.votingRecord') }}">
+          @if (!store.isLoadingVotingRecord()) {
+            @if (!store.hasVotingRecord()) {
+              <p class="no-votes-text">
+                <small>
+                  {{ t('councilMember.detail.noVotes') }}
+                </small>
+              </p>
+            }
+            @if (store.hasVotingRecord()) {
+              <ion-list>
+                @for (voting of store.selectedCouncilMemberVotingRecord(); track voting) {
+                  <ion-item
+                    button
+                    (click)="onClickBusiness(voting.BusinessNumber)"
+                    [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
                   >
-                  <ion-icon
-                    size="small"
-                [color]="
+                    <ion-icon
+                      size="small"
+                      [color]="
                   voting.Decision === 1
                     ? 'success'
                     : voting.Decision === 2
                     ? 'danger'
                     : 'medium'
                 "
-                [name]="
+                      [name]="
                   voting.Decision === 1
                     ? 'checkmark-outline'
                     : voting.Decision === 2
                     ? 'close-outline'
                     : 'remove-outline'
                 "
-                    slot="start"
-                  ></ion-icon>
-                  <ion-label class="ion-text-wrap">
-                    {{ voting.BusinessTitle }}
-                    <p class="ion-color-danger">
-                      {{ voting.Subject }}
-                    </p>
-                  </ion-label>
-                </ion-item>
-              }
-            </ion-list>
+                      slot="start"
+                    ></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{ voting.BusinessTitle }}
+                      <p class="ion-color-danger">
+                        {{ voting.Subject }}
+                      </p>
+                    </ion-label>
+                  </ion-item>
+                }
+              </ion-list>
+            }
+          } @else {
+            <div class="loading-voting-record-container">
+              <ion-spinner class="spinner"></ion-spinner>
+            </div>
           }
-        } @else {
-          <div class="loading-voting-record-container">
-            <ion-spinner class="spinner"></ion-spinner>
-          </div>
-        }
-      </app-text-card>
+        </app-text-card>
+      } @else {
+        <app-error-screen (retry)="retry()"></app-error-screen>
+      }
     } @else {
-      <app-error-screen (retry)="retry()"></app-error-screen>
+      <app-loading-screen></app-loading-screen>
     }
-  } @else {
-    <app-loading-screen></app-loading-screen>
-  }
-</ion-content>
+  </ion-content>
+</ng-container>
 
 
 
