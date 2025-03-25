@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IonicModule } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
@@ -19,7 +20,8 @@ import { CouncilMemberStore } from '../../council-member.store';
     CouncilMemberCardComponent,
     TextCardComponent,
     LoadingScreenComponent,
-    ErrorScreenComponent
+    ErrorScreenComponent,
+    TranslocoDirective
   ]
 })
 export class MemberDetailPage implements OnInit {

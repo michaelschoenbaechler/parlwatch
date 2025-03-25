@@ -1,29 +1,33 @@
-<form [formGroup]="filterForm">
-  <h3>Rat</h3>
-  <ion-list formArrayName="councils">
-    @for (council of councils.controls; track council; let i = $index) {
-      <ion-item>
-        <ion-checkbox
-          label-placement="start"
-          [formControlName]="i"
-          >{{ councilList[i].councilName }}</ion-checkbox
+<ng-container *transloco="let t; prefix: 'councilMember.filterForm'">
+  <form [formGroup]="filterForm">
+    <h3>{{ t('title') }}</h3>
+    <ion-list formArrayName="councils">
+      @for (council of councils.controls; track council; let i = $index) {
+        <ion-item>
+          <ion-checkbox
+            label-placement="start"
+            [formControlName]="i"
+          >{{ councilList[i].councilName }}
+          </ion-checkbox
           >
         </ion-item>
       }
     </ion-list>
-    <h3>Weitere Filter</h3>
+    <h3>{{ t('moreFilters') }}</h3>
     <ion-list>
       <ion-item>
         <ion-toggle
           label-placement="start"
           formControlName="inactiveMembers"
-        >Inaktive anzeigen*</ion-toggle>
+        >{{ t('showInactive') }}
+        </ion-toggle>
       </ion-item>
     </ion-list>
-    <small>*Ehemalige Ratsmitglieder</small>
+    <small>*{{ t('formerCouncilMembers') }}</small>
   </form>
   @if (filterForm.dirty) {
     <div class="floating-button">
-      <ion-button expand="block" (click)="onSubmit()">Filter anwenden</ion-button>
+      <ion-button expand="block" (click)="onSubmit()">{{ t('applyFilter') }}</ion-button>
     </div>
   }
+</ng-container>

@@ -4,8 +4,9 @@ import { Vote } from 'swissparl';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subject, from, of } from 'rxjs';
+import { from, of, Subject } from 'rxjs';
 import { IonicModule } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { VoteService } from '../../services/votes.service';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
@@ -25,7 +26,8 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
     VoteCardComponent,
     TextCardComponent,
     LoadingScreenComponent,
-    ErrorScreenComponent
+    ErrorScreenComponent,
+    TranslocoDirective
   ]
 })
 export class VoteDetailPage implements OnInit {

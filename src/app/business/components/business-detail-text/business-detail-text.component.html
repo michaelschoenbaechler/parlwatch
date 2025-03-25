@@ -1,75 +1,79 @@
-@if (business.Description) {
-  <app-text-card
-    [title]="'Beschreibung'"
-    [HtmlText]="business.Description"
-  ></app-text-card>
-}
+<ng-container *transloco="let t; prefix:'business.detailText'">
+  @if (business.Description) {
+    <app-text-card
+      [title]="t('description')"
+      [HtmlText]="business.Description"
+    ></app-text-card>
+  }
 
-@if (business.InitialSituation) {
-  <app-text-card
-    [title]="'Ausgangslage'"
-    [HtmlText]="business.InitialSituation"
-  ></app-text-card>
-}
+  @if (business.InitialSituation) {
+    <app-text-card
+      [title]="t('initialSituation')"
+      [HtmlText]="business.InitialSituation"
+    ></app-text-card>
+  }
 
-@if (business.Proceedings) {
-  <app-text-card
-    [title]="'Verhandlungen'"
-    [HtmlText]="business.Proceedings"
-  ></app-text-card>
-}
+  @if (business.Proceedings) {
+    <app-text-card
+      [title]="t('proceedings')"
+      [HtmlText]="business.Proceedings"
+    ></app-text-card>
+  }
 
-@if (business.DraftText) {
-  <app-text-card
-    [title]="'Entwurf'"
-    [HtmlText]="business.DraftText"
-  ></app-text-card>
-}
+  @if (business.DraftText) {
+    <app-text-card
+      [title]="t('draftText')"
+      [HtmlText]="business.DraftText"
+    ></app-text-card>
+  }
 
-@if (business.SubmittedText) {
-  <app-text-card
-    [title]="'Eingereichter Text'"
-    [HtmlText]="business.SubmittedText"
-  ></app-text-card>
-}
+  @if (business.SubmittedText) {
+    <app-text-card
+      [title]="t('submittedText')"
+      [HtmlText]="business.SubmittedText"
+    ></app-text-card>
+  }
 
-@if (business.ReasonText) {
-  <app-text-card
-    [title]="'Begründung'"
-    [HtmlText]="business.ReasonText"
-  ></app-text-card>
-}
+  @if (business.ReasonText) {
+    <app-text-card
+      [title]="t('reasonText')"
+      [HtmlText]="business.ReasonText"
+    ></app-text-card>
+  }
 
-@if (business.DocumentationText) {
-  <app-text-card
-    [title]="'Dokumentation'"
-    [HtmlText]="business.DocumentationText"
-  ></app-text-card>
-}
+  @if (business.DocumentationText) {
+    <app-text-card
+      [title]="t('documentationText')"
+      [HtmlText]="business.DocumentationText"
+    ></app-text-card>
+  }
 
-@if (business.MotionText) {
-  <app-text-card
-    [title]="'Motionstext'"
-    [HtmlText]="business.MotionText"
-  ></app-text-card>
-}
+  @if (business.MotionText) {
+    <app-text-card
+      [title]="t('motionText')"
+      [HtmlText]="business.MotionText"
+    ></app-text-card>
+  }
 
-@if (business.FederalCouncilResponseText) {
-  <app-text-card
-    [title]="'Stellungnahme des Bundesrates'"
-    [HtmlText]="business.FederalCouncilResponseText"
-  ></app-text-card>
-}
+  @if (business.FederalCouncilResponseText) {
+    <app-text-card
+      [title]="t('federalCouncilResponseText')"
+      [HtmlText]="business.FederalCouncilResponseText"
+    ></app-text-card>
+  }
 
-<app-text-card
-  title="Ergänzende Informationen"
-  HtmlText="Besuchen Sie www.parlament.ch für detaillierte Informationen und Ressourcen"
+  <app-text-card
+    [title]="t('business.detailText.additionalInformation.title')"
+    [HtmlText]="t('business.detailText.additionalInformation.text')"
   >
-  <ion-button
-    expand="block"
-    size="small"
-    fill="outline"
-    (click)="openFurtherInformation()"
-    >Geschäft öffnen <ion-icon slot="end" name="link-outline"></ion-icon
-  ></ion-button>
-</app-text-card>
+    <ion-button
+      expand="block"
+      size="small"
+      fill="outline"
+      (click)="openFurtherInformation()"
+    >{{ t('business.detailText.additionalInformation.button') }}
+      <ion-icon slot="end" name="link-outline"></ion-icon
+      >
+    </ion-button>
+  </app-text-card>
+</ng-container>

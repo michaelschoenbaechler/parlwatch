@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { AsyncPipe } from '@angular/common';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { AllCouncils, Council } from '../../containers/member-list/councils';
 
 export type CouncilMemberFilterForm = {
@@ -19,7 +19,7 @@ export type CouncilMemberFilterForm = {
   selector: 'app-council-member-filter-form',
   templateUrl: './council-member-filter-form.component.html',
   styleUrls: ['./council-member-filter-form.component.scss'],
-  imports: [IonicModule, AsyncPipe, ReactiveFormsModule],
+  imports: [IonicModule, ReactiveFormsModule, TranslocoDirective],
   standalone: true
 })
 export class CouncilMemberFilterFormComponent implements OnInit {

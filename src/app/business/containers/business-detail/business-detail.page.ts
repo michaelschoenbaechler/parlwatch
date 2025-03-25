@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { BusinessDetailTextComponent } from '../../components/business-detail-text/business-detail-text.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
@@ -18,7 +19,8 @@ import { BusinessStore } from '../../business.store';
     BusinessDetailTextComponent,
     LoadingScreenComponent,
     ErrorScreenComponent,
-    RouterLink
+    RouterLink,
+    TranslocoDirective
   ]
 })
 export class BusinessDetailPage implements OnInit {

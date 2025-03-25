@@ -7,15 +7,15 @@ import {
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { BusinessStore } from '../../business.store';
-import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 
 @Component({
   selector: 'app-business-filter-form',
   templateUrl: './business-filter-form.component.html',
   styleUrls: ['./business-filter-form.component.scss'],
   standalone: true,
-  imports: [FormsModule, IonicModule, ReactiveFormsModule, ErrorScreenComponent]
+  imports: [FormsModule, IonicModule, ReactiveFormsModule, TranslocoDirective]
 })
 export class BusinessFilterFormComponent {
   readonly store = inject(BusinessStore);

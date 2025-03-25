@@ -8,6 +8,7 @@ import {
   IonSearchbar,
   RefresherCustomEvent
 } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
 import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
@@ -33,7 +34,8 @@ import {
     LoadingScreenComponent,
     NoContentScreenComponent,
     ErrorScreenComponent,
-    CouncilMemberFilterFormComponent
+    CouncilMemberFilterFormComponent,
+    TranslocoDirective
   ]
 })
 export class MemberListPage implements OnInit {

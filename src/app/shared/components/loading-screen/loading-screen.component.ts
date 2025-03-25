@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { concat, interval, tap, timer } from 'rxjs';
 import { IonicModule } from '@ionic/angular';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 @UntilDestroy()
 @Component({
@@ -9,28 +10,30 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './loading-screen.component.html',
   styleUrls: ['./loading-screen.component.scss'],
   standalone: true,
-  imports: [IonicModule]
+  imports: [IonicModule, TranslocoDirective]
 })
 export class LoadingScreenComponent implements OnInit {
+  translocoService = inject(TranslocoService);
+
+  facts: string[];
   currentFact: string;
-  facts: string[] = [
-    'Das Schweizer Parlament ist ein Zweikammersystem, bestehend aus dem Nationalrat und dem Ständerat.',
-    'Der Nationalrat hat 200 Mitglieder, während der Ständerat 46 Mitglieder hat.',
-    'Die Parlamentarierinnen und Parlamentarier werden vom Volk für eine Amtszeit von vier Jahren gewählt. ',
-    'Beide Kammern haben die gleichen Kompetenzen und beschliessen über die gleichen Geschäfte.',
-    'Das Parlament berät und verabschiedet die Bundesgesetze, die für das ganze Land gelten. Deswegen wird das Parlament «Legislative» genannt.',
-    'Das Parlament überwacht die Tätigkeit des Bundesrates, der Bundesverwaltung, des Bundesgerichts und der Unternehmen, die Bundesaufgaben erfüllen wie die Post oder die SBB',
-    'Das Parlament bestimmt die finanziellen Mittel, die dem Bund für die Erfüllung seiner Aufgaben zur Verfügung stehen.',
-    'Wieso hat das Bundeshaus eine Kuppel? Schon mal einen Zirkus mit Flachdach gesehen?',
-    'National- und Ständerat fassen die meisten Beschlüsse getrennt.',
-    'Die Mitglieder beider Kammern kommen regelmässig zu den Sessionen zusammen. Sessionen finden vier Mal jährlich statt.',
-    'Einen grossen Teil ihrer Arbeiten verrichten die Parlamentarierinnen und Parlamentarier zwischen den Sessionen in den parlamentarischen Kommissionen.'
-  ];
   shuffledFacts: string[] = [];
 
-  constructor() {}
-
   ngOnInit() {
+    this.facts = this.translocoService.translate<string[]>([
+      'shared.loadingScreen.loadingFact1',
+      'shared.loadingScreen.loadingFact2',
+      'shared.loadingScreen.loadingFact3',
+      'shared.loadingScreen.loadingFact4',
+      'shared.loadingScreen.loadingFact5',
+      'shared.loadingScreen.loadingFact6',
+      'shared.loadingScreen.loadingFact7',
+      'shared.loadingScreen.loadingFact8',
+      'shared.loadingScreen.loadingFact9',
+      'shared.loadingScreen.loadingFact10',
+      'shared.loadingScreen.loadingFact11'
+    ]);
+
     this.shuffleFacts();
     let factIndex = -1;
 

@@ -200,7 +200,7 @@ export const BusinessStore = signalStore(
   })),
 
   withHooks({
-    onInit: ({ loadBusinesses, loadBusinessStates, loadBusinessTypes }) => {
+    onInit: ({ loadBusinessStates, loadBusinessTypes }) => {
       loadBusinessStates(null);
       loadBusinessTypes(null);
     }

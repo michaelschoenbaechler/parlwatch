@@ -1,46 +1,48 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title> Geschäfte </ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar
-      #searchBar
-      appHideKeyboardOnEnter
-      color="light"
-      enterkeyhint="search"
-      placeholder="Suche"
-      (ionChange)="onSearch($event)"
-    ></ion-searchbar>
-    <ion-icon
-      (click)="toggleFilterModal()"
-      slot="end"
-      size="large"
-      name="filter-outline"
-    ></ion-icon>
-  </ion-toolbar>
-  @if (store.query().businessTypes.length > 0 || store.query().businessStatuses.length > 0) {
-    <div
-      class="active-filter-wrapper"
+<ng-container *transloco="let t;">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ t('business.list.title') }}</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar
+        #searchBar
+        appHideKeyboardOnEnter
+        color="light"
+        enterkeyhint="search"
+        placeholder="{{ t('common.search.placeholder') }}"
+        (ionChange)="onSearch($event)"
+      ></ion-searchbar>
+      <ion-icon
+        (click)="toggleFilterModal()"
+        slot="end"
+        size="large"
+        name="filter-outline"
+      ></ion-icon>
+    </ion-toolbar>
+    @if (store.query().businessTypes.length > 0 || store.query().businessStatuses.length > 0) {
+      <div
+        class="active-filter-wrapper"
       >
-      @for (businessType of store.query().businessTypes; track businessType) {
-        <ion-chip>
-          <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
-        </ion-chip>
-      }
-      @for (businessStatus of store.query().businessStatuses; track businessStatus) {
-        <ion-chip>
-          <ion-label>{{ businessStatus.BusinessStatusName }}</ion-label>
-        </ion-chip>
-      }
-    </div>
-  }
-  @if (showSuggestedSearches) {
-    <div class="search-suggestions">
-      <p><small>Nach Thema suchen</small></p>
-      @for (term of suggestedSearchTerms; track term) {
-        <ion-chip
-          (click)="onSuggestedSearchTopic(term)"
-          >{{ term }}</ion-chip
+        @for (businessType of store.query().businessTypes; track businessType) {
+          <ion-chip>
+            <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
+          </ion-chip>
+        }
+        @for (businessStatus of store.query().businessStatuses; track businessStatus) {
+          <ion-chip>
+            <ion-label>{{ businessStatus.BusinessStatusName }}</ion-label>
+          </ion-chip>
+        }
+      </div>
+    }
+    @if (showSuggestedSearches) {
+      <div class="search-suggestions">
+        <p><small>{{ t('business.list.searchSuggestions') }}</small></p>
+        @for (term of suggestedSearchTerms; track term) {
+          <ion-chip
+            (click)="onSuggestedSearchTopic(term)"
+          >{{ term }}
+          </ion-chip
           >
         }
       </div>
@@ -63,7 +65,7 @@
           <ion-infinite-scroll
             threshold="100px"
             (ionInfinite)="distanceReached($event)"
-            >
+          >
             <ion-infinite-scroll-content></ion-infinite-scroll-content>
           </ion-infinite-scroll>
         } @else {
@@ -81,13 +83,13 @@
     handle="true"
     [isOpen]="isModalOpen"
     [presentingElement]="presentingElement"
-    >
+  >
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Geschäfte filtern</ion-title>
+          <ion-title>{{ t('business.list.filter') }}</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="toggleFilterModal()">schliessen</ion-button>
+            <ion-button (click)="toggleFilterModal()">{{ t('common.close') }}</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -100,6 +102,7 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+</ng-container>
 
 
 

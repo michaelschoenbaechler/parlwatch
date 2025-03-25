@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, first, tap, switchMap } from 'rxjs/operators';
+import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { Vote } from 'swissparl';
-import { BehaviorSubject, Subject, combineLatest, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
 import { IonicModule, IonSearchbar } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { VoteService } from '../../services/votes.service';
 import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
@@ -22,7 +23,8 @@ import { NoContentScreenComponent } from '../../../shared/components/no-content-
     HideKeyboardOnEnterDirective,
     LoadingScreenComponent,
     ErrorScreenComponent,
-    NoContentScreenComponent
+    NoContentScreenComponent,
+    TranslocoDirective
   ]
 })
 export class VoteListPage implements OnInit {
