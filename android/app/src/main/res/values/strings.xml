@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ParlWatch</string>
+    <string name="title_activity_main">ParlWatch</string>
+    <string name="package_name">ch.michaelschoenbaechler.parlwatch</string>
+    <string name="custom_url_scheme">ch.michaelschoenbaechler.parlwatch</string>
+</resources>

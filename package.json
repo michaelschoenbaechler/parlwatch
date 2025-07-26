@@ -13,7 +13,13 @@
     "lint:fix": "ng lint --fix",
     "prettier:fix": "npx prettier --write \"src/**/*.ts\"",
     "i18n:extract": "transloco-keys-manager extract --remove-extra-keys --sort",
-    "i18n:find": "transloco-keys-manager find"
+    "i18n:find": "transloco-keys-manager find",
+    "android:sync": "npx cap sync android",
+    "android:build": "npm run build:prd && npx cap sync android",
+    "android:open": "npx cap open android",
+    "ios:sync": "npx cap sync ios",
+    "ios:build": "npm run build:prd && npx cap sync ios",
+    "ios:open": "npx cap open ios"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +29,7 @@
     "@angular/platform-browser": "^18.2.5",
     "@angular/platform-browser-dynamic": "^18.2.5",
     "@angular/router": "^18.2.5",
+    "@capacitor/android": "^6.2.1",
     "@capacitor/app": "^6.0.0",
     "@capacitor/browser": "^6.0.0",
     "@capacitor/core": "^6.0.0",
