@@ -9,7 +9,6 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
   selector: 'app-loading-screen',
   templateUrl: './loading-screen.component.html',
   styleUrls: ['./loading-screen.component.scss'],
-  standalone: true,
   imports: [IonicModule, TranslocoDirective]
 })
 export class LoadingScreenComponent implements OnInit {

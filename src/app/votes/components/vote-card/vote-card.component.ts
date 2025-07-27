@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Vote, Voting } from 'swissparl';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
@@ -12,15 +12,14 @@ import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
   selector: 'app-vote-card',
   templateUrl: './vote-card.component.html',
   styleUrls: ['./vote-card.component.scss'],
-  standalone: true,
   imports: [TextCardComponent, ODataDateTimePipe, TranslocoDirective]
 })
 export class VoteCardComponent implements OnInit {
+  private voteService = inject(VoteService);
+
   @Input() vote: Vote;
 
   voteCount: { decision: string; percentage: number }[] = [];
-
-  constructor(private voteService: VoteService) {}
 
   ngOnInit() {
     this.voteService

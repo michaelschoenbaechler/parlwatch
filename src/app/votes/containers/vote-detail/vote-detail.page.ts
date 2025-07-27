@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Vote } from 'swissparl';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
@@ -18,7 +18,6 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
   selector: 'app-vote-detail',
   templateUrl: './vote-detail.page.html',
   styleUrls: ['./vote-detail.page.scss'],
-  standalone: true,
   imports: [
     RouterLink,
     ReactiveFormsModule,
@@ -31,6 +30,10 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
   ]
 })
 export class VoteDetailPage implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private voteService = inject(VoteService);
+
   vote: Vote = null;
   loading = true;
   error = false;
@@ -47,12 +50,6 @@ export class VoteDetailPage implements OnInit {
     'Grünliberale Fraktion': 'GLP',
     'Die Mitte-Fraktion. Die Mitte. EVP.': 'Die Mitte'
   };
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private voteService: VoteService
-  ) {}
 
   ngOnInit() {
     from(this.trigger$)

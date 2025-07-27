@@ -6,7 +6,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
   selector: 'app-no-content-screen',
   templateUrl: './no-content-screen.component.html',
   styleUrls: ['./no-content-screen.component.scss'],
-  standalone: true,
   imports: [IonicModule, TranslocoDirective]
 })
 export class NoContentScreenComponent {

@@ -5,7 +5,6 @@ import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
   selector: 'app-text-card',
   templateUrl: './text-card.component.html',
   styleUrls: ['./text-card.component.scss'],
-  standalone: true,
   imports: [SafeHtmlPipe]
 })
 export class TextCardComponent {

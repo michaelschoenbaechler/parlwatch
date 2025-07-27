@@ -14,7 +14,6 @@ import { CouncilMemberStore } from '../../council-member.store';
   selector: 'app-member-detail',
   templateUrl: './member-detail.page.html',
   styleUrls: ['./member-detail.page.scss'],
-  standalone: true,
   imports: [
     IonicModule,
     CouncilMemberCardComponent,

@@ -7,7 +7,6 @@ import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
   selector: 'app-business-card',
   templateUrl: './business-card.component.html',
   styleUrls: ['./business-card.component.scss'],
-  standalone: true,
   imports: [TextCardComponent, ODataDateTimePipe]
 })
 export class BusinessCardComponent {

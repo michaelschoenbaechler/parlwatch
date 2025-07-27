@@ -14,7 +14,6 @@ import { BusinessStore } from '../../business.store';
   selector: 'app-business-filter-form',
   templateUrl: './business-filter-form.component.html',
   styleUrls: ['./business-filter-form.component.scss'],
-  standalone: true,
   imports: [FormsModule, IonicModule, ReactiveFormsModule, TranslocoDirective]
 })
 export class BusinessFilterFormComponent {

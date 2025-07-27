@@ -1,4 +1,11 @@
-import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  input,
+  OnInit,
+  Output,
+  inject
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -19,10 +26,11 @@ export type CouncilMemberFilterForm = {
   selector: 'app-council-member-filter-form',
   templateUrl: './council-member-filter-form.component.html',
   styleUrls: ['./council-member-filter-form.component.scss'],
-  imports: [IonicModule, ReactiveFormsModule, TranslocoDirective],
-  standalone: true
+  imports: [IonicModule, ReactiveFormsModule, TranslocoDirective]
 })
 export class CouncilMemberFilterFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+
   preset = input<CouncilMemberFilterForm>();
 
   councilList = AllCouncils;
@@ -34,8 +42,6 @@ export class CouncilMemberFilterFormComponent implements OnInit {
 
   @Output() applyFilter: EventEmitter<CouncilMemberFilterForm> =
     new EventEmitter<CouncilMemberFilterForm>();
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.filterForm = this.fb.group({

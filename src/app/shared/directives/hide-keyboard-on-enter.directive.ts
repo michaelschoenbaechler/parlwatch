@@ -1,4 +1,4 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, inject } from '@angular/core';
 import { Keyboard } from '@capacitor/keyboard';
 import { Platform } from '@ionic/angular';
 
@@ -7,7 +7,7 @@ import { Platform } from '@ionic/angular';
   standalone: true
 })
 export class HideKeyboardOnEnterDirective {
-  constructor(private platform: Platform) {}
+  private platform = inject(Platform);
 
   @HostListener('keyup', ['$event']) onKeyUp(event: KeyboardEvent) {
     if (
