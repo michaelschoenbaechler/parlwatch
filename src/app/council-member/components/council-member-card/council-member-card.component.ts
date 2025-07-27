@@ -6,7 +6,6 @@ import { LowerCasePipe } from '@angular/common';
   selector: 'app-council-member-card',
   templateUrl: './council-member-card.component.html',
   styleUrls: ['./council-member-card.component.scss'],
-  standalone: true,
   imports: [LowerCasePipe]
 })
 export class CouncilMemberCardComponent {

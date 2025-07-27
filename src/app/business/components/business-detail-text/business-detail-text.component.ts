@@ -9,7 +9,6 @@ import { TextCardComponent } from '../../../shared/components/text-card/text-car
   selector: 'app-business-detail-text',
   templateUrl: './business-detail-text.component.html',
   styleUrls: ['./business-detail-text.component.scss'],
-  standalone: true,
   imports: [IonicModule, TextCardComponent, TranslocoDirective]
 })
 export class BusinessDetailTextComponent {

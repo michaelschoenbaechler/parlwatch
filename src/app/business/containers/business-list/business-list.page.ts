@@ -30,7 +30,6 @@ import { SearchSuggestions } from './search-suggestions';
   selector: 'app-business-list',
   templateUrl: './business-list.page.html',
   styleUrls: ['./business-list.page.scss'],
-  standalone: true,
   imports: [
     IonicModule,
     ReactiveFormsModule,

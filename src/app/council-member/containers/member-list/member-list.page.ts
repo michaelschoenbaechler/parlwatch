@@ -25,7 +25,6 @@ import {
   selector: 'app-member-list',
   templateUrl: './member-list.page.html',
   styleUrls: ['./member-list.page.scss'],
-  standalone: true,
   imports: [
     IonicModule,
     ReactiveFormsModule,

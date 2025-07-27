@@ -12,7 +12,6 @@ import { BusinessStore } from '../../business.store';
   selector: 'app-business-detail',
   templateUrl: './business-detail.page.html',
   styleUrls: ['./business-detail.page.scss'],
-  standalone: true,
   imports: [
     IonicModule,
     BusinessCardComponent,

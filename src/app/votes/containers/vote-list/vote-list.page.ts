@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { Vote } from 'swissparl';
@@ -16,7 +16,6 @@ import { NoContentScreenComponent } from '../../../shared/components/no-content-
   selector: 'app-vote-list',
   templateUrl: './vote-list.page.html',
   styleUrls: ['./vote-list.page.scss'],
-  standalone: true,
   imports: [
     IonicModule,
     VoteCardComponent,
@@ -28,6 +27,10 @@ import { NoContentScreenComponent } from '../../../shared/components/no-content-
   ]
 })
 export class VoteListPage implements OnInit {
+  private voteService = inject(VoteService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   top = 10;
   skip = 0;
   votes: Vote[] = [];
@@ -39,12 +42,6 @@ export class VoteListPage implements OnInit {
   trigger$ = new Subject<void>();
 
   @ViewChild('searchBar', { static: false }) searchBar: IonSearchbar;
-
-  constructor(
-    private voteService: VoteService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
 
   ngOnInit() {
     combineLatest([this.searchTerm$, this.trigger$])

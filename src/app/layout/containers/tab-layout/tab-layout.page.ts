@@ -6,7 +6,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
   selector: 'app-tab-layout',
   templateUrl: 'tab-layout.page.html',
   styleUrls: ['tab-layout.page.scss'],
-  standalone: true,
   imports: [IonicModule, TranslocoDirective]
 })
 export class TabLayoutPage {

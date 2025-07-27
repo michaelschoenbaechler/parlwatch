@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
@@ -7,11 +7,10 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
   selector: 'app-settings-overview',
   templateUrl: './settings-overview.page.html',
   styleUrls: ['./settings-overview.page.scss'],
-  standalone: true,
   imports: [IonicModule, TranslocoDirective]
 })
 export class SettingsOverviewPage {
-  constructor(private translocoService: TranslocoService) {}
+  private translocoService = inject(TranslocoService);
 
   surveyClicked() {
     Browser.open({
