@@ -14,7 +14,7 @@
     "prettier:fix": "npx prettier --write \"src/**/*.ts\"",
     "i18n:extract": "transloco-keys-manager extract --remove-extra-keys --sort",
     "i18n:find": "transloco-keys-manager find",
-    "changelog:generate": "conventional-changelog -p angular -r 0"
+    "changelog:generate": "conventional-changelog -p angular"
   },
   "private": true,
   "dependencies": {
