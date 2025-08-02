@@ -30,7 +30,7 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss"],
+            "styles": ["src/global.scss", "src/theme/variables.scss"],
             "allowedCommonJsDependencies": ["lodash", "swissparl"],
             "scripts": [],
             "vendorChunk": true,
