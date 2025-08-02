@@ -2,7 +2,7 @@
 
 * chore: add copilot instructions ([8f9ae96](https://github.com/michaelschoenbaechler/parlwatch/commit/8f9ae96))
 * chore: bump angular version ([23d4aab](https://github.com/michaelschoenbaechler/parlwatch/commit/23d4aab))
-* chore: bump app version ([2c73696](https://github.com/michaelschoenbaechler/parlwatch/commit/2c73696))
+* chore: bump app version ([7233e34](https://github.com/michaelschoenbaechler/parlwatch/commit/7233e34))
 * chore: bump ionic and capacitor version ([abd3947](https://github.com/michaelschoenbaechler/parlwatch/commit/abd3947))
 * chore: bump ios build number ([1b60f6e](https://github.com/michaelschoenbaechler/parlwatch/commit/1b60f6e))
 * chore: update eslint dependencies ([01afa2d](https://github.com/michaelschoenbaechler/parlwatch/commit/01afa2d))
