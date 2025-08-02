@@ -1,6 +1,6 @@
 {
   "name": "parlwatch",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Michael Schönbächler",
   "homepage": "https://github.com/michaelschoenbaechler",
   "description": "Easy access for everyone to parliamentary data",
@@ -13,7 +13,8 @@
     "lint:fix": "ng lint --fix",
     "prettier:fix": "npx prettier --write \"src/**/*.ts\"",
     "i18n:extract": "transloco-keys-manager extract --remove-extra-keys --sort",
-    "i18n:find": "transloco-keys-manager find"
+    "i18n:find": "transloco-keys-manager find",
+    "changelog:generate": "conventional-changelog -p angular -r 0"
   },
   "private": true,
   "dependencies": {
@@ -63,6 +64,7 @@
     "@types/node": "^20.11.2",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
+    "conventional-changelog": "^7.1.1",
     "eslint": "^8.56.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "2.29.1",

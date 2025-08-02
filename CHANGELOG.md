@@ -1,67 +1,114 @@
-## [1.0.3](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.2...1.0.3) (2024-11-20)
+## <small>1.0.4 (2025-08-02)</small>
 
-### Features
+* chore: add copilot instructions ([8f9ae96](https://github.com/michaelschoenbaechler/parlwatch/commit/8f9ae96))
+* chore: bump angular version ([23d4aab](https://github.com/michaelschoenbaechler/parlwatch/commit/23d4aab))
+* chore: bump app version ([2c73696](https://github.com/michaelschoenbaechler/parlwatch/commit/2c73696))
+* chore: bump ionic and capacitor version ([abd3947](https://github.com/michaelschoenbaechler/parlwatch/commit/abd3947))
+* chore: bump ios build number ([1b60f6e](https://github.com/michaelschoenbaechler/parlwatch/commit/1b60f6e))
+* chore: update eslint dependencies ([01afa2d](https://github.com/michaelschoenbaechler/parlwatch/commit/01afa2d))
+* feat(i18n): add i18n ([2147e1e](https://github.com/michaelschoenbaechler/parlwatch/commit/2147e1e))
 
-- **performance**: introduce ngrx signals
 
-### Bug Fixes
 
-- **security**: update dependencies
+## <small>1.0.3 (2024-11-20)</small>
 
-## [1.0.2](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.1...1.0.2) (2024-01-15)
+* chore: bump version to 1.0.3 ([8bf46d2](https://github.com/michaelschoenbaechler/parlwatch/commit/8bf46d2))
+* chore: configure ionic schematics ([cd51bc3](https://github.com/michaelschoenbaechler/parlwatch/commit/cd51bc3))
+* chore: enable eslint 'prefer-control-flow' rule ([378f56a](https://github.com/michaelschoenbaechler/parlwatch/commit/378f56a))
+* chore: update dependencies ([5a2157c](https://github.com/michaelschoenbaechler/parlwatch/commit/5a2157c))
+* chore: update dependencies ([4d1dd4e](https://github.com/michaelschoenbaechler/parlwatch/commit/4d1dd4e))
+* chore: update dependencies ([7d68ffe](https://github.com/michaelschoenbaechler/parlwatch/commit/7d68ffe))
+* chore: update dependencies ([cb3125d](https://github.com/michaelschoenbaechler/parlwatch/commit/cb3125d))
+* chore: update swissparl ([6e13d70](https://github.com/michaelschoenbaechler/parlwatch/commit/6e13d70))
+* fix: routing and remaining imports ([ed35b5f](https://github.com/michaelschoenbaechler/parlwatch/commit/ed35b5f))
+* fix: update .browserslistrc to recommended settings for Ionic v7 ([b563223](https://github.com/michaelschoenbaechler/parlwatch/commit/b563223))
+* fix: upgrade all eslint dependencies to v18 ([055d943](https://github.com/michaelschoenbaechler/parlwatch/commit/055d943))
+* refactor: configure and apply import order ([9ea7464](https://github.com/michaelschoenbaechler/parlwatch/commit/9ea7464))
+* refactor: improve naming ([53e29d0](https://github.com/michaelschoenbaechler/parlwatch/commit/53e29d0))
+* refactor: migrate to new built-in control flow ([d597c9e](https://github.com/michaelschoenbaechler/parlwatch/commit/d597c9e))
+* refactor: standalone architecture ([284b7e6](https://github.com/michaelschoenbaechler/parlwatch/commit/284b7e6))
+* refactor(business): introduce ngrx signals ([dff7ff8](https://github.com/michaelschoenbaechler/parlwatch/commit/dff7ff8))
+* refactor(business): rename css class ([18a8be2](https://github.com/michaelschoenbaechler/parlwatch/commit/18a8be2))
+* refactor(council-member): introduce ngrx signals ([01e2057](https://github.com/michaelschoenbaechler/parlwatch/commit/01e2057))
 
-### Bug Fixes
 
-- **security**: update dependencies
 
-## [1.0.1](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0...1.0.1) (2023-10-10)
+## <small>1.0.2 (2024-01-15)</small>
 
-### Bug Fixes
+* chore: bump version to 1.0.2 ([fb235ee](https://github.com/michaelschoenbaechler/parlwatch/commit/fb235ee))
+* chore: update dependencies ([af75de6](https://github.com/michaelschoenbaechler/parlwatch/commit/af75de6))
+* fix: update zonejs polyfills import ([0ba883c](https://github.com/michaelschoenbaechler/parlwatch/commit/0ba883c))
 
-- **security**: update dependencies
 
-## [1.0.0](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.4...1.0.0) (2023-10-09)
 
-- **docs**: add privacy policy
+## <small>1.0.1 (2023-10-10)</small>
 
-## [1.0.0-rc.4](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.3...1.0.0-rc.4) (2023-10-08)
+* chore: bump version to 1.0.1 ([83a3878](https://github.com/michaelschoenbaechler/parlwatch/commit/83a3878))
+* chore: update dependencies ([1ab552d](https://github.com/michaelschoenbaechler/parlwatch/commit/1ab552d))
+* docs: update changelog ([243b922](https://github.com/michaelschoenbaechler/parlwatch/commit/243b922))
 
-### Bug Fixes
 
-- **business:** show search suggestions depending on keyboard state ([8013111](https://github.com/michaelschoenbaechler/parlwatch/commit/8013111391cf1ed961192b594768e82763774fab))
 
-## [1.0.0-rc.3](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.2...1.0.0-rc.3) (2023-10-07)
+## 1.0.0 (2023-10-08)
 
-### Bug Fixes
+* docs: add privacy policy ([9fbd317](https://github.com/michaelschoenbaechler/parlwatch/commit/9fbd317))
 
-- **business:** use indexed ID for detailed search ([06ef938](https://github.com/michaelschoenbaechler/parlwatch/commit/06ef9386fb91cf4c51a75a3bf0fb627a7db2188e))
-- translate remaining english copy ([2d65347](https://github.com/michaelschoenbaechler/parlwatch/commit/2d65347e8a115fb00ac29f6ec40c9e59d848e0db))
 
-### Features
 
-- **council-member:** add loading spinner for voting record ([8241add](https://github.com/michaelschoenbaechler/parlwatch/commit/8241addfc0615b57fed932a023ae453dc0ea059d))
-- **council-member:** search for canton or canton abbreviation ([4d3a8af](https://github.com/michaelschoenbaechler/parlwatch/commit/4d3a8af396bbed6af7e16524634c56903e275781))
-- **layout:** switch votes and business tab ([8e2fb76](https://github.com/michaelschoenbaechler/parlwatch/commit/8e2fb766fd4e1e4c0583ef256c5fcd56b3c3d16c))
-- **vote:** remove session name in card ([8ec5aa2](https://github.com/michaelschoenbaechler/parlwatch/commit/8ec5aa2ff98301a094fd883040972eadc81bddd6))
+## 1.0.0-rc.4 (2023-10-08)
 
-## [1.0.0-rc.2](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.0-rc.1...1.0.0-rc.2) (2023-09-18)
+* chore: bump version to 1.0.0-rc.4 ([eb6e269](https://github.com/michaelschoenbaechler/parlwatch/commit/eb6e269))
+* chore: incerase xcode build number ([18e963e](https://github.com/michaelschoenbaechler/parlwatch/commit/18e963e))
+* fix(business): show search suggestions depending on keyboard state ([8013111](https://github.com/michaelschoenbaechler/parlwatch/commit/8013111))
+* docs: use lowercase and no italic for feature ([af92534](https://github.com/michaelschoenbaechler/parlwatch/commit/af92534))
 
-### Bug Fixes
 
-- **business:** set error to false after retry ([0c2d979](https://github.com/michaelschoenbaechler/parlwatch/commit/0c2d97971911c23d3bc11f7d5403c1bbd13948e1))
-- **council-members:** display canton flags correct ([94fd8fc](https://github.com/michaelschoenbaechler/parlwatch/commit/94fd8fcd17e6f0cbb0a9777c5a737d86535f8877))
-- improve wording ([5dd79d3](https://github.com/michaelschoenbaechler/parlwatch/commit/5dd79d328fe04e1ee1476e6905920f51d66c5542))
-- keyboard listener ([4f35f0a](https://github.com/michaelschoenbaechler/parlwatch/commit/4f35f0abd2d51b80dac2968bc72ef5eed2bcc775))
-- set global background color to white ([fbbe4dd](https://github.com/michaelschoenbaechler/parlwatch/commit/fbbe4dd209c8a28eaebd7fda4c4592e8e0def798))
 
-### Features
+## 1.0.0-rc.3 (2023-10-07)
 
-- add refresher in all list views ([3aa289b](https://github.com/michaelschoenbaechler/parlwatch/commit/3aa289bc691616af350298d45cd0b362431440e5))
-- **business:** add search suggestions ([d211f82](https://github.com/michaelschoenbaechler/parlwatch/commit/d211f82abda3d246baf8d99d8f50cd21a7698816))
-- **business:** display date of latest status change ([212f3c4](https://github.com/michaelschoenbaechler/parlwatch/commit/212f3c4e92432814cea62f0c9480473beff62d0c))
-- **shared:** extend text-card with subtitle input ([a79b359](https://github.com/michaelschoenbaechler/parlwatch/commit/a79b3598bbb6ee6a6fe00fcaf47e22799875b6b8))
-- **vote:** display date of vote ([bbef62e](https://github.com/michaelschoenbaechler/parlwatch/commit/bbef62edd8fafaafaf0f324f8decf77f00a3948d))
+* chore: bump version to 1.0.0-rc.3 ([32f2a2b](https://github.com/michaelschoenbaechler/parlwatch/commit/32f2a2b))
+* docs: improve readme ([1865928](https://github.com/michaelschoenbaechler/parlwatch/commit/1865928))
+* docs: remove license and usage ([e679c82](https://github.com/michaelschoenbaechler/parlwatch/commit/e679c82))
+* docs: remove square brackets ([db9e892](https://github.com/michaelschoenbaechler/parlwatch/commit/db9e892))
+* feat: ux improvements ([8e2fb76](https://github.com/michaelschoenbaechler/parlwatch/commit/8e2fb76))
+* feat(council-member): add loading spinner ([8241add](https://github.com/michaelschoenbaechler/parlwatch/commit/8241add))
+* feat(council-member): expand search ([4d3a8af](https://github.com/michaelschoenbaechler/parlwatch/commit/4d3a8af))
+* feat(vote): remove session name in card ([8ec5aa2](https://github.com/michaelschoenbaechler/parlwatch/commit/8ec5aa2))
+* fix: navigate to votes after welcome screen ([1ff49e1](https://github.com/michaelschoenbaechler/parlwatch/commit/1ff49e1))
+* fix: translate remaining english copy ([2d65347](https://github.com/michaelschoenbaechler/parlwatch/commit/2d65347))
+* fix(business): use indexed ID for detailed search ([06ef938](https://github.com/michaelschoenbaechler/parlwatch/commit/06ef938))
+* refactor(vote): simplify search for business number ([326b20a](https://github.com/michaelschoenbaechler/parlwatch/commit/326b20a))
 
-## 1.0.0-rc.1 (2023-09-07)
 
-- MVP with basic functionality
+
+## 1.0.0-rc.2 (2023-09-18)
+
+* chore: bump version to 1.0.0-rc.2 ([e9687d0](https://github.com/michaelschoenbaechler/parlwatch/commit/e9687d0))
+* chore: remove unused dependency ([68e4482](https://github.com/michaelschoenbaechler/parlwatch/commit/68e4482))
+* chore: remove unused dependency ([42e146c](https://github.com/michaelschoenbaechler/parlwatch/commit/42e146c))
+* chore: revert version format ([57c657b](https://github.com/michaelschoenbaechler/parlwatch/commit/57c657b))
+* build: add script for production build ([b91d48a](https://github.com/michaelschoenbaechler/parlwatch/commit/b91d48a))
+* build: change xcode project name ([1885d1b](https://github.com/michaelschoenbaechler/parlwatch/commit/1885d1b))
+* build: update name, version and build number ([a626f6e](https://github.com/michaelschoenbaechler/parlwatch/commit/a626f6e))
+* fix: improve wording ([5dd79d3](https://github.com/michaelschoenbaechler/parlwatch/commit/5dd79d3))
+* fix: keyboard listener ([4f35f0a](https://github.com/michaelschoenbaechler/parlwatch/commit/4f35f0a))
+* fix: set global background color to white ([fbbe4dd](https://github.com/michaelschoenbaechler/parlwatch/commit/fbbe4dd))
+* fix(business): search suggestions ([9899f8d](https://github.com/michaelschoenbaechler/parlwatch/commit/9899f8d))
+* fix(business): set error to false after retry ([0c2d979](https://github.com/michaelschoenbaechler/parlwatch/commit/0c2d979))
+* fix(council-members): display canton flags ([94fd8fc](https://github.com/michaelschoenbaechler/parlwatch/commit/94fd8fc))
+* feat: add refresher in all list views ([3aa289b](https://github.com/michaelschoenbaechler/parlwatch/commit/3aa289b))
+* feat(business): add search suggestions ([d211f82](https://github.com/michaelschoenbaechler/parlwatch/commit/d211f82))
+* feat(business): display date of latest status change ([212f3c4](https://github.com/michaelschoenbaechler/parlwatch/commit/212f3c4))
+* feat(shared): extend text-card with subtitle input ([a79b359](https://github.com/michaelschoenbaechler/parlwatch/commit/a79b359))
+* feat(vote): make use of text-card subtitle ([bbef62e](https://github.com/michaelschoenbaechler/parlwatch/commit/bbef62e))
+* docs: update contributing guide ([ae81f5a](https://github.com/michaelschoenbaechler/parlwatch/commit/ae81f5a))
+* refactor(service): introduce swissparl service ([1760f97](https://github.com/michaelschoenbaechler/parlwatch/commit/1760f97))
+
+
+
+## 1.0.0-rc.1 (2023-09-09)
+
+* initial commit ([20d05e9](https://github.com/michaelschoenbaechler/parlwatch/commit/20d05e9))
+
+
+
