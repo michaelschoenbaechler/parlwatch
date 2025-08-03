@@ -1,4 +1,11 @@
-import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UntilDestroy } from '@ngneat/until-destroy';
@@ -14,11 +21,11 @@ import { CouncilMemberCardComponent } from '../../components/council-member-card
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
-import { CouncilMemberStore } from '../../council-member.store';
 import {
   CouncilMemberFilterForm,
   CouncilMemberFilterFormComponent
 } from '../../components/council-member-filter-form/council-member-filter-form.component';
+import { CouncilMemberStore } from '../../store/council-member/council-member.store';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +50,8 @@ export class MemberListPage implements OnInit {
   readonly store = inject(CouncilMemberStore);
   readonly router = inject(Router);
 
+  readonly viewModel = computed(() => this.store.councilMembersViewModel());
+
   isModalOpen = false;
   presentingElement = null;
   activeFilter: CouncilMemberFilterForm = {
@@ -54,7 +63,7 @@ export class MemberListPage implements OnInit {
 
   constructor() {
     effect(() => {
-      if (!this.store.isLoadingMore() && !this.store.isRefreshing()) {
+      if (!this.viewModel().isLoadingMore && !this.viewModel().isRefreshing) {
         this.refreshOrLoadMoreEvent?.target?.complete().catch(() => {
           console.error('Error completing refresh or load more event');
         });
@@ -63,8 +72,6 @@ export class MemberListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.store.loadCouncilMembers(this.store.query);
-
     this.presentingElement = document.querySelector('ion-router-outlet');
   }
 
@@ -80,7 +87,7 @@ export class MemberListPage implements OnInit {
   }
 
   retrySearch() {
-    this.store.loadCouncilMembers(this.store.query);
+    this.store.reloadMembers(this.store.query);
   }
 
   resetFilter() {

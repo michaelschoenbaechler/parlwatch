@@ -36,13 +36,13 @@
   </ion-header>
 
   <ion-content role="feed" class="ion-padding">
-    @if (!store.isLoading()) {
-      @if (!store.hasError()) {
-        @if (!store.hasNoContent()) {
+    @if (!viewModel().isLoading) {
+      @if (!viewModel().hasError) {
+        @if (!viewModel().noContent) {
           <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
             <ion-refresher-content></ion-refresher-content>
           </ion-refresher>
-          @for (councilMember of store.councilMembers(); track councilMember) {
+          @for (councilMember of viewModel().councilMembers; track councilMember) {
             <app-council-member-card
               [councilMember]="councilMember"
               (click)="onClickPerson(councilMember.ID)"
@@ -66,7 +66,7 @@
   </ion-content>
 
   <ion-modal
-    handle="true"
+    [handle]="true"
     [isOpen]="isModalOpen"
     [presentingElement]="presentingElement"
   >

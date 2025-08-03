@@ -12,10 +12,10 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (!store.isLoading()) {
-      @if (!store.hasError()) {
+    @if (!councilMemberViewModel().isLoading) {
+      @if (!councilMemberViewModel().hasError) {
         <app-council-member-card
-          [councilMember]="store.selectedCouncilMember()"
+          [councilMember]="councilMemberViewModel().councilMember"
         ></app-council-member-card>
         @if (getMandatesAsHtmlList()) {
           <app-text-card
@@ -30,19 +30,17 @@
           ></app-text-card>
         }
         <app-text-card title="{{ t('councilMember.detail.votingRecord') }}">
-          @if (!store.isLoadingVotingRecord()) {
-            @if (!store.hasVotingRecord()) {
+          @if (!votingRecordViewModel().isLoading) {
+            @if (votingRecordViewModel().hasNoVotingRecord) {
               <p class="no-votes-text">
                 <small>
                   {{ t('councilMember.detail.noVotes') }}
                 </small>
               </p>
-            }
-            @if (store.hasVotingRecord()) {
+            } @else {
               <ion-list>
-                @for (voting of store.selectedCouncilMemberVotingRecord(); track voting) {
+                @for (voting of votingRecordViewModel().votingRecord; track voting) {
                   <ion-item
-                    button
                     (click)="onClickBusiness(voting.BusinessNumber)"
                     [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
                   >
