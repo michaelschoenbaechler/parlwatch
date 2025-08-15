@@ -1,14 +1,10 @@
-import {
-  Component,
-  computed,
-  EventEmitter,
-  inject,
-  Output
-} from '@angular/core';
+import { Component, computed, inject, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { BusinessStore } from '../../business.store';
+import { BusinessTypesStore } from '../../store/business-types/business-types.store';
+import { BusinessStore } from '../../store/business/business.store';
+import { BusinessStatusesStore } from '../../store/business-status/business-statuses.store';
 
 @Component({
   selector: 'app-business-filter-form',
@@ -17,21 +13,33 @@ import { BusinessStore } from '../../business.store';
   imports: [FormsModule, IonicModule, ReactiveFormsModule, TranslocoDirective]
 })
 export class BusinessFilterFormComponent {
-  readonly store = inject(BusinessStore);
+  readonly businessStore = inject(BusinessStore);
+  readonly businessTypeStore = inject(BusinessTypesStore);
+  readonly businessStatusStore = inject(BusinessStatusesStore);
 
-  @Output() submitFilter = new EventEmitter<void>();
+  submitFilter = output<void>();
+
+  readonly businessTypeViewModel = computed(() =>
+    this.businessTypeStore.businessTypesViewModel()
+  );
+
+  readonly businessStatusViewModel = computed(() =>
+    this.businessStatusStore.businessStatusesViewModel()
+  );
 
   businessTypeCheckboxes = computed(() =>
-    this.store.businessTypes().map((type) => ({
+    this.businessTypeViewModel().types.map((type) => ({
       ...type,
-      checked: this.store.query().businessTypes.some((t) => t.ID === type.ID)
+      checked: this.businessStore
+        .query()
+        .businessTypes.some((t) => t.ID === type.ID)
     }))
   );
 
   businessStatusCheckboxes = computed(() =>
-    this.store.businessStatuses().map((status) => ({
+    this.businessStatusViewModel().statuses.map((status) => ({
       ...status,
-      checked: this.store
+      checked: this.businessStore
         .query()
         .businessStatuses.some(
           (s) => s.BusinessStatusId === status.BusinessStatusId
@@ -41,8 +49,8 @@ export class BusinessFilterFormComponent {
 
   onSubmit() {
     this.submitFilter.emit();
-    this.store.updateQuery({
-      ...this.store.query(),
+    this.businessStore.updateQuery({
+      ...this.businessStore.query(),
       businessTypes: this.businessTypeCheckboxes().filter(
         (type) => type.checked
       ),

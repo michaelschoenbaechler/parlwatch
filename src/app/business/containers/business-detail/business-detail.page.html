@@ -12,23 +12,23 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (!store.isLoading()) {
-      @if (!store.hasError()) {
-        <app-business-card [business]="store.selectedBusiness()">
-          @if (store.selectedBusiness().Votes.length > 0) {
+    @if (!viewModel().isLoading) {
+      @if (!viewModel().hasError) {
+        <app-business-card [business]="viewModel().business">
+          @if (viewModel().hasVotes) {
             <ion-button
               expand="block"
               size="small"
               fill="outline"
               [routerLink]="['/layout/votes']"
-              [queryParams]="{ BusinessShortNumber: store.selectedBusiness().BusinessShortNumber }"
+              [queryParams]="{ BusinessShortNumber: viewModel().business.BusinessShortNumber }"
             >{{ t('business.detail.toVotes') }}
             </ion-button
             >
           }
         </app-business-card>
         <app-business-detail-text
-          [business]="store.selectedBusiness()"
+          [business]="viewModel().business"
         ></app-business-detail-text>
       } @else {
         <app-error-screen (retry)="retry()"></app-error-screen>

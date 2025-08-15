@@ -19,16 +19,16 @@
         name="filter-outline"
       ></ion-icon>
     </ion-toolbar>
-    @if (store.query().businessTypes.length > 0 || store.query().businessStatuses.length > 0) {
+    @if (businessStore.query().businessTypes.length > 0 || businessStore.query().businessStatuses.length > 0) {
       <div
         class="active-filter-wrapper"
       >
-        @for (businessType of store.query().businessTypes; track businessType) {
+        @for (businessType of businessStore.query().businessTypes; track businessType) {
           <ion-chip>
             <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
           </ion-chip>
         }
-        @for (businessStatus of store.query().businessStatuses; track businessStatus) {
+        @for (businessStatus of businessStore.query().businessStatuses; track businessStatus) {
           <ion-chip>
             <ion-label>{{ businessStatus.BusinessStatusName }}</ion-label>
           </ion-chip>
@@ -50,13 +50,13 @@
   </ion-header>
 
   <ion-content role="feed" class="ion-padding">
-    @if (!store.isLoading()) {
-      @if (!store.hasError()) {
-        @if (!store.hasNoContent()) {
+    @if (!viewModel().isLoading) {
+      @if (!viewModel().hasError) {
+        @if (!viewModel().noContent) {
           <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
             <ion-refresher-content></ion-refresher-content>
           </ion-refresher>
-          @for (business of store.businesses(); track business) {
+          @for (business of viewModel().businesses; track business) {
             <app-business-card
               [business]="business"
               (click)="onClickBusiness(business.ID)"
@@ -80,7 +80,6 @@
   </ion-content>
 
   <ion-modal
-    handle="true"
     [isOpen]="isModalOpen"
     [presentingElement]="presentingElement"
   >
@@ -94,7 +93,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        @if (!this.store.hasFilterError()) {
+        @if (!hasFilterError()) {
           <app-business-filter-form (submitFilter)="toggleFilterModal()"></app-business-filter-form>
         } @else {
           <app-error-screen (retry)="retrySearch()"></app-error-screen>

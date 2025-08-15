@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   OnInit,
@@ -21,9 +22,11 @@ import { BusinessCardComponent } from '../../components/business-card/business-c
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
-import { BusinessStore } from '../../business.store';
 import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
 import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
+import { BusinessStore } from '../../store/business/business.store';
+import { BusinessTypesStore } from '../../store/business-types/business-types.store';
+import { BusinessStatusesStore } from '../../store/business-status/business-statuses.store';
 import { SearchSuggestions } from './search-suggestions';
 
 @Component({
@@ -46,9 +49,20 @@ import { SearchSuggestions } from './search-suggestions';
 export class BusinessListPage implements OnInit {
   @ViewChild('searchBar', { static: false }) searchBar: IonSearchbar;
 
-  readonly store = inject(BusinessStore);
+  readonly businessStore = inject(BusinessStore);
+  readonly businessTypesStore = inject(BusinessTypesStore);
+  readonly businessStatusesStore = inject(BusinessStatusesStore);
   readonly router = inject(Router);
   readonly platform = inject(Platform);
+
+  readonly viewModel = computed(() =>
+    this.businessStore.businessListViewModel()
+  );
+  readonly hasFilterError = computed(
+    () =>
+      this.businessTypesStore.businessTypesViewModel().hasError ||
+      this.businessStatusesStore.businessStatusesViewModel().hasError
+  );
 
   isModalOpen = false;
   presentingElement = null;
@@ -60,7 +74,7 @@ export class BusinessListPage implements OnInit {
 
   constructor() {
     effect(() => {
-      if (!this.store.isLoadingMore() && !this.store.isRefreshing()) {
+      if (!this.viewModel().isLoadingMore && !this.viewModel().isRefreshing) {
         this.refreshOrLoadMoreEvent?.target?.complete().catch(() => {
           console.error('Error completing refresh or load more event');
         });
@@ -70,9 +84,6 @@ export class BusinessListPage implements OnInit {
 
   ngOnInit() {
     this.addKeyBoardListener();
-
-    this.store.loadBusinesses(this.store.query);
-
     this.presentingElement = document.querySelector('ion-router-outlet');
   }
 
@@ -92,8 +103,8 @@ export class BusinessListPage implements OnInit {
 
   onSearch(event: any) {
     this.showSuggestedSearches = false;
-    this.store.updateQuery({
-      ...this.store.query(),
+    this.businessStore.updateQuery({
+      ...this.businessStore.query(),
       searchTerm: event.target.value
     });
   }
@@ -101,29 +112,29 @@ export class BusinessListPage implements OnInit {
   onSuggestedSearchTopic(searchTerm: string) {
     this.showSuggestedSearches = false;
     this.searchBar.value = searchTerm;
-    this.store.updateQuery({
-      ...this.store.query(),
+    this.businessStore.updateQuery({
+      ...this.businessStore.query(),
       searchTerm
     });
   }
 
   retrySearch() {
-    this.store.loadBusinesses(this.store.query());
+    this.businessStore.reloadBusinesses(this.businessStore.query());
   }
 
   resetFilter() {
     this.searchBar.value = '';
-    this.store.resetQuery();
+    this.businessStore.resetQuery();
   }
 
   distanceReached(event: InfiniteScrollCustomEvent) {
     this.refreshOrLoadMoreEvent = event;
-    this.store.loadMore();
+    this.businessStore.loadMore();
   }
 
   handleRefresh(event: RefresherCustomEvent) {
     this.refreshOrLoadMoreEvent = event;
-    this.store.refresh();
+    this.businessStore.refresh();
   }
 
   onClickBusiness(id: number) {
