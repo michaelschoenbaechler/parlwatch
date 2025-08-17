@@ -12,6 +12,7 @@ import { filter, pipe, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { MemberCouncil } from 'swissparl';
 import { tapResponse } from '@ngrx/operators';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   CouncilMemberFilter,
   CouncilMemberService
@@ -54,6 +55,7 @@ const initialState: CouncilMemberState = {
 
 export const CouncilMemberStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('CouncilMemberStore'),
   withState(initialState),
   withComputed((store) => {
     return {

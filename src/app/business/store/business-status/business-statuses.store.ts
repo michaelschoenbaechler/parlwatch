@@ -12,6 +12,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 import { BusinessStatus } from 'swissparl';
 import * as _ from 'lodash';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
@@ -34,6 +35,7 @@ const initialBusinessStatusesState: BusinessStatusesSlice = {
 
 export const BusinessStatusesStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('BusinessStatusesStore'),
   withState(initialBusinessStatusesState),
   withComputed((store) => {
     return {

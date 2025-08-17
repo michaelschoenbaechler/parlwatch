@@ -1,9 +1,9 @@
 import {
+  patchState,
   signalStore,
-  withState,
   withComputed,
   withMethods,
-  patchState
+  withState
 } from '@ngrx/signals';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -11,6 +11,7 @@ import { pipe, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 import { BusinessType } from 'swissparl';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
@@ -33,6 +34,7 @@ const initialBusinessTypesState: BusinessTypesState = {
 
 export const BusinessTypesStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('BusinessTypesStore'),
   withState(initialBusinessTypesState),
   withComputed((store) => {
     return {

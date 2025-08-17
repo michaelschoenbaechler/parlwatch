@@ -11,6 +11,7 @@ import { pipe, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
@@ -34,6 +35,7 @@ const initialVotingRecordState: VotingRecordSlice = {
 
 export const VotingRecordStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('VotingRecordStore'),
   withState(initialVotingRecordState),
   withComputed((store) => {
     return {

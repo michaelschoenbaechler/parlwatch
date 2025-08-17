@@ -9,7 +9,8 @@ import {
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { filter, pipe, tap } from 'rxjs';
-import { mergeMap, switchMap } from 'rxjs/operators';
+import { switchMap, mergeMap } from 'rxjs/operators';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { Vote } from 'swissparl';
 import { tapResponse } from '@ngrx/operators';
 import {
@@ -24,8 +25,8 @@ import {
   createRefreshState,
   createSuccessVotesAppendRequestState,
   createSuccessVotesRequestState,
-  createUpsertDetailedVoteState,
-  patchQueryState
+  patchQueryState,
+  createUpsertDetailedVoteState
 } from './vote.updaters';
 import {
   createVoteDetailVm,
@@ -51,6 +52,7 @@ const initialState: VoteSlice = {
 
 export const VoteStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('VoteStore'),
   withState(initialState),
   withComputed((store) => {
     return {

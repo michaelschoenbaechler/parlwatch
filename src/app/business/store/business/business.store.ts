@@ -1,10 +1,10 @@
 import {
+  getState,
+  patchState,
   signalStore,
-  withState,
   withComputed,
   withMethods,
-  patchState,
-  getState
+  withState
 } from '@ngrx/signals';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -12,6 +12,7 @@ import { filter, pipe, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 import { Business } from 'swissparl';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
@@ -54,6 +55,7 @@ const initialState: BusinessSlice = {
 
 export const BusinessStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('BusinessStore'),
   withState(initialState),
   withComputed((store) => {
     return {
