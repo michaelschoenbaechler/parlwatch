@@ -4,20 +4,18 @@
       <ion-title>{{ t('business.list.title') }}</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar
-        #searchBar
+      <ion-searchbar #searchBar
         appHideKeyboardOnEnter
         color="light"
         enterkeyhint="search"
         placeholder="{{ t('common.search.placeholder') }}"
         (ionChange)="onSearch($event)"
-      ></ion-searchbar>
-      <ion-icon
-        (click)="toggleFilterModal()"
+       />
+      <ion-icon (click)="toggleFilterModal()"
         slot="end"
         size="large"
         name="filter-outline"
-      ></ion-icon>
+       />
     </ion-toolbar>
     @if (businessStore.query().businessTypes.length > 0 || businessStore.query().businessStatuses.length > 0) {
       <div
@@ -54,28 +52,27 @@
       @if (!viewModel().hasError) {
         @if (!viewModel().noContent) {
           <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-            <ion-refresher-content></ion-refresher-content>
+            <ion-refresher-content />
           </ion-refresher>
           @for (business of viewModel().businesses; track business) {
-            <app-business-card
-              [business]="business"
+            <app-business-card [business]="business"
               (click)="onClickBusiness(business.ID)"
-            ></app-business-card>
+             />
           }
           <ion-infinite-scroll
             threshold="100px"
             (ionInfinite)="distanceReached($event)"
           >
-            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            <ion-infinite-scroll-content />
           </ion-infinite-scroll>
         } @else {
-          <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+          <app-no-content-screen (resetFilter)="resetFilter()" />
         }
       } @else {
-        <app-error-screen (retry)="retrySearch()"></app-error-screen>
+        <app-error-screen (retry)="retrySearch()" />
       }
     } @else {
-      <app-loading-screen></app-loading-screen>
+      <app-loading-screen />
     }
   </ion-content>
 
@@ -94,9 +91,9 @@
       </ion-header>
       <ion-content class="ion-padding">
         @if (!hasFilterError()) {
-          <app-business-filter-form (submitFilter)="toggleFilterModal()"></app-business-filter-form>
+          <app-business-filter-form (submitFilter)="toggleFilterModal()" />
         } @else {
-          <app-error-screen (retry)="retrySearch()"></app-error-screen>
+          <app-error-screen (retry)="retrySearch()" />
         }
       </ion-content>
     </ng-template>

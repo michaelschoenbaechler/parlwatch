@@ -2,10 +2,9 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button
-          text="Zurück"
+        <ion-back-button text="Zurück"
           defaultHref="layout/votes"
-        ></ion-back-button>
+         />
       </ion-buttons>
       <ion-title>{{ t('title') }}</ion-title>
     </ion-toolbar>
@@ -43,14 +42,13 @@
                 routerLink="/council-member/detail/{{ voting.PersonNumber }}"
                 [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
               >
-                <ion-icon
-                  size="small"
+                <ion-icon size="small"
                   [color]="
                 voting.Decision === 1 ? 'success' : voting.Decision === 2 ? 'danger' : 'medium'"
                   [name]="
                 voting.Decision === 1 ? 'checkmark-outline' : voting.Decision === 2 ? 'close-outline' : 'remove-outline'"
                   slot="start"
-                ></ion-icon>
+                 />
                 <ion-label>
                   <h3>{{ voting.FirstName }} {{ voting.LastName }}</h3>
                   <p>
@@ -64,10 +62,10 @@
           </ion-list>
         </app-text-card>
       } @else {
-        <app-error-screen (retry)="retrySearch()"></app-error-screen>
+        <app-error-screen (retry)="retrySearch()" />
       }
     } @else {
-      <app-loading-screen></app-loading-screen>
+      <app-loading-screen />
     }
   </ion-content>
 </ng-container>

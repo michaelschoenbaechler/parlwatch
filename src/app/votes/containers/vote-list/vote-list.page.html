@@ -4,14 +4,13 @@
       <ion-title>{{ t('votes.voteList.title') }}</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar
-        appHideKeyboardOnEnter
+      <ion-searchbar appHideKeyboardOnEnter
         placeholder="{{ t('common.search.placeholder') }}"
         color="light"
         enterkeyhint="search"
         [value]="store.query().searchTerm"
         (ionChange)="onSearch($event)"
-      ></ion-searchbar>
+       />
     </ion-toolbar>
   </ion-header>
 
@@ -20,28 +19,27 @@
       @if (!viewModel().hasError) {
         @if (!viewModel().noContent) {
           <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-            <ion-refresher-content></ion-refresher-content>
+            <ion-refresher-content />
           </ion-refresher>
           @for (vote of viewModel().votes; track vote) {
-            <app-vote-card
-              [vote]="vote"
+            <app-vote-card [vote]="vote"
               (click)="onClickVote(vote.ID)"
-            ></app-vote-card>
+             />
           }
           <ion-infinite-scroll
             threshold="100px"
             (ionInfinite)="distanceReached($event)"
           >
-            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            <ion-infinite-scroll-content />
           </ion-infinite-scroll>
         } @else {
-          <app-no-content-screen (resetFilter)="resetFilter()"></app-no-content-screen>
+          <app-no-content-screen (resetFilter)="resetFilter()" />
         }
       } @else {
-        <app-error-screen (retry)="retrySearch()"></app-error-screen>
+        <app-error-screen (retry)="retrySearch()" />
       }
     } @else {
-      <app-loading-screen></app-loading-screen>
+      <app-loading-screen />
     }
   </ion-content>
 </ng-container>

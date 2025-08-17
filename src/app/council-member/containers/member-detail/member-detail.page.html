@@ -2,10 +2,9 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button
-          text="{{ t('councilMember.detail.back') }}"
+        <ion-back-button text="{{ t('councilMember.detail.back') }}"
           defaultHref="layout/council-member"
-        ></ion-back-button>
+         />
       </ion-buttons>
       <ion-title>{{ t('councilMember.detail.title') }}</ion-title>
     </ion-toolbar>
@@ -14,20 +13,17 @@
   <ion-content class="ion-padding">
     @if (!councilMemberViewModel().isLoading) {
       @if (!councilMemberViewModel().hasError) {
-        <app-council-member-card
-          [councilMember]="councilMemberViewModel().councilMember"
-        ></app-council-member-card>
+        <app-council-member-card [councilMember]="councilMemberViewModel().councilMember"
+         />
         @if (getMandatesAsHtmlList()) {
-          <app-text-card
-            title="{{ t('councilMember.detail.mandates') }}"
+          <app-text-card title="{{ t('councilMember.detail.mandates') }}"
             [HtmlText]="getMandatesAsHtmlList()"
-          ></app-text-card>
+           />
         }
         @if (getAdditionalActivitiesAsHtmlList()) {
-          <app-text-card
-            title="{{ t('councilMember.detail.otherActivities') }}"
+          <app-text-card title="{{ t('councilMember.detail.otherActivities') }}"
             [HtmlText]="getAdditionalActivitiesAsHtmlList()"
-          ></app-text-card>
+           />
         }
         <app-text-card title="{{ t('councilMember.detail.votingRecord') }}">
           @if (!votingRecordViewModel().isLoading) {
@@ -44,8 +40,7 @@
                     (click)="onClickBusiness(voting.BusinessNumber)"
                     [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
                   >
-                    <ion-icon
-                      size="small"
+                    <ion-icon size="small"
                       [color]="
                   voting.Decision === 1
                     ? 'success'
@@ -61,7 +56,7 @@
                     : 'remove-outline'
                 "
                       slot="start"
-                    ></ion-icon>
+                     />
                     <ion-label class="ion-text-wrap">
                       {{ voting.BusinessTitle }}
                       <p class="ion-color-danger">
@@ -74,15 +69,15 @@
             }
           } @else {
             <div class="loading-voting-record-container">
-              <ion-spinner class="spinner"></ion-spinner>
+              <ion-spinner class="spinner" />
             </div>
           }
         </app-text-card>
       } @else {
-        <app-error-screen (retry)="retry()"></app-error-screen>
+        <app-error-screen (retry)="retry()" />
       }
     } @else {
-      <app-loading-screen></app-loading-screen>
+      <app-loading-screen />
     }
   </ion-content>
 </ng-container>

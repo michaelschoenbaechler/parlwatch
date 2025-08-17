@@ -2,10 +2,9 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button
-          text="Zurück"
+        <ion-back-button text="Zurück"
           defaultHref="layout/business"
-        ></ion-back-button>
+         />
       </ion-buttons>
       <ion-title>{{ t('business.detail.title') }}</ion-title>
     </ion-toolbar>
@@ -27,14 +26,13 @@
             >
           }
         </app-business-card>
-        <app-business-detail-text
-          [business]="viewModel().business"
-        ></app-business-detail-text>
+        <app-business-detail-text [business]="viewModel().business"
+         />
       } @else {
-        <app-error-screen (retry)="retry()"></app-error-screen>
+        <app-error-screen (retry)="retry()" />
       }
     } @else {
-      <app-loading-screen></app-loading-screen>
+      <app-loading-screen />
     }
   </ion-content>
 </ng-container>

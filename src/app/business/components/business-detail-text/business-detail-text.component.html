@@ -1,65 +1,56 @@
 <ng-container *transloco="let t; prefix:'business.detailText'">
   @if (business().Description) {
-    <app-text-card
-      [title]="t('description')"
+    <app-text-card [title]="t('description')"
       [HtmlText]="business().Description"
-    ></app-text-card>
+     />
   }
 
   @if (business().InitialSituation) {
-    <app-text-card
-      [title]="t('initialSituation')"
+    <app-text-card [title]="t('initialSituation')"
       [HtmlText]="business().InitialSituation"
-    ></app-text-card>
+     />
   }
 
   @if (business().Proceedings) {
-    <app-text-card
-      [title]="t('proceedings')"
+    <app-text-card [title]="t('proceedings')"
       [HtmlText]="business().Proceedings"
-    ></app-text-card>
+     />
   }
 
   @if (business().DraftText) {
-    <app-text-card
-      [title]="t('draftText')"
+    <app-text-card [title]="t('draftText')"
       [HtmlText]="business().DraftText"
-    ></app-text-card>
+     />
   }
 
   @if (business().SubmittedText) {
-    <app-text-card
-      [title]="t('submittedText')"
+    <app-text-card [title]="t('submittedText')"
       [HtmlText]="business().SubmittedText"
-    ></app-text-card>
+     />
   }
 
   @if (business().ReasonText) {
-    <app-text-card
-      [title]="t('reasonText')"
+    <app-text-card [title]="t('reasonText')"
       [HtmlText]="business().ReasonText"
-    ></app-text-card>
+     />
   }
 
   @if (business().DocumentationText) {
-    <app-text-card
-      [title]="t('documentationText')"
+    <app-text-card [title]="t('documentationText')"
       [HtmlText]="business().DocumentationText"
-    ></app-text-card>
+     />
   }
 
   @if (business().MotionText) {
-    <app-text-card
-      [title]="t('motionText')"
+    <app-text-card [title]="t('motionText')"
       [HtmlText]="business().MotionText"
-    ></app-text-card>
+     />
   }
 
   @if (business().FederalCouncilResponseText) {
-    <app-text-card
-      [title]="t('federalCouncilResponseText')"
+    <app-text-card [title]="t('federalCouncilResponseText')"
       [HtmlText]="business().FederalCouncilResponseText"
-    ></app-text-card>
+     />
   }
 
   <app-text-card
@@ -72,8 +63,7 @@
       fill="outline"
       (click)="openFurtherInformation()"
     >{{ t('business.detailText.additionalInformation.button') }}
-      <ion-icon slot="end" name="link-outline"></ion-icon
-      >
+      <ion-icon slot="end" name="link-outline" />
     </ion-button>
   </app-text-card>
 </ng-container>
