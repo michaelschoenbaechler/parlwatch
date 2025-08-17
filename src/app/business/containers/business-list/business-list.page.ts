@@ -5,7 +5,7 @@ import {
   effect,
   inject,
   OnInit,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -47,7 +47,7 @@ import { SearchSuggestions } from './search-suggestions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusinessListPage implements OnInit {
-  @ViewChild('searchBar', { static: false }) searchBar: IonSearchbar;
+  readonly searchBar = viewChild<IonSearchbar>('searchBar');
 
   readonly businessStore = inject(BusinessStore);
   readonly businessTypesStore = inject(BusinessTypesStore);
@@ -111,7 +111,7 @@ export class BusinessListPage implements OnInit {
 
   onSuggestedSearchTopic(searchTerm: string) {
     this.showSuggestedSearches = false;
-    this.searchBar.value = searchTerm;
+    this.searchBar().value = searchTerm;
     this.businessStore.updateQuery({
       ...this.businessStore.query(),
       searchTerm
@@ -123,7 +123,7 @@ export class BusinessListPage implements OnInit {
   }
 
   resetFilter() {
-    this.searchBar.value = '';
+    this.searchBar().value = '';
     this.businessStore.resetQuery();
   }
 

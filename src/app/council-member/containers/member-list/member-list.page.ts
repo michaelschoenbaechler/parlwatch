@@ -4,7 +4,7 @@ import {
   effect,
   inject,
   OnInit,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -45,7 +45,7 @@ import { CouncilMemberStore } from '../../store/council-member/council-member.st
   ]
 })
 export class MemberListPage implements OnInit {
-  @ViewChild('searchBar', { static: false }) searchBar: IonSearchbar;
+  readonly searchBar = viewChild<IonSearchbar>('searchBar');
 
   readonly store = inject(CouncilMemberStore);
   readonly router = inject(Router);
@@ -91,7 +91,7 @@ export class MemberListPage implements OnInit {
   }
 
   resetFilter() {
-    this.searchBar.value = '';
+    this.searchBar().value = '';
     this.store.resetQuery();
   }
 
