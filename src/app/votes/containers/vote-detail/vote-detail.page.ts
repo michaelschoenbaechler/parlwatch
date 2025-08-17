@@ -1,19 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, computed } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Vote } from 'swissparl';
-import { catchError, first, switchMap, tap } from 'rxjs/operators';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { from, of, Subject } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { VoteService } from '../../services/votes.service';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { VoteStore, VotingDecisionFilter } from '../../store/vote';
 
-@UntilDestroy()
 @Component({
   selector: 'app-vote-detail',
   templateUrl: './vote-detail.page.html',
@@ -30,17 +26,18 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
   ]
 })
 export class VoteDetailPage implements OnInit {
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private voteService = inject(VoteService);
+  readonly router = inject(Router);
+  readonly route = inject(ActivatedRoute);
+  readonly store = inject(VoteStore);
 
-  vote: Vote = null;
-  loading = true;
-  error = false;
-  votingsFiltered = [];
+  voteFilterControl = new FormControl<VotingDecisionFilter>('all');
+  private readonly voteFilter = toSignal(this.voteFilterControl.valueChanges, {
+    initialValue: this.voteFilterControl.value as VotingDecisionFilter
+  });
 
-  trigger$ = new Subject<void>();
-  voteFilterControl = new FormControl('all');
+  readonly viewModel = computed(() =>
+    this.store.voteDetailViewModel(this.voteFilter() ?? 'all')
+  );
 
   partyMappingDE = {
     'Sozialdemokratische Fraktion': 'SP',
@@ -52,57 +49,11 @@ export class VoteDetailPage implements OnInit {
   };
 
   ngOnInit() {
-    from(this.trigger$)
-      .pipe(
-        untilDestroyed(this),
-        tap(() => (this.loading = true)),
-        switchMap(() =>
-          this.voteService
-            .getVote(parseInt(this.route.snapshot.params.id))
-            .pipe(
-              first(),
-              catchError(() => {
-                this.error = true;
-                this.loading = false;
-                return of(null);
-              })
-            )
-        )
-      )
-      .subscribe((vote) => {
-        if (vote === null) {
-          return;
-        }
-        this.vote = vote;
-        this.votingsFiltered = vote.Votings;
-        this.loading = false;
-      });
-
-    this.voteFilterControl.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe((value) => {
-        if (value === 'all') {
-          this.votingsFiltered = this.vote.Votings;
-        } else {
-          this.votingsFiltered = this.vote.Votings.filter((voting) => {
-            return {
-              yes: () => voting.Decision === 1,
-              no: () => voting.Decision === 2,
-              'no-vote': () => voting.Decision !== 1 && voting.Decision !== 2
-            }[value]();
-          });
-        }
-      });
-  }
-
-  ionViewDidEnter() {
-    if (this.vote === null) {
-      this.trigger$.next();
-    }
+    this.store.selectVote(parseInt(this.route.snapshot.params.id));
   }
 
   retrySearch() {
-    this.trigger$.next();
+    this.store.selectVote(parseInt(this.route.snapshot.params.id));
   }
 
   onClickPerson(id: number) {
@@ -110,6 +61,9 @@ export class VoteDetailPage implements OnInit {
   }
 
   goToBusiness() {
-    this.router.navigate(['business', 'detail', this.vote.BusinessNumber]);
+    const vm = this.viewModel();
+    if (vm.vote) {
+      this.router.navigate(['business', 'detail', vm.vote.BusinessNumber]);
+    }
   }
 }

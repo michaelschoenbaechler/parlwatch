@@ -1,16 +1,23 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, first, switchMap, tap } from 'rxjs/operators';
-import { Vote } from 'swissparl';
-import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
-import { IonicModule, IonSearchbar } from '@ionic/angular';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject
+} from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  InfiniteScrollCustomEvent,
+  IonicModule,
+  RefresherCustomEvent
+} from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { VoteService } from '../../services/votes.service';
 import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
+import { VoteStore } from '../../store/vote';
 
 @Component({
   selector: 'app-vote-list',
@@ -24,137 +31,53 @@ import { NoContentScreenComponent } from '../../../shared/components/no-content-
     ErrorScreenComponent,
     NoContentScreenComponent,
     TranslocoDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VoteListPage implements OnInit {
-  private voteService = inject(VoteService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+export class VoteListPage {
+  readonly store = inject(VoteStore);
+  readonly router = inject(Router);
 
-  top = 10;
-  skip = 0;
-  votes: Vote[] = [];
-  loading = true;
-  error = false;
-  noContent = false;
+  readonly viewModel = computed(() => this.store.votesListViewModel());
 
-  searchTerm$ = new BehaviorSubject<string>('');
-  trigger$ = new Subject<void>();
+  refreshOrLoadMoreEvent: InfiniteScrollCustomEvent | RefresherCustomEvent;
 
-  @ViewChild('searchBar', { static: false }) searchBar: IonSearchbar;
-
-  ngOnInit() {
-    combineLatest([this.searchTerm$, this.trigger$])
-      .pipe(
-        tap(() => {
-          this.skip = 0;
-          this.error = false;
-          this.loading = true;
-        }),
-        switchMap(([searchTerm]) =>
-          this.voteService
-            .getVotes({
-              top: this.top,
-              skip: this.skip,
-              searchTerm
-            })
-            .pipe(
-              catchError(() => {
-                this.error = true;
-                this.loading = false;
-                return of(null);
-              })
-            )
-        )
-      )
-      .subscribe((votes) => {
-        if (votes === null) {
-          return;
-        }
-        this.votes = votes;
-        this.noContent = votes.length === 0;
-        this.loading = false;
-      });
-  }
-
-  ionViewDidEnter() {
-    // trigger search again if we are coming back from another page and no items have been loaded yet
-    if (this.votes.length === 0) {
-      this.trigger$.next();
-    }
-
-    const businessShortNumber =
-      +this.route.snapshot.queryParams['BusinessShortNumber'];
-    if (businessShortNumber) {
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { BusinessShortNumber: null },
-        queryParamsHandling: 'merge'
-      });
-      this.searchBar.value = businessShortNumber.toString();
-      this.searchTerm$.next(businessShortNumber.toString());
-    }
+  constructor() {
+    effect(() => {
+      if (!this.viewModel().isLoadingMore && !this.viewModel().isRefreshing) {
+        this.refreshOrLoadMoreEvent?.target?.complete().catch(() => {
+          console.error('Error completing refresh or load more event');
+        });
+      }
+    });
   }
 
   retrySearch() {
-    this.trigger$.next();
+    this.store.reloadVotes(this.store.query());
   }
 
   onSearch(event: any) {
-    this.searchTerm$.next(event.target.value);
+    this.store.updateQuery({
+      ...this.store.query(),
+      searchTerm: event.target.value
+    });
   }
 
   resetFilter() {
-    this.searchTerm$.next('');
-    this.searchBar.value = '';
+    this.store.resetQuery();
   }
 
-  distanceReached(event: any) {
-    this.skip += this.top;
-    this.fetchVotes().subscribe((newVotes) => {
-      if (newVotes === null) {
-        return;
-      }
-      this.votes = [...this.votes, ...newVotes];
-      event.target.complete();
-    });
+  distanceReached(event: InfiniteScrollCustomEvent) {
+    this.refreshOrLoadMoreEvent = event;
+    this.store.loadMore();
   }
 
-  handleRefresh(event) {
-    this.skip = 0;
-    this.fetchVotes().subscribe((votes) => {
-      if (votes === null) {
-        return;
-      }
-      this.votes = votes;
-      event.target.complete();
-    });
-  }
-
-  fetchVotes() {
-    return this.voteService
-      .getVotes({
-        top: this.top,
-        skip: this.skip,
-        searchTerm: this.searchTerm$.getValue()
-      })
-      .pipe(
-        first(),
-        catchError(() => {
-          this.error = true;
-          return of(null);
-        })
-      );
+  handleRefresh(event: RefresherCustomEvent) {
+    this.refreshOrLoadMoreEvent = event;
+    this.store.refresh();
   }
 
   onClickVote(id: number) {
     this.router.navigate(['votes', 'detail', id]);
-  }
-
-  getSubtitle(vote: Vote) {
-    if (vote.Subject) {
-      return `${vote.SessionName} - ${vote.Subject}`;
-    }
-    return vote.SessionName;
   }
 }

@@ -12,9 +12,9 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (!loading) {
-      @if (!error) {
-        <app-vote-card [vote]="vote">
+    @if (viewModel() && !viewModel().isLoading) {
+      @if (!viewModel().hasError) {
+        <app-vote-card [vote]="viewModel().vote">
           <ion-button
             expand="block"
             size="small"
@@ -38,7 +38,7 @@
             <ion-select-option value="no-vote">{{ t('filter.noVote') }}</ion-select-option>
           </ion-select>
           <ion-list>
-            @for (voting of votingsFiltered; track voting) {
+            @for (voting of viewModel().votings; track voting) {
               <ion-item
                 routerLink="/council-member/detail/{{ voting.PersonNumber }}"
                 [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
@@ -64,11 +64,10 @@
           </ion-list>
         </app-text-card>
       } @else {
-        <app-error-screen (click)="retrySearch()"></app-error-screen>
+        <app-error-screen (retry)="retrySearch()"></app-error-screen>
       }
     } @else {
       <app-loading-screen></app-loading-screen>
     }
   </ion-content>
 </ng-container>
-

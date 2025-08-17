@@ -5,24 +5,24 @@
     </ion-toolbar>
     <ion-toolbar>
       <ion-searchbar
-        #searchBar
         appHideKeyboardOnEnter
         placeholder="{{ t('common.search.placeholder') }}"
         color="light"
         enterkeyhint="search"
+        [value]="store.query().searchTerm"
         (ionChange)="onSearch($event)"
       ></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 
   <ion-content role="feed" class="ion-padding">
-    @if (!loading) {
-      @if (!error) {
-        @if (!noContent) {
+    @if (!viewModel().isLoading) {
+      @if (!viewModel().hasError) {
+        @if (!viewModel().noContent) {
           <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
             <ion-refresher-content></ion-refresher-content>
           </ion-refresher>
-          @for (vote of votes; track vote) {
+          @for (vote of viewModel().votes; track vote) {
             <app-vote-card
               [vote]="vote"
               (click)="onClickVote(vote.ID)"
@@ -45,6 +45,3 @@
     }
   </ion-content>
 </ng-container>
-
-
-

@@ -1,13 +1,17 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnInit
+} from '@angular/core';
 import { Vote, Voting } from 'swissparl';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { map } from 'rxjs/operators';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { VoteService } from '../../services/votes.service';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
+import { VoteStore } from '../../store/vote';
 
-@UntilDestroy()
 @Component({
   selector: 'app-vote-card',
   templateUrl: './vote-card.component.html',
@@ -15,29 +19,18 @@ import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
   imports: [TextCardComponent, ODataDateTimePipe, TranslocoDirective]
 })
 export class VoteCardComponent implements OnInit {
-  private voteService = inject(VoteService);
+  readonly store = inject(VoteStore);
 
-  @Input() vote: Vote;
+  vote = input.required<Vote>();
 
-  voteCount: { decision: string; percentage: number }[] = [];
-
-  ngOnInit() {
-    this.voteService
-      .getVotings(this.vote.ID)
-      .pipe(
-        untilDestroyed(this),
-        map((votings) =>
-          this.calculatePercentageOfDecision(
-            this.getVoteCountByDecision(votings)
-          )
-        )
-      )
-      .subscribe((voteCountsByDecision) => {
-        this.voteCount = voteCountsByDecision;
-      });
+  ngOnInit(): void {
+    this.store.loadVoting(this.vote().ID);
   }
 
-  getVoteCountByDecision(votings: Voting[]): { [key: string]: number } {
+  private voteCountsByDecision = computed(() => {
+    const raw = this.vote()?.Votings as unknown;
+    const votings = Array.isArray(raw) ? (raw as Voting[]) : [];
+
     const accumulator = votings.reduce(
       (acc, voting) => {
         const vote = { '1': 'yes', '2': 'no' }[voting.Decision] || 'no-vote';
@@ -47,32 +40,29 @@ export class VoteCardComponent implements OnInit {
       {} as { [key: string]: number }
     );
 
-    // sort
     return {
       yes: accumulator['yes'] || 0,
       no: accumulator['no'] || 0,
       'no-vote': accumulator['no-vote'] || 0
-    };
-  }
+    } as const;
+  });
 
-  calculatePercentageOfDecision(voteCountsByDecision: {
-    [key: string]: number;
-  }) {
-    const total = Object.values(voteCountsByDecision).reduce(
-      (acc, count) => acc + count
-    );
-    return Object.keys(voteCountsByDecision).map((decision) => ({
-      decision,
-      percentage: (voteCountsByDecision[decision] / total) * 100
-    }));
-  }
+  voteCount = computed(() => {
+    const counts = this.voteCountsByDecision();
+    const total = Object.values(counts).reduce((acc, c) => acc + c, 0);
+    const safeDiv = (n: number) => (total > 0 ? (n / total) * 100 : 0);
+    return [
+      { decision: 'yes', percentage: safeDiv(counts['yes']) },
+      { decision: 'no', percentage: safeDiv(counts['no']) },
+      { decision: 'no-vote', percentage: safeDiv(counts['no-vote']) }
+    ];
+  });
 
   getLeftPosition(decision: string): number {
+    const parts = this.voteCount();
     let position = 0;
-    for (const vote of this.voteCount) {
-      if (vote.decision === decision) {
-        break;
-      }
+    for (const vote of parts) {
+      if (vote.decision === decision) break;
       position += vote.percentage;
     }
     return position;

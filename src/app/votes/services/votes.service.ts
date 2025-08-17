@@ -5,6 +5,12 @@ import { Vote, Voting } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 
+export type VoteFilter = {
+  top: number;
+  skip?: number;
+  searchTerm?: string;
+};
+
 @Injectable({
   providedIn: 'root'
 })
