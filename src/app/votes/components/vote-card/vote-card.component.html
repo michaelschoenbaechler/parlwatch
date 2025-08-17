@@ -1,8 +1,9 @@
 <ng-container *transloco="let t; prefix: 'votes.voteCard'">
   <app-text-card
     [title]="
-    vote().BusinessShortNumber + (vote().Subject ? ' - ' + vote().Subject : '')
-  "
+      vote().BusinessShortNumber +
+      (vote().Subject ? ' - ' + vote().Subject : '')
+    "
     [subtitle]="t('votedOn', { date: vote().VoteEnd | oDataDateTime })"
     [HtmlText]="vote().BillTitle ? vote().BillTitle : vote().BusinessTitle"
   >

@@ -4,61 +4,60 @@
       <ion-title>{{ t('councilMember.list.title') }}</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar #searchBar
+      <ion-searchbar
+        #searchBar
         appHideKeyboardOnEnter
         color="light"
         placeholder="{{ t('common.search.placeholder') }}"
         enterkeyhint="search"
         (ionChange)="onSearch($event)"
-       />
-      <ion-icon (click)="toggleFilterModal()"
+      />
+      <ion-icon
+        (click)="toggleFilterModal()"
         slot="end"
         size="large"
         name="filter-outline"
-       />
+      />
     </ion-toolbar>
     @if (store.query().council.length > 0 || store.query().showInactive) {
-      <div class="active-filter-wrapper">
-        @for (council of activeFilter.councils; track council) {
-          <ion-chip>
-            <ion-label>{{ council.councilName }}</ion-label>
-          </ion-chip>
-        }
-        @if (activeFilter.inactiveMembers) {
-          <ion-chip>
-            <ion-label>{{ t('councilMember.list.showInactiveMembers') }}</ion-label>
-          </ion-chip>
-        }
-      </div>
+    <div class="active-filter-wrapper">
+      @for (council of activeFilter.councils; track council) {
+      <ion-chip>
+        <ion-label>{{ council.councilName }}</ion-label>
+      </ion-chip>
+      } @if (activeFilter.inactiveMembers) {
+      <ion-chip>
+        <ion-label>{{ t('councilMember.list.showInactiveMembers') }}</ion-label>
+      </ion-chip>
+      }
+    </div>
     }
   </ion-header>
 
   <ion-content role="feed" class="ion-padding">
-    @if (!viewModel().isLoading) {
-      @if (!viewModel().hasError) {
-        @if (!viewModel().noContent) {
-          <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-            <ion-refresher-content />
-          </ion-refresher>
-          @for (councilMember of viewModel().councilMembers; track councilMember) {
-            <app-council-member-card [councilMember]="councilMember"
-              (click)="onClickPerson(councilMember.ID)"
-             />
-          }
-          <ion-infinite-scroll
-            threshold="100px"
-            (ionInfinite)="distanceReached($event)"
-          >
-            <ion-infinite-scroll-content />
-          </ion-infinite-scroll>
-        } @else {
-          <app-no-content-screen (resetFilter)="resetFilter()" />
-        }
-      } @else {
-        <app-error-screen (retry)="retrySearch()" />
-      }
+    @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
+    (!viewModel().noContent) {
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content />
+    </ion-refresher>
+    @for (councilMember of viewModel().councilMembers; track councilMember) {
+    <app-council-member-card
+      [councilMember]="councilMember"
+      (click)="onClickPerson(councilMember.ID)"
+    />
+    }
+    <ion-infinite-scroll
+      threshold="100px"
+      (ionInfinite)="distanceReached($event)"
+    >
+      <ion-infinite-scroll-content />
+    </ion-infinite-scroll>
     } @else {
-      <app-loading-screen />
+    <app-no-content-screen (resetFilter)="resetFilter()" />
+    } } @else {
+    <app-error-screen (retry)="retrySearch()" />
+    } } @else {
+    <app-loading-screen />
     }
   </ion-content>
 
@@ -72,15 +71,18 @@
         <ion-toolbar>
           <ion-title>{{ t('councilMember.list.filter') }}</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="toggleFilterModal()">{{ t('common.close') }}</ion-button>
+            <ion-button (click)="toggleFilterModal()"
+              >{{ t('common.close') }}</ion-button
+            >
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <app-council-member-filter-form [preset]="activeFilter" (applyFilter)="onFilter($event)" />
+        <app-council-member-filter-form
+          [preset]="activeFilter"
+          (applyFilter)="onFilter($event)"
+        />
       </ion-content>
     </ng-template>
   </ion-modal>
 </ng-container>
-
-

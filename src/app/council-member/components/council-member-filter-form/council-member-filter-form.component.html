@@ -4,22 +4,17 @@
     <ion-list formArrayName="councils">
       @for (council of councils.controls; track council; let i = $index) {
         <ion-item>
-          <ion-checkbox
-            label-placement="start"
-            [formControlName]="i"
-          >{{ councilList[i].councilName }}
-          </ion-checkbox
-          >
+          <ion-checkbox label-placement="start" [formControlName]="i"
+            >{{ councilList[i].councilName }}
+          </ion-checkbox>
         </ion-item>
       }
     </ion-list>
     <h3>{{ t('moreFilters') }}</h3>
     <ion-list>
       <ion-item>
-        <ion-toggle
-          label-placement="start"
-          formControlName="inactiveMembers"
-        >{{ t('showInactive') }}
+        <ion-toggle label-placement="start" formControlName="inactiveMembers"
+          >{{ t('showInactive') }}
         </ion-toggle>
       </ion-item>
     </ion-list>
@@ -27,7 +22,9 @@
   </form>
   @if (filterForm.dirty) {
     <div class="floating-button">
-      <ion-button expand="block" (click)="onSubmit()">{{ t('applyFilter') }}</ion-button>
+      <ion-button expand="block" (click)="onSubmit()">{{
+        t('applyFilter')
+      }}</ion-button>
     </div>
   }
 </ng-container>

@@ -8,23 +8,24 @@
             labelPlacement="start"
             [name]="businessType.BusinessTypeName"
             [(ngModel)]="businessType.checked"
-          >{{ businessType.BusinessTypeName }}
-          </ion-checkbox
-          >
+            >{{ businessType.BusinessTypeName }}
+          </ion-checkbox>
         </ion-item>
       }
     </ion-list>
     <h3>{{ t('status') }}</h3>
     <ion-list>
-      @for (businessStatus of businessStatusCheckboxes(); track businessStatus) {
+      @for (
+        businessStatus of businessStatusCheckboxes();
+        track businessStatus
+      ) {
         <ion-item>
           <ion-checkbox
             labelPlacement="start"
             [name]="businessStatus.BusinessStatusName"
             [(ngModel)]="businessStatus.checked"
-          >{{ businessStatus.BusinessStatusName }}
-          </ion-checkbox
-          >
+            >{{ businessStatus.BusinessStatusName }}
+          </ion-checkbox>
         </ion-item>
       }
     </ion-list>
@@ -34,4 +35,3 @@
     </div>
   </form>
 </ng-container>
-

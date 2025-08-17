@@ -1,56 +1,62 @@
-<ng-container *transloco="let t; prefix:'business.detailText'">
+<ng-container *transloco="let t; prefix: 'business.detailText'">
   @if (business().Description) {
-    <app-text-card [title]="t('description')"
+    <app-text-card
+      [title]="t('description')"
       [HtmlText]="business().Description"
-     />
+    />
   }
 
   @if (business().InitialSituation) {
-    <app-text-card [title]="t('initialSituation')"
+    <app-text-card
+      [title]="t('initialSituation')"
       [HtmlText]="business().InitialSituation"
-     />
+    />
   }
 
   @if (business().Proceedings) {
-    <app-text-card [title]="t('proceedings')"
+    <app-text-card
+      [title]="t('proceedings')"
       [HtmlText]="business().Proceedings"
-     />
+    />
   }
 
   @if (business().DraftText) {
-    <app-text-card [title]="t('draftText')"
-      [HtmlText]="business().DraftText"
-     />
+    <app-text-card [title]="t('draftText')" [HtmlText]="business().DraftText" />
   }
 
   @if (business().SubmittedText) {
-    <app-text-card [title]="t('submittedText')"
+    <app-text-card
+      [title]="t('submittedText')"
       [HtmlText]="business().SubmittedText"
-     />
+    />
   }
 
   @if (business().ReasonText) {
-    <app-text-card [title]="t('reasonText')"
+    <app-text-card
+      [title]="t('reasonText')"
       [HtmlText]="business().ReasonText"
-     />
+    />
   }
 
   @if (business().DocumentationText) {
-    <app-text-card [title]="t('documentationText')"
+    <app-text-card
+      [title]="t('documentationText')"
       [HtmlText]="business().DocumentationText"
-     />
+    />
   }
 
   @if (business().MotionText) {
-    <app-text-card [title]="t('motionText')"
+    <app-text-card
+      [title]="t('motionText')"
       [HtmlText]="business().MotionText"
-     />
+    />
   }
 
   @if (business().FederalCouncilResponseText) {
-    <app-text-card [title]="t('federalCouncilResponseText')"
+    <app-text-card
+      [title]="t('federalCouncilResponseText')"
       [HtmlText]="business().FederalCouncilResponseText"
-     />
+    />
   }
 
   <app-text-card
@@ -62,7 +68,7 @@
       size="small"
       fill="outline"
       (click)="openFurtherInformation()"
-    >{{ t('business.detailText.additionalInformation.button') }}
+      >{{ t('business.detailText.additionalInformation.button') }}
       <ion-icon slot="end" name="link-outline" />
     </ion-button>
   </app-text-card>

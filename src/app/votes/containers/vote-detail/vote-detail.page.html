@@ -2,70 +2,73 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button text="Zurück"
-          defaultHref="layout/votes"
-         />
+        <ion-back-button text="Zurück" defaultHref="layout/votes" />
       </ion-buttons>
       <ion-title>{{ t('title') }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (viewModel() && !viewModel().isLoading) {
-      @if (!viewModel().hasError) {
-        <app-vote-card [vote]="viewModel().vote">
-          <ion-button
-            expand="block"
+    @if (viewModel() && !viewModel().isLoading) { @if (!viewModel().hasError) {
+    <app-vote-card [vote]="viewModel().vote">
+      <ion-button
+        expand="block"
+        size="small"
+        fill="outline"
+        (click)="goToBusiness()"
+        >{{ t('toBusiness') }}
+      </ion-button>
+    </app-vote-card>
+    <app-text-card title="{{ t('voteHistory') }}">
+      <ion-select
+        justify="end"
+        [formControl]="voteFilterControl"
+        interface="popover"
+        aria-label="Vote filter"
+        value="all"
+      >
+        <ion-select-option value="all"
+          >{{ t('filter.showAll') }}</ion-select-option
+        >
+        <ion-select-option value="yes"
+          >{{ t('filter.onlyYes') }}</ion-select-option
+        >
+        <ion-select-option value="no"
+          >{{ t('filter.onlyNo') }}</ion-select-option
+        >
+        <ion-select-option value="no-vote"
+          >{{ t('filter.noVote') }}</ion-select-option
+        >
+      </ion-select>
+      <ion-list>
+        @for (voting of viewModel().votings; track voting) {
+        <ion-item
+          routerLink="/council-member/detail/{{ voting.PersonNumber }}"
+          [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
+        >
+          <ion-icon
             size="small"
-            fill="outline"
-            (click)="goToBusiness()"
-          >{{ t('toBusiness') }}
-          </ion-button
-          >
-        </app-vote-card>
-        <app-text-card title="{{ t('voteHistory') }}">
-          <ion-select
-            justify="end"
-            [formControl]="voteFilterControl"
-            interface="popover"
-            aria-label="Vote filter"
-            value="all"
-          >
-            <ion-select-option value="all">{{ t('filter.showAll') }}</ion-select-option>
-            <ion-select-option value="yes">{{ t('filter.onlyYes') }}</ion-select-option>
-            <ion-select-option value="no">{{ t('filter.onlyNo') }}</ion-select-option>
-            <ion-select-option value="no-vote">{{ t('filter.noVote') }}</ion-select-option>
-          </ion-select>
-          <ion-list>
-            @for (voting of viewModel().votings; track voting) {
-              <ion-item
-                routerLink="/council-member/detail/{{ voting.PersonNumber }}"
-                [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
-              >
-                <ion-icon size="small"
-                  [color]="
+            [color]="
                 voting.Decision === 1 ? 'success' : voting.Decision === 2 ? 'danger' : 'medium'"
-                  [name]="
+            [name]="
                 voting.Decision === 1 ? 'checkmark-outline' : voting.Decision === 2 ? 'close-outline' : 'remove-outline'"
-                  slot="start"
-                 />
-                <ion-label>
-                  <h3>{{ voting.FirstName }} {{ voting.LastName }}</h3>
-                  <p>
-                    {{ partyMappingDE[voting.ParlGroupName] }} - {{
-                      voting.CantonName
-                    }}
-                  </p>
-                </ion-label>
-              </ion-item>
-            }
-          </ion-list>
-        </app-text-card>
-      } @else {
-        <app-error-screen (retry)="retrySearch()" />
-      }
+            slot="start"
+          />
+          <ion-label>
+            <h3>{{ voting.FirstName }} {{ voting.LastName }}</h3>
+            <p>
+              {{ partyMappingDE[voting.ParlGroupName] }} - {{ voting.CantonName
+              }}
+            </p>
+          </ion-label>
+        </ion-item>
+        }
+      </ion-list>
+    </app-text-card>
     } @else {
-      <app-loading-screen />
+    <app-error-screen (retry)="retrySearch()" />
+    } } @else {
+    <app-loading-screen />
     }
   </ion-content>
 </ng-container>

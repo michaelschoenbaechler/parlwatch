@@ -1,10 +1,4 @@
-import {
-  Component,
-  input,
-  OnInit,
-  inject,
-  output
-} from '@angular/core';
+import { Component, input, OnInit, inject, output } from '@angular/core';
 import {
   FormArray,
   FormBuilder,

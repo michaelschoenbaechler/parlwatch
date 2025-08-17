@@ -7,10 +7,7 @@
       <small>{{ subtitle() }} </small>
     }
     @if (HtmlText()) {
-      <p
-        [innerHTML]="HtmlText() | safeHtml"
-        class="text-card-description"
-      ></p>
+      <p [innerHTML]="HtmlText() | safeHtml" class="text-card-description"></p>
     }
     <ng-content />
   </div>

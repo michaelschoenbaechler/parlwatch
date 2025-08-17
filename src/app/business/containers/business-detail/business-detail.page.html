@@ -2,38 +2,31 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button text="Zurück"
-          defaultHref="layout/business"
-         />
+        <ion-back-button text="Zurück" defaultHref="layout/business" />
       </ion-buttons>
       <ion-title>{{ t('business.detail.title') }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (!viewModel().isLoading) {
-      @if (!viewModel().hasError) {
-        <app-business-card [business]="viewModel().business">
-          @if (viewModel().hasVotes) {
-            <ion-button
-              expand="block"
-              size="small"
-              fill="outline"
-              [routerLink]="['/layout/votes']"
-              [queryParams]="{ BusinessShortNumber: viewModel().business.BusinessShortNumber }"
-            >{{ t('business.detail.toVotes') }}
-            </ion-button
-            >
-          }
-        </app-business-card>
-        <app-business-detail-text [business]="viewModel().business"
-         />
-      } @else {
-        <app-error-screen (retry)="retry()" />
+    @if (!viewModel().isLoading) { @if (!viewModel().hasError) {
+    <app-business-card [business]="viewModel().business">
+      @if (viewModel().hasVotes) {
+      <ion-button
+        expand="block"
+        size="small"
+        fill="outline"
+        [routerLink]="['/layout/votes']"
+        [queryParams]="{ BusinessShortNumber: viewModel().business.BusinessShortNumber }"
+        >{{ t('business.detail.toVotes') }}
+      </ion-button>
       }
+    </app-business-card>
+    <app-business-detail-text [business]="viewModel().business" />
     } @else {
-      <app-loading-screen />
+    <app-error-screen (retry)="retry()" />
+    } } @else {
+    <app-loading-screen />
     }
   </ion-content>
 </ng-container>
-

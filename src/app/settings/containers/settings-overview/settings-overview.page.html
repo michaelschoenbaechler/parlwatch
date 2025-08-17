@@ -21,25 +21,24 @@
           <div class="ion-padding" slot="content">
             <ion-radio-group value="de" (ionChange)="languageChanged($event)">
               <ion-item lines="full">
-                <ion-radio value="de" justify="space-between">{{ t('language.german') }}</ion-radio>
+                <ion-radio value="de" justify="space-between"
+                  >{{ t('language.german') }}</ion-radio
+                >
               </ion-item>
               <ion-item lines="full">
                 <ion-radio disabled value="fr" justify="space-between"
-                >{{ t('language.french') }}
-                </ion-radio
-                >
+                  >{{ t('language.french') }}
+                </ion-radio>
               </ion-item>
               <ion-item lines="full">
                 <ion-radio disabled value="it" justify="space-between"
-                >{{ t('language.italian') }}
-                </ion-radio
-                >
+                  >{{ t('language.italian') }}
+                </ion-radio>
               </ion-item>
               <ion-item lines="full">
                 <ion-radio disabled value="en" justify="space-between"
-                >{{ t('language.english') }}
-                </ion-radio
-                >
+                  >{{ t('language.english') }}
+                </ion-radio>
               </ion-item>
             </ion-radio-group>
           </div>
@@ -50,29 +49,21 @@
           </ion-item>
           <div class="ion-padding" slot="content">
             <h3>{{ t('about.title') }}</h3>
-            <p>
-              {{ t('about.text') }}
-            </p>
+            <p>{{ t('about.text') }}</p>
 
             <h3>{{ t('openSource.title') }}</h3>
-            <p>
-              {{ t('openSource.text') }}
-            </p>
+            <p>{{ t('openSource.text') }}</p>
 
             <h3>{{ t('dataSource.title') }}</h3>
-            <p>
-              {{ t('dataSource.text') }}
-
-            </p>
+            <p>{{ t('dataSource.text') }}</p>
 
             <h3>{{ t('dataProtection.title') }}</h3>
-            <p>
-              {{ t('dataProtection.text') }}
-            </p>
+            <p>{{ t('dataProtection.text') }}</p>
 
             <h3>{{ t('githubRepository.title') }}</h3>
-            <p [innerHTML]="t('githubRepository.text', { link: 'https://github.com/michaelschoenbaechler/parlwatch'})">
-            </p>
+            <p
+              [innerHTML]="t('githubRepository.text', { link: 'https://github.com/michaelschoenbaechler/parlwatch'})"
+            ></p>
           </div>
         </ion-accordion>
         <ion-accordion value="third">
@@ -86,9 +77,8 @@
               size="small"
               fill="outline"
               (click)="surveyClicked()"
-            >{{ t('feedback.poll.button') }}
-            </ion-button
-            >
+              >{{ t('feedback.poll.button') }}
+            </ion-button>
             <p>
               <small>{{ t('feedback.poll.info') }}</small>
             </p>

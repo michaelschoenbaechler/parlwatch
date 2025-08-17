@@ -2,85 +2,80 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button text="{{ t('councilMember.detail.back') }}"
+        <ion-back-button
+          text="{{ t('councilMember.detail.back') }}"
           defaultHref="layout/council-member"
-         />
+        />
       </ion-buttons>
       <ion-title>{{ t('councilMember.detail.title') }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (!councilMemberViewModel().isLoading) {
-      @if (!councilMemberViewModel().hasError) {
-        <app-council-member-card [councilMember]="councilMemberViewModel().councilMember"
-         />
-        @if (getMandatesAsHtmlList()) {
-          <app-text-card title="{{ t('councilMember.detail.mandates') }}"
-            [HtmlText]="getMandatesAsHtmlList()"
-           />
-        }
-        @if (getAdditionalActivitiesAsHtmlList()) {
-          <app-text-card title="{{ t('councilMember.detail.otherActivities') }}"
-            [HtmlText]="getAdditionalActivitiesAsHtmlList()"
-           />
-        }
-        <app-text-card title="{{ t('councilMember.detail.votingRecord') }}">
-          @if (!votingRecordViewModel().isLoading) {
-            @if (votingRecordViewModel().hasNoVotingRecord) {
-              <p class="no-votes-text">
-                <small>
-                  {{ t('councilMember.detail.noVotes') }}
-                </small>
-              </p>
-            } @else {
-              <ion-list>
-                @for (voting of votingRecordViewModel().votingRecord; track voting) {
-                  <ion-item
-                    (click)="onClickBusiness(voting.BusinessNumber)"
-                    [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
-                  >
-                    <ion-icon size="small"
-                      [color]="
+    @if (!councilMemberViewModel().isLoading) { @if
+    (!councilMemberViewModel().hasError) {
+    <app-council-member-card
+      [councilMember]="councilMemberViewModel().councilMember"
+    />
+    @if (getMandatesAsHtmlList()) {
+    <app-text-card
+      title="{{ t('councilMember.detail.mandates') }}"
+      [HtmlText]="getMandatesAsHtmlList()"
+    />
+    } @if (getAdditionalActivitiesAsHtmlList()) {
+    <app-text-card
+      title="{{ t('councilMember.detail.otherActivities') }}"
+      [HtmlText]="getAdditionalActivitiesAsHtmlList()"
+    />
+    }
+    <app-text-card title="{{ t('councilMember.detail.votingRecord') }}">
+      @if (!votingRecordViewModel().isLoading) { @if
+      (votingRecordViewModel().hasNoVotingRecord) {
+      <p class="no-votes-text">
+        <small> {{ t('councilMember.detail.noVotes') }} </small>
+      </p>
+      } @else {
+      <ion-list>
+        @for (voting of votingRecordViewModel().votingRecord; track voting) {
+        <ion-item
+          (click)="onClickBusiness(voting.BusinessNumber)"
+          [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
+        >
+          <ion-icon
+            size="small"
+            [color]="
                   voting.Decision === 1
                     ? 'success'
                     : voting.Decision === 2
                     ? 'danger'
                     : 'medium'
                 "
-                      [name]="
+            [name]="
                   voting.Decision === 1
                     ? 'checkmark-outline'
                     : voting.Decision === 2
                     ? 'close-outline'
                     : 'remove-outline'
                 "
-                      slot="start"
-                     />
-                    <ion-label class="ion-text-wrap">
-                      {{ voting.BusinessTitle }}
-                      <p class="ion-color-danger">
-                        {{ voting.Subject }}
-                      </p>
-                    </ion-label>
-                  </ion-item>
-                }
-              </ion-list>
-            }
-          } @else {
-            <div class="loading-voting-record-container">
-              <ion-spinner class="spinner" />
-            </div>
-          }
-        </app-text-card>
-      } @else {
-        <app-error-screen (retry)="retry()" />
+            slot="start"
+          />
+          <ion-label class="ion-text-wrap">
+            {{ voting.BusinessTitle }}
+            <p class="ion-color-danger">{{ voting.Subject }}</p>
+          </ion-label>
+        </ion-item>
+        }
+      </ion-list>
+      } } @else {
+      <div class="loading-voting-record-container">
+        <ion-spinner class="spinner" />
+      </div>
       }
+    </app-text-card>
     } @else {
-      <app-loading-screen />
+    <app-error-screen (retry)="retry()" />
+    } } @else {
+    <app-loading-screen />
     }
   </ion-content>
 </ng-container>
-
-
-

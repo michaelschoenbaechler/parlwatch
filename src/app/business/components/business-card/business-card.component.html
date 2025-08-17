@@ -1,12 +1,12 @@
 <app-text-card
-  [title]="
-    business().BusinessShortNumber +
-    ' - ' +
-    business().BusinessTypeName
+  [title]="business().BusinessShortNumber + ' - ' + business().BusinessTypeName"
+  [subtitle]="
+    business().BusinessStatusText +
+    ' am ' +
+    (business().BusinessStatusDate | oDataDateTime)
   "
-  [subtitle]="business().BusinessStatusText + ' am ' + (business().BusinessStatusDate | oDataDateTime)"
   [HtmlText]="business().Title"
-  >
+>
   @if (getTagNames().length > 0) {
     <div class="business-label-container">
       @for (tagName of getTagNames(); track tagName) {

@@ -9,9 +9,10 @@
     "start": "ng serve",
     "build": "ng build",
     "build:prd": "ng build --configuration=production",
-    "lint": "ng lint && npx prettier -c \"src/**/*.ts\"",
+    "lint": "ng lint && npx prettier -c \"src/**/*.{ts,html}\"",
     "lint:fix": "ng lint --fix",
-    "prettier:fix": "npx prettier --write \"src/**/*.ts\"",
+    "prettier": "npm run prettier:fix",
+    "prettier:fix": "npx prettier --write \"src/**/*.{ts,html}\"",
     "i18n:extract": "transloco-keys-manager extract --remove-extra-keys --sort",
     "i18n:find": "transloco-keys-manager find",
     "changelog:generate": "conventional-changelog -p angular"
