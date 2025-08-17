@@ -1,10 +1,9 @@
 import {
   Component,
-  EventEmitter,
   input,
   OnInit,
-  Output,
-  inject
+  inject,
+  output
 } from '@angular/core';
 import {
   FormArray,
@@ -40,8 +39,7 @@ export class CouncilMemberFilterFormComponent implements OnInit {
     inactiveMembers: new FormControl(false)
   });
 
-  @Output() applyFilter: EventEmitter<CouncilMemberFilterForm> =
-    new EventEmitter<CouncilMemberFilterForm>();
+  readonly applyFilter = output<CouncilMemberFilterForm>();
 
   ngOnInit() {
     this.filterForm = this.fb.group({

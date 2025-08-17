@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 
@@ -9,7 +9,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
   imports: [IonicModule, TranslocoDirective]
 })
 export class ErrorScreenComponent {
-  @Output() retry: EventEmitter<void> = new EventEmitter();
+  readonly retry = output<void>();
 
   constructor() {}
 
