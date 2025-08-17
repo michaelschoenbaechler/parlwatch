@@ -1,6 +1,6 @@
 # ParlWatch
 
-ParlWatch is an open-source project designed to provide easy access to the parliamentary data of the Swiss government. Leveraging the power of Angular 16 and Ionic 5, it facilitates a seamless and comprehensive viewing experience.
+ParlWatch is an open-source project designed to provide easy access to the parliamentary data of the Swiss government. Leveraging the power of Angular and Ionic, it facilitates a seamless and comprehensive viewing experience.
 
 ## Features
 
