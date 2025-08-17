@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 @Component({
@@ -8,9 +8,9 @@ import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
   imports: [SafeHtmlPipe]
 })
 export class TextCardComponent {
-  @Input() title: string;
-  @Input() subtitle: string;
-  @Input() HtmlText: string;
+  readonly title = input<string>(undefined);
+  readonly subtitle = input<string>(undefined);
+  readonly HtmlText = input<string>(undefined);
 
   constructor() {}
 }

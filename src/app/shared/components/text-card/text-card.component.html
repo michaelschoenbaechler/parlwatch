@@ -1,14 +1,14 @@
 <div class="text-card">
   <div class="text-card-content">
-    @if (title) {
-      <div class="text-card-title">{{ title }}</div>
+    @if (title()) {
+      <div class="text-card-title">{{ title() }}</div>
     }
-    @if (subtitle) {
-      <small>{{ subtitle }} </small>
+    @if (subtitle()) {
+      <small>{{ subtitle() }} </small>
     }
-    @if (HtmlText) {
+    @if (HtmlText()) {
       <p
-        [innerHTML]="HtmlText | safeHtml"
+        [innerHTML]="HtmlText() | safeHtml"
         class="text-card-description"
       ></p>
     }

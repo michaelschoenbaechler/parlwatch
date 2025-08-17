@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { Business } from 'swissparl';
 import { IonicModule } from '@ionic/angular';
@@ -12,7 +12,7 @@ import { TextCardComponent } from '../../../shared/components/text-card/text-car
   imports: [IonicModule, TextCardComponent, TranslocoDirective]
 })
 export class BusinessDetailTextComponent {
-  @Input() business: Business;
+  readonly business = input<Business>(undefined);
 
   constructor() {}
 
@@ -20,7 +20,7 @@ export class BusinessDetailTextComponent {
     Browser.open({
       url:
         'https://www.parlament.ch/de/ratsbetrieb/suche-curia-vista/geschaeft?AffairId=' +
-        this.business.ID,
+        this.business().ID,
       presentationStyle: 'popover'
     });
   }

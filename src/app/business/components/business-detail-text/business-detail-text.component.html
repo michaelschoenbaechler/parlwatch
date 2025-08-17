@@ -1,64 +1,64 @@
 <ng-container *transloco="let t; prefix:'business.detailText'">
-  @if (business.Description) {
+  @if (business().Description) {
     <app-text-card
       [title]="t('description')"
-      [HtmlText]="business.Description"
+      [HtmlText]="business().Description"
     ></app-text-card>
   }
 
-  @if (business.InitialSituation) {
+  @if (business().InitialSituation) {
     <app-text-card
       [title]="t('initialSituation')"
-      [HtmlText]="business.InitialSituation"
+      [HtmlText]="business().InitialSituation"
     ></app-text-card>
   }
 
-  @if (business.Proceedings) {
+  @if (business().Proceedings) {
     <app-text-card
       [title]="t('proceedings')"
-      [HtmlText]="business.Proceedings"
+      [HtmlText]="business().Proceedings"
     ></app-text-card>
   }
 
-  @if (business.DraftText) {
+  @if (business().DraftText) {
     <app-text-card
       [title]="t('draftText')"
-      [HtmlText]="business.DraftText"
+      [HtmlText]="business().DraftText"
     ></app-text-card>
   }
 
-  @if (business.SubmittedText) {
+  @if (business().SubmittedText) {
     <app-text-card
       [title]="t('submittedText')"
-      [HtmlText]="business.SubmittedText"
+      [HtmlText]="business().SubmittedText"
     ></app-text-card>
   }
 
-  @if (business.ReasonText) {
+  @if (business().ReasonText) {
     <app-text-card
       [title]="t('reasonText')"
-      [HtmlText]="business.ReasonText"
+      [HtmlText]="business().ReasonText"
     ></app-text-card>
   }
 
-  @if (business.DocumentationText) {
+  @if (business().DocumentationText) {
     <app-text-card
       [title]="t('documentationText')"
-      [HtmlText]="business.DocumentationText"
+      [HtmlText]="business().DocumentationText"
     ></app-text-card>
   }
 
-  @if (business.MotionText) {
+  @if (business().MotionText) {
     <app-text-card
       [title]="t('motionText')"
-      [HtmlText]="business.MotionText"
+      [HtmlText]="business().MotionText"
     ></app-text-card>
   }
 
-  @if (business.FederalCouncilResponseText) {
+  @if (business().FederalCouncilResponseText) {
     <app-text-card
       [title]="t('federalCouncilResponseText')"
-      [HtmlText]="business.FederalCouncilResponseText"
+      [HtmlText]="business().FederalCouncilResponseText"
     ></app-text-card>
   }
 
