@@ -1,10 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  OnInit
-} from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { Vote, Voting } from 'swissparl';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
