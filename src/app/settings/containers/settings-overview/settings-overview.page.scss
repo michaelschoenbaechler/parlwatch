@@ -5,10 +5,10 @@
 }
 
 ion-item {
-  --color: #666666;
-  --border-color: #f0f0f0;
+  --color: var(--ion-color-text-secondary);
+  --border-color: var(--ion-color-border-light);
 }
 
 ion-button {
-  margin-top: 1rem;
+  margin-top: var(--ion-padding-md);
 }

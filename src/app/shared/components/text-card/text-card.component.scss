@@ -1,13 +1,13 @@
 .text-card {
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border-radius: var(--ion-border-radius-sm);
+  box-shadow: var(--ion-box-shadow-lg);
   overflow: hidden;
-  background: white;
-  margin: 0 0 0.5rem 0rem;
+  background: var(--ion-color-secondary);
+  margin: 0 0 var(--ion-padding-sm) 0;
 }
 
 .text-card-content {
-  padding: 1.25rem;
+  padding: var(--ion-padding-lg);
 }
 
 .text-card-content *:last-child {
@@ -15,18 +15,18 @@
 }
 
 .text-card-title {
-  font-size: 12px;
+  font-size: var(--ion-font-size-xs);
   letter-spacing: 0.4px;
   font-weight: 700;
   color: var(--ion-color-primary);
 }
 
 .text-card-description {
-  font-size: 16px;
-  line-height: 22.4px;
-  color: #666666;
+  font-size: var(--ion-font-size-md);
+  line-height: 1.4;
+  color: var(--ion-color-text-secondary);
 }
 
 small {
-  color: #666666;
+  color: var(--ion-color-text-secondary);
 }

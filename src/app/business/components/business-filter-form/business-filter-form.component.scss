@@ -1,6 +1,6 @@
 .floating-button {
   position: fixed;
-  bottom: 1rem;
+  bottom: var(--ion-padding-md);
   left: 0;
   right: 0;
   z-index: 999;
