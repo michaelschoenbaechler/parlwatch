@@ -19,14 +19,14 @@
 
 // Text styles mixins
 @mixin text-title() {
-  font-size: var(--app-font-size-sm);
+  font-size: var(--app-font-size-caption);
   letter-spacing: var(--app-letter-spacing-sm);
   font-weight: 700;
   color: var(--ion-color-primary);
 }
 
 @mixin text-description() {
-  font-size: var(--app-font-size-lg);
+  font-size: var(--app-font-size-title);
   line-height: var(--app-line-height-md);
   color: var(--app-text-muted);
 }
@@ -68,7 +68,7 @@
   border: 1px solid var(--app-text-muted);
   color: var(--app-text-muted);
   padding: var(--app-spacing-xs) var(--app-spacing-sm);
-  font-size: var(--app-font-size-md);
+  font-size: var(--app-font-size-body);
 }
 
 // Responsive breakpoints following Ionic patterns
