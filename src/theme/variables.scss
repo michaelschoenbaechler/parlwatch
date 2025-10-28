@@ -113,6 +113,11 @@
   --ion-color-text-tertiary: var(--ion-color-medium);
   --ion-color-border: #e0e0e0;
   --ion-color-border-light: #f0f0f0;
+  --ion-color-surface: #ffffff; /* Card and surface backgrounds */
+
+  /* Border width tokens */
+  --ion-border-width-thin: 1px;
+  --ion-border-width-medium: 2px;
 }
 
 /*
@@ -157,5 +162,6 @@
     --ion-color-text-tertiary: var(--ion-color-medium);
     --ion-color-border: #404040;
     --ion-color-border-light: #2a2a2a;
+    --ion-color-surface: #1e1e1e; /* Card and surface backgrounds in dark mode */
   }
 }

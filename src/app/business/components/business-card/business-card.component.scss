@@ -9,7 +9,7 @@
 
 .business-label {
   border-radius: var(--ion-border-radius-lg);
-  border: 1px solid var(--ion-color-border);
+  border: var(--ion-border-width-thin) solid var(--ion-color-border);
   color: var(--ion-color-text-secondary);
   padding: var(--ion-padding-xs) var(--ion-padding-sm);
   font-size: var(--ion-font-size-sm);
