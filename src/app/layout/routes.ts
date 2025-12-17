@@ -18,24 +18,24 @@ export const TAB_ROUTES: Routes = [
       {
         path: 'council-member',
         loadComponent: () =>
-          import(
-            '../council-member/containers/member-list/member-list.page'
-          ).then((m) => m.MemberListPage)
+          import('../council-member/containers/member-list/member-list.page').then(
+            (m) => m.MemberListPage
+          )
       },
       {
         path: 'business',
         loadComponent: () =>
-          import(
-            '../business/containers/business-list/business-list.page'
-          ).then((m) => m.BusinessListPage)
+          import('../business/containers/business-list/business-list.page').then(
+            (m) => m.BusinessListPage
+          )
       },
 
       {
         path: 'settings',
         loadComponent: () =>
-          import(
-            '../settings/containers/settings-overview/settings-overview.page'
-          ).then((mod) => mod.SettingsOverviewPage)
+          import('../settings/containers/settings-overview/settings-overview.page').then(
+            (mod) => mod.SettingsOverviewPage
+          )
       }
     ]
   },
