@@ -12,10 +12,10 @@
 }
 
 .spinner {
-  --spinner-stroke-width: 1rem;
+  --spinner-stroke-width: var(--ion-padding-md);
   width: 3rem;
   height: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: var(--ion-padding-md);
 }
 
 .fixed-height {

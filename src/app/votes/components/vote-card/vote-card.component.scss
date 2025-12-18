@@ -1,8 +1,8 @@
 .voting-bar {
-  margin-top: 1rem;
+  margin-top: var(--ion-padding-md);
   position: relative;
   width: 100%;
-  height: 0.5rem;
+  height: var(--ion-padding-sm);
   overflow: hidden; /* To make sure the inner div doesn't overflow */
 }
 
@@ -12,7 +12,7 @@
 }
 
 .yes {
-  background-color: #4caf50; /* Green for "yes" */
+  background-color: var(--ion-color-success); /* Green for "yes" */
 }
 
 .no {

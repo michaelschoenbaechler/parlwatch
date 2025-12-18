@@ -1,7 +1,7 @@
 ion-card {
-  margin: 0 0 0.5rem 0rem;
+  margin: 0 0 var(--ion-padding-sm) 0;
 }
 
 app-business-card ion-button {
-  margin-top: 1rem;
+  margin-top: var(--ion-padding-md);
 }
