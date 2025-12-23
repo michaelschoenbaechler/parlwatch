@@ -1,5 +1,5 @@
 // Ionic Variables and Theming. For more info, please see:
-// http://ionicframework.com/docs/theming/
+// https://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
 :root {
@@ -28,12 +28,12 @@
   --ion-color-tertiary-tint: #f8f8f8;
 
   /** success **/
-  --ion-color-success: #2dd36f;
-  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success: #4caf50; /* Material Design Green - improved for accessibility */
+  --ion-color-success-rgb: 76, 175, 80;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade: #28ba62;
-  --ion-color-success-tint: #42d77d;
+  --ion-color-success-shade: #43a047;
+  --ion-color-success-tint: #66bb6a;
 
   /** warning **/
   --ion-color-warning: #ffc409;
@@ -79,5 +79,65 @@
   --ion-toolbar-color: #ffffff;
   --ion-toolbar-background: #e3000f;
 
+  /** background **/
   --ion-background-color: #ffffff;
+
+  /** Custom semantic colors for the app **/
+  --app-text-color: #333333;
+  --app-text-muted: #666666;
+  --app-text-light: #999999;
+  --app-border-color: #e0e0e0;
+  --app-border-color-dark: #bbbbbb;
+  --app-shadow-color: rgba(0, 0, 0, 0.12);
+  --app-card-background: #ffffff;
+
+  /** Custom spacing variables **/
+  --app-spacing-xs: 0.25rem;
+  --app-spacing-sm: 0.5rem;
+  --app-spacing-md: 1rem;
+  --app-spacing-lg: 1.25rem;
+  --app-spacing-xl: 2rem;
+
+  /** Custom border radius **/
+  --app-border-radius-sm: 0.25rem;
+  --app-border-radius-md: 0.5rem;
+  --app-border-radius-lg: 1rem;
+
+  /** Custom typography **/
+  --app-font-size-caption: 12px;
+  --app-font-size-body: 14px;
+  --app-font-size-title: 16px;
+  --app-line-height-md: 1.4;
+  --app-letter-spacing-sm: 0.4px;
+}
+
+/** Dark mode support **/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-color-secondary: #121212;
+    --ion-color-secondary-rgb: 18, 18, 18;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #0a0a0a;
+    --ion-color-secondary-tint: #1e1e1e;
+
+    --ion-color-tertiary: #1e1e1e;
+    --ion-color-tertiary-rgb: 30, 30, 30;
+    --ion-color-tertiary-contrast: #ffffff;
+    --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+    --ion-color-tertiary-shade: #1a1a1a;
+    --ion-color-tertiary-tint: #2c2c2c;
+
+    --ion-background-color: #121212;
+    --ion-text-color: #ffffff;
+
+    /** Custom dark mode colors **/
+    --app-text-color: #ffffff;
+    --app-text-muted: #b0b0b0;
+    --app-text-light: #8a8a8a;
+    --app-border-color: #333333;
+    --app-border-color-dark: #555555;
+    --app-shadow-color: rgba(0, 0, 0, 0.3);
+    --app-card-background: #1e1e1e;
+  }
 }
