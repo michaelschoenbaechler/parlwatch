@@ -18,6 +18,10 @@
     "changelog:generate": "conventional-changelog -p angular"
   },
   "private": true,
+  "overrides": {
+    "tar": "^7.5.7",
+    "tmp": "^0.2.4"
+  },
   "dependencies": {
     "@angular/common": "^20.3.16",
     "@angular/core": "^20.3.16",
@@ -57,7 +61,7 @@
     "@angular/compiler": "^20.3.16",
     "@angular/compiler-cli": "^20.3.16",
     "@angular/language-service": "^20.3.16",
-    "@capacitor/cli": "^7.4.4",
+    "@capacitor/cli": "^7.4.5",
     "@commitlint/cli": "^18.4.4",
     "@commitlint/config-conventional": "^18.4.4",
     "@ionic/angular-toolkit": "^12.3.0",
