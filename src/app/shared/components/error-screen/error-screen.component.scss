@@ -1,12 +1,11 @@
+@import '../../../../theme/mixins.scss';
+
 .error-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center();
   height: 100%;
 }
 
 .error-content {
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   align-items: center;
 }

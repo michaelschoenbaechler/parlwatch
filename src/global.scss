@@ -24,3 +24,66 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+/* 
+ * Custom global utilities following Ionic best practices
+ * Using CSS variables for consistent theming
+ */
+
+/* Common card styles using CSS variables */
+.card-base {
+  border-radius: var(--app-border-radius-md);
+  box-shadow: 0 4px 16px var(--app-shadow-color);
+  overflow: hidden;
+  background: var(--app-card-background);
+  margin-bottom: var(--app-spacing-sm);
+}
+
+/* Common text styles */
+.text-muted {
+  color: var(--app-text-muted);
+}
+
+.text-light {
+  color: var(--app-text-light);
+}
+
+/* Utility spacing classes */
+.margin-top-sm {
+  margin-top: var(--app-spacing-sm);
+}
+
+.margin-bottom-sm {
+  margin-bottom: var(--app-spacing-sm);
+}
+
+.padding-md {
+  padding: var(--app-spacing-md);
+}
+
+.padding-lg {
+  padding: var(--app-spacing-lg);
+}
+
+/* Common button styles */
+.floating-button-base {
+  position: fixed;
+  bottom: var(--app-spacing-md);
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+/* Typography utilities */
+.text-title {
+  font-size: var(--app-font-size-caption);
+  letter-spacing: var(--app-letter-spacing-sm);
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.text-description {
+  font-size: var(--app-font-size-title);
+  line-height: var(--app-line-height-md);
+  color: var(--app-text-muted);
+}

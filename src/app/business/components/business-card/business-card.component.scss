@@ -1,16 +1,14 @@
+@import '../../../../theme/mixins.scss';
+
 .business-label-container {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--app-spacing-sm);
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--app-spacing-sm);
   flex-wrap: wrap;
 }
 
 .business-label {
-  border-radius: 1rem;
-  border: 0.0625rem solid #666666;
-  color: #666666;
-  padding: 0.25rem 0.5rem;
-  font-size: 14px;
+  @include badge-style();
 }
