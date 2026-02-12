@@ -80,4 +80,88 @@
   --ion-toolbar-background: #e3000f;
 
   --ion-background-color: #ffffff;
+
+  /** Custom design tokens for consistency **/
+  /* Spacing tokens */
+  --ion-padding-xs: 0.25rem;
+  --ion-padding-sm: 0.5rem;
+  --ion-padding-md: 1rem;
+  --ion-padding-lg: 1.25rem;
+  --ion-padding-xl: 1.5rem;
+
+  /* Border radius tokens */
+  --ion-border-radius-xs: 0.25rem;
+  --ion-border-radius-sm: 0.5rem;
+  --ion-border-radius-md: 0.75rem;
+  --ion-border-radius-lg: 1rem;
+
+  /* Shadow tokens */
+  --ion-box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --ion-box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  --ion-box-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  /* Typography tokens */
+  --ion-font-size-xs: 0.75rem;   /* 12px */
+  --ion-font-size-sm: 0.875rem;  /* 14px */
+  --ion-font-size-md: 1rem;      /* 16px */
+  --ion-font-size-lg: 1.125rem;  /* 18px */
+  --ion-font-size-xl: 1.25rem;   /* 20px */
+
+  /* Semantic colors */
+  --ion-color-text-primary: var(--ion-color-dark);
+  --ion-color-text-secondary: #666666;
+  --ion-color-text-tertiary: var(--ion-color-medium);
+  --ion-color-border: #e0e0e0;
+  --ion-color-border-light: #f0f0f0;
+  --ion-color-surface: #ffffff; /* Card and surface backgrounds */
+
+  /* Border width tokens */
+  --ion-border-width-thin: 1px;
+  --ion-border-width-medium: 2px;
+}
+
+/*
+ * Dark Colors
+ * ----------------------------
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /** primary **/
+    --ion-color-primary: #ff1a2b; /* Lighter Swiss red for dark mode */
+    --ion-color-primary-rgb: 255, 26, 43;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #e0172a;
+    --ion-color-primary-tint: #ff3041;
+
+    /** secondary **/
+    --ion-color-secondary: #1e1e1e; /* Dark background */
+    --ion-color-secondary-rgb: 30, 30, 30;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #1a1a1a;
+    --ion-color-secondary-tint: #353535;
+
+    /** tertiary **/
+    --ion-color-tertiary: #2a2a2a; /* Dark gray */
+    --ion-color-tertiary-rgb: 42, 42, 42;
+    --ion-color-tertiary-contrast: #ffffff;
+    --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+    --ion-color-tertiary-shade: #252525;
+    --ion-color-tertiary-tint: #404040;
+
+    /** toolbar **/
+    --ion-toolbar-color: #ffffff;
+    --ion-toolbar-background: #ff1a2b;
+
+    --ion-background-color: #121212;
+
+    /* Dark mode semantic colors */
+    --ion-color-text-primary: #ffffff;
+    --ion-color-text-secondary: #b0b0b0;
+    --ion-color-text-tertiary: var(--ion-color-medium);
+    --ion-color-border: #404040;
+    --ion-color-border-light: #2a2a2a;
+    --ion-color-surface: #1e1e1e; /* Card and surface backgrounds in dark mode */
+  }
 }
