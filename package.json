@@ -9,6 +9,11 @@
     "start": "ng serve",
     "build": "ng build",
     "build:prd": "ng build --configuration=production",
+    "ios:sync": "npx cap sync ios",
+    "ios:fastlane:install": "cd ios/App && bundle install",
+    "ios:prepare": "npm run build:prd && npm run ios:sync",
+    "ios:deploy:testflight": "npm run ios:prepare && cd ios/App && bundle exec fastlane testflight",
+    "ios:deploy:appstore": "npm run ios:prepare && cd ios/App && bundle exec fastlane appstore",
     "lint": "ng lint && npx prettier -c \"src/**/*.{ts,html}\"",
     "lint:fix": "ng lint --fix",
     "prettier": "npm run prettier:fix",
@@ -19,8 +24,10 @@
   },
   "private": true,
   "overrides": {
-    "tar": "^7.5.7",
-    "tmp": "^0.2.4"
+    "tmp": "^0.2.4",
+    "@capacitor/cli": {
+      "tar": "^6.2.1"
+    }
   },
   "dependencies": {
     "@angular/common": "^20.3.16",

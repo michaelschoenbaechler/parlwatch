@@ -1,0 +1,87 @@
+default_platform(:ios)
+
+def required_env!(keys)
+  missing = keys.select { |key| ENV[key].to_s.strip.empty? }
+  return if missing.empty?
+
+  UI.user_error!("Missing required environment variable(s): #{missing.join(', ')}")
+end
+
+def app_store_connect_api_key_from_env
+  required_env!(%w[APP_STORE_CONNECT_KEY_ID APP_STORE_CONNECT_ISSUER_ID APP_STORE_CONNECT_API_KEY])
+
+  app_store_connect_api_key(
+    key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+    issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+    key_content: ENV["APP_STORE_CONNECT_API_KEY"],
+    is_key_content_base64: true
+  )
+end
+
+platform :ios do
+  before_all do
+    setup_ci if ENV["CI"] == "true"
+  end
+
+  private_lane :set_ci_build_number do
+    run_number = ENV["GITHUB_RUN_NUMBER"]
+    return if run_number.to_s.strip.empty?
+
+    increment_build_number(
+      xcodeproj: "App.xcodeproj",
+      build_number: run_number
+    )
+  end
+
+  private_lane :build_release do
+    app_identifier = ENV.fetch("APP_IDENTIFIER", "ch.michaelschoenbaechler.parlwatch")
+    provisioning_profile_name = ENV["IOS_PROVISIONING_PROFILE_NAME"].to_s.strip
+    export_options = {
+      "method" => "app-store",
+      "signingStyle" => "automatic"
+    }
+
+    unless provisioning_profile_name.empty?
+      export_options["provisioningProfiles"] = {
+        app_identifier => provisioning_profile_name
+      }
+    end
+
+    build_app(
+      workspace: "App.xcworkspace",
+      scheme: "App",
+      clean: true,
+      export_method: "app-store",
+      export_options: export_options
+    )
+  end
+
+  desc "Build and upload an iOS build to TestFlight"
+  lane :testflight do
+    api_key = app_store_connect_api_key_from_env
+    set_ci_build_number
+    build_release
+
+    upload_to_testflight(
+      api_key: api_key,
+      skip_waiting_for_build_processing: true,
+      distribute_external: false
+    )
+  end
+
+  desc "Build and upload an iOS build to App Store Connect"
+  lane :appstore do
+    api_key = app_store_connect_api_key_from_env
+    set_ci_build_number
+    build_release
+
+    upload_to_app_store(
+      api_key: api_key,
+      skip_metadata: true,
+      skip_screenshots: true,
+      submit_for_review: false,
+      automatic_release: false,
+      force: true
+    )
+  end
+end

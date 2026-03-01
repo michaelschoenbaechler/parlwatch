@@ -28,6 +28,13 @@ npm-debug.log*
 /coverage
 /dist
 /node_modules
+.env
+.env.local
+.env.*.local
 /platforms
 /plugins
 /www
+/ios/App/fastlane/report.xml
+/ios/App/fastlane/Preview.html
+/ios/App/fastlane/test_output
+/ios/App/fastlane/screenshots
