@@ -25,6 +25,17 @@ ParlWatch is an open-source project designed to provide easy access to the parli
    npm run start
    ```
 
+## iOS deployment
+
+Automated iOS deployments (TestFlight/App Store) are available via Fastlane and GitHub Actions.
+
+- Setup and usage guide: [docs/ios-deployment.md](docs/ios-deployment.md)
+- Local commands:
+  - `cp .env.example .env` and load env vars before deploy
+  - `npm run ios:fastlane:install`
+  - `npm run ios:deploy:testflight`
+  - `npm run ios:deploy:appstore`
+
 ## Contribution
 
 We welcome contributions from the community. Please refer to the CONTRIBUTING.md file for more details on how to contribute to this project.
