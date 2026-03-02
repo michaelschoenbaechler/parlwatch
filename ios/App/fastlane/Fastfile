@@ -19,6 +19,22 @@ def app_store_connect_api_key_from_env
 end
 
 platform :ios do
+  private_lane :set_ci_marketing_version do
+    marketing_version = ENV["IOS_MARKETING_VERSION"].to_s.strip
+
+    if marketing_version.empty? && ENV["CI"] == "true"
+      now = Time.now
+      marketing_version = now.strftime("%Y.%-m.%-d")
+    end
+
+    return if marketing_version.empty?
+
+    increment_version_number(
+      xcodeproj: "App.xcodeproj",
+      version_number: marketing_version
+    )
+  end
+
   private_lane :set_ci_build_number do
     build_number = ENV["IOS_BUILD_NUMBER"].to_s.strip
     build_number = ENV["GITHUB_RUN_ID"].to_s.strip if build_number.empty?
@@ -60,6 +76,7 @@ platform :ios do
   desc "Build and upload an iOS build to TestFlight"
   lane :deploy_testflight do
     api_key = app_store_connect_api_key_from_env
+    set_ci_marketing_version
     set_ci_build_number
     build_release
 
@@ -73,6 +90,7 @@ platform :ios do
   desc "Build and upload an iOS build to App Store Connect"
   lane :deploy_appstore do
     api_key = app_store_connect_api_key_from_env
+    set_ci_marketing_version
     set_ci_build_number
     build_release
 

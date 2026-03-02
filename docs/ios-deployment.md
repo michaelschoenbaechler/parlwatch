@@ -41,10 +41,17 @@ Optional:
 
 - `APP_IDENTIFIER` (default: `ch.michaelschoenbaechler.parlwatch`)
 - `APPLE_TEAM_ID` (default: `65DUBW68Z2`)
+- `IOS_MARKETING_VERSION` (overrides `CFBundleShortVersionString`)
+- `IOS_BUILD_NUMBER` (overrides `CFBundleVersion`)
 
 Local note:
 
 - Local deploy expects signing certificate/profile to already be available in your login keychain.
+
+Versioning note:
+
+- In CI, if `IOS_MARKETING_VERSION` is not provided, Fastlane auto-sets `CFBundleShortVersionString` to a date format `YYYY.M.D` (for example `2026.3.3`).
+- This avoids App Store Connect rejections when the approved version is already higher than your checked-in version string.
 
 ## GitHub Actions deployment
 
@@ -124,3 +131,4 @@ Add these repository secrets before running the workflow:
    - `KEYCHAIN_PASSWORD`
 3. Trigger workflow: `Actions` > `iOS Deploy` > `Run workflow`.
 4. Select target: `testflight` or `appstore`.
+5. Optional: set `marketing_version` if you want a manual short version for that run.

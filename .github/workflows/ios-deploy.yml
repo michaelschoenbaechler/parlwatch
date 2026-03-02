@@ -11,13 +11,19 @@ on:
           - testflight
           - appstore
         default: testflight
+      marketing_version:
+        description: Optional marketing version (CFBundleShortVersionString), e.g. 2026.3.3
+        required: false
+        type: string
 
 jobs:
   deploy-ios:
     runs-on: macos-latest
     env:
+      TZ: Europe/Zurich
       APP_IDENTIFIER: ch.michaelschoenbaechler.parlwatch
       APPLE_TEAM_ID: 65DUBW68Z2
+      IOS_MARKETING_VERSION: ${{ github.event.inputs.marketing_version }}
       APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
       APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
       APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
