@@ -52,7 +52,8 @@ platform :ios do
       clean: true,
       export_method: "app-store",
       export_options: export_options,
-      xcargs: %Q(CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=#{team_id} CODE_SIGN_IDENTITY="Apple Distribution" PROVISIONING_PROFILE_SPECIFIER="#{provisioning_profile_name}")
+      xcargs: %Q(DEVELOPMENT_TEAM=#{team_id} CODE_SIGN_IDENTITY="Apple Distribution"),
+      skip_profile_detection: true
     )
   end
 
