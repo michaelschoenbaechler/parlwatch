@@ -58,10 +58,18 @@ jobs:
 
           CERT_PATH="$RUNNER_TEMP/distribution-cert.p12"
           PROFILE_PATH="$RUNNER_TEMP/appstore.mobileprovision"
+          PROFILE_PLIST="$RUNNER_TEMP/appstore.mobileprovision.plist"
           KEYCHAIN_PATH="$RUNNER_TEMP/app-signing.keychain-db"
 
           echo -n "$IOS_DISTRIBUTION_CERTIFICATE_BASE64" | openssl base64 -d -A > "$CERT_PATH"
           echo -n "$IOS_APPSTORE_PROVISIONING_PROFILE_BASE64" | openssl base64 -d -A > "$PROFILE_PATH"
+          security cms -D -i "$PROFILE_PATH" > "$PROFILE_PLIST"
+          PROFILE_NAME=$(/usr/libexec/PlistBuddy -c "Print Name" "$PROFILE_PLIST")
+          PROFILE_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" "$PROFILE_PLIST")
+          if [[ "$PROFILE_NAME" != "$IOS_PROVISIONING_PROFILE_NAME" ]]; then
+            echo "::error::Provisioning profile name mismatch. Expected '$IOS_PROVISIONING_PROFILE_NAME' but got '$PROFILE_NAME'."
+            exit 1
+          fi
 
           security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
@@ -72,12 +80,17 @@ jobs:
           security default-keychain -d user -s "$KEYCHAIN_PATH"
 
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
-          cp "$PROFILE_PATH" "$HOME/Library/MobileDevice/Provisioning Profiles/appstore.mobileprovision"
+          cp "$PROFILE_PATH" "$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
 
       - name: Install Fastlane dependencies
         run: bundle install
         working-directory: ios/App
 
       - name: Deploy to App Store Connect
-        run: bundle exec fastlane ${{ github.event.inputs.target }}
+        run: |
+          if [[ "${{ github.event.inputs.target }}" == "testflight" ]]; then
+            bundle exec fastlane deploy_testflight
+          else
+            bundle exec fastlane deploy_appstore
+          fi
         working-directory: ios/App

@@ -19,45 +19,45 @@ def app_store_connect_api_key_from_env
 end
 
 platform :ios do
-  before_all do
-    setup_ci if ENV["CI"] == "true"
-  end
-
   private_lane :set_ci_build_number do
-    run_number = ENV["GITHUB_RUN_NUMBER"]
-    return if run_number.to_s.strip.empty?
+    build_number = ENV["IOS_BUILD_NUMBER"].to_s.strip
+    build_number = ENV["GITHUB_RUN_ID"].to_s.strip if build_number.empty?
+    build_number = ENV["GITHUB_RUN_NUMBER"].to_s.strip if build_number.empty?
+    return if build_number.empty?
 
     increment_build_number(
       xcodeproj: "App.xcodeproj",
-      build_number: run_number
+      build_number: build_number
     )
   end
 
   private_lane :build_release do
     app_identifier = ENV.fetch("APP_IDENTIFIER", "ch.michaelschoenbaechler.parlwatch")
     provisioning_profile_name = ENV["IOS_PROVISIONING_PROFILE_NAME"].to_s.strip
+    team_id = ENV.fetch("APPLE_TEAM_ID", "65DUBW68Z2")
+    required_env!(%w[IOS_PROVISIONING_PROFILE_NAME])
+
     export_options = {
       "method" => "app-store",
-      "signingStyle" => "automatic"
-    }
-
-    unless provisioning_profile_name.empty?
-      export_options["provisioningProfiles"] = {
+      "signingStyle" => "manual",
+      "teamID" => team_id,
+      "provisioningProfiles" => {
         app_identifier => provisioning_profile_name
       }
-    end
+    }
 
     build_app(
       workspace: "App.xcworkspace",
       scheme: "App",
       clean: true,
       export_method: "app-store",
-      export_options: export_options
+      export_options: export_options,
+      xcargs: %Q(CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=#{team_id} CODE_SIGN_IDENTITY="Apple Distribution" PROVISIONING_PROFILE_SPECIFIER="#{provisioning_profile_name}")
     )
   end
 
   desc "Build and upload an iOS build to TestFlight"
-  lane :testflight do
+  lane :deploy_testflight do
     api_key = app_store_connect_api_key_from_env
     set_ci_build_number
     build_release
@@ -70,7 +70,7 @@ platform :ios do
   end
 
   desc "Build and upload an iOS build to App Store Connect"
-  lane :appstore do
+  lane :deploy_appstore do
     api_key = app_store_connect_api_key_from_env
     set_ci_build_number
     build_release
