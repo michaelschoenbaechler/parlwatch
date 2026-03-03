@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:ci
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/parlwatch/
+          retention-days: 30
+
+      - name: Post coverage summary
+        run: |
+          echo "### Test Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          cat coverage/parlwatch/index.html | grep -oP '[^>]+(?=%</span>)' | head -1 | xargs -I {} echo "- Overall Coverage: {}%" >> $GITHUB_STEP_SUMMARY || echo "- Coverage report generated" >> $GITHUB_STEP_SUMMARY

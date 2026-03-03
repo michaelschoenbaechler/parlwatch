@@ -20,7 +20,10 @@
     "prettier:fix": "npx prettier --write \"src/**/*.{ts,html}\"",
     "i18n:extract": "transloco-keys-manager extract --remove-extra-keys --sort",
     "i18n:find": "transloco-keys-manager find",
-    "changelog:generate": "conventional-changelog -p angular"
+    "changelog:generate": "conventional-changelog -p angular",
+    "test": "ng test",
+    "test:ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
+    "test:coverage": "ng test --code-coverage"
   },
   "private": true,
   "overrides": {
@@ -73,7 +76,7 @@
     "@commitlint/config-conventional": "^18.4.4",
     "@ionic/angular-toolkit": "^12.3.0",
     "@jsverse/transloco-keys-manager": "^7.1.0",
-    "@types/jasmine": "^5.1.13",
+    "@types/jasmine": "^5.1.15",
     "@types/node": "^20.19.27",
     "@typescript-eslint/eslint-plugin": "^8.50.0",
     "@typescript-eslint/parser": "^8.50.0",
@@ -84,6 +87,12 @@
     "eslint-plugin-jsdoc": "48.0.2",
     "eslint-plugin-unused-imports": "^4.3.0",
     "husky": "^8.0.3",
+    "jasmine-core": "^6.1.0",
+    "karma": "^6.4.4",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.1",
+    "karma-jasmine": "^5.1.0",
+    "karma-jasmine-html-reporter": "^2.2.0",
     "prettier": "^3.7.4",
     "ts-node": "~10.9.2",
     "typescript": "~5.8.0"

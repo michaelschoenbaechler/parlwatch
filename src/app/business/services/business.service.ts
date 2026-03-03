@@ -27,17 +27,22 @@ export class BusinessService {
     businessTypes,
     businessStatuses
   }: BusinessFilter): Observable<Business[]> {
-    const businessTypeIds = businessTypes.map((bt) => bt.ID);
+    const safeBusinessTypes = businessTypes ?? [];
+    const safeBusinessStatuses = businessStatuses ?? [];
+
+    const businessTypeIds = safeBusinessTypes.map((bt) => bt.ID);
     const businessTypeFilterArray = [];
-    if (businessTypeIds && businessTypes.length > 0) {
+    if (businessTypeIds.length > 0) {
       businessTypeIds.forEach((id) => {
         businessTypeFilterArray.push({ BusinessType: id });
       });
     }
 
-    const businessStatusIds = businessStatuses.map((bs) => bs.BusinessStatusId);
+    const businessStatusIds = safeBusinessStatuses.map(
+      (bs) => bs.BusinessStatusId
+    );
     const businessStatusFilterArray = [];
-    if (businessStatusIds && businessStatuses.length > 0) {
+    if (businessStatusIds.length > 0) {
       businessStatusIds.forEach((id) => {
         businessStatusFilterArray.push({ BusinessStatus: id });
       });
