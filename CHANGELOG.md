@@ -1,3 +1,30 @@
+## <small>2026.3.3 (2026-03-03)</small>
+
+* ci: add iOS deployment guide and automation ([5fca8b4](https://github.com/michaelschoenbaechler/parlwatch/commit/5fca8b4))
+* ci: improve iOS deployment process and provisioning profile handling ([92bd53c](https://github.com/michaelschoenbaechler/parlwatch/commit/92bd53c))
+* ci: switch iOS code signing to manual and update Fastlane for provisioning profile config ([1bc7687](https://github.com/michaelschoenbaechler/parlwatch/commit/1bc7687))
+* ci: switch iOS code signing to manual and update Fastlane for provisioning profile config ([9b6b988](https://github.com/michaelschoenbaechler/parlwatch/commit/9b6b988))
+* ci: update Fastlane to skip provisioning profile detection in iOS builds ([53c84d7](https://github.com/michaelschoenbaechler/parlwatch/commit/53c84d7))
+* fix: address tar and tmp vulnerabilities via npm overrides ([ef501ee](https://github.com/michaelschoenbaechler/parlwatch/commit/ef501ee))
+* fix: update Angular to 20.3.16 to address XSS vulnerability (GHSA-jrmj-c5cx-3cw6) ([fd2b84c](https://github.com/michaelschoenbaechler/parlwatch/commit/fd2b84c))
+* fix: upgrade to ESLint 9 to address stack overflow vulnerability (GHSA-p5wg-g6qr-c7cg) ([b7357f8](https://github.com/michaelschoenbaechler/parlwatch/commit/b7357f8))
+* chore: add html to prettier ([63a29c4](https://github.com/michaelschoenbaechler/parlwatch/commit/63a29c4))
+* chore: add ngrx toolkit ([8ef6702](https://github.com/michaelschoenbaechler/parlwatch/commit/8ef6702))
+* chore: increment changelog generation ([de5080c](https://github.com/michaelschoenbaechler/parlwatch/commit/de5080c))
+* chore: lint ([991427d](https://github.com/michaelschoenbaechler/parlwatch/commit/991427d))
+* chore: update packages to fix security vulnerabilities and update dependencies ([a1c8074](https://github.com/michaelschoenbaechler/parlwatch/commit/a1c8074))
+* refactor: migration to output function ([0c1f3c2](https://github.com/michaelschoenbaechler/parlwatch/commit/0c1f3c2))
+* refactor: migration to self-closing tags ([3a98f75](https://github.com/michaelschoenbaechler/parlwatch/commit/3a98f75))
+* refactor: migration to signal inputs ([0b1ad4f](https://github.com/michaelschoenbaechler/parlwatch/commit/0b1ad4f))
+* refactor: migration to signal queries ([d57c629](https://github.com/michaelschoenbaechler/parlwatch/commit/d57c629))
+* refactor(business): introduce scalable signal store architecture ([06a12de](https://github.com/michaelschoenbaechler/parlwatch/commit/06a12de))
+* refactor(council-member): introduce scalable signal store architecture ([fff6769](https://github.com/michaelschoenbaechler/parlwatch/commit/fff6769))
+* refactor(votes): introduce scalable signal store architecture ([0b951aa](https://github.com/michaelschoenbaechler/parlwatch/commit/0b951aa))
+* docs: improve documentation of request state ([f7cfa7c](https://github.com/michaelschoenbaechler/parlwatch/commit/f7cfa7c))
+* docs: remove version of frameworks ([304670f](https://github.com/michaelschoenbaechler/parlwatch/commit/304670f))
+
+
+
 ## <small>1.0.4 (2025-08-02)</small>
 
 * chore: add copilot instructions ([8f9ae96](https://github.com/michaelschoenbaechler/parlwatch/commit/8f9ae96))
