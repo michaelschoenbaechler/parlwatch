@@ -3,7 +3,7 @@ ion-item::part(native) {
 }
 
 app-text-card ion-list {
-  margin-top: 1rem;
+  margin-top: var(--ion-padding-md);
 }
 
 .vote-item {
@@ -18,7 +18,7 @@ app-text-card ion-list {
 
 .no-votes-text {
   text-align: center;
-  color: #666666;
+  color: var(--ion-color-text-secondary);
 }
 
 .loading-voting-record-container {
