@@ -1,3 +1,20 @@
+## <small>2026.3.9 (2026-03-09)</small>
+
+* fix(deps): bump tar to 7.5.9 ([9b0c583](https://github.com/michaelschoenbaechler/parlwatch/commit/9b0c583))
+* fix(deps): resolve dependabot security alerts ([eec5199](https://github.com/michaelschoenbaechler/parlwatch/commit/eec5199))
+* test: add Karma/Jasmine testing setup with coverage and CI ([82d3ef0](https://github.com/michaelschoenbaechler/parlwatch/commit/82d3ef0))
+* ci: update Info.plist to specify app does not use non-exempt encryption ([463b3dc](https://github.com/michaelschoenbaechler/parlwatch/commit/463b3dc))
+
+
+
+## <small>2026.3.9 (2026-03-09)</small>
+
+* test: add Karma/Jasmine testing setup with coverage and CI ([82d3ef0](https://github.com/michaelschoenbaechler/parlwatch/commit/82d3ef0))
+* fix(deps): bump tar to 7.5.9 ([9b0c583](https://github.com/michaelschoenbaechler/parlwatch/commit/9b0c583))
+* ci: update Info.plist to specify app does not use non-exempt encryption ([463b3dc](https://github.com/michaelschoenbaechler/parlwatch/commit/463b3dc))
+
+
+
 ## <small>2026.3.3 (2026-03-03)</small>
 
 * ci: add iOS deployment guide and automation ([5fca8b4](https://github.com/michaelschoenbaechler/parlwatch/commit/5fca8b4))
