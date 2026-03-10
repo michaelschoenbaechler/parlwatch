@@ -1,4 +1,9 @@
-import { enableProdMode, importProvidersFrom, isDevMode } from '@angular/core';
+import {
+  enableProdMode,
+  importProvidersFrom,
+  isDevMode,
+  provideZoneChangeDetection
+} from '@angular/core';
 import { provideRouter, RouteReuseStrategy } from '@angular/router';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -16,6 +21,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZoneChangeDetection(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(IonicModule.forRoot(), IonicStorageModule.forRoot()),
     provideRouter(APP_ROUTES),
