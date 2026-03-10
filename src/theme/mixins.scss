@@ -1,0 +1,142 @@
+/**
+ * Common SCSS mixins following Ionic framework best practices
+ * These mixins use CSS variables for consistent theming
+ */
+
+// Card mixin for consistent card styling
+@mixin card-base() {
+  border-radius: var(--app-border-radius-md);
+  box-shadow: 0 4px 16px var(--app-shadow-color);
+  overflow: hidden;
+  background: var(--app-card-background);
+  margin-bottom: var(--app-spacing-sm);
+}
+
+// Content padding mixin
+@mixin content-padding() {
+  padding: var(--app-spacing-lg);
+}
+
+// Text styles mixins
+@mixin text-title() {
+  font-size: var(--app-font-size-caption);
+  letter-spacing: var(--app-letter-spacing-sm);
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+@mixin text-description() {
+  font-size: var(--app-font-size-title);
+  line-height: var(--app-line-height-md);
+  color: var(--app-text-muted);
+}
+
+@mixin text-muted() {
+  color: var(--app-text-muted);
+}
+
+// Flex utilities
+@mixin flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}
+
+// Button mixins
+@mixin floating-button() {
+  position: fixed;
+  bottom: var(--app-spacing-md);
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+// Label/Badge mixin
+@mixin badge-style() {
+  border-radius: var(--app-border-radius-lg);
+  border: 1px solid var(--app-text-muted);
+  color: var(--app-text-muted);
+  padding: var(--app-spacing-xs) var(--app-spacing-sm);
+  font-size: var(--app-font-size-body);
+}
+
+// Responsive breakpoints following Ionic patterns
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (max-width: 575px) {
+      @content;
+    }
+  }
+  @if $breakpoint == 'sm' {
+    @media (min-width: 576px) {
+      @content;
+    }
+  }
+  @if $breakpoint == 'md' {
+    @media (min-width: 768px) {
+      @content;
+    }
+  }
+  @if $breakpoint == 'lg' {
+    @media (min-width: 992px) {
+      @content;
+    }
+  }
+  @if $breakpoint == 'xl' {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+}
+
+// Dark mode mixin
+@mixin dark-mode() {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// Animation mixins
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+// Spacing mixins
+@mixin margin($size) {
+  @if $size == 'xs' {
+    margin: var(--app-spacing-xs);
+  } @else if $size == 'sm' {
+    margin: var(--app-spacing-sm);
+  } @else if $size == 'md' {
+    margin: var(--app-spacing-md);
+  } @else if $size == 'lg' {
+    margin: var(--app-spacing-lg);
+  } @else if $size == 'xl' {
+    margin: var(--app-spacing-xl);
+  }
+}
+
+@mixin padding($size) {
+  @if $size == 'xs' {
+    padding: var(--app-spacing-xs);
+  } @else if $size == 'sm' {
+    padding: var(--app-spacing-sm);
+  } @else if $size == 'md' {
+    padding: var(--app-spacing-md);
+  } @else if $size == 'lg' {
+    padding: var(--app-spacing-lg);
+  } @else if $size == 'xl' {
+    padding: var(--app-spacing-xl);
+  }
+}

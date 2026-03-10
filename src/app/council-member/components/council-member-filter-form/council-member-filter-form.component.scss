@@ -1,11 +1,9 @@
+@import '../../../../theme/mixins.scss';
+
 form small {
-  margin-left: 1rem;
+  margin-left: var(--app-spacing-md);
 }
 
 .floating-button {
-  position: fixed;
-  bottom: 1rem;
-  left: 0;
-  right: 0;
-  z-index: 999;
+  @include floating-button();
 }
