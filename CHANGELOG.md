@@ -1,3 +1,8 @@
+## <small>2026.3.10 (2026-03-10)</small>
+
+
+
+
 ## <small>2026.3.9 (2026-03-09)</small>
 
 * fix(deps): bump tar to 7.5.9 ([9b0c583](https://github.com/michaelschoenbaechler/parlwatch/commit/9b0c583))
