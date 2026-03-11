@@ -1,3 +1,10 @@
+## <small>2026.3.11 (2026-03-11)</small>
+
+* chore: update to Angular 21 ([5d2cd52](https://github.com/michaelschoenbaechler/parlwatch/commit/5d2cd52))
+* ci: use Xcode 26 on macOS 15 runner for iOS deploy ([be9b375](https://github.com/michaelschoenbaechler/parlwatch/commit/be9b375))
+
+
+
 ## <small>2026.3.10 (2026-03-10)</small>
 
 
