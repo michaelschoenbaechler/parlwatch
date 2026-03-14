@@ -1,3 +1,12 @@
+## <small>2026.3.14 (2026-03-14)</small>
+
+* fix(deps): resolve dependabot security alerts ([378d6cc](https://github.com/michaelschoenbaechler/parlwatch/commit/378d6cc))
+
+## <small>2026.3.14 (2026-03-14)</small>
+
+
+
+
 ## <small>2026.3.11 (2026-03-11)</small>
 
 * chore: update to Angular 21 ([5d2cd52](https://github.com/michaelschoenbaechler/parlwatch/commit/5d2cd52))
