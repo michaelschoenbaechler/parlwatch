@@ -1,3 +1,7 @@
+## <small>2026.3.20 (2026-03-20)</small>
+
+* fix(deps): resolve dependabot security alerts ([0f39217](https://github.com/michaelschoenbaechler/parlwatch/commit/0f39217))
+
 ## <small>2026.3.19 (2026-03-19)</small>
 
 ## <small>2026.3.14 (2026-03-14)</small>
