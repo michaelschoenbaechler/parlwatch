@@ -5,6 +5,6 @@
 }
 
 .welcome-text {
-  padding: 2rem;
-  color: #666666;
+  padding: var(--app-spacing-xl);
+  color: var(--app-text-muted);
 }

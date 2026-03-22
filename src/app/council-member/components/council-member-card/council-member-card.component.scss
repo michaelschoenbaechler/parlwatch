@@ -1,13 +1,11 @@
+@import '../../../../theme/mixins.scss';
+
 .text-card {
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
-  background: white;
-  margin: 0 0 0.5rem 0rem;
+  @include card-base();
 }
 
 .text-card-content {
-  padding: 1.25rem;
+  @include content-padding();
 }
 
 .text-card-content *:last-child {
@@ -15,27 +13,20 @@
 }
 
 .text-card-title {
-  font-size: 12px;
-  letter-spacing: 0.4px;
-  font-weight: 700;
-  color: var(--ion-color-primary);
+  @include text-title();
 }
 
 .text-card-description {
-  font-size: 16px;
-  line-height: 22.4px;
-  color: #666666;
+  @include text-description();
 }
 
 .card-flex-container {
-  display: flex;
-  justify-content: space-between; /* push content to the left and image to the right */
-  align-items: center; /* vertically center items */
+  @include flex-between();
 }
 
 .canton-flag {
-  width: 2rem; /* adjust as per your needs */
-  height: 2rem; /* adjust as per your needs */
-  margin-right: 1rem;
-  border: #bbbbbb 1px solid;
+  width: var(--app-spacing-xl);
+  height: var(--app-spacing-xl);
+  margin-right: var(--app-spacing-md);
+  border: var(--app-border-color-dark) 1px solid;
 }
