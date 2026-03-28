@@ -1,6 +1,6 @@
 {
   "name": "parlwatch",
-  "version": "2026.3.20",
+  "version": "2026.3.28",
   "author": "Michael Schönbächler",
   "homepage": "https://github.com/michaelschoenbaechler",
   "description": "Easy access for everyone to parliamentary data",
@@ -30,10 +30,11 @@
     "tmp": "^0.2.4",
     "webpack": "5.105.4",
     "rollup": "4.59.0",
-    "serialize-javascript": "7.0.4",
+    "serialize-javascript": "7.0.5",
     "tar": "7.5.11",
     "undici": "7.24.2",
-    "yauzl": "3.2.1"
+    "yauzl": "3.2.1",
+    "picomatch": "4.0.4"
   },
   "dependencies": {
     "@angular/common": "^21.2.4",
