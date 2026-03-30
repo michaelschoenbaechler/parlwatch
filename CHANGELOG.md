@@ -1,3 +1,11 @@
+## <small>2026.3.30 (2026-03-30)</small>
+
+* fix: override vulnerable picomatch and handlebars ([e1d0c9d](https://github.com/michaelschoenbaechler/parlwatch/commit/e1d0c9d))
+* fix: regenerate package-lock.json to sync dependencies ([e4107e7](https://github.com/michaelschoenbaechler/parlwatch/commit/e4107e7))
+* fix(deps): resolve dependabot security alerts ([5141bd9](https://github.com/michaelschoenbaechler/parlwatch/commit/5141bd9))
+* fix(deps): resolve dependabot security alerts ([5aea7bb](https://github.com/michaelschoenbaechler/parlwatch/commit/5aea7bb))
+* fix(deps): resolve dependabot security alerts ([0f39217](https://github.com/michaelschoenbaechler/parlwatch/commit/0f39217))
+
 ## <small>2026.3.28 (2026-03-28)</small>
 
 * fix(deps): resolve dependabot security alerts ([5aea7bb](https://github.com/michaelschoenbaechler/parlwatch/commit/5aea7bb))
