@@ -1,6 +1,6 @@
 {
   "name": "parlwatch",
-  "version": "2026.3.28",
+  "version": "2026.3.30",
   "author": "Michael Schönbächler",
   "homepage": "https://github.com/michaelschoenbaechler",
   "description": "Easy access for everyone to parliamentary data",
@@ -27,7 +27,7 @@
   },
   "private": true,
   "overrides": {
-    "handlebars": "4.7.8",
+    "handlebars": "4.7.9",
     "picomatch": "4.0.3",
     "tmp": "^0.2.4",
     "webpack": "5.105.4",
