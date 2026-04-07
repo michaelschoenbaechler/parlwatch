@@ -1,5 +1,5 @@
 ion-toolbar {
-  --padding-end: 1rem;
+  --padding-end: var(--app-spacing-md);
 }
 
 ion-modal ion-toolbar {
@@ -12,6 +12,6 @@ ion-modal ion-toolbar {
 }
 
 .active-filter-wrapper {
-  padding: 0.5rem 1rem 0 1rem;
+  padding: var(--app-spacing-sm) var(--app-spacing-md) 0 var(--app-spacing-md);
   background-color: var(--ion-color-primary-contrast);
 }

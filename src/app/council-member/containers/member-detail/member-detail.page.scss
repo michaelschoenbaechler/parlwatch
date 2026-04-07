@@ -1,15 +1,15 @@
+@import '../../../../theme/mixins.scss';
+
 ion-item::part(native) {
   padding-left: 0;
 }
 
 app-text-card ion-list {
-  margin-top: 1rem;
+  margin-top: var(--app-spacing-md);
 }
 
 .vote-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-between();
 }
 
 .votings-title {
@@ -18,13 +18,11 @@ app-text-card ion-list {
 
 .no-votes-text {
   text-align: center;
-  color: #666666;
+  color: var(--app-text-muted);
 }
 
 .loading-voting-record-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center();
   margin-top: 3rem;
   height: 100%;
 }
