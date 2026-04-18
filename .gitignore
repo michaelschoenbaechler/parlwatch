@@ -16,8 +16,10 @@ $RECYCLE.BIN/
 *.log
 log.txt
 npm-debug.log*
+node_modules/
 
 /.angular
+/apps/*/.angular
 /.idea
 /.ionic
 /.sass-cache
@@ -26,15 +28,15 @@ npm-debug.log*
 /.vscode/*
 !/.vscode/extensions.json
 /coverage
+/apps/*/coverage
 /dist
-/node_modules
 .env
 .env.local
 .env.*.local
 /platforms
 /plugins
-/www
-/ios/App/fastlane/report.xml
-/ios/App/fastlane/Preview.html
-/ios/App/fastlane/test_output
-/ios/App/fastlane/screenshots
+/apps/ionic/www
+/apps/ionic/ios/App/fastlane/report.xml
+/apps/ionic/ios/App/fastlane/Preview.html
+/apps/ionic/ios/App/fastlane/test_output
+/apps/ionic/ios/App/fastlane/screenshots

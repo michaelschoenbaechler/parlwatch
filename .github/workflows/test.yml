@@ -31,10 +31,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage/parlwatch/
+          path: apps/ionic/coverage/parlwatch/
           retention-days: 30
 
       - name: Post coverage summary
         run: |
           echo "### Test Coverage Summary" >> $GITHUB_STEP_SUMMARY
-          cat coverage/parlwatch/index.html | grep -oP '[^>]+(?=%</span>)' | head -1 | xargs -I {} echo "- Overall Coverage: {}%" >> $GITHUB_STEP_SUMMARY || echo "- Coverage report generated" >> $GITHUB_STEP_SUMMARY
+          cat apps/ionic/coverage/parlwatch/index.html | grep -oP '[^>]+(?=%</span>)' | head -1 | xargs -I {} echo "- Overall Coverage: {}%" >> $GITHUB_STEP_SUMMARY || echo "- Coverage report generated" >> $GITHUB_STEP_SUMMARY
