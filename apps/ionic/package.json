@@ -28,7 +28,6 @@
   "private": true,
   "overrides": {
     "handlebars": "4.7.9",
-    "picomatch": "4.0.3",
     "tmp": "^0.2.4",
     "webpack": "5.105.4",
     "rollup": "4.59.0",
