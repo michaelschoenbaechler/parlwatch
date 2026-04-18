@@ -2,6 +2,8 @@
 
 This project now supports one-command iOS deployment through Fastlane.
 
+The repository root exposes the deployment commands and forwards them to the Ionic workspace in `apps/ionic`.
+
 ## Local deployment
 
 1. Install Ruby dependencies once:
@@ -13,13 +15,13 @@ This project now supports one-command iOS deployment through Fastlane.
    cp .env.example .env
    set -a; source .env; set +a
    ```
-3. From repo root, run one of:
+3. From the repository root, run one of:
    ```bash
    npm run ios:deploy:testflight
    npm run ios:deploy:appstore
    ```
 
-The commands build web assets, sync the Capacitor iOS project, archive the app, and upload to App Store Connect.
+The commands build the Ionic workspace web assets, sync the Capacitor iOS project, archive the app, and upload to App Store Connect.
 
 ## Required environment variables
 

@@ -31,7 +31,7 @@
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
-            "allowedCommonJsDependencies": ["lodash", "swissparl"],
+            "allowedCommonJsDependencies": ["localforage", "lodash", "swissparl"],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -122,21 +122,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "app:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "app:serve:production"
-            },
-            "ci": {
-              "devServerTarget": "app:serve:ci"
-            }
           }
         }
       }

@@ -1,29 +1,46 @@
 # ParlWatch
 
-ParlWatch is an open-source project designed to provide easy access to the parliamentary data of the Swiss government. Leveraging the power of Angular and Ionic, it facilitates a seamless and comprehensive viewing experience.
+ParlWatch is an open-source project that makes Swiss parliamentary data easier to browse across client platforms.
 
-## Features
+## Monorepo layout
 
-- **Real-time Data**: Fetch real-time parliamentary data directly from the Swiss government's API.
-- **User-friendly Interface**: Utilize the intuitive UI to navigate through vast amounts of data with ease.
+This repository now uses `npm` workspaces so additional apps can be added without reshaping the repo again later.
 
-## Getting Started
+- `apps/ionic`: the existing Ionic + Angular + Capacitor application
+- `apps/web`: reserved for a future website
+- `apps/native`: reserved for a future native mobile app
+- `apps/desktop`: reserved for a future desktop app
+- `docs`: shared project documentation
+
+## Getting started
 
 ### Prerequisites
 
 - Node.js
-- Angular CLI
+- npm
 
-### Installation (web)
+### Run the existing Ionic app
 
-1. Install the dependencies
-   ```
+1. Install dependencies from the repository root:
+   ```bash
    npm install
    ```
-2. Run the application
-   ```
+2. Start the Ionic workspace through the root script:
+   ```bash
    npm run start
    ```
+
+The root scripts forward to `apps/ionic`, so the current developer workflow stays available from the repo root.
+
+## Common commands
+
+- `npm run start`
+- `npm run build`
+- `npm run build:prd`
+- `npm run lint`
+- `npm run test:ci`
+- `npm run ios:prepare`
+- `npm run ios:deploy:testflight`
 
 ## iOS deployment
 
@@ -36,18 +53,6 @@ Automated iOS deployments (TestFlight/App Store) are available via Fastlane and 
   - `npm run ios:deploy:testflight`
   - `npm run ios:deploy:appstore`
 
-## Contribution
-
-We welcome contributions from the community. Please refer to the CONTRIBUTING.md file for more details on how to contribute to this project.
-
 ## API
 
-The parliamentary data is sourced from the Swiss government's official API, which is free to use. Note that this project is not responsible for the management or maintenance of the API.
-
-## Support
-
-For support, bug reporting, or to suggest new features, please open an issue on the GitHub project page.
-
-## Privacy Policy
-
-We believe in respecting your privacy. That's why we don't track or profile you in any way. Our project is designed to operate without collecting or storing any personal information.
+The parliamentary data comes from the Swiss government's public API. ParlWatch does not operate or manage that API.

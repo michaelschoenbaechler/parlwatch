@@ -95,7 +95,7 @@ jobs:
 
       - name: Install Fastlane dependencies
         run: bundle install
-        working-directory: ios/App
+        working-directory: apps/ionic/ios/App
 
       - name: Deploy to App Store Connect
         run: |
@@ -104,4 +104,4 @@ jobs:
           else
             bundle exec fastlane deploy_appstore
           fi
-        working-directory: ios/App
+        working-directory: apps/ionic/ios/App

@@ -41,6 +41,9 @@ module.exports = function (config) {
     },
     reporters: ['progress', 'kjhtml', 'coverage'],
     browsers: ['ChromeHeadless'],
+    hostname: '127.0.0.1',
+    listenAddress: '127.0.0.1',
+    port: 9876,
     customLaunchers: {
       ChromeHeadlessCI: {
         base: 'ChromeHeadless',
