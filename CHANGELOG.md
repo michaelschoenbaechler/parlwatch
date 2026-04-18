@@ -7,31 +7,11 @@
 * fix(deps): resolve dependabot security alerts ([5aea7bb](https://github.com/michaelschoenbaechler/parlwatch/commit/5aea7bb))
 * fix(deps): resolve dependabot security alerts ([0f39217](https://github.com/michaelschoenbaechler/parlwatch/commit/0f39217))
 
-## <small>2026.3.30 (2026-03-30)</small>
 
-* fix: override vulnerable picomatch and handlebars ([e1d0c9d](https://github.com/michaelschoenbaechler/parlwatch/commit/e1d0c9d))
-* fix: regenerate package-lock.json to sync dependencies ([e4107e7](https://github.com/michaelschoenbaechler/parlwatch/commit/e4107e7))
-* fix(deps): resolve dependabot security alerts ([5141bd9](https://github.com/michaelschoenbaechler/parlwatch/commit/5141bd9))
-* fix(deps): resolve dependabot security alerts ([5aea7bb](https://github.com/michaelschoenbaechler/parlwatch/commit/5aea7bb))
-* fix(deps): resolve dependabot security alerts ([0f39217](https://github.com/michaelschoenbaechler/parlwatch/commit/0f39217))
-
-## <small>2026.3.28 (2026-03-28)</small>
-
-* fix(deps): resolve dependabot security alerts ([5aea7bb](https://github.com/michaelschoenbaechler/parlwatch/commit/5aea7bb))
-* fix(deps): resolve dependabot security alerts ([0f39217](https://github.com/michaelschoenbaechler/parlwatch/commit/0f39217))
-
-## <small>2026.3.20 (2026-03-20)</small>
-
-* fix(deps): resolve dependabot security alerts ([0f39217](https://github.com/michaelschoenbaechler/parlwatch/commit/0f39217))
-
-## <small>2026.3.19 (2026-03-19)</small>
 
 ## <small>2026.3.14 (2026-03-14)</small>
 
 * fix(deps): resolve dependabot security alerts ([378d6cc](https://github.com/michaelschoenbaechler/parlwatch/commit/378d6cc))
-
-## <small>2026.3.14 (2026-03-14)</small>
-
 
 
 
@@ -39,11 +19,6 @@
 
 * chore: update to Angular 21 ([5d2cd52](https://github.com/michaelschoenbaechler/parlwatch/commit/5d2cd52))
 * ci: use Xcode 26 on macOS 15 runner for iOS deploy ([be9b375](https://github.com/michaelschoenbaechler/parlwatch/commit/be9b375))
-
-
-
-## <small>2026.3.10 (2026-03-10)</small>
-
 
 
 
