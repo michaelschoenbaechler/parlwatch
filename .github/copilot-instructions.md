@@ -1,4 +1,4 @@
-This is a Typescript-based repository using Angular and Ionic capacitor framework. 
+This is a Typescript-based repository using Angular and Ionic capacitor framework.
 The repository is structured to support a modular architecture, with components, pages, services and ngrx signal stores (https://ngrx.io/guide/signals/signal-store).
 Please follow these guidelines when contributing:
 
@@ -15,19 +15,20 @@ Please follow these guidelines when contributing:
 - i18n: `npm run i18n:find` (to find new translations) and `npm run i18n:extract` (to extract translations)
 
 ## Repository Structure
-- `ios/`: Contains iOS specific configurations and files
-- `src/`: Contains the main application code
-  - `app/`: The main application module and components
+- `apps/ionic/`: Contains the existing Ionic application workspace
+  - `ios/`: Contains iOS specific configurations and files
+  - `src/`: Contains the main application code
+  - `src/app/`: The main application module and components
     - `business`: Components, pages and signal store related to businesses that are part of the council
-    - `council-members/`: Components, pages and signal store related to council members'
+    - `council-member/`: Components, pages and signal store related to council members
     - `layout/`: Tab navigation components for the application
     - `settings/`: Application settings and configurations like language and donation
     - `shared/`: Shared components, directives, pipes and services
     - `votes/`: Components and pages related to voting on particular businesses
-  - `assets/`: Static assets like images and stylesheets
-  - `environments/`: Environment-specific configurations
-  - `i18n/`: Internationalization files
-  - `theme/`: Global styles and themes
+  - `src/assets/`: Static assets like images and stylesheets
+  - `src/environments/`: Environment-specific configurations
+  - `src/theme/`: Global styles and themes
+- `apps/web/`, `apps/native/`, `apps/desktop/`: Reserved for future clients
 
 ## Key Guidelines
 1. Follow Go best practices and idiomatic patterns
