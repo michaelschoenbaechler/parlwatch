@@ -116,7 +116,8 @@ export const BusinessStore = signalStore(
               next: (business) =>
                 patchState(
                   store,
-                  createSuccessBusinessRequestState([business])
+                  createSuccessBusinessRequestState([business]),
+                  { selectedBusinessId: id }
                 ),
               error: () => patchState(store, createErrorBusinessRequestState())
             })
