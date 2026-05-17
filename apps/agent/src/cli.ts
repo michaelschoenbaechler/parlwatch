@@ -21,6 +21,7 @@ import {
 import type { AgentEvent } from "@earendil-works/pi-agent-core";
 import { createAgent } from "./agent/index.js";
 import { buildGetApiKey } from "./auth/login.js";
+import { SessionLogger } from "./debug/logger.js";
 
 const markdownTheme: MarkdownTheme = {
   heading: (s) => chalk.bold.cyan(s),
@@ -150,6 +151,7 @@ const promptUser = (
 (async () => {
   const getApiKey = await buildGetApiKey();
   const agent = createAgent(promptUser, getApiKey);
+  const logger = new SessionLogger();
 
   agent.subscribe((event: AgentEvent) => {
     switch (event.type) {
@@ -208,22 +210,19 @@ const promptUser = (
       }
 
       case "tool_execution_start":
+        logger.logToolStart(event.toolCallId, event.toolName, event.args).catch(() => undefined);
         history.addChild(new Text(chalk.dim(`⚙ ${event.toolName}`), 1, 0));
         tui.requestRender();
         break;
 
       case "tool_execution_end": {
+        logger.logToolEnd(event.toolCallId, event.result, event.isError).catch(() => undefined);
         const resultText = event.result?.content?.[0]?.text ?? JSON.stringify(event.result);
         if (event.isError) {
           history.addChild(new Text(chalk.red(`  ✗ ${resultText}`), 0, 0));
         } else {
-          history.addChild(
-            new Text(
-              chalk.dim(`  ✓ ${resultText.slice(0, 120)}${resultText.length > 120 ? "…" : ""}`),
-              0,
-              0
-            )
-          );
+          const preview = resultText.slice(0, 120) + (resultText.length > 120 ? "…" : "");
+          history.addChild(new Text(chalk.dim(`  ✓ ${preview}`), 0, 0));
         }
         tui.requestRender();
         break;
@@ -278,6 +277,8 @@ const promptUser = (
       tui.requestRender();
     }
   };
+
+  history.addChild(new Text(chalk.dim(`Sitzung: ${logger.sessionDir}`), 0, 1));
 
   tui.addChild(history);
   tui.addChild(new Spacer(1));

@@ -1,7 +1,25 @@
 import { fetchCollection, Collection } from "swissparl";
-import type { MemberCouncil, Voting, Vote, Business } from "swissparl";
+import type { MemberCouncil, Voting, Vote, Business, BusinessRole, PersonInterest } from "swissparl";
 
-export type { MemberCouncil, Voting, Vote, Business };
+export type { MemberCouncil, Voting, Vote, Business, BusinessRole, PersonInterest };
+
+export async function getVotingsByBusiness(params: {
+  businessShortNumber: string;
+  language?: string;
+}): Promise<Voting[]> {
+  const { businessShortNumber, language = "DE" } = params;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filter: any = {
+    eq: [{ Language: language }, { BusinessShortNumber: businessShortNumber }],
+  };
+
+  return fetchCollection<Voting>(Collection.Voting, {
+    filter,
+    top: 500,
+    orderby: { property: "IdVote", order: "asc" },
+  });
+}
 
 export async function searchCouncilMembers(params: {
   name?: string;
@@ -56,5 +74,47 @@ export async function searchBusinesses(params: {
   return fetchCollection<Business>(Collection.Business, {
     filter,
     top: 20,
+    orderby: { property: "SubmissionDate", order: "desc" },
+  });
+}
+
+export async function getCouncillorBusinesses(params: {
+  personNumber: number;
+  type?: string;
+  language?: string;
+}): Promise<BusinessRole[]> {
+  const { personNumber, type, language = "DE" } = params;
+
+  const eqFilter: Record<string, unknown>[] = [
+    { Language: language },
+    { MemberCouncilNumber: personNumber },
+  ];
+  if (type) eqFilter.push({ BusinessTypeAbbreviation: type });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filter: any = { eq: eqFilter };
+
+  return fetchCollection<BusinessRole>(Collection.BusinessRole, {
+    filter,
+    top: 50,
+    orderby: { property: "BusinessSubmissionDate", order: "desc" },
+  });
+}
+
+export async function getCouncillorInterests(params: {
+  personNumber: number;
+  language?: string;
+}): Promise<PersonInterest[]> {
+  const { personNumber, language = "DE" } = params;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filter: any = {
+    eq: [{ Language: language }, { PersonNumber: personNumber }],
+  };
+
+  return fetchCollection<PersonInterest>(Collection.PersonInterest, {
+    filter,
+    top: 100,
+    orderby: { property: "SortOrder", order: "asc" },
   });
 }

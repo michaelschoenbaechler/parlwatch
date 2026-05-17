@@ -40,7 +40,7 @@ function formatCouncilMember(m: MemberCouncil): string {
     : `ausgeschieden ${formatODataDate(m.DateLeaving) ?? ""}`;
 
   return [
-    `${m.OfficialName ?? `${m.FirstName} ${m.LastName}`} (${chamber}, ${canton})`,
+    `${m.OfficialName ?? `${m.FirstName} ${m.LastName}`} (${chamber}, ${canton}) [PersonNumber: ${m.PersonNumber ?? "?"}]`,
     `  Fraktion: ${m.ParlGroupName ?? parlGroup} | Partei: ${party}`,
     `  Eingetreten: ${joined} | Status: ${status}`,
     m.AdditionalMandate ? `  Weitere Mandate: ${m.AdditionalMandate}` : null,
