@@ -103,4 +103,21 @@ platform :ios do
       force: true
     )
   end
+
+  desc "Build, upload, and submit an iOS build to App Store for review"
+  lane :release_appstore do
+    api_key = app_store_connect_api_key_from_env
+    set_ci_marketing_version
+    set_ci_build_number
+    build_release
+
+    upload_to_app_store(
+      api_key: api_key,
+      skip_metadata: true,
+      skip_screenshots: true,
+      submit_for_review: true,
+      automatic_release: true,
+      force: true
+    )
+  end
 end
