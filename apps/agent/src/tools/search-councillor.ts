@@ -1,6 +1,7 @@
 import { Type, type Static } from "typebox";
 import type { AgentTool } from "@earendil-works/pi-agent-core";
 import { searchCouncilMembers, type MemberCouncil } from "../clients/parlament.js";
+import { formatODataDate } from "../utils/odata.js";
 
 const params = Type.Object({
   name: Type.Optional(
@@ -33,12 +34,15 @@ function formatCouncilMember(m: MemberCouncil): string {
   const canton = m.CantonAbbreviation ?? "?";
   const parlGroup = m.ParlGroupAbbreviation ?? "?";
   const party = m.PartyAbbreviation ?? "?";
-  const status = m.Active ? "aktiv" : `ausgeschieden ${m.DateLeaving?.slice(0, 10) ?? ""}`;
+  const joined = formatODataDate(m.DateJoining) ?? "?";
+  const status = m.Active
+    ? "aktiv"
+    : `ausgeschieden ${formatODataDate(m.DateLeaving) ?? ""}`;
 
   return [
     `${m.OfficialName ?? `${m.FirstName} ${m.LastName}`} (${chamber}, ${canton})`,
     `  Fraktion: ${m.ParlGroupName ?? parlGroup} | Partei: ${party}`,
-    `  Eingetreten: ${m.DateJoining?.slice(0, 10) ?? "?"} | Status: ${status}`,
+    `  Eingetreten: ${joined} | Status: ${status}`,
     m.AdditionalMandate ? `  Weitere Mandate: ${m.AdditionalMandate}` : null,
   ]
     .filter(Boolean)
