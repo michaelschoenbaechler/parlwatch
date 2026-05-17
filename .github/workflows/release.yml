@@ -28,6 +28,13 @@ jobs:
       KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
 
     steps:
+      - name: Verify branch is main
+        run: |
+          if [[ "${{ github.ref }}" != "refs/heads/main" ]]; then
+            echo "::error::Release workflow must be run from the main branch (got ${{ github.ref }})."
+            exit 1
+          fi
+
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
