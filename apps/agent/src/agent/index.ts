@@ -7,6 +7,7 @@ import { SYSTEM_PROMPT } from "./system-prompt.js";
 registerBuiltInApiProviders();
 import { createAskUserTool, type PromptUserFn } from "../tools/ask-user.js";
 import { searchCouncillorTool } from "../tools/search-councillor.js";
+import { searchBusinessTool } from "../tools/search-business.js";
 
 const model: Model<"anthropic-messages"> = {
   id: process.env.MODEL_ID ?? "claude-sonnet-4-6",
@@ -28,6 +29,7 @@ export function createAgent(
   const tools: AgentTool[] = [
     createAskUserTool(promptUser),
     searchCouncillorTool,
+    searchBusinessTool,
   ];
 
   return new Agent({
