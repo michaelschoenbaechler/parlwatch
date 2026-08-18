@@ -26,12 +26,19 @@
               },
               {
                 "glob": "**/*.svg",
-                "input": "../../node_modules/ionicons/dist/ionicons/svg",
+                "input": ".ionicons/svg",
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
-            "allowedCommonJsDependencies": ["localforage", "lodash", "swissparl"],
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
+            "allowedCommonJsDependencies": [
+              "localforage",
+              "lodash",
+              "swissparl"
+            ],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -121,7 +128,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }

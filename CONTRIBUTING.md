@@ -59,7 +59,7 @@ For this project, we are using VSCode as the preferred IDE. Make sure to configu
 
 We follow the [Conventional Commits specification](https://www.conventionalcommits.org/) to ensure consistency and readability of the commit history. Before making a commit, please ensure that your messages follow this convention.
 
-Additionally, we have configured Husky to validate commits. To set it up, you need to install Husky by running the command `npx husky install`. Husky will then automatically run the validation script on every commit.
+Additionally, we have configured Husky to validate commits. The hooks are installed automatically by the `prepare` script when you run `npm install` from the repository root. Husky will then run the validation script on every commit.
 
 ## Submitting a Pull Request
 
