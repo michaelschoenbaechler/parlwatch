@@ -55,7 +55,7 @@ jobs:
             VERSION=$(TZ=Europe/Zurich date +'%Y.%-m.%-d')
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Bump version
         run: |
