@@ -68,7 +68,6 @@ jobs:
 
       - name: Generate changelog
         run: |
-          cd apps/ionic
           npx conventional-changelog -p angular -i CHANGELOG.md -s
           awk '/^## /{found++} found==2{exit} found{print}' CHANGELOG.md > /tmp/release-notes.md
 
@@ -136,7 +135,7 @@ jobs:
 
       - name: Commit, tag, and push
         run: |
-          git add apps/ionic/package.json apps/ionic/CHANGELOG.md package-lock.json
+          git add apps/ionic/package.json CHANGELOG.md package-lock.json
           git commit -m "chore(release): ${{ steps.version.outputs.version }}"
           git tag "${{ steps.version.outputs.tag }}"
           git push origin HEAD:main --follow-tags
