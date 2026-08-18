@@ -5,7 +5,7 @@ Please follow these guidelines when contributing:
 ## Code Standards
 
 ### Required Before Each Commit
-- Run `npx husky install` before
+- Run `npm install` from the repository root once, which installs the Husky hooks
 - Use `npm run lint` to check for linting errors
 - Use `npm run prettier` to format your code according to the project's style guide
 - Validate commit messages using commitlint (see .husky/commit-msg for configuration)
