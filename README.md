@@ -4,12 +4,9 @@ ParlWatch is an open-source project that makes Swiss parliamentary data easier t
 
 ## Monorepo layout
 
-This repository now uses `npm` workspaces so additional apps can be added without reshaping the repo again later.
+This repository uses `npm` workspaces so additional apps can be added without reshaping the repo again later.
 
-- `apps/ionic`: the existing Ionic + Angular + Capacitor application
-- `apps/web`: reserved for a future website
-- `apps/native`: reserved for a future native mobile app
-- `apps/desktop`: reserved for a future desktop app
+- `apps/ionic`: the Ionic + Angular + Capacitor application
 - `docs`: shared project documentation
 
 ## Getting started
@@ -19,7 +16,7 @@ This repository now uses `npm` workspaces so additional apps can be added withou
 - Node.js
 - npm
 
-### Run the existing Ionic app
+### Run the Ionic app
 
 1. Install dependencies from the repository root:
    ```bash
@@ -30,7 +27,7 @@ This repository now uses `npm` workspaces so additional apps can be added withou
    npm run start
    ```
 
-The root scripts forward to `apps/ionic`, so the current developer workflow stays available from the repo root.
+The root scripts forward to `apps/ionic`, so the whole developer workflow stays available from the repo root.
 
 ## Common commands
 

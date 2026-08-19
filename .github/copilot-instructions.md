@@ -28,7 +28,6 @@ Please follow these guidelines when contributing:
   - `src/assets/`: Static assets like images and stylesheets
   - `src/environments/`: Environment-specific configurations
   - `src/theme/`: Global styles and themes
-- `apps/web/`, `apps/native/`, `apps/desktop/`: Reserved for future clients
 
 ## Key Guidelines
 1. Follow Go best practices and idiomatic patterns
