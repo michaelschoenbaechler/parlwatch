@@ -57,34 +57,22 @@ export function createBusinessListVm(
 
 /**
  * Creates a view model for the business detail view.
- * This function finds a specific business by ID from the available data
- * and creates a view model suitable for displaying detailed information about that business.
- * @param businessRequestState - The current request state containing business data and loading/error status
- * @param selectedBusinessId - The ID of the business to display, or null if none selected
- * @returns A view model object with the selected business data and UI state properties
+ *
+ * Reads a dedicated request state rather than searching the list array: the
+ * list is fetched with a `$select` covering only the card fields, so a list
+ * row can never satisfy the detail page, and a list refresh would otherwise
+ * overwrite the fully loaded business mid-view.
+ * @param selectedBusinessRequestState Request state holding the loaded business
+ * @returns A view model with the business and UI state properties
  */
 export function createBusinessDetailVm(
-  businessRequestState: RequestState<Business[]>,
-  selectedBusinessId: number | null
+  selectedBusinessRequestState: RequestState<Business | null>
 ): BusinessDetailVm {
-  const selected = business();
+  const selected = selectedBusinessRequestState.data ?? null;
   return {
     business: selected,
     hasVotes: !!selected?.Votes?.length,
-    isLoading: businessRequestState.loading,
-    hasError: !!businessRequestState.error
+    isLoading: selectedBusinessRequestState.loading && !selected,
+    hasError: !!selectedBusinessRequestState.error
   };
-
-  /**
-   * Helper function to find and return the selected business by ID.
-   * Returns null if no matching business is found or if no data is available.
-   * @returns The selected Business or null when not found
-   */
-  function business(): Business | null {
-    return (
-      businessRequestState.data?.find(
-        (business) => business.ID === selectedBusinessId
-      ) || null
-    );
-  }
 }

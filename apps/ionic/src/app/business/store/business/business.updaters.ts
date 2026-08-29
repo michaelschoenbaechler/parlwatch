@@ -178,3 +178,48 @@ export function createApplyDefaultSessionState(
     }
   });
 }
+
+/**
+ * Marks the selected-business request as loading, keeping the previous entity
+ * on screen so the detail page does not flash empty while reloading.
+ * @returns Partial updater setting the detail request to loading
+ */
+export function createLoadSelectedBusinessState(): PartialStateUpdater<BusinessSlice> {
+  return (state) => ({
+    ...state,
+    selectedBusinessRequestState: onRequestLoad(
+      state.selectedBusinessRequestState,
+      state.selectedBusinessRequestState.data
+    )
+  });
+}
+
+/**
+ * Stores the fully loaded business the detail page shows.
+ * @param business The business as returned by the detail endpoint
+ * @returns Partial updater setting the detail request to success
+ */
+export function createSuccessSelectedBusinessState(
+  business: Business
+): PartialStateUpdater<BusinessSlice> {
+  return (state) => ({
+    ...state,
+    selectedBusinessRequestState: onRequestSuccess(
+      state.selectedBusinessRequestState,
+      business
+    )
+  });
+}
+
+/**
+ * Marks the selected-business request as failed.
+ * @returns Partial updater setting the detail request to error
+ */
+export function createErrorSelectedBusinessState(): PartialStateUpdater<BusinessSlice> {
+  return (state) => ({
+    ...state,
+    selectedBusinessRequestState: onRequestError(
+      state.selectedBusinessRequestState
+    )
+  });
+}

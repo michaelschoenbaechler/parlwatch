@@ -29,6 +29,9 @@ import {
 import {
   createApplyDefaultSessionState,
   createErrorBusinessRequestState,
+  createErrorSelectedBusinessState,
+  createLoadSelectedBusinessState,
+  createSuccessSelectedBusinessState,
   createLoadBusinessRequestState,
   createLoadMoreState,
   createRefreshState,
@@ -39,13 +42,20 @@ import {
 
 export type BusinessSlice = {
   businessRequestState: RequestState<Business[]>;
-  selectedBusinessId: number | null;
+  /**
+   * The business shown on the detail page. Kept separate from the list: the
+   * list is fetched with a `$select` for the card fields only, so its rows
+   * cannot serve the detail page, and a list refresh must not clobber it.
+   */
+  selectedBusinessRequestState: RequestState<Business | null>;
   query: BusinessFilter;
 };
 
 const initialState: BusinessSlice = {
   businessRequestState: createDefaultRequestState<Business[]>([]),
-  selectedBusinessId: null,
+  selectedBusinessRequestState: createDefaultRequestState<Business | null>(
+    null
+  ),
   query: {
     top: 20,
     skip: 0,
@@ -69,10 +79,7 @@ export const BusinessStore = signalStore(
         createBusinessListVm(store.businessRequestState(), store.query())
       ),
       businessDetailViewModel: computed(() =>
-        createBusinessDetailVm(
-          store.businessRequestState(),
-          store.selectedBusinessId()
-        )
+        createBusinessDetailVm(store.selectedBusinessRequestState())
       )
     };
   }),
@@ -123,31 +130,17 @@ export const BusinessStore = signalStore(
 
     _applyDefaultSession(sessionStore.defaultSessionId);
 
-    const _isBusinessInState = (id: number) => {
-      const state = getState(store);
-      return state.businessRequestState.data.some((b) => b.ID === id);
-    };
-
+    // Always fetches: list rows only carry the card fields, so they can never
+    // stand in for the detail page's full text and expanded votes.
     const _selectAndLoadBusiness = rxMethod<number>(
       pipe(
-        filter((id) => {
-          const isLoaded = _isBusinessInState(id);
-          if (isLoaded) {
-            patchState(store, { selectedBusinessId: id });
-          }
-          return !isLoaded;
-        }),
-        tap(() => patchState(store, createLoadBusinessRequestState())),
+        tap(() => patchState(store, createLoadSelectedBusinessState())),
         switchMap((id) =>
           businessService.getBusiness(id).pipe(
             tapResponse({
               next: (business) =>
-                patchState(
-                  store,
-                  createSuccessBusinessRequestState([business]),
-                  { selectedBusinessId: id }
-                ),
-              error: () => patchState(store, createErrorBusinessRequestState())
+                patchState(store, createSuccessSelectedBusinessState(business)),
+              error: () => patchState(store, createErrorSelectedBusinessState())
             })
           )
         )
