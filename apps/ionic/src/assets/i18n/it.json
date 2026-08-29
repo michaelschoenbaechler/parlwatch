@@ -83,6 +83,9 @@
   "votes.voteDetail.title": "Missing value for 'votes.voteDetail.title'",
   "votes.voteDetail.toBusiness": "Missing value for 'votes.voteDetail.toBusiness'",
   "votes.voteDetail.voteHistory": "Missing value for 'votes.voteDetail.voteHistory'",
+  "votes.voteGroupCard.summary": "Missing value for 'votes.voteGroupCard.summary'",
+  "votes.voteGroupCard.summarySingle": "Missing value for 'votes.voteGroupCard.summarySingle'",
+  "votes.voteGroupCard.unnamedVote": "Missing value for 'votes.voteGroupCard.unnamedVote'",
   "votes.voteList.title": "Missing value for 'votes.voteList.title'",
   "welcome.discover": "Missing value for 'welcome.discover'",
   "welcome.text": "Missing value for 'welcome.text'"

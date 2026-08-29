@@ -1,0 +1,10 @@
+<div class="voting-bar">
+  @for (segment of segments(); track segment.decision) {
+    <div
+      class="fill"
+      [class]="segment.decision"
+      [style.width.%]="segment.percentage"
+      [style.left.%]="segment.left"
+    ></div>
+  }
+</div>

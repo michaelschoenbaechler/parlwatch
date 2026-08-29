@@ -13,7 +13,7 @@ import {
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
-import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
+import { VoteGroupCardComponent } from '../../components/vote-group-card/vote-group-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
@@ -25,7 +25,7 @@ import { VoteStore } from '../../store/vote';
   styleUrls: ['./vote-list.page.scss'],
   imports: [
     IonicModule,
-    VoteCardComponent,
+    VoteGroupCardComponent,
     HideKeyboardOnEnterDirective,
     LoadingScreenComponent,
     ErrorScreenComponent,

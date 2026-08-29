@@ -1,0 +1,30 @@
+ion-list.vote-list {
+  margin-top: 0.75rem;
+  padding: 0;
+  background: transparent;
+}
+
+.vote-list ion-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --border-color: #ebebeb;
+  --detail-icon-color: #666666;
+  --detail-icon-opacity: 1;
+}
+
+.vote-list ion-label h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.vote-list ion-label p {
+  font-size: 13px;
+  color: #666666;
+}
+
+.vote-list app-voting-bar {
+  margin: 0.5rem 0 0.125rem 0;
+}

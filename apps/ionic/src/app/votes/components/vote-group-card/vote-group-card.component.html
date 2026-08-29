@@ -1,0 +1,31 @@
+<ng-container *transloco="let t; prefix: 'votes.voteGroupCard'">
+  <app-text-card
+    [title]="group().businessShortNumber"
+    [subtitle]="
+      group().votes.length === 1
+        ? t('summarySingle', { date: group().latestVoteEnd | oDataDateTime })
+        : t('summary', {
+            count: group().votes.length,
+            date: group().latestVoteEnd | oDataDateTime
+          })
+    "
+    [HtmlText]="group().businessTitle"
+  >
+    <ion-list class="vote-list">
+      @for (vote of group().votes; track vote.ID; let last = $last) {
+        <ion-item
+          button
+          detail="true"
+          [lines]="last ? 'none' : 'full'"
+          (click)="voteSelected.emit(vote.ID)"
+        >
+          <ion-label class="ion-text-wrap">
+            <h3>{{ vote.Subject || vote.BillTitle || t('unnamedVote') }}</h3>
+            <p>{{ vote.VoteEnd | oDataDateTime: 'datetime' }}</p>
+            <app-voting-bar [votings]="vote.Votings" />
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  </app-text-card>
+</ng-container>

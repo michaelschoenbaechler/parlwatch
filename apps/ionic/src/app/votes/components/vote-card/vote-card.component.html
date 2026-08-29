@@ -4,19 +4,15 @@
       vote().BusinessShortNumber +
       (vote().Subject ? ' - ' + vote().Subject : '')
     "
-    [subtitle]="t('votedOn', { date: vote().VoteEnd | oDataDateTime })"
+    [subtitle]="
+      t('votedOn', {
+        date: vote().VoteEnd | oDataDateTime,
+        time: vote().VoteEnd | oDataDateTime: 'time'
+      })
+    "
     [HtmlText]="vote().BillTitle ? vote().BillTitle : vote().BusinessTitle"
   >
-    <div class="voting-bar">
-      @for (vote of voteCount(); track vote) {
-        <div
-          class="fill"
-          [class]="vote.decision"
-          [style.width.%]="vote.percentage"
-          [style.left.%]="getLeftPosition(vote.decision)"
-        ></div>
-      }
-    </div>
+    <app-voting-bar [votings]="vote().Votings" />
     <ng-content />
   </app-text-card>
 </ng-container>
