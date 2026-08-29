@@ -55,30 +55,46 @@ export function createSuccessVotesRequestState(
 }
 
 /**
- * Upserts a detailed vote (with votings) into the list and optionally updates the selection.
- * Uses onRequestSuccess to mark the request as successful and set the updated list.
- * @param vote The detailed vote to upsert
- * @param selectOnLoad Whether to update selectedVoteId to this vote's ID
- * @returns Partial updater that upserts the detailed vote and optionally updates selectedVoteId
+ * Marks the selected-vote request as loading, keeping the previous vote on
+ * screen so the detail page does not flash empty while reloading.
+ * @returns Partial updater setting the detail request to loading
  */
-export function createUpsertDetailedVoteState(
-  vote: Vote,
-  selectOnLoad: boolean
-): PartialStateUpdater<VoteSlice> {
-  return (state) => {
-    const list = state.votesRequestState.data || [];
-    const idx = list.findIndex((v) => v.ID === vote.ID);
-    const updated =
-      idx >= 0
-        ? [...list.slice(0, idx), vote, ...list.slice(idx + 1)]
-        : [...list, vote];
+export function createLoadSelectedVoteState(): PartialStateUpdater<VoteSlice> {
+  return (state) => ({
+    ...state,
+    selectedVoteRequestState: onRequestLoad(
+      state.selectedVoteRequestState,
+      state.selectedVoteRequestState.data
+    )
+  });
+}
 
-    return {
-      ...state,
-      votesRequestState: onRequestSuccess(state.votesRequestState, updated),
-      selectedVoteId: selectOnLoad ? vote.ID : state.selectedVoteId
-    };
-  };
+/**
+ * Stores the fully loaded vote (with its ballots) the detail page shows.
+ * @param vote The vote as returned by the detail endpoint
+ * @returns Partial updater setting the detail request to success
+ */
+export function createSuccessSelectedVoteState(
+  vote: Vote
+): PartialStateUpdater<VoteSlice> {
+  return (state) => ({
+    ...state,
+    selectedVoteRequestState: onRequestSuccess(
+      state.selectedVoteRequestState,
+      vote
+    )
+  });
+}
+
+/**
+ * Marks the selected-vote request as failed.
+ * @returns Partial updater setting the detail request to error
+ */
+export function createErrorSelectedVoteState(): PartialStateUpdater<VoteSlice> {
+  return (state) => ({
+    ...state,
+    selectedVoteRequestState: onRequestError(state.selectedVoteRequestState)
+  });
 }
 
 /**

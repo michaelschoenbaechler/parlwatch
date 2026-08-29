@@ -66,25 +66,26 @@ export function createVoteListVm(
 
 /**
  * Build the view model for a single vote detail.
- * @param votesRequestState Request state that may contain the selected vote
- * @param selectedVoteId ID of the vote to select
+ * Reads a dedicated request state rather than searching the list array: the
+ * list is fetched with a `$select` that omits the ballots, so a list row can
+ * never satisfy the detail page, and a list refresh would otherwise overwrite
+ * the fully loaded vote mid-view.
+ * @param selectedVoteRequestState Request state holding the loaded vote
  * @param filter Voting decision filter to apply to the votings list
  * @returns VoteDetailVm derived from state
  */
 export function createVoteDetailVm(
-  votesRequestState: RequestState<Vote[]>,
-  selectedVoteId: number | null,
+  selectedVoteRequestState: RequestState<Vote | null>,
   filter: VotingDecisionFilter
 ): VoteDetailVm {
-  const selected =
-    votesRequestState.data?.find((v) => v.ID === selectedVoteId) ?? null;
+  const selected = selectedVoteRequestState.data ?? null;
   const votings = [...(selected?.Votings || [])];
 
   return {
     vote: selected,
     votings: filterVotings(),
-    isLoading: votesRequestState.loading,
-    hasError: !!votesRequestState.error
+    isLoading: selectedVoteRequestState.loading && !selected,
+    hasError: !!selectedVoteRequestState.error
   };
 
   /**

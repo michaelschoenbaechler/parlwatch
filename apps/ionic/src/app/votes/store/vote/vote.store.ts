@@ -27,8 +27,10 @@ import {
   createSuccessVotesAppendRequestState,
   createSuccessVotesRequestState,
   patchQueryState,
-  createUpsertDetailedVoteState,
-  createTalliesState
+  createTalliesState,
+  createErrorSelectedVoteState,
+  createLoadSelectedVoteState,
+  createSuccessSelectedVoteState
 } from './vote.updaters';
 import {
   createVoteDetailVm,
@@ -40,14 +42,14 @@ export type VoteSlice = {
   votesRequestState: RequestState<Vote[]>;
   /** Per-vote decision counts, loaded in batches for the whole visible list. */
   tallies: Record<number, VoteTally>;
-  selectedVoteId: number | null;
+  selectedVoteRequestState: RequestState<Vote | null>;
   query: VoteFilter;
 };
 
 const initialState: VoteSlice = {
   votesRequestState: createDefaultRequestState<Vote[]>([]),
   tallies: {},
-  selectedVoteId: null,
+  selectedVoteRequestState: createDefaultRequestState<Vote | null>(null),
   query: {
     top: 10,
     skip: 0,
@@ -124,36 +126,26 @@ export const VoteStore = signalStore(
 
     _fetchTallies(store.pendingTallyIds);
 
-    // Only the detail page needs the individual ballots; the list works off
-    // the batched tallies above.
+
+    const _hasBallots = (id: number) => {
+      const selected = getState(store).selectedVoteRequestState.data;
+      return (
+        selected?.ID === id &&
+        Array.isArray(selected.Votings) &&
+        selected.Votings.length > 0
+      );
+    };
+
     const _selectVote = rxMethod<number>(
       pipe(
-        tap((id: number) => {
-          const state = getState(store);
-          const existing = state.votesRequestState.data.find(
-            (v) => v.ID === id
-          );
-          if (existing?.Votings?.length) {
-            patchState(store, { selectedVoteId: id });
-          }
-        }),
-        // Only fetch if not present or missing Votings
-        filter((id: number) => {
-          const state = getState(store);
-          const existing = state.votesRequestState.data.find(
-            (v) => v.ID === id
-          );
-          return (
-            !existing || !(existing.Votings && existing.Votings.length > 0)
-          );
-        }),
+        filter((id: number) => !_hasBallots(id)),
+        tap(() => patchState(store, createLoadSelectedVoteState())),
         mergeMap((id: number) =>
           voteService.getVote(id).pipe(
             tapResponse({
-              next: (vote) => {
-                patchState(store, createUpsertDetailedVoteState(vote, true));
-              },
-              error: () => patchState(store, createErrorVotesRequestState())
+              next: (vote) =>
+                patchState(store, createSuccessSelectedVoteState(vote)),
+              error: () => patchState(store, createErrorSelectedVoteState())
             })
           )
         )
@@ -170,11 +162,7 @@ export const VoteStore = signalStore(
       resetQuery: () =>
         patchState(store, () => ({ query: initialState.query })),
       voteDetailViewModel(filter: VotingDecisionFilter) {
-        return createVoteDetailVm(
-          store.votesRequestState(),
-          store.selectedVoteId(),
-          filter
-        );
+        return createVoteDetailVm(store.selectedVoteRequestState(), filter);
       }
     };
   })
