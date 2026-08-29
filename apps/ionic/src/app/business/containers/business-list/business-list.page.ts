@@ -138,6 +138,6 @@ export class BusinessListPage implements OnInit {
   }
 
   onClickBusiness(id: number) {
-    this.router.navigate(['business', 'detail', id]);
+    this.router.navigate(['/layout/business/detail', id]);
   }
 }

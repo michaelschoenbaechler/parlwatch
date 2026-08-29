@@ -116,6 +116,6 @@ export class MemberListPage implements OnInit {
   }
 
   onClickPerson(id: number) {
-    this.router.navigate(['council-member', 'detail', id]);
+    this.router.navigate(['/layout/council-member/detail', id]);
   }
 }

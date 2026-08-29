@@ -2,7 +2,7 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button text="Zurück" defaultHref="layout/votes" />
+        <ion-back-button text="Zurück" defaultHref="/layout/votes" />
       </ion-buttons>
       <ion-title>{{ t('title') }}</ion-title>
     </ion-toolbar>
@@ -46,7 +46,7 @@
       <ion-list>
         @for (voting of viewModel().votings; track voting) {
         <ion-item
-          routerLink="/council-member/detail/{{ voting.PersonNumber }}"
+          routerLink="/layout/votes/council-member/detail/{{ voting.PersonNumber }}"
           [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
         >
           <ion-icon

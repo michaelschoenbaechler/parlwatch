@@ -69,14 +69,13 @@ export class VoteDetailPage implements OnInit {
     this.store.selectVote(parseInt(this.route.snapshot.params.id));
   }
 
-  onClickPerson(id: number) {
-    this.router.navigate(['council-member', 'detail', id]);
-  }
-
   goToBusiness() {
     const vm = this.viewModel();
     if (vm.vote) {
-      this.router.navigate(['business', 'detail', vm.vote.BusinessNumber]);
+      this.router.navigate([
+        '/layout/votes/business/detail',
+        vm.vote.BusinessNumber
+      ]);
     }
   }
 

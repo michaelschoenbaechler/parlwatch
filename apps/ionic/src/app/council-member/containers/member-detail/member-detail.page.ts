@@ -51,7 +51,9 @@ export class MemberDetailPage implements OnInit {
   }
 
   onClickBusiness(id: number) {
-    this.router.navigate(['business', 'detail', id]).catch(console.error);
+    this.router
+      .navigate(['/layout/council-member/business/detail', id])
+      .catch(console.error);
   }
 
   getMandatesAsHtmlList() {

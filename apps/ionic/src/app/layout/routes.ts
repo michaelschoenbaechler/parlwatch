@@ -10,26 +10,20 @@ export const TAB_ROUTES: Routes = [
     children: [
       {
         path: 'votes',
-        loadComponent: () =>
-          import('../votes/containers/vote-list/vote-list.page').then(
-            (m) => m.VoteListPage
-          )
+        loadChildren: () => import('../votes/routes').then((m) => m.VOTE_ROUTES)
       },
       {
         path: 'council-member',
-        loadComponent: () =>
-          import('../council-member/containers/member-list/member-list.page').then(
-            (m) => m.MemberListPage
+        loadChildren: () =>
+          import('../council-member/routes').then(
+            (m) => m.COUNCIL_MEMBER_ROUTES
           )
       },
       {
         path: 'business',
-        loadComponent: () =>
-          import('../business/containers/business-list/business-list.page').then(
-            (m) => m.BusinessListPage
-          )
+        loadChildren: () =>
+          import('../business/routes').then((m) => m.BUSINESS_ROUTES)
       },
-
       {
         path: 'settings',
         loadComponent: () =>

@@ -78,6 +78,6 @@ export class VoteListPage {
   }
 
   onClickVote(id: number) {
-    this.router.navigate(['votes', 'detail', id]);
+    this.router.navigate(['/layout/votes/detail', id]);
   }
 }
