@@ -4,7 +4,9 @@ import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
 import { BusinessStore } from '../../store/business/business.store';
-import { BusinessStatusesStore } from '../../store/business-status/business-statuses.store';
+import { SessionStore } from '../../store/session/session.store';
+import { TagStore } from '../../store/tag/tag.store';
+import { BUSINESS_STATUS_OPTIONS } from '../../models/business-status';
 
 @Component({
   selector: 'app-business-filter-form',
@@ -15,7 +17,8 @@ import { BusinessStatusesStore } from '../../store/business-status/business-stat
 export class BusinessFilterFormComponent {
   readonly businessStore = inject(BusinessStore);
   readonly businessTypeStore = inject(BusinessTypesStore);
-  readonly businessStatusStore = inject(BusinessStatusesStore);
+  readonly sessionStore = inject(SessionStore);
+  readonly tagStore = inject(TagStore);
 
   submitFilter = output<void>();
 
@@ -23,9 +26,22 @@ export class BusinessFilterFormComponent {
     this.businessTypeStore.businessTypesViewModel()
   );
 
-  readonly businessStatusViewModel = computed(() =>
-    this.businessStatusStore.businessStatusesViewModel()
+  readonly sessionViewModel = computed(() =>
+    this.sessionStore.sessionsViewModel()
   );
+
+  readonly tagViewModel = computed(() => this.tagStore.tagsViewModel());
+
+  tagCheckboxes = computed(() =>
+    this.tagViewModel().tags.map((tag) => ({
+      ...tag,
+      checked: this.businessStore.query().tagIds.includes(tag.ID)
+    }))
+  );
+
+  /** `null` is the "all sessions" option in the picker. */
+  selectedSessionId: number | null =
+    this.businessStore.query().sessionId ?? null;
 
   businessTypeCheckboxes = computed(() =>
     this.businessTypeViewModel().types.map((type) => ({
@@ -37,13 +53,11 @@ export class BusinessFilterFormComponent {
   );
 
   businessStatusCheckboxes = computed(() =>
-    this.businessStatusViewModel().statuses.map((status) => ({
-      ...status,
+    BUSINESS_STATUS_OPTIONS.map((option) => ({
+      ...option,
       checked: this.businessStore
         .query()
-        .businessStatuses.some(
-          (s) => s.BusinessStatusId === status.BusinessStatusId
-        )
+        .businessStatuses.some((s) => s.id === option.id)
     }))
   );
 
@@ -51,12 +65,16 @@ export class BusinessFilterFormComponent {
     this.submitFilter.emit();
     this.businessStore.updateQuery({
       ...this.businessStore.query(),
+      sessionId: this.selectedSessionId,
       businessTypes: this.businessTypeCheckboxes().filter(
         (type) => type.checked
       ),
-      businessStatuses: this.businessStatusCheckboxes().filter(
-        (status) => status.checked
-      )
+      businessStatuses: this.businessStatusCheckboxes()
+        .filter((status) => status.checked)
+        .map(({ id, ids }) => ({ id, ids })),
+      tagIds: this.tagCheckboxes()
+        .filter((tag) => tag.checked)
+        .map((tag) => tag.ID)
     });
   }
 }

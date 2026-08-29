@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, retry, switchMap } from 'rxjs';
+import { Observable, of, retry, switchMap, timeout } from 'rxjs';
 import { fetchCollection } from 'swissparl';
 import { Collection, SwissParlEntity } from 'swissparl/dist/models';
 
@@ -29,6 +29,16 @@ interface Config {
   maxResults?: number;
 }
 
+/**
+ * The parliament API is usually fast but stalls sporadically for ~20s. Without
+ * a deadline a stalled request keeps the page on its loading spinner
+ * indefinitely, so cap each attempt and retry only once before surfacing the
+ * error screen, which offers the user a retry button anyway.
+ */
+const REQUEST_TIMEOUT_MS = 15000;
+const RETRY_COUNT = 1;
+const RETRY_DELAY_MS = 500;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +52,8 @@ export class SwissParlService {
   ): Observable<T[]> {
     return of(null).pipe(
       switchMap(() => fetchCollection<T>(collection, options, config)),
-      retry(3)
+      timeout(REQUEST_TIMEOUT_MS),
+      retry({ count: RETRY_COUNT, delay: RETRY_DELAY_MS })
     );
   }
 }

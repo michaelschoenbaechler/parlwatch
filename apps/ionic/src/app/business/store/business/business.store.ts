@@ -21,11 +21,13 @@ import {
   BusinessFilter,
   BusinessService
 } from '../../services/business.service';
+import { SessionStore } from '../session/session.store';
 import {
   createBusinessDetailVm,
   createBusinessListVm
 } from './business.vm-builder';
 import {
+  createApplyDefaultSessionState,
   createErrorBusinessRequestState,
   createLoadBusinessRequestState,
   createLoadMoreState,
@@ -49,7 +51,11 @@ const initialState: BusinessSlice = {
     skip: 0,
     searchTerm: '',
     businessTypes: [],
-    businessStatuses: []
+    businessStatuses: [],
+    tagIds: [],
+    // Left undefined until SessionStore resolves the session to default to,
+    // so the list issues one scoped request instead of an unscoped one first.
+    sessionId: undefined
   }
 };
 
@@ -73,8 +79,12 @@ export const BusinessStore = signalStore(
   withMethods((store) => {
     const businessService = inject(BusinessService);
 
+    const sessionStore = inject(SessionStore);
+
     const _fetchBusinesses = rxMethod<BusinessFilter>(
       pipe(
+        // Wait for the default session; undefined means "not resolved yet".
+        filter((query) => query.sessionId !== undefined),
         tap(() => patchState(store, createLoadBusinessRequestState())),
         switchMap((query) =>
           businessService.getBusinesses(query).pipe(
@@ -94,6 +104,24 @@ export const BusinessStore = signalStore(
     );
 
     _fetchBusinesses(store.query);
+
+    // Scope the list to the most recent session once it is known. On failure
+    // SessionStore reports null, which means "all sessions" and keeps the list
+    // usable rather than stuck on its spinner.
+    const _applyDefaultSession = rxMethod<number | null | undefined>(
+      pipe(
+        filter(
+          (sessionId: number | null | undefined) =>
+            sessionId !== undefined &&
+            getState(store).query.sessionId === undefined
+        ),
+        tap((sessionId: number | null) =>
+          patchState(store, createApplyDefaultSessionState(sessionId))
+        )
+      )
+    );
+
+    _applyDefaultSession(sessionStore.defaultSessionId);
 
     const _isBusinessInState = (id: number) => {
       const state = getState(store);
@@ -133,7 +161,10 @@ export const BusinessStore = signalStore(
       refresh: () => patchState(store, createRefreshState()),
       updateQuery: (query: BusinessFilter) =>
         patchState(store, patchQueryState(query)),
-      resetQuery: () => patchState(store, () => ({ query: initialState.query }))
+      resetQuery: () =>
+        patchState(store, (state) => ({
+          query: { ...initialState.query, sessionId: state.query.sessionId }
+        }))
     };
   })
 );

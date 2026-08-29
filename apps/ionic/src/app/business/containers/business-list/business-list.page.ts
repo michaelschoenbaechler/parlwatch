@@ -5,6 +5,7 @@ import {
   effect,
   inject,
   OnInit,
+  signal,
   viewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,10 +14,8 @@ import {
   InfiniteScrollCustomEvent,
   IonicModule,
   IonSearchbar,
-  Platform,
   RefresherCustomEvent
 } from '@ionic/angular';
-import { Keyboard } from '@capacitor/keyboard';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
@@ -26,8 +25,8 @@ import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-ke
 import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
 import { BusinessStore } from '../../store/business/business.store';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
-import { BusinessStatusesStore } from '../../store/business-status/business-statuses.store';
-import { SearchSuggestions } from './search-suggestions';
+import { SessionStore } from '../../store/session/session.store';
+import { TagStore } from '../../store/tag/tag.store';
 
 @Component({
   selector: 'app-business-list',
@@ -51,24 +50,42 @@ export class BusinessListPage implements OnInit {
 
   readonly businessStore = inject(BusinessStore);
   readonly businessTypesStore = inject(BusinessTypesStore);
-  readonly businessStatusesStore = inject(BusinessStatusesStore);
+  readonly sessionStore = inject(SessionStore);
+  readonly tagStore = inject(TagStore);
   readonly router = inject(Router);
-  readonly platform = inject(Platform);
 
   readonly viewModel = computed(() =>
     this.businessStore.businessListViewModel()
   );
   readonly hasFilterError = computed(
-    () =>
-      this.businessTypesStore.businessTypesViewModel().hasError ||
-      this.businessStatusesStore.businessStatusesViewModel().hasError
+    () => this.businessTypesStore.businessTypesViewModel().hasError
   );
+
+  /** Name of the session the list is currently scoped to, if any. */
+  readonly activeSessionName = computed(() => {
+    const sessionId = this.businessStore.query().sessionId;
+    return (
+      this.sessionStore
+        .sessionsViewModel()
+        .sessions.find((session) => session.ID === sessionId)?.SessionName ?? ''
+    );
+  });
 
   isModalOpen = false;
   presentingElement = null;
 
-  showSuggestedSearches: boolean = false;
-  suggestedSearchTerms = SearchSuggestions;
+  readonly showSuggestedSearches = signal(false);
+
+  /** Topic tags offered as a shortcut into the same filter the modal exposes. */
+  readonly suggestedTags = computed(() => this.tagStore.tagsViewModel().tags);
+
+  /** Tags the list is currently filtered by, for the active-filter chips. */
+  readonly activeTags = computed(() => {
+    const selected = this.businessStore.query().tagIds;
+    return this.tagStore
+      .tagsViewModel()
+      .tags.filter((tag) => selected.includes(tag.ID));
+  });
 
   refreshOrLoadMoreEvent: InfiniteScrollCustomEvent | RefresherCustomEvent;
 
@@ -83,18 +100,15 @@ export class BusinessListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.addKeyBoardListener();
     this.presentingElement = document.querySelector('ion-router-outlet');
   }
 
-  private addKeyBoardListener() {
-    if (!this.platform.is('capacitor')) return;
-    Keyboard.addListener('keyboardWillHide', () => {
-      this.showSuggestedSearches = false;
-    });
-    Keyboard.addListener('keyboardWillShow', () => {
-      this.showSuggestedSearches = true;
-    });
+  onSearchFocus() {
+    this.showSuggestedSearches.set(true);
+  }
+
+  onSearchBlur() {
+    this.showSuggestedSearches.set(false);
   }
 
   toggleFilterModal() {
@@ -102,20 +116,37 @@ export class BusinessListPage implements OnInit {
   }
 
   onSearch(event: any) {
-    this.showSuggestedSearches = false;
-    this.businessStore.updateQuery({
-      ...this.businessStore.query(),
-      searchTerm: event.target.value
-    });
+    this.commitSearchTerm(event.target.value ?? '');
   }
 
-  onSuggestedSearchTopic(searchTerm: string) {
-    this.showSuggestedSearches = false;
-    this.searchBar().value = searchTerm;
+  private commitSearchTerm(searchTerm: string) {
+    if (searchTerm === this.businessStore.query().searchTerm) return;
     this.businessStore.updateQuery({
       ...this.businessStore.query(),
       searchTerm
     });
+  }
+
+  toggleTag(tagId: number) {
+    const query = this.businessStore.query();
+    const tagIds = query.tagIds.includes(tagId)
+      ? query.tagIds.filter((id) => id !== tagId)
+      : [...query.tagIds, tagId];
+    this.businessStore.updateQuery({ ...query, tagIds });
+  }
+
+  isTagSelected(tagId: number): boolean {
+    return this.businessStore.query().tagIds.includes(tagId);
+  }
+
+  /**
+   * Commit the current term straight away and drop focus, which dismisses the
+   * keyboard and closes the suggestions.
+   */
+  async onSearchEnter() {
+    this.commitSearchTerm(this.searchBar().value ?? '');
+    const input = await this.searchBar().getInputElement();
+    input.blur();
   }
 
   retrySearch() {
@@ -124,6 +155,7 @@ export class BusinessListPage implements OnInit {
 
   resetFilter() {
     this.searchBar().value = '';
+    this.showSuggestedSearches.set(false);
     this.businessStore.resetQuery();
   }
 

@@ -1,8 +1,44 @@
-<ng-container *transloco="let t; prefix: 'business.filterForm'">
+<ng-container *transloco="let t">
   <form (ngSubmit)="onSubmit()">
-    <h3>{{ t('type') }}</h3>
+    <h3>{{ t('business.filterForm.session') }}</h3>
     <ion-list>
-      @for (businessType of businessTypeCheckboxes(); track businessType) {
+      <ion-item>
+        <ion-select
+          interface="popover"
+          [(ngModel)]="selectedSessionId"
+          name="session"
+          [label]="t('business.filterForm.session')"
+          labelPlacement="stacked"
+        >
+          <ion-select-option [value]="null">{{
+            t('business.filterForm.allSessions')
+          }}</ion-select-option>
+          @for (session of sessionViewModel().sessions; track session.ID) {
+            <ion-select-option [value]="session.ID">{{
+              session.SessionName
+            }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <h3>{{ t('business.filterForm.topic') }}</h3>
+    <ion-list>
+      @for (tag of tagCheckboxes(); track tag.ID) {
+        <ion-item>
+          <ion-checkbox
+            labelPlacement="start"
+            [name]="'tag-' + tag.ID"
+            [(ngModel)]="tag.checked"
+            >{{ tag.TagName }}
+          </ion-checkbox>
+        </ion-item>
+      }
+    </ion-list>
+
+    <h3>{{ t('business.filterForm.type') }}</h3>
+    <ion-list>
+      @for (businessType of businessTypeCheckboxes(); track businessType.ID) {
         <ion-item>
           <ion-checkbox
             labelPlacement="start"
@@ -13,25 +49,28 @@
         </ion-item>
       }
     </ion-list>
-    <h3>{{ t('status') }}</h3>
+
+    <h3>{{ t('business.filterForm.status') }}</h3>
     <ion-list>
       @for (
         businessStatus of businessStatusCheckboxes();
-        track businessStatus
+        track businessStatus.id
       ) {
         <ion-item>
           <ion-checkbox
             labelPlacement="start"
-            [name]="businessStatus.BusinessStatusName"
+            [name]="'status-' + businessStatus.id"
             [(ngModel)]="businessStatus.checked"
-            >{{ businessStatus.BusinessStatusName }}
+            >{{ t('business.status.' + businessStatus.id) }}
           </ion-checkbox>
         </ion-item>
       }
     </ion-list>
 
     <div class="floating-button">
-      <ion-button expand="block" type="submit">{{ t('apply') }}</ion-button>
+      <ion-button expand="block" type="submit">{{
+        t('business.filterForm.apply')
+      }}</ion-button>
     </div>
   </form>
 </ng-container>

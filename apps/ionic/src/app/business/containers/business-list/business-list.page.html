@@ -9,8 +9,12 @@
         appHideKeyboardOnEnter
         color="light"
         enterkeyhint="search"
+        debounce="300"
         placeholder="{{ t('common.search.placeholder') }}"
-        (ionChange)="onSearch($event)"
+        (ionInput)="onSearch($event)"
+        (ionFocus)="onSearchFocus()"
+        (ionBlur)="onSearchBlur()"
+        (keyup.enter)="onSearchEnter()"
       />
       <ion-icon
         (click)="toggleFilterModal()"
@@ -19,26 +23,40 @@
         name="filter-outline"
       />
     </ion-toolbar>
-    @if (businessStore.query().businessTypes.length > 0 ||
+    @if (activeSessionName() || activeTags().length > 0 ||
+    businessStore.query().businessTypes.length > 0 ||
     businessStore.query().businessStatuses.length > 0) {
     <div class="active-filter-wrapper">
-      @for (businessType of businessStore.query().businessTypes; track
-      businessType) {
+      @if (activeSessionName()) {
+      <ion-chip>
+        <ion-label>{{ activeSessionName() }}</ion-label>
+      </ion-chip>
+      } @for (tag of activeTags(); track tag.ID) {
+      <ion-chip (click)="toggleTag(tag.ID)">
+        <ion-label>{{ tag.TagName }}</ion-label>
+        <ion-icon name="close-circle" />
+      </ion-chip>
+      } @for (businessType of businessStore.query().businessTypes; track
+      businessType.ID) {
       <ion-chip>
         <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
       </ion-chip>
       } @for (businessStatus of businessStore.query().businessStatuses; track
-      businessStatus) {
+      businessStatus.id) {
       <ion-chip>
-        <ion-label>{{ businessStatus.BusinessStatusName }}</ion-label>
+        <ion-label>{{ t('business.status.' + businessStatus.id) }}</ion-label>
       </ion-chip>
       }
     </div>
-    } @if (showSuggestedSearches) {
+    } @if (showSuggestedSearches()) {
     <div class="search-suggestions">
       <p><small>{{ t('business.list.searchSuggestions') }}</small></p>
-      @for (term of suggestedSearchTerms; track term) {
-      <ion-chip (click)="onSuggestedSearchTopic(term)">{{ term }} </ion-chip>
+      @for (tag of suggestedTags(); track tag.ID) {
+      <ion-chip
+        [outline]="!isTagSelected(tag.ID)"
+        (pointerdown)="toggleTag(tag.ID)"
+        >{{ tag.TagName }}
+      </ion-chip>
       }
     </div>
     }

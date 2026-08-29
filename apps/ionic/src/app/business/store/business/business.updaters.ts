@@ -160,3 +160,21 @@ export function patchQueryState(
     }
   });
 }
+
+/**
+ * Scopes the list to a session once the default has been resolved.
+ * @param sessionId Session to scope to, or null for every session
+ * @returns A partial state updater that applies the session and resets paging
+ */
+export function createApplyDefaultSessionState(
+  sessionId: number | null
+): PartialStateUpdater<BusinessSlice> {
+  return (state) => ({
+    ...state,
+    query: {
+      ...state.query,
+      sessionId,
+      skip: 0
+    }
+  });
+}

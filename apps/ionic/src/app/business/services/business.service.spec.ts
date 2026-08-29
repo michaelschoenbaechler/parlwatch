@@ -88,8 +88,8 @@ describe('BusinessService', () => {
 
   it('should filter by business statuses when provided', () => {
     const businessStatuses = [
-      { BusinessStatusId: 10 },
-      { BusinessStatusId: 20 }
+      { id: 10, ids: [10] },
+      { id: 20, ids: [20] }
     ] as any;
     service.getBusinesses({ top: 10, businessStatuses }).subscribe();
 
@@ -98,6 +98,47 @@ describe('BusinessService', () => {
     const filter = options.filter as any;
     expect(filter.eq).toContain({ BusinessStatus: 10 });
     expect(filter.eq).toContain({ BusinessStatus: 20 });
+  });
+
+  it('should expand a status option that covers several ids', () => {
+    const businessStatuses = [{ id: 229, ids: [27, 229] }] as any;
+    service.getBusinesses({ top: 10, businessStatuses }).subscribe();
+
+    const [, options] =
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
+    const filter = options.filter as any;
+    expect(filter.eq).toContain({ BusinessStatus: 27 });
+    expect(filter.eq).toContain({ BusinessStatus: 229 });
+  });
+
+  it('should filter by session only when one is selected', () => {
+    service.getBusinesses({ top: 10, sessionId: 5214 }).subscribe();
+    let filter = (
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args[1] as any
+    ).filter;
+    expect(filter.eq).toContain({ SubmissionSession: 5214 });
+
+    service.getBusinesses({ top: 10, sessionId: null }).subscribe();
+    filter = (
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args[1] as any
+    ).filter;
+    expect(filter.eq.some((e: any) => 'SubmissionSession' in e)).toBeFalse();
+  });
+
+  it('should request only the fields the list renders', () => {
+    service.getBusinesses({ top: 10 }).subscribe();
+
+    const [, options] =
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
+    expect(options.select as any).toEqual([
+      'ID',
+      'BusinessShortNumber',
+      'BusinessTypeName',
+      'BusinessStatusText',
+      'BusinessStatusDate',
+      'Title',
+      'TagNames'
+    ]);
   });
 
   it('should get single business with expand Votes', (done) => {
@@ -114,16 +155,17 @@ describe('BusinessService', () => {
     });
   });
 
-  it('should get business statuses with select and language filter', () => {
-    service.getBusinessStatus().subscribe();
+  it('should get sessions with select, ordering and language filter', () => {
+    service.getSessions().subscribe();
 
     const [collection, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
-    expect(collection).toBe('BusinessStatus');
-    expect(options.select as any).toEqual([
-      'BusinessStatusId',
-      'BusinessStatusName'
-    ]);
+    expect(collection).toBe('Session');
+    expect(options.select as any).toEqual(['ID', 'SessionName', 'StartDate']);
+    expect(options.orderby).toEqual({
+      property: 'StartDate',
+      order: 'desc'
+    } as any);
     const filter = options.filter as any;
     expect(filter.eq).toEqual([{ Language: 'DE' }]);
   });
