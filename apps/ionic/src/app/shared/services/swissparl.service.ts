@@ -35,9 +35,9 @@ interface Config {
  * indefinitely, so cap each attempt and retry only once before surfacing the
  * error screen, which offers the user a retry button anyway.
  */
-const REQUEST_TIMEOUT_MS = 15000;
-const RETRY_COUNT = 1;
-const RETRY_DELAY_MS = 500;
+export const REQUEST_TIMEOUT_MS = 15000;
+export const RETRY_COUNT = 1;
+export const RETRY_DELAY_MS = 500;
 
 @Injectable({
   providedIn: 'root'

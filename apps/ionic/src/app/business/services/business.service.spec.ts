@@ -155,6 +155,48 @@ describe('BusinessService', () => {
     });
   });
 
+  it('should match tag ids exactly, not as bare substrings', () => {
+    service.getBusinesses({ top: 10, tagIds: [52, 66] }).subscribe();
+
+    const [, options] =
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
+    const filter = options.filter as any;
+    const tagEntry = filter.eq.find((entry: any) =>
+      Object.keys(entry)[0].includes('substringof')
+    );
+    const expression = Object.keys(tagEntry)[0];
+
+    // Business.Tags is a pipe-delimited id list, so both sides are padded:
+    // without that, '|5|' would match the '52' inside '15|52|2841'.
+    expect(expression).toBe(
+      "(substringof('|52|', concat('|',concat(Tags,'|'))) or " +
+        "substringof('|66|', concat('|',concat(Tags,'|'))))"
+    );
+    expect(tagEntry[expression]).toBeTrue();
+  });
+
+  it('should not add a tag filter when no tags are selected', () => {
+    service.getBusinesses({ top: 10, tagIds: [] }).subscribe();
+
+    const [, options] =
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
+    const filter = options.filter as any;
+    expect(
+      filter.eq.some((entry: any) => Object.keys(entry)[0].includes('Tags'))
+    ).toBeFalse();
+  });
+
+  it('should get tags with select and language filter', () => {
+    service.getTags().subscribe();
+
+    const [collection, options] =
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
+    expect(collection).toBe('Tags');
+    expect(options.select as any).toEqual(['ID', 'TagName']);
+    const filter = options.filter as any;
+    expect(filter.eq).toEqual([{ Language: 'DE' }]);
+  });
+
   it('should get sessions with select, ordering and language filter', () => {
     service.getSessions().subscribe();
 
