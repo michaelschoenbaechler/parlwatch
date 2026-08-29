@@ -3,12 +3,14 @@ import {
   Component,
   computed,
   effect,
-  inject
+  inject,
+  viewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   InfiniteScrollCustomEvent,
   IonicModule,
+  IonSearchbar,
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -35,6 +37,8 @@ import { VoteStore } from '../../store/vote';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VoteListPage {
+  readonly searchBar = viewChild<IonSearchbar>('searchBar');
+
   readonly store = inject(VoteStore);
   readonly router = inject(Router);
 
@@ -57,10 +61,19 @@ export class VoteListPage {
   }
 
   onSearch(event: any) {
-    this.store.updateQuery({
-      ...this.store.query(),
-      searchTerm: event.target.value
-    });
+    this.commitSearchTerm(event.target.value ?? '');
+  }
+
+  private commitSearchTerm(searchTerm: string) {
+    if (searchTerm === this.store.query().searchTerm) return;
+    this.store.updateQuery({ ...this.store.query(), searchTerm });
+  }
+
+  /** Commit straight away and drop focus, which dismisses the keyboard. */
+  async onSearchEnter() {
+    this.commitSearchTerm(this.searchBar().value ?? '');
+    const input = await this.searchBar().getInputElement();
+    input.blur();
   }
 
   resetFilter() {

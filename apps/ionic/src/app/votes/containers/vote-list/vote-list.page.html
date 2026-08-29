@@ -5,12 +5,15 @@
     </ion-toolbar>
     <ion-toolbar>
       <ion-searchbar
+        #searchBar
         appHideKeyboardOnEnter
         placeholder="{{ t('common.search.placeholder') }}"
         color="light"
         enterkeyhint="search"
+        debounce="300"
         [value]="store.query().searchTerm"
-        (ionChange)="onSearch($event)"
+        (ionInput)="onSearch($event)"
+        (keyup.enter)="onSearchEnter()"
       />
     </ion-toolbar>
   </ion-header>

@@ -1,10 +1,10 @@
 import { Component, computed, input } from '@angular/core';
-import { Voting } from 'swissparl';
 import { TranslocoDirective } from '@jsverse/transloco';
 import {
-  tallyVotings,
+  createEmptyTally,
   VOTE_DECISIONS,
-  VoteDecision
+  VoteDecision,
+  VoteTally
 } from '../../models/vote-decision';
 
 interface VotingBarSegment {
@@ -21,13 +21,14 @@ interface VotingBarSegment {
   imports: [TranslocoDirective]
 })
 export class VotingBarComponent {
-  readonly votings = input<Voting[]>(undefined);
+  /** Undefined while the counts for this vote are still loading. */
+  readonly tally = input<VoteTally | undefined>(undefined);
 
   /** Renders the counts per decision underneath the bar. */
   readonly showCounts = input(false);
 
   readonly segments = computed<VotingBarSegment[]>(() => {
-    const tally = tallyVotings(this.votings());
+    const tally = this.tally() ?? createEmptyTally();
     let left = 0;
 
     return VOTE_DECISIONS.map((decision) => {

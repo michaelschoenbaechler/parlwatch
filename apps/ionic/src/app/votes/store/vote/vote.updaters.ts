@@ -6,6 +6,7 @@ import {
   onRequestSuccess
 } from '../../../shared/models/request-state.model';
 import { VoteFilter } from '../../services/votes.service';
+import { VoteTally } from '../../models/vote-decision';
 import { VoteSlice } from '.';
 
 /**
@@ -138,5 +139,19 @@ export function patchQueryState(
       ...query,
       skip: 0
     }
+  });
+}
+
+/**
+ * Merges a batch of freshly computed tallies into the store.
+ * @param tallies Tallies keyed by vote id
+ * @returns Partial updater that adds the tallies
+ */
+export function createTalliesState(
+  tallies: Record<number, VoteTally>
+): PartialStateUpdater<VoteSlice> {
+  return (state) => ({
+    ...state,
+    tallies: { ...state.tallies, ...tallies }
   });
 }

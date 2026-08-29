@@ -6,7 +6,7 @@ export const firstTimeOpenGuard: CanActivateFn = async () => {
   const storage = inject(Storage);
   const router = inject(Router);
 
-  storage.create();
+  await storage.create();
 
   const isFirstTime = await storage.get('isFirstTimeOpen');
   if (isFirstTime === null) {

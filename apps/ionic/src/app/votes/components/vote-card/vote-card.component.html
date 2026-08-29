@@ -12,7 +12,7 @@
     "
     [HtmlText]="vote().BillTitle ? vote().BillTitle : vote().BusinessTitle"
   >
-    <app-voting-bar [votings]="vote().Votings" [showCounts]="true" />
+    <app-voting-bar [tally]="tally()" [showCounts]="true" />
 
     @if (meaningYes() || meaningNo()) {
       <dl class="vote-meaning">

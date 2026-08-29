@@ -5,6 +5,27 @@ import { Vote, Voting } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 
+/**
+ * Only the fields the vote cards render. Without this the API ships every
+ * field of every vote in the list.
+ */
+const LIST_FIELDS: Array<keyof Vote> = [
+  'ID',
+  'BusinessNumber',
+  'BusinessShortNumber',
+  'BusinessTitle',
+  'BusinessAuthor',
+  'BillTitle',
+  'Subject',
+  'SessionName',
+  'MeaningYes',
+  'MeaningNo',
+  'VoteEnd'
+];
+
+/** Headroom per vote when sizing a batched ballot request (200 seats today). */
+const MAX_VOTINGS_PER_VOTE = 300;
+
 export type VoteFilter = {
   top: number;
   skip?: number;
@@ -49,6 +70,7 @@ export class VoteService {
       top,
       skip,
       filter,
+      select: LIST_FIELDS,
       orderby: { property: 'VoteEnd', order: 'desc' }
     });
   }
@@ -73,14 +95,23 @@ export class VoteService {
       .pipe(map((list) => list[0]));
   }
 
-  getVotings(id: number): Observable<Voting[]> {
+  /**
+   * Fetch just the decision of every ballot for a set of votes, in one request.
+   *
+   * The list only needs per-vote counts, and pulling `Vote?$expand=Votings`
+   * per card costs ~257 KB each. Repeated `IdVote` filters are OR-ed by the
+   * query builder, so one request covers a whole page of votes.
+   * @param voteIds Votes to fetch ballots for
+   * @returns Ballots carrying only IdVote and Decision
+   */
+  getVoteTallies(voteIds: number[]): Observable<Voting[]> {
     return this.swissParlService.fetchCollection<Voting>('Voting', {
+      top: voteIds.length * MAX_VOTINGS_PER_VOTE,
+      select: ['IdVote', 'Decision'],
       filter: {
         eq: [
-          {
-            IdVote: id,
-            Language: this.translocoService.getActiveLang().toUpperCase()
-          }
+          { Language: this.translocoService.getActiveLang().toUpperCase() },
+          ...voteIds.map((id) => ({ IdVote: id }))
         ]
       }
     });

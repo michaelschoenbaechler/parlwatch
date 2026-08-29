@@ -45,6 +45,20 @@ export function toVoteDecision(decision: number | undefined): VoteDecision {
 }
 
 /**
+ * An all-zero tally, used for votes whose ballots have not loaded yet.
+ * @returns A tally with every bucket at zero
+ */
+export function createEmptyTally(): VoteTally {
+  return {
+    yes: 0,
+    no: 0,
+    abstained: 0,
+    'not-participated': 0,
+    total: 0
+  };
+}
+
+/**
  * Count votings per decision bucket.
  * @param votings Votings of a vote; may be an unexpanded OData reference
  * @returns Counts per bucket plus the total number of votings
@@ -53,19 +67,42 @@ export function tallyVotings(votings: Voting[] | undefined): VoteTally {
   // Without `$expand` the API returns a deferred reference instead of an array.
   const list = Array.isArray(votings) ? votings : [];
 
-  const tally: VoteTally = {
-    yes: 0,
-    no: 0,
-    abstained: 0,
-    'not-participated': 0,
-    total: list.length
-  };
-
+  const tally = createEmptyTally();
   for (const voting of list) {
     tally[toVoteDecision(voting.Decision)] += 1;
+    tally.total += 1;
   }
 
   return tally;
+}
+
+/**
+ * Split a batch of votings into one tally per vote.
+ *
+ * Every requested id gets an entry, including ids the response had no rows
+ * for. Without that, a vote with no recorded ballots would stay "missing"
+ * forever and the store would keep re-requesting it.
+ * @param voteIds The vote ids that were requested
+ * @param votings Rows returned for those votes, carrying IdVote and Decision
+ * @returns One tally per requested vote id
+ */
+export function talliesByVote(
+  voteIds: number[],
+  votings: Voting[]
+): Record<number, VoteTally> {
+  const tallies: Record<number, VoteTally> = {};
+  for (const id of voteIds) {
+    tallies[id] = createEmptyTally();
+  }
+
+  for (const voting of Array.isArray(votings) ? votings : []) {
+    const tally = tallies[voting.IdVote];
+    if (!tally) continue;
+    tally[toVoteDecision(voting.Decision)] += 1;
+    tally.total += 1;
+  }
+
+  return tallies;
 }
 
 /**

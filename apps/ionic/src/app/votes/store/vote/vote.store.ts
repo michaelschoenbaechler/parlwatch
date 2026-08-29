@@ -18,6 +18,7 @@ import {
   RequestState
 } from '../../../shared/models/request-state.model';
 import { VoteFilter, VoteService } from '../../services/votes.service';
+import { talliesByVote, VoteTally } from '../../models/vote-decision';
 import {
   createErrorVotesRequestState,
   createLoadMoreState,
@@ -26,7 +27,8 @@ import {
   createSuccessVotesAppendRequestState,
   createSuccessVotesRequestState,
   patchQueryState,
-  createUpsertDetailedVoteState
+  createUpsertDetailedVoteState,
+  createTalliesState
 } from './vote.updaters';
 import {
   createVoteDetailVm,
@@ -36,12 +38,15 @@ import {
 
 export type VoteSlice = {
   votesRequestState: RequestState<Vote[]>;
+  /** Per-vote decision counts, loaded in batches for the whole visible list. */
+  tallies: Record<number, VoteTally>;
   selectedVoteId: number | null;
   query: VoteFilter;
 };
 
 const initialState: VoteSlice = {
   votesRequestState: createDefaultRequestState<Vote[]>([]),
+  tallies: {},
   selectedVoteId: null,
   query: {
     top: 10,
@@ -49,6 +54,9 @@ const initialState: VoteSlice = {
     searchTerm: ''
   }
 };
+
+/** Caps the OR-filter length of a batched tally request. */
+const MAX_TALLY_BATCH = 25;
 
 export const VoteStore = signalStore(
   { providedIn: 'root' },
@@ -58,7 +66,15 @@ export const VoteStore = signalStore(
     return {
       votesListViewModel: computed(() =>
         createVoteListVm(store.votesRequestState(), store.query())
-      )
+      ),
+      /** Votes on screen whose tally has not been loaded yet. */
+      pendingTallyIds: computed(() => {
+        const tallies = store.tallies();
+        return (store.votesRequestState().data ?? [])
+          .map((vote) => vote.ID)
+          .filter((id) => id !== undefined && tallies[id] === undefined)
+          .slice(0, MAX_TALLY_BATCH);
+      })
     };
   }),
   withMethods((store) => {
@@ -86,14 +102,38 @@ export const VoteStore = signalStore(
 
     _fetchVotes(store.query);
 
-    const _ensureVoteDetail = (options: { selectOnLoad: boolean }) =>
+    // One request per page of votes instead of one per card: the list only
+    // needs counts, and `Vote?$expand=Votings` costs ~257 KB per vote.
+    const _fetchTallies = rxMethod<number[]>(
+      pipe(
+        filter((voteIds: number[]) => voteIds.length > 0),
+        switchMap((voteIds) =>
+          voteService.getVoteTallies(voteIds).pipe(
+            tapResponse({
+              next: (votings) =>
+                patchState(
+                  store,
+                  createTalliesState(talliesByVote(voteIds, votings))
+                ),
+              error: () => patchState(store, createErrorVotesRequestState())
+            })
+          )
+        )
+      )
+    );
+
+    _fetchTallies(store.pendingTallyIds);
+
+    // Only the detail page needs the individual ballots; the list works off
+    // the batched tallies above.
+    const _selectVote = rxMethod<number>(
       pipe(
         tap((id: number) => {
           const state = getState(store);
           const existing = state.votesRequestState.data.find(
             (v) => v.ID === id
           );
-          if (options.selectOnLoad && existing?.Votings?.length) {
+          if (existing?.Votings?.length) {
             patchState(store, { selectedVoteId: id });
           }
         }),
@@ -111,21 +151,18 @@ export const VoteStore = signalStore(
           voteService.getVote(id).pipe(
             tapResponse({
               next: (vote) => {
-                patchState(
-                  store,
-                  createUpsertDetailedVoteState(vote, options.selectOnLoad)
-                );
+                patchState(store, createUpsertDetailedVoteState(vote, true));
               },
               error: () => patchState(store, createErrorVotesRequestState())
             })
           )
         )
-      );
+      )
+    );
 
     return {
       reloadVotes: _fetchVotes,
-      selectVote: rxMethod<number>(_ensureVoteDetail({ selectOnLoad: true })),
-      loadVoting: rxMethod<number>(_ensureVoteDetail({ selectOnLoad: false })),
+      selectVote: _selectVote,
       loadMore: () => patchState(store, createLoadMoreState()),
       refresh: () => patchState(store, createRefreshState()),
       updateQuery: (query: VoteFilter) =>

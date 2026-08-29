@@ -22,7 +22,7 @@
           <ion-label class="ion-text-wrap">
             <h3>{{ vote.Subject || vote.BillTitle || t('unnamedVote') }}</h3>
             <p>{{ vote.VoteEnd | oDataDateTime: 'datetime' }}</p>
-            <app-voting-bar [votings]="vote.Votings" />
+            <app-voting-bar [tally]="store.tallies()[vote.ID]" />
           </ion-label>
         </ion-item>
       }

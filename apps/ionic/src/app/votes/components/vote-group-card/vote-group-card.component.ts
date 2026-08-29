@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
   inject,
   input,
   output
@@ -31,20 +30,4 @@ export class VoteGroupCardComponent {
 
   readonly group = input.required<VoteBusinessGroupVm>();
   readonly voteSelected = output<number>();
-
-  /** Votes whose votings have already been requested, to avoid duplicate loads. */
-  private readonly requestedVoteIds = new Set<number>();
-
-  constructor() {
-    // A group grows while paging through the list, so load the votings of every
-    // vote that joins it, but only once per vote.
-    effect(() => {
-      for (const vote of this.group().votes) {
-        if (!this.requestedVoteIds.has(vote.ID)) {
-          this.requestedVoteIds.add(vote.ID);
-          this.store.loadVoting(vote.ID);
-        }
-      }
-    });
-  }
 }

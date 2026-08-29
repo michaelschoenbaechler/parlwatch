@@ -1,9 +1,9 @@
-import { Component, computed, inject, input, OnInit } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Vote } from 'swissparl';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
-import { VoteStore } from '../../store/vote';
+import { tallyVotings } from '../../models/vote-decision';
 import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 
 @Component({
@@ -17,10 +17,14 @@ import { VotingBarComponent } from '../voting-bar/voting-bar.component';
     TranslocoDirective
   ]
 })
-export class VoteCardComponent implements OnInit {
-  readonly store = inject(VoteStore);
-
+export class VoteCardComponent {
   vote = input.required<Vote>();
+
+  /**
+   * The detail page already loads every ballot for its member list, so the
+   * bar is counted locally instead of going through the store's batch.
+   */
+  readonly tally = computed(() => tallyVotings(this.vote()?.Votings));
 
   /**
    * What a yes/no vote stood for. The API stores these once in whichever
@@ -28,8 +32,4 @@ export class VoteCardComponent implements OnInit {
    */
   readonly meaningYes = computed(() => this.vote()?.MeaningYes?.trim() ?? '');
   readonly meaningNo = computed(() => this.vote()?.MeaningNo?.trim() ?? '');
-
-  ngOnInit(): void {
-    this.store.loadVoting(this.vote().ID);
-  }
 }

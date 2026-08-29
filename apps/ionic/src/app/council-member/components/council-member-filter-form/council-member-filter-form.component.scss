@@ -2,9 +2,16 @@ form small {
   margin-left: 1rem;
 }
 
+/* Same fixed apply button as the business filter, so the form has to reserve
+   the space it covers or the last row ends up underneath it. */
+form {
+  display: block;
+  padding-bottom: calc(5rem + var(--ion-safe-area-bottom, 0px));
+}
+
 .floating-button {
   position: fixed;
-  bottom: 1rem;
+  bottom: calc(1rem + var(--ion-safe-area-bottom, 0px));
   left: 0;
   right: 0;
   z-index: 999;
