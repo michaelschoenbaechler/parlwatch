@@ -171,8 +171,11 @@ export class BusinessListPage implements OnInit {
   }
 
   onSearchBlur() {
-    // A tap inside the panel decides for itself whether to stay open.
-    if (this.pointerInSuggestions) return;
+    if (this.pointerInSuggestions) {
+      this.pointerInSuggestions = false;
+      void this.focusSearch();
+      return;
+    }
     // Record the completed query, not each debounced keystroke along the way.
     this.recentStore.recordSearch(this.searchBar().value ?? '');
     this.showSuggestedSearches.set(false);
@@ -180,6 +183,11 @@ export class BusinessListPage implements OnInit {
 
   onSuggestionsPointerDown() {
     this.pointerInSuggestions = true;
+  }
+
+  private async focusSearch() {
+    const input = await this.searchBar().getInputElement();
+    input.focus();
   }
 
   private async closeSuggestions() {
