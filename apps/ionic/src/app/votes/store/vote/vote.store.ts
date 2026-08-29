@@ -126,7 +126,6 @@ export const VoteStore = signalStore(
 
     _fetchTallies(store.pendingTallyIds);
 
-
     const _hasBallots = (id: number) => {
       const selected = getState(store).selectedVoteRequestState.data;
       return (
