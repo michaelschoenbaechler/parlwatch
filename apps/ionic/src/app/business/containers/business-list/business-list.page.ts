@@ -160,41 +160,13 @@ export class BusinessListPage implements OnInit {
     this.presentingElement = document.querySelector('ion-router-outlet');
   }
 
-  /**
-   * Set while a pointer is down inside the suggestions panel. Without it the
-   * resulting blur would tear the panel down before the click lands.
-   */
-  private pointerInSuggestions = false;
-
   onSearchFocus() {
     this.showSuggestedSearches.set(true);
   }
 
-  onSearchBlur() {
-    if (this.pointerInSuggestions) {
-      this.pointerInSuggestions = false;
-      void this.focusSearch();
-      return;
-    }
-    // Record the completed query, not each debounced keystroke along the way.
+  closeSuggestions() {
     this.recentStore.recordSearch(this.searchBar().value ?? '');
     this.showSuggestedSearches.set(false);
-  }
-
-  onSuggestionsPointerDown() {
-    this.pointerInSuggestions = true;
-  }
-
-  private async focusSearch() {
-    const input = await this.searchBar().getInputElement();
-    input.focus();
-  }
-
-  private async closeSuggestions() {
-    this.pointerInSuggestions = false;
-    this.showSuggestedSearches.set(false);
-    const input = await this.searchBar().getInputElement();
-    input.blur();
   }
 
   toggleFilterModal() {
@@ -220,18 +192,17 @@ export class BusinessListPage implements OnInit {
    */
   onSuggestionTagClick(tagId: number) {
     this.toggleTag(tagId);
-    void this.closeSuggestions();
+    this.closeSuggestions();
   }
 
   onRecentSearchClick(searchTerm: string) {
     this.searchBar().value = searchTerm;
     this.commitSearchTerm(searchTerm);
-    this.recentStore.recordSearch(searchTerm);
-    void this.closeSuggestions();
+    this.closeSuggestions();
   }
 
   onRecentBusinessClick(id: number) {
-    void this.closeSuggestions();
+    this.closeSuggestions();
     this.onClickBusiness(id);
   }
 
@@ -252,9 +223,8 @@ export class BusinessListPage implements OnInit {
    * keyboard and closes the suggestions.
    */
   async onSearchEnter() {
-    const searchTerm = this.searchBar().value ?? '';
-    this.commitSearchTerm(searchTerm);
-    this.recentStore.recordSearch(searchTerm);
+    this.commitSearchTerm(this.searchBar().value ?? '');
+    this.closeSuggestions();
     const input = await this.searchBar().getInputElement();
     input.blur();
   }
