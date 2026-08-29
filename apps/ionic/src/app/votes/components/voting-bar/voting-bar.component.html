@@ -8,3 +8,14 @@
     ></div>
   }
 </div>
+
+@if (showCounts()) {
+  <ul class="voting-counts" *transloco="let t; prefix: 'votes.decision'">
+    @for (segment of segments(); track segment.decision) {
+      <li>
+        <span class="dot" [class]="segment.decision"></span>
+        <strong>{{ segment.count }}</strong> {{ t(segment.decision) }}
+      </li>
+    }
+  </ul>
+}

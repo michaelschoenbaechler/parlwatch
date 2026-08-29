@@ -36,8 +36,11 @@
         <ion-select-option value="no"
           >{{ t('filter.onlyNo') }}</ion-select-option
         >
-        <ion-select-option value="no-vote"
-          >{{ t('filter.noVote') }}</ion-select-option
+        <ion-select-option value="abstained"
+          >{{ t('filter.onlyAbstained') }}</ion-select-option
+        >
+        <ion-select-option value="not-participated"
+          >{{ t('filter.onlyNotParticipated') }}</ion-select-option
         >
       </ion-select>
       <ion-list>
@@ -48,17 +51,19 @@
         >
           <ion-icon
             size="small"
-            [color]="
-                voting.Decision === 1 ? 'success' : voting.Decision === 2 ? 'danger' : 'medium'"
-            [name]="
-                voting.Decision === 1 ? 'checkmark-outline' : voting.Decision === 2 ? 'close-outline' : 'remove-outline'"
             slot="start"
+            [color]="decisionColor(voting)"
+            [name]="decisionIcon(voting)"
+            [attr.aria-label]="decisionLabel(voting)"
           />
           <ion-label>
             <h3>{{ voting.FirstName }} {{ voting.LastName }}</h3>
-            <p>
-              {{ partyMappingDE[voting.ParlGroupName] }} - {{ voting.CantonName
-              }}
+            <p class="parl-group">
+              <span
+                class="parl-group-dot"
+                [style.background-color]="parlGroupColour(voting)"
+              ></span>
+              {{ parlGroupLabel(voting) }} - {{ voting.CantonName }}
             </p>
           </ion-label>
         </ion-item>

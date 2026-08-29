@@ -1,3 +1,33 @@
 app-voting-bar {
   margin-top: 1rem;
 }
+
+.vote-meaning {
+  margin: 1rem 0 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.vote-meaning dt {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.vote-meaning dd {
+  margin: 0 0 0.5rem 0;
+  color: #666666;
+}
+
+.vote-meaning dd:last-child {
+  margin-bottom: 0;
+}
+
+.vote-meta {
+  margin: 1rem 0 0 0;
+  font-size: 13px;
+  color: #666666;
+}
+
+.vote-meta span + span::before {
+  content: ' · ';
+}

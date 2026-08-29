@@ -1,6 +1,7 @@
 import { Vote, Voting } from 'swissparl';
 import { RequestState } from '../../../shared/models/request-state.model';
 import { VoteFilter } from '../../services/votes.service';
+import { toVoteDecision, VoteDecision } from '../../models/vote-decision';
 
 export interface VoteListVm {
   businessGroups: VoteBusinessGroupVm[];
@@ -27,7 +28,7 @@ export interface VoteDetailVm {
   hasError: boolean;
 }
 
-export type VotingDecisionFilter = 'all' | 'yes' | 'no' | 'no-vote';
+export type VotingDecisionFilter = 'all' | VoteDecision;
 
 /**
  * Build the view model for the votes list with loading/refresh states.
@@ -93,15 +94,7 @@ export function createVoteDetailVm(
   function filterVotings(): Voting[] {
     return filter === 'all'
       ? votings
-      : votings.filter((voting) => {
-          return (
-            {
-              yes: () => voting.Decision === 1,
-              no: () => voting.Decision === 2,
-              'no-vote': () => voting.Decision !== 1 && voting.Decision !== 2
-            } as const
-          )[filter]();
-        });
+      : votings.filter((voting) => toVoteDecision(voting.Decision) === filter);
   }
 }
 

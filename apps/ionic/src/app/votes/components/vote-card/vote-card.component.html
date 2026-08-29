@@ -12,7 +12,32 @@
     "
     [HtmlText]="vote().BillTitle ? vote().BillTitle : vote().BusinessTitle"
   >
-    <app-voting-bar [votings]="vote().Votings" />
+    <app-voting-bar [votings]="vote().Votings" [showCounts]="true" />
+
+    @if (meaningYes() || meaningNo()) {
+      <dl class="vote-meaning">
+        @if (meaningYes()) {
+          <dt>{{ t('meaningYes') }}</dt>
+          <dd>{{ meaningYes() }}</dd>
+        }
+        @if (meaningNo()) {
+          <dt>{{ t('meaningNo') }}</dt>
+          <dd>{{ meaningNo() }}</dd>
+        }
+      </dl>
+    }
+
+    @if (vote().SessionName || vote().BusinessAuthor) {
+      <p class="vote-meta">
+        @if (vote().SessionName) {
+          <span>{{ vote().SessionName }}</span>
+        }
+        @if (vote().BusinessAuthor) {
+          <span>{{ t('author', { author: vote().BusinessAuthor }) }}</span>
+        }
+      </p>
+    }
+
     <ng-content />
   </app-text-card>
 </ng-container>

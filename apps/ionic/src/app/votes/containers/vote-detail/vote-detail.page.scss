@@ -16,3 +16,16 @@ app-vote-card ion-button {
   display: flex;
   justify-content: space-between;
 }
+
+.parl-group {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.parl-group-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
