@@ -122,8 +122,8 @@ jobs:
         run: bundle install
         working-directory: apps/ionic/ios/App
 
-      - name: Build and submit to App Store for review
-        run: bundle exec fastlane release_appstore
+      - name: Build and upload to App Store Connect
+        run: bundle exec fastlane deploy_appstore
         working-directory: apps/ionic/ios/App
         env:
           IOS_MARKETING_VERSION: ${{ steps.version.outputs.version }}
