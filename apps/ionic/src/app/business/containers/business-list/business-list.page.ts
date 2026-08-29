@@ -27,6 +27,10 @@ import { BusinessStore } from '../../store/business/business.store';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
 import { SessionStore } from '../../store/session/session.store';
 import { TagStore } from '../../store/tag/tag.store';
+import { RecentStore } from '../../store/recent/recent.store';
+
+/** How many recent searches / businesses the suggestion panel lists. */
+const MAX_VISIBLE_RECENTS = 3;
 
 @Component({
   selector: 'app-business-list',
@@ -52,6 +56,7 @@ export class BusinessListPage implements OnInit {
   readonly businessTypesStore = inject(BusinessTypesStore);
   readonly sessionStore = inject(SessionStore);
   readonly tagStore = inject(TagStore);
+  readonly recentStore = inject(RecentStore);
   readonly router = inject(Router);
 
   readonly viewModel = computed(() =>
@@ -76,8 +81,60 @@ export class BusinessListPage implements OnInit {
 
   readonly showSuggestedSearches = signal(false);
 
-  /** Topic tags offered as a shortcut into the same filter the modal exposes. */
-  readonly suggestedTags = computed(() => this.tagStore.tagsViewModel().tags);
+  /** Lowercased current query, used to narrow the suggestion panel. */
+  private readonly suggestionFilter = computed(() =>
+    (this.businessStore.query().searchTerm ?? '').trim().toLowerCase()
+  );
+
+  /**
+   * History is capped at the few newest entries, but filtering runs over the
+   * whole stored history, so typing can surface entries that have already
+   * dropped out of the top three.
+   */
+  readonly visibleRecentSearches = computed(() =>
+    this.matchQuery(this.recentStore.searches(), (term) => term).slice(
+      0,
+      MAX_VISIBLE_RECENTS
+    )
+  );
+
+  readonly visibleRecentBusinesses = computed(() =>
+    this.matchQuery(
+      this.recentStore.businesses(),
+      (entry) => entry.title
+    ).slice(0, MAX_VISIBLE_RECENTS)
+  );
+
+  /** All topics on an empty query, only the matching ones while typing. */
+  readonly visibleTags = computed(() =>
+    this.matchQuery(
+      this.tagStore.tagsViewModel().tags,
+      (tag) => tag.TagName ?? ''
+    )
+  );
+
+  /** Keeps the panel from covering the results with an empty overlay. */
+  readonly hasSuggestions = computed(
+    () =>
+      this.visibleTags().length > 0 ||
+      this.visibleRecentSearches().length > 0 ||
+      this.visibleRecentBusinesses().length > 0
+  );
+
+  /**
+   * Narrow a list to the entries matching the current query, or return it
+   * untouched when there is no query.
+   * @param entries Entries to narrow
+   * @param toText Reads the text an entry is matched on
+   * @returns The matching entries
+   */
+  private matchQuery<T>(entries: T[], toText: (entry: T) => string): T[] {
+    const filter = this.suggestionFilter();
+    if (!filter) return entries;
+    return entries.filter((entry) =>
+      toText(entry).toLowerCase().includes(filter)
+    );
+  }
 
   /** Tags the list is currently filtered by, for the active-filter chips. */
   readonly activeTags = computed(() => {
@@ -103,12 +160,33 @@ export class BusinessListPage implements OnInit {
     this.presentingElement = document.querySelector('ion-router-outlet');
   }
 
+  /**
+   * Set while a pointer is down inside the suggestions panel. Without it the
+   * resulting blur would tear the panel down before the click lands.
+   */
+  private pointerInSuggestions = false;
+
   onSearchFocus() {
     this.showSuggestedSearches.set(true);
   }
 
   onSearchBlur() {
+    // A tap inside the panel decides for itself whether to stay open.
+    if (this.pointerInSuggestions) return;
+    // Record the completed query, not each debounced keystroke along the way.
+    this.recentStore.recordSearch(this.searchBar().value ?? '');
     this.showSuggestedSearches.set(false);
+  }
+
+  onSuggestionsPointerDown() {
+    this.pointerInSuggestions = true;
+  }
+
+  private async closeSuggestions() {
+    this.pointerInSuggestions = false;
+    this.showSuggestedSearches.set(false);
+    const input = await this.searchBar().getInputElement();
+    input.blur();
   }
 
   toggleFilterModal() {
@@ -125,6 +203,28 @@ export class BusinessListPage implements OnInit {
       ...this.businessStore.query(),
       searchTerm
     });
+  }
+
+  /**
+   * Picking a topic applies it and dismisses the panel so the results are
+   * visible right away. Combining several topics is done in the filter modal.
+   * @param tagId Tag to toggle
+   */
+  onSuggestionTagClick(tagId: number) {
+    this.toggleTag(tagId);
+    void this.closeSuggestions();
+  }
+
+  onRecentSearchClick(searchTerm: string) {
+    this.searchBar().value = searchTerm;
+    this.commitSearchTerm(searchTerm);
+    this.recentStore.recordSearch(searchTerm);
+    void this.closeSuggestions();
+  }
+
+  onRecentBusinessClick(id: number) {
+    void this.closeSuggestions();
+    this.onClickBusiness(id);
   }
 
   toggleTag(tagId: number) {
@@ -144,7 +244,9 @@ export class BusinessListPage implements OnInit {
    * keyboard and closes the suggestions.
    */
   async onSearchEnter() {
-    this.commitSearchTerm(this.searchBar().value ?? '');
+    const searchTerm = this.searchBar().value ?? '';
+    this.commitSearchTerm(searchTerm);
+    this.recentStore.recordSearch(searchTerm);
     const input = await this.searchBar().getInputElement();
     input.blur();
   }

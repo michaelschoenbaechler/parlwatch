@@ -20,6 +20,8 @@
   "business.filterForm.topic": "Thema",
   "business.filterForm.type": "Geschäftstyp",
   "business.list.filter": "Geschäfte filtern",
+  "business.list.recentSearches": "Zuletzt gesucht",
+  "business.list.recentlyViewed": "Zuletzt angesehen",
   "business.list.searchSuggestions": "Nach Thema suchen",
   "business.list.title": "Geschäfte",
   "business.status.202": "Eingereicht",

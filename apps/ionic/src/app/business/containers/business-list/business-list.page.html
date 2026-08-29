@@ -48,16 +48,41 @@
       </ion-chip>
       }
     </div>
-    } @if (showSuggestedSearches()) {
-    <div class="search-suggestions">
+    } @if (showSuggestedSearches() && hasSuggestions()) {
+    <div class="search-suggestions" (pointerdown)="onSuggestionsPointerDown()">
+      @if (visibleRecentSearches().length > 0) {
+      <p><small>{{ t('business.list.recentSearches') }}</small></p>
+      <ion-list class="recent-list" lines="none">
+        @for (term of visibleRecentSearches(); track term) {
+        <ion-item button detail="false" (click)="onRecentSearchClick(term)">
+          <ion-icon name="time-outline" slot="start" size="small" />
+          <ion-label>{{ term }}</ion-label>
+        </ion-item>
+        }
+      </ion-list>
+      } @if (visibleRecentBusinesses().length > 0) {
+      <p><small>{{ t('business.list.recentlyViewed') }}</small></p>
+      <ion-list inset="true" lines="full" class="recent-business-list">
+        @for (business of visibleRecentBusinesses(); track business.id) {
+        <ion-item
+          button
+          detail="true"
+          (click)="onRecentBusinessClick(business.id)"
+        >
+          <ion-icon name="bag-check-outline" slot="start" size="small" />
+          <ion-label class="ion-text-wrap">{{ business.title }}</ion-label>
+        </ion-item>
+        }
+      </ion-list>
+      } @if (visibleTags().length > 0) {
       <p><small>{{ t('business.list.searchSuggestions') }}</small></p>
-      @for (tag of suggestedTags(); track tag.ID) {
+      @for (tag of visibleTags(); track tag.ID) {
       <ion-chip
         [outline]="!isTagSelected(tag.ID)"
-        (pointerdown)="toggleTag(tag.ID)"
+        (click)="onSuggestionTagClick(tag.ID)"
         >{{ tag.TagName }}
       </ion-chip>
-      }
+      } }
     </div>
     }
   </ion-header>

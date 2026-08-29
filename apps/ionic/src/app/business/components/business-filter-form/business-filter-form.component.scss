@@ -1,11 +1,17 @@
+/* The apply button is fixed to the bottom of the modal, so the form has to
+   reserve the space it covers or the last checkbox ends up underneath it.
+   The reserve sits on the form rather than on the last ion-list: the previous
+   `ion-list:last-child` rule never matched, because the form's last child is
+   the button wrapper, not a list. */
+form {
+  display: block;
+  padding-bottom: calc(5rem + var(--ion-safe-area-bottom, 0px));
+}
+
 .floating-button {
   position: fixed;
-  bottom: 1rem;
+  bottom: calc(1rem + var(--ion-safe-area-bottom, 0px));
   left: 0;
   right: 0;
   z-index: 999;
-}
-
-ion-list:last-child {
-  padding-bottom: 4rem;
 }

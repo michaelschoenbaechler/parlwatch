@@ -30,3 +30,58 @@ ion-chip {
   padding: 0.5rem 1rem 0 1rem;
   background-color: var(--ion-color-primary-contrast);
 }
+
+.recent-list {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0.5rem;
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --min-height: 2.25rem;
+    font-size: 14px;
+  }
+
+  ion-icon {
+    margin-inline-end: 0.5rem;
+    color: #666666;
+  }
+}
+
+/* Recently viewed reads as "go to this business", so it gets the app's card
+   treatment. ion-list[inset] supplies the rounded container and drops the last
+   item's separator; the shadow, background and radius are overridden to match
+   app-text-card. The element+class selector is needed to outweigh Ionic's own
+   .list-md.list-inset margin and radius. */
+ion-list.recent-business-list {
+  margin: 0 0 0.75rem 0;
+  padding: 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  background: white;
+
+  ion-item {
+    --background: #ffffff;
+    --padding-start: 1rem;
+    --inner-padding-end: 1rem;
+    --min-height: 3rem;
+    --border-color: #ebebeb;
+    --detail-icon-color: var(--ion-color-primary);
+    --detail-icon-opacity: 1;
+    font-size: 15px;
+  }
+
+  ion-icon[slot='start'] {
+    margin-inline-end: 0.75rem;
+    color: var(--ion-color-primary);
+  }
+
+  ion-label {
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+}
