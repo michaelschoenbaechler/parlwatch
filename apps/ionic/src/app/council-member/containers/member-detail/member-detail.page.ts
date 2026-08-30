@@ -2,16 +2,18 @@ import { Component, computed, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IonicModule } from '@ionic/angular';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Voting } from 'swissparl';
 import { MemberIdCardComponent } from '../../components/member-id-card/member-id-card.component';
 import { InterestListComponent } from '../../components/interest-list/interest-list.component';
+import { SpeechListComponent } from '../../../shared/components/speech-list/speech-list.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { CouncilMemberStore } from '../../store/council-member/council-member.store';
 import { VotingRecordStore } from '../../store/voting-record/voting-record.store';
 import { InterestStore } from '../../store/interest/interest.store';
+import { SpeechStore } from '../../store/speech/speech.store';
 
 @UntilDestroy()
 @Component({
@@ -22,6 +24,7 @@ import { InterestStore } from '../../store/interest/interest.store';
     IonicModule,
     MemberIdCardComponent,
     InterestListComponent,
+    SpeechListComponent,
     TextCardComponent,
     LoadingScreenComponent,
     ErrorScreenComponent,
@@ -32,6 +35,8 @@ export class MemberDetailPage implements OnInit {
   readonly councilMemberStore = inject(CouncilMemberStore);
   readonly votingRecordStore = inject(VotingRecordStore);
   readonly interestStore = inject(InterestStore);
+  readonly speechStore = inject(SpeechStore);
+  private readonly transloco = inject(TranslocoService);
   readonly route = inject(ActivatedRoute);
   readonly router = inject(Router);
 
@@ -47,11 +52,15 @@ export class MemberDetailPage implements OnInit {
     this.interestStore.interestViewModel()
   );
 
+  /** Debates are recorded verbatim, so speeches carry their own language. */
+  readonly uiLanguage = this.transloco.getActiveLang();
+
   ngOnInit() {
     const councilMemberId = parseInt(this.route.snapshot.params.id);
     this.councilMemberStore.selectCouncilMember(councilMemberId);
     this.votingRecordStore.loadVotingRecord(councilMemberId);
     this.interestStore.loadInterests(councilMemberId);
+    this.speechStore.selectMember(councilMemberId);
   }
 
   retry() {

@@ -45,6 +45,38 @@
       [HtmlText]="getAdditionalActivitiesAsHtmlList()"
     />
     }
+    <app-text-card title="{{ t('councilMember.detail.speeches') }}">
+      @if (speechStore.isLoading()) {
+      <div class="loading-voting-record-container">
+        <ion-spinner class="spinner" />
+      </div>
+      } @else if (speechStore.hasError()) {
+      <p class="no-votes-text">
+        <small> {{ t('councilMember.detail.speechesError') }} </small>
+      </p>
+      } @else if (speechStore.speeches().length === 0) {
+      <p class="no-votes-text">
+        <small> {{ t('councilMember.detail.noSpeeches') }} </small>
+      </p>
+      } @else {
+      <app-speech-list
+        [groups]="speechStore.speechGroups()"
+        [texts]="speechStore.texts()"
+        [loadingTextId]="speechStore.loadingTextId()"
+        [uiLanguage]="uiLanguage"
+        (textRequested)="speechStore.loadText($event)"
+      />
+      @if (speechStore.hasMore()) {
+      <ion-button
+        expand="block"
+        size="small"
+        fill="outline"
+        [disabled]="speechStore.isLoadingMore()"
+        (click)="speechStore.loadMore()"
+        >{{ t('councilMember.detail.moreSpeeches') }}
+      </ion-button>
+      } }
+    </app-text-card>
     <app-text-card title="{{ t('councilMember.detail.votingRecord') }}">
       @if (!votingRecordViewModel().isLoading) { @if
       (votingRecordViewModel().hasNoVotingRecord) {

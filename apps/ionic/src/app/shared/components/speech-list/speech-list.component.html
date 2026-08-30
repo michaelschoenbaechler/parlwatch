@@ -1,0 +1,61 @@
+<div class="speech-list" *transloco="let t; prefix: 'shared.speechList'">
+  @for (group of groups(); track group.key) {
+    <section class="speech-group">
+      <h4 class="speech-group-title">
+        @if (group.title) {
+          {{ group.title }}
+        } @else {
+          {{ t('untitled') }}
+        }
+      </h4>
+      <p class="speech-group-meta">
+        @if (group.businessShortNumber) {
+          <span>{{ group.businessShortNumber }}</span>
+        }
+        @if (group.speeches.length > 1) {
+          <span>{{ t('speechCount', { count: group.speeches.length }) }}</span>
+        }
+      </p>
+
+      <ul class="speech-entries">
+        @for (speech of group.speeches; track speech.id) {
+          <li class="speech" [class.open]="isOpen(speech)">
+            <button
+              type="button"
+              class="speech-header"
+              (click)="toggle(speech)"
+            >
+              <span class="speech-meta">
+                <span class="speech-date">
+                  {{ speech.start | oDataDateTime }}
+                </span>
+                @if (speech.council) {
+                  <span>{{ speech.council }}</span>
+                }
+                @if (isForeignLanguage(speech)) {
+                  <ion-badge color="medium">{{ speech.language }}</ion-badge>
+                }
+              </span>
+              <ion-icon
+                class="speech-chevron"
+                [name]="isOpen(speech) ? 'chevron-up' : 'chevron-down'"
+              />
+            </button>
+
+            @if (isOpen(speech)) {
+              <div class="speech-body">
+                @if (loadingTextId() === speech.id) {
+                  <ion-spinner class="speech-spinner" />
+                } @else if (texts()[speech.id]) {
+                  <div [innerHTML]="texts()[speech.id] | safeHtml"></div>
+                } @else {
+                  <p class="speech-empty">{{ t('unavailable') }}</p>
+                }
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    </section>
+  }
+</div>
