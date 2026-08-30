@@ -1,0 +1,31 @@
+ion-list.related-list {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --border-color: #ebebeb;
+    --detail-icon-color: var(--ion-color-primary);
+    --detail-icon-opacity: 1;
+  }
+
+  ion-item:last-of-type {
+    --border-width: 0;
+  }
+
+  h3 {
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    color: #666666;
+  }
+
+  .related-type {
+    font-size: 12px;
+  }
+}

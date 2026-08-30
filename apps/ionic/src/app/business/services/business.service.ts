@@ -171,7 +171,15 @@ export class BusinessService {
               }
             ]
           },
-          expand: ['Votes']
+          // The detail page's timeline lives in three collections. `Resolutions`
+          // sits one level below `Bills`, which swissparl's `deepParse` does
+          // not unwrap, hence `odataList` on the way out.
+          expand: [
+            'Votes',
+            'Bills/Resolutions',
+            'Preconsultations',
+            'RelatedBusinesses'
+          ] as Array<keyof Business>
         },
         { deepParse: true }
       )

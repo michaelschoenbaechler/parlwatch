@@ -57,6 +57,9 @@ export class MemberListPage implements OnInit {
   presentingElement: HTMLElement | null = null;
   activeFilter: CouncilMemberFilterForm = {
     councils: [],
+    cantons: [],
+    parlGroups: [],
+    parties: [],
     inactiveMembers: false
   };
 
@@ -93,6 +96,13 @@ export class MemberListPage implements OnInit {
 
   resetFilter() {
     this.searchBar().value = '';
+    this.activeFilter = {
+      councils: [],
+      cantons: [],
+      parlGroups: [],
+      parties: [],
+      inactiveMembers: false
+    };
     this.store.resetQuery();
   }
 
@@ -112,8 +122,27 @@ export class MemberListPage implements OnInit {
     this.store.updateQuery({
       ...this.store.query(),
       council: this.activeFilter.councils.map((council) => council.id),
+      cantons: this.activeFilter.cantons.map((canton) => canton.id),
+      parlGroups: this.activeFilter.parlGroups.map((group) => group.id),
+      parties: this.activeFilter.parties.map((party) => party.id),
       showInactive: this.activeFilter.inactiveMembers
     });
+  }
+
+  /**
+   * The canton, faction and party chips shown above the list.
+   *
+   * Each facet numbers its values independently, so canton 13 and party 13 are
+   * different things; the chips are keyed by facet name as well as id.
+   * @returns One chip per selected facet value
+   */
+  get activeFacetChips(): { key: string; label: string }[] {
+    const { cantons, parlGroups, parties } = this.activeFilter;
+    return [
+      ...cantons.map((o) => ({ key: `canton-${o.id}`, label: o.label })),
+      ...parlGroups.map((o) => ({ key: `parlGroup-${o.id}`, label: o.label })),
+      ...parties.map((o) => ({ key: `party-${o.id}`, label: o.label }))
+    ];
   }
 
   onClickPerson(councilMember: MemberCouncil) {

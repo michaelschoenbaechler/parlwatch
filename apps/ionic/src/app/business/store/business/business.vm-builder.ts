@@ -1,5 +1,10 @@
-import { Business } from 'swissparl';
+import { Business, RelatedBusiness } from 'swissparl';
 import { RequestState } from '../../../shared/models/request-state.model';
+import { odataList } from '../../../shared/models/odata.model';
+import {
+  TimelineStep,
+  toBusinessTimeline
+} from '../../models/business-timeline';
 import { BusinessFilter } from '../../services/business.service';
 
 export interface BusinessListVm {
@@ -14,6 +19,10 @@ export interface BusinessListVm {
 export interface BusinessDetailVm {
   business: Business | null;
   hasVotes: boolean;
+  /** The business's path through parliament, oldest step first. */
+  timeline: TimelineStep[];
+  /** Businesses the API cross-references; empty for most businesses. */
+  relatedBusinesses: RelatedBusiness[];
   isLoading: boolean;
   hasError: boolean;
 }
@@ -72,6 +81,8 @@ export function createBusinessDetailVm(
   return {
     business: selected,
     hasVotes: !!selected?.Votes?.length,
+    timeline: toBusinessTimeline(selected),
+    relatedBusinesses: odataList<RelatedBusiness>(selected?.RelatedBusinesses),
     isLoading: selectedBusinessRequestState.loading && !selected,
     hasError: !!selectedBusinessRequestState.error
   };

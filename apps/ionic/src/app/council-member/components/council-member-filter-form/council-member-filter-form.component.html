@@ -10,6 +10,62 @@
         </ion-item>
       }
     </ion-list>
+
+    <h3>{{ t('affiliation') }}</h3>
+    <ion-list>
+      <ion-item>
+        <ion-select
+          formControlName="cantons"
+          multiple="true"
+          interface="alert"
+          [label]="t('canton')"
+          labelPlacement="stacked"
+          [placeholder]="t('all')"
+          [disabled]="facetsLoading()"
+        >
+          @for (canton of facets().cantons; track canton.id) {
+            <ion-select-option [value]="canton.id">
+              {{ canton.label }}
+            </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-select
+          formControlName="parlGroups"
+          multiple="true"
+          interface="alert"
+          [label]="t('parlGroup')"
+          labelPlacement="stacked"
+          [placeholder]="t('all')"
+          [disabled]="facetsLoading()"
+        >
+          @for (group of facets().parlGroups; track group.id) {
+            <ion-select-option [value]="group.id">
+              {{ group.label }}
+            </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-select
+          formControlName="parties"
+          multiple="true"
+          interface="alert"
+          [label]="t('party')"
+          labelPlacement="stacked"
+          [placeholder]="t('all')"
+          [disabled]="facetsLoading()"
+        >
+          @for (party of facets().parties; track party.id) {
+            <ion-select-option [value]="party.id">
+              {{ party.label }}
+            </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
     <h3>{{ t('moreFilters') }}</h3>
     <ion-list>
       <ion-item>

@@ -1,7 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MemberCouncil, PersonInterest, Voting } from 'swissparl';
+import {
+  Canton,
+  MemberCouncil,
+  ParlGroup,
+  PersonInterest,
+  Voting
+} from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 
@@ -10,6 +16,12 @@ export type CouncilMemberFilter = {
   skip?: number;
   searchTerm?: string;
   council?: number[];
+  /** Canton numbers; a member matches if they sit for any of them. */
+  cantons?: number[];
+  /** Faction numbers; a member matches if they belong to any of them. */
+  parlGroups?: number[];
+  /** Party numbers; a member matches if they belong to any of them. */
+  parties?: number[];
   showInactive?: boolean;
 };
 
@@ -25,20 +37,29 @@ export class CouncilMemberService {
     skip,
     searchTerm,
     council,
+    cantons,
+    parlGroups,
+    parties,
     showInactive
-  }: {
-    top: number;
-    skip?: number;
-    searchTerm?: string;
-    council?: number[];
-    showInactive?: boolean;
-  }): Observable<MemberCouncil[]> {
-    const councilFilterArray: { Council: number }[] = (council ?? []).map(
-      (id) => ({ Council: id })
-    );
+  }: CouncilMemberFilter): Observable<MemberCouncil[]> {
+    // Repeated keys are OR-ed by the query builder and different keys AND-ed,
+    // so each of these narrows the result while widening its own dimension.
+    const councilFilterArray = (council ?? []).map((id) => ({ Council: id }));
+    const cantonFilterArray = (cantons ?? []).map((id) => ({ Canton: id }));
+    const parlGroupFilterArray = (parlGroups ?? []).map((id) => ({
+      ParlGroupNumber: id
+    }));
+    const partyFilterArray = (parties ?? []).map((id) => ({ Party: id }));
 
     const filter: {
-      eq: { Language?: string; Active?: boolean; Council?: number }[];
+      eq: {
+        Language?: string;
+        Active?: boolean;
+        Council?: number;
+        Canton?: number;
+        ParlGroupNumber?: number;
+        Party?: number;
+      }[];
       substringOf?: {
         LastName?: string;
         FirstName?: string;
@@ -49,7 +70,10 @@ export class CouncilMemberService {
     } = {
       eq: [
         { Language: this.translocoService.getActiveLang().toUpperCase() },
-        ...councilFilterArray
+        ...councilFilterArray,
+        ...cantonFilterArray,
+        ...parlGroupFilterArray,
+        ...partyFilterArray
       ]
     };
 
@@ -88,6 +112,62 @@ export class CouncilMemberService {
         }
       })
       .pipe(map((list) => list[0]));
+  }
+
+  /**
+   * Cantons, for the member list's canton filter.
+   * @returns All 26 cantons
+   */
+  getCantons(): Observable<Canton[]> {
+    return this.swissParlService.fetchCollection<Canton>('Canton', {
+      top: 50,
+      select: ['CantonNumber', 'CantonName', 'CantonAbbreviation'],
+      filter: {
+        eq: [{ Language: this.translocoService.getActiveLang().toUpperCase() }]
+      }
+    });
+  }
+
+  /**
+   * The factions currently sitting, for the member list's faction filter.
+   * @returns The active parliamentary groups
+   */
+  getParlGroups(): Observable<ParlGroup[]> {
+    return this.swissParlService.fetchCollection<ParlGroup>('ParlGroup', {
+      top: 50,
+      select: ['ParlGroupNumber', 'ParlGroupName', 'ParlGroupAbbreviation'],
+      filter: {
+        eq: [
+          {
+            Language: this.translocoService.getActiveLang().toUpperCase(),
+            IsActive: true
+          }
+        ]
+      }
+    });
+  }
+
+  /**
+   * Sitting members reduced to their party, the source for the party filter's
+   * options. The `Party` collection itself is mostly defunct parties.
+   * @returns One row per sitting member, carrying only the party
+   */
+  getSeatedMemberParties(): Observable<MemberCouncil[]> {
+    return this.swissParlService.fetchCollection<MemberCouncil>(
+      'MemberCouncil',
+      {
+        top: 300,
+        select: ['Party', 'PartyAbbreviation', 'PartyName'],
+        filter: {
+          eq: [
+            {
+              Language: this.translocoService.getActiveLang().toUpperCase(),
+              Active: true
+            }
+          ]
+        }
+      }
+    );
   }
 
   /**

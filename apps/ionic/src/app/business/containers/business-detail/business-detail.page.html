@@ -23,8 +23,20 @@
       </ion-button>
       }
     </app-business-card>
+    @if (viewModel().timeline.length > 0) {
+    <app-text-card title="{{ t('business.timeline.title') }}">
+      <app-business-timeline [steps]="viewModel().timeline" />
+    </app-text-card>
+    }
     <app-business-detail-text [business]="business" />
-    } @else {
+    @if (viewModel().relatedBusinesses.length > 0) {
+    <app-text-card title="{{ t('business.related.title') }}">
+      <app-related-business-list
+        [relatedBusinesses]="viewModel().relatedBusinesses"
+        (businessSelected)="onRelatedBusiness($event)"
+      />
+    </app-text-card>
+    } } @else {
     <app-error-screen (retry)="retry()" />
     } } @else {
     <app-loading-screen />

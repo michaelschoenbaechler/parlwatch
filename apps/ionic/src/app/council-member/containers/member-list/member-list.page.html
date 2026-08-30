@@ -19,12 +19,18 @@
         name="filter-outline"
       />
     </ion-toolbar>
-    @if ((store.query().council?.length ?? 0) > 0 || store.query().showInactive)
-    {
+    @if ((store.query().council?.length ?? 0) > 0 ||
+    (store.query().cantons?.length ?? 0) > 0 ||
+    (store.query().parlGroups?.length ?? 0) > 0 ||
+    (store.query().parties?.length ?? 0) > 0 || store.query().showInactive) {
     <div class="active-filter-wrapper">
       @for (council of activeFilter.councils; track council) {
       <ion-chip>
         <ion-label>{{ council.councilName }}</ion-label>
+      </ion-chip>
+      } @for (facet of activeFacetChips; track facet.key) {
+      <ion-chip>
+        <ion-label>{{ facet.label }}</ion-label>
       </ion-chip>
       } @if (activeFilter.inactiveMembers) {
       <ion-chip>

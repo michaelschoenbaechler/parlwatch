@@ -1,0 +1,26 @@
+<ol class="timeline" *transloco="let t; prefix: 'business.timeline'">
+  @for (step of steps(); track step.key) {
+    <li class="timeline-step" [class]="step.kind">
+      <div class="timeline-marker"></div>
+      <div class="timeline-body">
+        <p class="timeline-date">{{ step.date | oDataDateTime }}</p>
+        <p class="timeline-label">
+          @switch (step.kind) {
+            @case ('submission') {
+              {{ t('submitted') }}
+            }
+            @case ('preconsultation') {
+              {{ t('inCommittee') }}
+            }
+            @default {
+              {{ step.text }}
+            }
+          }
+        </p>
+        @if (step.council) {
+          <p class="timeline-council">{{ step.council }}</p>
+        }
+      </div>
+    </li>
+  }
+</ol>

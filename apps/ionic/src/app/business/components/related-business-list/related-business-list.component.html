@@ -1,0 +1,13 @@
+<ion-list class="related-list" lines="full">
+  @for (related of relatedBusinesses(); track related.ID) {
+    <ion-item button detail="true" (click)="onSelect(related)">
+      <ion-label class="ion-text-wrap">
+        <h3>{{ related.RelatedBusinessShortNumber }}</h3>
+        <p>{{ related.RelatedBusinessTitle }}</p>
+        @if (related.RelatedBusinessTypeName) {
+          <p class="related-type">{{ related.RelatedBusinessTypeName }}</p>
+        }
+      </ion-label>
+    </ion-item>
+  }
+</ion-list>
