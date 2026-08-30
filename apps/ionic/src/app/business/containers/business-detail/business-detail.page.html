@@ -9,20 +9,21 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (!viewModel().isLoading) { @if (!viewModel().hasError) {
-    <app-business-card [business]="viewModel().business">
+    @if (!viewModel().isLoading) { @if (!viewModel().hasError &&
+    viewModel().business; as business) {
+    <app-business-card [business]="business">
       @if (viewModel().hasVotes) {
       <ion-button
         expand="block"
         size="small"
         fill="outline"
         [routerLink]="['/layout/votes']"
-        [queryParams]="{ BusinessShortNumber: viewModel().business.BusinessShortNumber }"
+        [queryParams]="{ BusinessShortNumber: business.BusinessShortNumber }"
         >{{ t('business.detail.toVotes') }}
       </ion-button>
       }
     </app-business-card>
-    <app-business-detail-text [business]="viewModel().business" />
+    <app-business-detail-text [business]="business" />
     } @else {
     <app-error-screen (retry)="retry()" />
     } } @else {

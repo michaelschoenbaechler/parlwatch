@@ -23,15 +23,15 @@
       />
     </ion-toolbar>
     @if (activeSessionName() || activeTags().length > 0 ||
-    businessStore.query().businessTypes.length > 0 ||
-    businessStore.query().businessStatuses.length > 0) {
+    (businessStore.query().businessTypes?.length ?? 0) > 0 ||
+    (businessStore.query().businessStatuses?.length ?? 0) > 0) {
     <div class="active-filter-wrapper">
       @if (activeSessionName()) {
       <ion-chip>
         <ion-label>{{ activeSessionName() }}</ion-label>
       </ion-chip>
       } @for (tag of activeTags(); track tag.ID) {
-      <ion-chip (click)="toggleTag(tag.ID)">
+      <ion-chip (click)="onActiveTagClick(tag)">
         <ion-label>{{ tag.TagName }}</ion-label>
         <ion-icon name="close-circle" />
       </ion-chip>
@@ -83,7 +83,7 @@
         @for (tag of visibleTags(); track tag.ID) {
         <ion-chip
           [outline]="!isTagSelected(tag.ID)"
-          (click)="onSuggestionTagClick(tag.ID)"
+          (click)="onSuggestionTagClick(tag)"
           >{{ tag.TagName }}
         </ion-chip>
         } }
@@ -103,7 +103,7 @@
     @for (business of viewModel().businesses; track business) {
     <app-business-card
       [business]="business"
-      (click)="onClickBusiness(business.ID)"
+      (click)="onBusinessCardClick(business)"
     />
     }
     <ion-infinite-scroll

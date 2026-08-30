@@ -8,9 +8,9 @@ import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
   imports: [SafeHtmlPipe]
 })
 export class TextCardComponent {
-  readonly title = input<string>(undefined);
-  readonly subtitle = input<string>(undefined);
-  readonly HtmlText = input<string>(undefined);
+  readonly title = input<string>();
+  readonly subtitle = input<string>();
+  readonly HtmlText = input<string>();
 
   constructor() {}
 }

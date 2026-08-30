@@ -24,12 +24,12 @@ export function createCouncilMemberListVm(
     isLoading:
       councilMemberRequestState.loading &&
       councilMembers().length === 0 &&
-      query.skip === 0,
+      (query.skip ?? 0) === 0,
     isRefreshing:
       councilMemberRequestState.loading &&
       councilMembers().length > 0 &&
-      query.skip === 0,
-    isLoadingMore: councilMemberRequestState.loading && query.skip > 0,
+      (query.skip ?? 0) === 0,
+    isLoadingMore: councilMemberRequestState.loading && (query.skip ?? 0) > 0,
     hasError: !!councilMemberRequestState.error
   };
 

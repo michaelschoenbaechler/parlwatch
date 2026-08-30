@@ -22,13 +22,18 @@ export class ODataDateTimePipe implements PipeTransform {
 
   /**
    * Format an OData date string as Swiss local date and/or time.
-   * @param value OData date string, e.g. `/Date(1781800272354)/`
+   * @param value OData date string, e.g. `/Date(1781800272354)/`. Every date
+   * field of the parliament API is optional, so missing values are expected.
    * @param format Which parts to render, defaults to the date only
-   * @returns Formatted Swiss local date/time, or the input when unparsable
+   * @returns Formatted Swiss local date/time, the input when unparsable, or an
+   * empty string when there is no value
    */
-  transform(value: string, format: ODataDateTimeFormat = 'date'): string {
+  transform(
+    value: string | undefined,
+    format: ODataDateTimeFormat = 'date'
+  ): string {
     if (!value) {
-      return value;
+      return '';
     }
 
     const timestamp = parseInt(

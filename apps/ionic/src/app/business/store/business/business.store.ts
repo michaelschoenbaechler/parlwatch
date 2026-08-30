@@ -118,11 +118,11 @@ export const BusinessStore = signalStore(
     const _applyDefaultSession = rxMethod<number | null | undefined>(
       pipe(
         filter(
-          (sessionId: number | null | undefined) =>
+          (sessionId): sessionId is number | null =>
             sessionId !== undefined &&
             getState(store).query.sessionId === undefined
         ),
-        tap((sessionId: number | null) =>
+        tap((sessionId) =>
           patchState(store, createApplyDefaultSessionState(sessionId))
         )
       )

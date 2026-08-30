@@ -1,7 +1,6 @@
-import { Component, input, OnInit, inject, output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import {
   FormArray,
-  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule
@@ -15,6 +14,12 @@ export type CouncilMemberFilterForm = {
   inactiveMembers: boolean;
 };
 
+/** One checkbox per council, in `AllCouncils` order, plus the inactive toggle. */
+type FilterFormGroup = FormGroup<{
+  councils: FormArray<FormControl<boolean>>;
+  inactiveMembers: FormControl<boolean>;
+}>;
+
 @Component({
   selector: 'app-council-member-filter-form',
   templateUrl: './council-member-filter-form.component.html',
@@ -22,42 +27,49 @@ export type CouncilMemberFilterForm = {
   imports: [IonicModule, ReactiveFormsModule, TranslocoDirective]
 })
 export class CouncilMemberFilterFormComponent implements OnInit {
-  private fb = inject(FormBuilder);
-
   preset = input<CouncilMemberFilterForm>();
 
   councilList = AllCouncils;
 
-  filterForm = new FormGroup({
-    councils: new FormArray([]),
-    inactiveMembers: new FormControl(false)
+  filterForm: FilterFormGroup = new FormGroup({
+    councils: new FormArray<FormControl<boolean>>([]),
+    inactiveMembers: new FormControl(false, { nonNullable: true })
   });
 
   readonly applyFilter = output<CouncilMemberFilterForm>();
 
   ngOnInit() {
-    this.filterForm = this.fb.group({
-      councils: this.fb.array([
-        ...this.councilList.map((c) =>
-          this.fb.control(this.preset()?.councils.includes(c) ?? false)
+    this.filterForm = new FormGroup({
+      councils: new FormArray(
+        this.councilList.map(
+          (council) =>
+            new FormControl(
+              this.preset()?.councils.includes(council) ?? false,
+              {
+                nonNullable: true
+              }
+            )
         )
-      ]),
-      inactiveMembers: new FormControl(this.preset()?.inactiveMembers ?? false)
+      ),
+      inactiveMembers: new FormControl(
+        this.preset()?.inactiveMembers ?? false,
+        { nonNullable: true }
+      )
     });
   }
 
   onSubmit() {
-    const councils = this.filterForm.value.councils
-      .map((value, index) => (value ? this.councilList[index] : null))
-      .filter((value) => value !== null) as Council[];
+    const councils = this.councils.controls
+      .map((control, index) => (control.value ? this.councilList[index] : null))
+      .filter((council): council is Council => council !== null);
 
     this.applyFilter.emit({
       councils,
-      inactiveMembers: this.filterForm.get('inactiveMembers').value
+      inactiveMembers: this.filterForm.controls.inactiveMembers.value
     });
   }
 
   get councils() {
-    return this.filterForm.get('councils') as FormArray;
+    return this.filterForm.controls.councils;
   }
 }

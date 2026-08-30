@@ -35,7 +35,9 @@ export class BusinessFilterFormComponent {
   tagCheckboxes = computed(() =>
     this.tagViewModel().tags.map((tag) => ({
       ...tag,
-      checked: this.businessStore.query().tagIds.includes(tag.ID)
+      checked:
+        tag.ID !== undefined &&
+        (this.businessStore.query().tagIds ?? []).includes(tag.ID)
     }))
   );
 
@@ -46,18 +48,18 @@ export class BusinessFilterFormComponent {
   businessTypeCheckboxes = computed(() =>
     this.businessTypeViewModel().types.map((type) => ({
       ...type,
-      checked: this.businessStore
-        .query()
-        .businessTypes.some((t) => t.ID === type.ID)
+      checked: (this.businessStore.query().businessTypes ?? []).some(
+        (t) => t.ID === type.ID
+      )
     }))
   );
 
   businessStatusCheckboxes = computed(() =>
     BUSINESS_STATUS_OPTIONS.map((option) => ({
       ...option,
-      checked: this.businessStore
-        .query()
-        .businessStatuses.some((s) => s.id === option.id)
+      checked: (this.businessStore.query().businessStatuses ?? []).some(
+        (s) => s.id === option.id
+      )
     }))
   );
 
@@ -75,6 +77,7 @@ export class BusinessFilterFormComponent {
       tagIds: this.tagCheckboxes()
         .filter((tag) => tag.checked)
         .map((tag) => tag.ID)
+        .filter((id): id is number => id !== undefined)
     });
   }
 }

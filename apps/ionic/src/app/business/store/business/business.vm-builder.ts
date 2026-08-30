@@ -36,12 +36,12 @@ export function createBusinessListVm(
     isLoading:
       businessRequestState.loading &&
       businesses().length === 0 &&
-      query.skip === 0,
+      (query.skip ?? 0) === 0,
     isRefreshing:
       businessRequestState.loading &&
       businesses().length > 0 &&
-      query.skip === 0,
-    isLoadingMore: businessRequestState.loading && query.skip > 0,
+      (query.skip ?? 0) === 0,
+    isLoadingMore: businessRequestState.loading && (query.skip ?? 0) > 0,
     hasError: !!businessRequestState.error
   };
 

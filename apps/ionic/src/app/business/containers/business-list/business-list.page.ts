@@ -17,6 +17,7 @@ import {
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { Business, Tags } from 'swissparl';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
@@ -50,7 +51,7 @@ const MAX_VISIBLE_RECENTS = 3;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusinessListPage implements OnInit {
-  readonly searchBar = viewChild<IonSearchbar>('searchBar');
+  readonly searchBar = viewChild.required<IonSearchbar>('searchBar');
 
   readonly businessStore = inject(BusinessStore);
   readonly businessTypesStore = inject(BusinessTypesStore);
@@ -77,7 +78,7 @@ export class BusinessListPage implements OnInit {
   });
 
   isModalOpen = false;
-  presentingElement = null;
+  presentingElement: HTMLElement | null = null;
 
   readonly showSuggestedSearches = signal(false);
 
@@ -138,13 +139,13 @@ export class BusinessListPage implements OnInit {
 
   /** Tags the list is currently filtered by, for the active-filter chips. */
   readonly activeTags = computed(() => {
-    const selected = this.businessStore.query().tagIds;
+    const selected = this.businessStore.query().tagIds ?? [];
     return this.tagStore
       .tagsViewModel()
-      .tags.filter((tag) => selected.includes(tag.ID));
+      .tags.filter((tag) => tag.ID !== undefined && selected.includes(tag.ID));
   });
 
-  refreshOrLoadMoreEvent: InfiniteScrollCustomEvent | RefresherCustomEvent;
+  refreshOrLoadMoreEvent?: InfiniteScrollCustomEvent | RefresherCustomEvent;
 
   constructor() {
     effect(() => {
@@ -188,11 +189,21 @@ export class BusinessListPage implements OnInit {
   /**
    * Picking a topic applies it and dismisses the panel so the results are
    * visible right away. Combining several topics is done in the filter modal.
-   * @param tagId Tag to toggle
+   * @param tag Tag to toggle
    */
-  onSuggestionTagClick(tagId: number) {
-    this.toggleTag(tagId);
+  onSuggestionTagClick(tag: Tags) {
+    if (tag.ID === undefined) return;
+    this.toggleTag(tag.ID);
     this.closeSuggestions();
+  }
+
+  /**
+   * Toggle a topic from the active-filter chips.
+   * @param tag Tag whose chip was tapped
+   */
+  onActiveTagClick(tag: Tags) {
+    if (tag.ID === undefined) return;
+    this.toggleTag(tag.ID);
   }
 
   onRecentSearchClick(searchTerm: string) {
@@ -208,14 +219,18 @@ export class BusinessListPage implements OnInit {
 
   toggleTag(tagId: number) {
     const query = this.businessStore.query();
-    const tagIds = query.tagIds.includes(tagId)
-      ? query.tagIds.filter((id) => id !== tagId)
-      : [...query.tagIds, tagId];
+    const selected = query.tagIds ?? [];
+    const tagIds = selected.includes(tagId)
+      ? selected.filter((id) => id !== tagId)
+      : [...selected, tagId];
     this.businessStore.updateQuery({ ...query, tagIds });
   }
 
-  isTagSelected(tagId: number): boolean {
-    return this.businessStore.query().tagIds.includes(tagId);
+  isTagSelected(tagId: number | undefined): boolean {
+    return (
+      tagId !== undefined &&
+      (this.businessStore.query().tagIds ?? []).includes(tagId)
+    );
   }
 
   /**
@@ -251,5 +266,14 @@ export class BusinessListPage implements OnInit {
 
   onClickBusiness(id: number) {
     this.router.navigate(['/layout/business/detail', id]);
+  }
+
+  /**
+   * Open a business from its list card.
+   * @param business The business the tapped card renders
+   */
+  onBusinessCardClick(business: Business) {
+    if (business.ID === undefined) return;
+    this.onClickBusiness(business.ID);
   }
 }

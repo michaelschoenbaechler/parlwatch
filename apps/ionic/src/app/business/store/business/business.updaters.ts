@@ -109,7 +109,7 @@ export function createLoadMoreState(): PartialStateUpdater<BusinessSlice> {
     ...state,
     query: {
       ...state.query,
-      skip: state.query.skip + state.query.top
+      skip: (state.query.skip ?? 0) + state.query.top
     }
   });
 }

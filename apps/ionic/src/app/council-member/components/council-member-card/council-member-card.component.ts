@@ -9,7 +9,7 @@ import { LowerCasePipe } from '@angular/common';
   imports: [LowerCasePipe]
 })
 export class CouncilMemberCardComponent {
-  councilMember = input<MemberCouncil>();
+  councilMember = input.required<MemberCouncil>();
 
   constructor() {}
 }

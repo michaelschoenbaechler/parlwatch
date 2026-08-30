@@ -51,9 +51,10 @@ export class BusinessService {
     tagIds,
     sessionId
   }: BusinessFilter): Observable<Business[]> {
-    const businessTypeFilterArray = (businessTypes ?? []).map((type) => ({
-      BusinessType: type.ID
-    }));
+    const businessTypeFilterArray = (businessTypes ?? [])
+      .map((type) => type.ID)
+      .filter((id): id is number => id !== undefined)
+      .map((id) => ({ BusinessType: id }));
 
     // One option can cover several API ids, e.g. 27 and 229 are both "Erledigt".
     const businessStatusFilterArray = (businessStatuses ?? [])

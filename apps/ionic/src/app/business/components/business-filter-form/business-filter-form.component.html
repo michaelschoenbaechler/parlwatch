@@ -42,7 +42,7 @@
         <ion-item>
           <ion-checkbox
             labelPlacement="start"
-            [name]="businessType.BusinessTypeName"
+            [name]="'type-' + businessType.ID"
             [(ngModel)]="businessType.checked"
             >{{ businessType.BusinessTypeName }}
           </ion-checkbox>

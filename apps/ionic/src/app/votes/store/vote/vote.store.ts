@@ -74,7 +74,9 @@ export const VoteStore = signalStore(
         const tallies = store.tallies();
         return (store.votesRequestState().data ?? [])
           .map((vote) => vote.ID)
-          .filter((id) => id !== undefined && tallies[id] === undefined)
+          .filter(
+            (id): id is number => id !== undefined && tallies[id] === undefined
+          )
           .slice(0, MAX_TALLY_BATCH);
       })
     };

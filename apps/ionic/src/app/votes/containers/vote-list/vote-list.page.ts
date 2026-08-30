@@ -37,14 +37,14 @@ import { VoteStore } from '../../store/vote';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VoteListPage {
-  readonly searchBar = viewChild<IonSearchbar>('searchBar');
+  readonly searchBar = viewChild.required<IonSearchbar>('searchBar');
 
   readonly store = inject(VoteStore);
   readonly router = inject(Router);
 
   readonly viewModel = computed(() => this.store.votesListViewModel());
 
-  refreshOrLoadMoreEvent: InfiniteScrollCustomEvent | RefresherCustomEvent;
+  refreshOrLoadMoreEvent?: InfiniteScrollCustomEvent | RefresherCustomEvent;
 
   constructor() {
     effect(() => {

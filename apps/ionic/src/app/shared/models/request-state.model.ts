@@ -85,7 +85,7 @@ export function onRequestSuccess<T>(
  */
 export function onRequestError<T>(
   req: RequestState<T>,
-  errorInfo?: ErrorInfo
+  errorInfo?: ErrorInfo | null
 ): RequestState<T> {
   return {
     ...req,

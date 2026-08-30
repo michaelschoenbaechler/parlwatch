@@ -12,7 +12,7 @@ import { TextCardComponent } from '../../../shared/components/text-card/text-car
   imports: [IonicModule, TextCardComponent, TranslocoDirective]
 })
 export class BusinessDetailTextComponent {
-  readonly business = input<Business>(undefined);
+  readonly business = input.required<Business>();
 
   constructor() {}
 

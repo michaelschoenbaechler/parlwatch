@@ -96,6 +96,7 @@ export function talliesByVote(
   }
 
   for (const voting of Array.isArray(votings) ? votings : []) {
+    if (voting.IdVote === undefined) continue;
     const tally = tallies[voting.IdVote];
     if (!tally) continue;
     tally[toVoteDecision(voting.Decision)] += 1;

@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { MemberCouncil } from 'swissparl';
 import {
   InfiniteScrollCustomEvent,
   IonicModule,
@@ -45,7 +46,7 @@ import { CouncilMemberStore } from '../../store/council-member/council-member.st
   ]
 })
 export class MemberListPage implements OnInit {
-  readonly searchBar = viewChild<IonSearchbar>('searchBar');
+  readonly searchBar = viewChild.required<IonSearchbar>('searchBar');
 
   readonly store = inject(CouncilMemberStore);
   readonly router = inject(Router);
@@ -53,13 +54,13 @@ export class MemberListPage implements OnInit {
   readonly viewModel = computed(() => this.store.councilMembersViewModel());
 
   isModalOpen = false;
-  presentingElement = null;
+  presentingElement: HTMLElement | null = null;
   activeFilter: CouncilMemberFilterForm = {
     councils: [],
     inactiveMembers: false
   };
 
-  refreshOrLoadMoreEvent: InfiniteScrollCustomEvent | RefresherCustomEvent;
+  refreshOrLoadMoreEvent?: InfiniteScrollCustomEvent | RefresherCustomEvent;
 
   constructor() {
     effect(() => {
@@ -115,7 +116,9 @@ export class MemberListPage implements OnInit {
     });
   }
 
-  onClickPerson(id: number) {
-    this.router.navigate(['/layout/council-member/detail', id]);
+  onClickPerson(councilMember: MemberCouncil) {
+    if (councilMember.ID !== undefined) {
+      this.router.navigate(['/layout/council-member/detail', councilMember.ID]);
+    }
   }
 }

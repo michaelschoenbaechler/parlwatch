@@ -10,7 +10,7 @@ import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
   imports: [TextCardComponent, ODataDateTimePipe]
 })
 export class BusinessCardComponent {
-  readonly business = input<Business>(undefined);
+  readonly business = input.required<Business>();
 
   constructor() {}
 

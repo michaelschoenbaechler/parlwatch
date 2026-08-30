@@ -9,8 +9,9 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    @if (viewModel() && !viewModel().isLoading) { @if (!viewModel().hasError) {
-    <app-vote-card [vote]="viewModel().vote">
+    @if (viewModel() && !viewModel().isLoading) { @if (!viewModel().hasError &&
+    viewModel().vote; as vote) {
+    <app-vote-card [vote]="vote">
       <ion-button
         expand="block"
         size="small"

@@ -14,8 +14,8 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 export class LoadingScreenComponent implements OnInit {
   translocoService = inject(TranslocoService);
 
-  facts: string[];
-  currentFact: string;
+  facts: string[] = [];
+  currentFact = '';
   shuffledFacts: string[] = [];
 
   ngOnInit() {
@@ -48,7 +48,7 @@ export class LoadingScreenComponent implements OnInit {
             this.shuffleFacts();
             factIndex = 0;
           }
-          this.currentFact = this.shuffledFacts[factIndex];
+          this.currentFact = this.shuffledFacts[factIndex] ?? '';
         })
       )
       .subscribe();

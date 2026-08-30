@@ -103,7 +103,9 @@ export const CouncilMemberStore = signalStore(
 
     const _isMemberInState = (id: number) => {
       const state = getState(store);
-      return state.councilMemberRequestState.data.some((b) => b.ID === id);
+      return (state.councilMemberRequestState.data ?? []).some(
+        (b) => b.ID === id
+      );
     };
 
     const _selectAndLoadCouncilMember = rxMethod<number>(

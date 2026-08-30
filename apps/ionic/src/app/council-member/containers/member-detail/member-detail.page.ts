@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { Voting } from 'swissparl';
 import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
@@ -50,14 +51,20 @@ export class MemberDetailPage implements OnInit {
     );
   }
 
-  onClickBusiness(id: number) {
+  onClickBusiness(voting: Voting) {
+    if (voting.BusinessNumber === undefined) return;
     this.router
-      .navigate(['/layout/council-member/business/detail', id])
+      .navigate([
+        '/layout/council-member/business/detail',
+        voting.BusinessNumber
+      ])
       .catch(console.error);
   }
 
   getMandatesAsHtmlList() {
     const member = this.councilMemberViewModel().councilMember;
+    if (!member) return '';
+
     let mandates = '';
     if (member.Mandates) {
       mandates =
@@ -83,6 +90,8 @@ export class MemberDetailPage implements OnInit {
 
   getAdditionalActivitiesAsHtmlList() {
     const member = this.councilMemberViewModel().councilMember;
+    if (!member) return '';
+
     let additionalActivities = '';
     if (member.AdditionalActivity) {
       additionalActivities =

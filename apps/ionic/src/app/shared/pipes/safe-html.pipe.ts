@@ -8,9 +8,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class SafeHtmlPipe implements PipeTransform {
   private sanitized = inject(DomSanitizer);
 
-  transform(value: string): SafeHtml {
+  transform(value: string | undefined): SafeHtml {
     const div = document.createElement('div');
-    div.innerHTML = value;
+    div.innerHTML = value ?? '';
 
     const allowedTags = ['strong', 'p', 'ul', 'li', 'i', 'a'];
 
@@ -20,6 +20,7 @@ export class SafeHtmlPipe implements PipeTransform {
       if (allowedTags.indexOf(element.tagName.toLowerCase()) === -1) {
         // If the tag is not in the allowed list, replace it with its own innerHTML
         const parent = element.parentNode;
+        if (!parent) continue;
         while (element.firstChild) {
           parent.insertBefore(element.firstChild, element);
         }
