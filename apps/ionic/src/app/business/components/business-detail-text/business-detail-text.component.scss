@@ -1,0 +1,40 @@
+.read-more {
+  --padding-start: 0;
+  --padding-end: 0;
+  margin: 0.5rem 0 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+ion-modal ion-toolbar {
+  --background: var(--ion-color-step-150);
+  --color: var(--ion-color-secondary-contrast);
+
+  ion-button::part(native) {
+    color: var(--ion-color-primary);
+  }
+}
+
+.section-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+/*
+ * The section body is injected with [innerHTML], so it never carries the
+ * component's scoping attribute and a plain descendant rule would not match.
+ */
+:host ::ng-deep .section-text p {
+  margin: 0 0 1rem 0;
+}
+
+:host ::ng-deep .section-text p:last-child {
+  margin-bottom: 0;
+}
+
+:host ::ng-deep .section-text a {
+  color: var(--ion-color-primary);
+}

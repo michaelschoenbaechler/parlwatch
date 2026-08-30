@@ -1,13 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   output,
   signal
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { SpeechGroupVm, SpeechVm } from '../../models/transcript.model';
+import { parlGroupTranslationKey } from '../../models/parl-group.model';
 import { ODataDateTimePipe } from '../../pipes/o-data-date-time.pipe';
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
@@ -19,6 +21,8 @@ import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpeechListComponent {
+  private readonly transloco = inject(TranslocoService);
+
   readonly groups = input.required<SpeechGroupVm[]>();
   /** Bodies already loaded, keyed by speech id. */
   readonly texts = input.required<Record<number, string>>();
@@ -29,6 +33,16 @@ export class SpeechListComponent {
    * badged, because debates are recorded verbatim and never translated.
    */
   readonly uiLanguage = input<string>('');
+  /**
+   * Whether to name the speaker on each row. A debate needs it; a member's own
+   * page would just repeat their name down the page.
+   */
+  readonly showSpeaker = input(false);
+  /**
+   * Whether each group prints its own heading. Off when the caller already
+   * gives every group a card of its own, whose title says the same thing.
+   */
+  readonly showGroupHeader = input(true);
 
   /** Asks the container to fetch a body the list does not have yet. */
   readonly textRequested = output<number>();
@@ -49,6 +63,20 @@ export class SpeechListComponent {
     if (this.texts()[speech.id] === undefined) {
       this.textRequested.emit(speech.id);
     }
+  }
+
+  /**
+   * A speaker's faction, spelled out.
+   *
+   * The API reports terse codes — `RL`, `S`, `V` — which mean nothing to a
+   * reader, so they are resolved to the names the rest of the app uses and
+   * fall back to the raw code only for a faction the app does not know.
+   * @param speech The speech being listed
+   * @returns Localised faction name
+   */
+  parlGroupLabel(speech: SpeechVm): string {
+    const key = parlGroupTranslationKey(speech.parlGroup);
+    return key ? this.transloco.translate(key) : speech.parlGroup;
   }
 
   isOpen(speech: SpeechVm): boolean {

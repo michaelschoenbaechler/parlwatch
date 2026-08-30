@@ -13,11 +13,11 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
 import { VoteStore, VotingDecisionFilter } from '../../store/vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
 import {
-  parlGroupTranslationKey,
   toCssColour,
   toVoteDecision,
   VoteDecision
 } from '../../models/vote-decision';
+import { parlGroupTranslationKey } from '../../../shared/models/parl-group.model';
 
 const DECISION_ICONS: Record<VoteDecision, string> = {
   yes: 'checkmark-outline',

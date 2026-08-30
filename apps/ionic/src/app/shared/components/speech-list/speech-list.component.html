@@ -1,21 +1,28 @@
 <div class="speech-list" *transloco="let t; prefix: 'shared.speechList'">
   @for (group of groups(); track group.key) {
     <section class="speech-group">
-      <h4 class="speech-group-title">
-        @if (group.title) {
-          {{ group.title }}
-        } @else {
-          {{ t('untitled') }}
-        }
-      </h4>
-      <p class="speech-group-meta">
-        @if (group.businessShortNumber) {
-          <span>{{ group.businessShortNumber }}</span>
-        }
-        @if (group.speeches.length > 1) {
-          <span>{{ t('speechCount', { count: group.speeches.length }) }}</span>
-        }
-      </p>
+      @if (showGroupHeader()) {
+        <h4 class="speech-group-title">
+          @if (group.title) {
+            {{ group.title }}
+          } @else {
+            {{ t('untitled') }}
+          }
+        </h4>
+        <p class="speech-group-meta">
+          @if (group.businessShortNumber) {
+            <span>{{ group.businessShortNumber }}</span>
+          }
+          @if (group.date) {
+            <span>{{ group.date | oDataDateTime }}</span>
+          }
+          @if (group.speeches.length > 1) {
+            <span>{{
+              t('speechCount', { count: group.speeches.length })
+            }}</span>
+          }
+        </p>
+      }
 
       <ul class="speech-entries">
         @for (speech of group.speeches; track speech.id) {
@@ -25,12 +32,19 @@
               class="speech-header"
               (click)="toggle(speech)"
             >
+              @if (showSpeaker()) {
+                <span class="speech-speaker">{{ speech.speaker }}</span>
+              }
               <span class="speech-meta">
-                <span class="speech-date">
-                  {{ speech.start | oDataDateTime }}
-                </span>
-                @if (speech.council) {
-                  <span>{{ speech.council }}</span>
+                @if (showSpeaker()) {
+                  @if (speech.parlGroup) {
+                    <span>{{ parlGroupLabel(speech) }}</span>
+                  }
+                } @else {
+                  <span>{{ speech.start | oDataDateTime }}</span>
+                  @if (speech.council) {
+                    <span>{{ speech.council }}</span>
+                  }
                 }
                 @if (isForeignLanguage(speech)) {
                   <ion-badge color="medium">{{ speech.language }}</ion-badge>

@@ -10,16 +10,6 @@ export const VOTE_DECISIONS: readonly VoteDecision[] = [
   'not-participated'
 ];
 
-/** Faction codes the API reports; language independent, unlike `ParlGroupName`. */
-export const PARL_GROUP_CODES: readonly string[] = [
-  'S',
-  'G',
-  'V',
-  'RL',
-  'GL',
-  'M-E'
-];
-
 export type VoteTally = Record<VoteDecision, number> & { total: number };
 
 export interface ParlGroupTally {
@@ -28,20 +18,6 @@ export interface ParlGroupTally {
   abbreviation: string;
   colour: string;
   tally: VoteTally;
-}
-
-/**
- * Translation key for a faction, or null when the app has no name for it.
- * Keyed on `ParlGroupCode`, which is stable across languages unlike the name.
- * @param code Faction code from a `Voting`
- * @returns Transloco key, or null when the code is unknown
- */
-export function parlGroupTranslationKey(
-  code: string | undefined
-): string | null {
-  return code && PARL_GROUP_CODES.includes(code)
-    ? `votes.parlGroup.${code}`
-    : null;
 }
 
 /**

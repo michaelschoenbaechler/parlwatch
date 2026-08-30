@@ -29,14 +29,53 @@
     </app-text-card>
     }
     <app-business-detail-text [business]="business" />
-    @if (viewModel().relatedBusinesses.length > 0) {
+    @if (debateStore.isLoading()) {
+    <app-text-card title="{{ t('business.debate.title') }}">
+      <ion-spinner class="debate-spinner" />
+    </app-text-card>
+    } @else if (debateStore.hasError()) {
+    <app-text-card title="{{ t('business.debate.title') }}">
+      <p class="debate-error">
+        <small> {{ t('business.debate.error') }} </small>
+      </p>
+    </app-text-card>
+    } @else { @for (stage of debateStore.stages(); track stage.key) {
+    <app-text-card
+      [title]="t('business.debate.stageTitle', { stage: stage.title })"
+      [subtitle]="stage.date | oDataDateTime"
+    >
+      <app-speech-list
+        [groups]="[stage]"
+        [texts]="debateStore.texts()"
+        [loadingTextId]="debateStore.loadingTextId()"
+        [uiLanguage]="uiLanguage"
+        [showSpeaker]="true"
+        [showGroupHeader]="false"
+        (textRequested)="debateStore.loadText($event)"
+      />
+    </app-text-card>
+    } } @if (viewModel().relatedBusinesses.length > 0) {
     <app-text-card title="{{ t('business.related.title') }}">
       <app-related-business-list
         [relatedBusinesses]="viewModel().relatedBusinesses"
         (businessSelected)="onRelatedBusiness($event)"
       />
     </app-text-card>
-    } } @else {
+    }
+    <app-text-card
+      [title]="t('business.detail.additionalInformation.title')"
+      [HtmlText]="t('business.detail.additionalInformation.text')"
+    >
+      <ion-button
+        expand="block"
+        size="small"
+        fill="outline"
+        (click)="openFurtherInformation()"
+        >{{ t('business.detail.additionalInformation.button') }}
+        <ion-icon slot="end" name="link-outline" />
+      </ion-button>
+    </app-text-card>
+    } @else {
     <app-error-screen (retry)="retry()" />
     } } @else {
     <app-loading-screen />

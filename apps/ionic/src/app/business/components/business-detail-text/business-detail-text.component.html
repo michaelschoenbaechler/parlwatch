@@ -1,75 +1,38 @@
 <ng-container *transloco="let t; prefix: 'business.detailText'">
-  @if (business().Description) {
+  @for (section of sections(); track section.key) {
     <app-text-card
-      [title]="t('description')"
-      [HtmlText]="business().Description"
-    />
+      [title]="t(section.key)"
+      [HtmlText]="section.isTruncated ? section.preview : section.html"
+    >
+      @if (section.isTruncated) {
+        <ion-button
+          class="read-more"
+          fill="clear"
+          size="small"
+          (click)="readSection(section)"
+        >
+          {{ t('readMore') }}
+          <ion-icon slot="end" name="chevron-forward-outline" />
+        </ion-button>
+      }
+    </app-text-card>
   }
 
-  @if (business().InitialSituation) {
-    <app-text-card
-      [title]="t('initialSituation')"
-      [HtmlText]="business().InitialSituation"
-    />
-  }
-
-  @if (business().Proceedings) {
-    <app-text-card
-      [title]="t('proceedings')"
-      [HtmlText]="business().Proceedings"
-    />
-  }
-
-  @if (business().DraftText) {
-    <app-text-card [title]="t('draftText')" [HtmlText]="business().DraftText" />
-  }
-
-  @if (business().SubmittedText) {
-    <app-text-card
-      [title]="t('submittedText')"
-      [HtmlText]="business().SubmittedText"
-    />
-  }
-
-  @if (business().ReasonText) {
-    <app-text-card
-      [title]="t('reasonText')"
-      [HtmlText]="business().ReasonText"
-    />
-  }
-
-  @if (business().DocumentationText) {
-    <app-text-card
-      [title]="t('documentationText')"
-      [HtmlText]="business().DocumentationText"
-    />
-  }
-
-  @if (business().MotionText) {
-    <app-text-card
-      [title]="t('motionText')"
-      [HtmlText]="business().MotionText"
-    />
-  }
-
-  @if (business().FederalCouncilResponseText) {
-    <app-text-card
-      [title]="t('federalCouncilResponseText')"
-      [HtmlText]="business().FederalCouncilResponseText"
-    />
-  }
-
-  <app-text-card
-    [title]="t('business.detailText.additionalInformation.title')"
-    [HtmlText]="t('business.detailText.additionalInformation.text')"
-  >
-    <ion-button
-      expand="block"
-      size="small"
-      fill="outline"
-      (click)="openFurtherInformation()"
-      >{{ t('business.detailText.additionalInformation.button') }}
-      <ion-icon slot="end" name="link-outline" />
-    </ion-button>
-  </app-text-card>
+  <ion-modal [isOpen]="!!openSection()" (didDismiss)="closeSection()">
+    <ng-template>
+      @if (openSection(); as section) {
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>{{ t(section.key) }}</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="closeSection()">{{ t('close') }}</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <div class="section-text" [innerHTML]="section.html | safeHtml"></div>
+        </ion-content>
+      }
+    </ng-template>
+  </ion-modal>
 </ng-container>

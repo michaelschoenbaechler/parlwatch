@@ -19,8 +19,11 @@ const LIST_FIELDS: Array<keyof Transcript> = [
   'IdSubject',
   'PersonNumber',
   'CouncilName',
+  'SpeakerFullName',
   'SpeakerFunction',
+  'ParlGroupAbbreviation',
   'LanguageOfText',
+  'SortOrder',
   'Start',
   'End',
   'Type'
@@ -78,6 +81,67 @@ export class TranscriptService {
       select: LIST_FIELDS,
       filter,
       orderby: { property: 'Start', order: 'desc' }
+    });
+  }
+
+  /**
+   * The agenda items a business was debated under.
+   *
+   * Parliament splits a business over several items — first chamber, second
+   * chamber, differences — and a transcript names only its item, so this is
+   * the hop from a business to its debate.
+   * @param businessNumber The business's id
+   * @returns The agenda items, carrying their stage notes
+   */
+  getBusinessSubjects(businessNumber: number): Observable<SubjectBusiness[]> {
+    return this.swissParlService.fetchCollection<SubjectBusiness>(
+      'SubjectBusiness',
+      {
+        top: 50,
+        select: ['IdSubject', 'PublishedNotes', 'BusinessShortNumber'],
+        filter: {
+          eq: [
+            {
+              BusinessNumber: businessNumber,
+              Language: this.translocoService.getActiveLang().toUpperCase()
+            }
+          ]
+        }
+      }
+    );
+  }
+
+  /**
+   * Every speech given under a set of agenda items.
+   *
+   * Ordering is left to the caller: `SortOrder` restarts at one in each item,
+   * so a single `$orderby` cannot sequence a debate that spans several.
+   * @param subjectIds Agenda item ids of the debate
+   * @param top Ceiling on the number of speeches
+   * @returns Speech metadata rows, without their bodies
+   */
+  getSpeechesBySubjects(
+    subjectIds: number[],
+    top = 200
+  ): Observable<Transcript[]> {
+    const uniqueIds = [...new Set(subjectIds)].filter((id) => id > 0);
+    if (uniqueIds.length === 0) return of([]);
+
+    const filter: { eq: Record<string, string | number | boolean>[] } = {
+      eq: [
+        {
+          Language: this.translocoService.getActiveLang().toUpperCase(),
+          Type: TRANSCRIPT_TYPE_SPEECH
+        },
+        { [`(length(Text) gt ${MIN_SPEECH_LENGTH})`]: true },
+        ...uniqueIds.map((id) => ({ IdSubject: id }))
+      ]
+    };
+
+    return this.swissParlService.fetchCollection<Transcript>('Transcript', {
+      top,
+      select: LIST_FIELDS,
+      filter
     });
   }
 

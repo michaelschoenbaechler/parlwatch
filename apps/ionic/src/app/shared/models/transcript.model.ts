@@ -1,4 +1,5 @@
 import { Transcript } from 'swissparl';
+import { odataTimestamp } from './odata.model';
 
 /** One speech as the speech list renders it. */
 export interface SpeechVm {
@@ -20,6 +21,12 @@ export interface SpeechVm {
   title: string;
   /** Short number of that business, e.g. `26.033`. */
   businessShortNumber: string;
+  /** Who spoke. Redundant on a member's own page, essential in a debate. */
+  speaker: string;
+  /** The speaker's faction, shown alongside their name in a debate. */
+  parlGroup: string;
+  /** Position within its agenda item, which is the order of the debate. */
+  sortOrder: number;
 }
 
 /**
@@ -79,7 +86,10 @@ export function toSpeeches(transcripts: Transcript[]): SpeechVm[] {
       language: transcript.LanguageOfText?.trim() ?? '',
       start: transcript.Start ?? '',
       title: '',
-      businessShortNumber: ''
+      businessShortNumber: '',
+      speaker: transcript.SpeakerFullName?.trim() ?? '',
+      parlGroup: transcript.ParlGroupAbbreviation?.trim() ?? '',
+      sortOrder: transcript.SortOrder ?? 0
     });
   }
 
@@ -90,10 +100,16 @@ export function toSpeeches(transcripts: Transcript[]): SpeechVm[] {
 export interface SpeechGroupVm {
   /** Stable identity for `@for` tracking. */
   key: string;
-  /** Business the speeches were about, empty when there is none. */
+  /** What the group is: a business on a member page, a stage in a debate. */
   title: string;
   businessShortNumber: string;
-  /** The group's speeches, newest first. */
+  /**
+   * OData date the group happened on. Set for a debate stage, where every
+   * speech shares the day; empty for a business, whose speeches span months
+   * and carry their own dates.
+   */
+  date: string;
+  /** The group's speeches, in the order the group reads best. */
   speeches: SpeechVm[];
 }
 
@@ -129,6 +145,7 @@ export function groupSpeechesByBusiness(speeches: SpeechVm[]): SpeechGroupVm[] {
       key,
       title: speech.title,
       businessShortNumber: speech.businessShortNumber,
+      date: '',
       speeches: [speech]
     });
   }
@@ -165,4 +182,66 @@ export function withSubjectTitles(
       businessShortNumber: subject.businessShortNumber
     };
   });
+}
+
+/**
+ * Arrange a business's speeches into the stages of its debate.
+ *
+ * Parliament splits a business over several agenda items — first chamber,
+ * continuation, second chamber, then the reconciliation of differences — and
+ * `SortOrder` counts from one within each of them. So stages are ordered by
+ * when they happened and speeches by their position inside the stage, which
+ * together replay the debate in the order it was held.
+ * @param speeches Speeches across all of the business's agenda items
+ * @param stageLabels Stage names keyed by agenda item id
+ * @returns One group per stage, oldest first
+ */
+export function toDebateStages(
+  speeches: SpeechVm[],
+  stageLabels: Record<number, string>
+): SpeechGroupVm[] {
+  const stages = new Map<number, SpeechGroupVm>();
+
+  for (const speech of speeches) {
+    const stage = stages.get(speech.subjectId);
+    if (stage) {
+      stage.speeches.push(speech);
+      continue;
+    }
+
+    stages.set(speech.subjectId, {
+      key: `stage-${speech.subjectId}`,
+      title: stageLabels[speech.subjectId] ?? '',
+      businessShortNumber: '',
+      date: speech.start,
+      speeches: [speech]
+    });
+  }
+
+  const ordered = [...stages.values()];
+
+  for (const stage of ordered) {
+    // Safe to sort in place: every `speeches` array is built here, not shared.
+    stage.speeches.sort((a, b) => a.sortOrder - b.sortOrder);
+    stage.date = stage.speeches[0]?.start ?? stage.date;
+  }
+
+  return ordered.sort(
+    (a, b) => odataTimestamp(a.date) - odataTimestamp(b.date)
+  );
+}
+
+/**
+ * Read a stage's name out of the API's bilingual note.
+ *
+ * `PublishedNotes` pairs the languages on one line — `Erstrat - Premier
+ * Conseil` — so the part before the dash is the name in the requested one.
+ * @param publishedNotes The note as the API returns it
+ * @returns The stage name, or an empty string when there is none
+ */
+export function toStageLabel(publishedNotes: string | undefined): string {
+  const note = publishedNotes?.trim();
+  if (!note) return '';
+
+  return note.split(' - ')[0].trim();
 }
