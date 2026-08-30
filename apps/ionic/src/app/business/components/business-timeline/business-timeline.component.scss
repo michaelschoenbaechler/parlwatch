@@ -40,8 +40,12 @@
   box-shadow: 0 0 0 1px #cccccc;
 }
 
-.timeline-step.status .timeline-marker,
 .timeline-step.resolution .timeline-marker {
+  background: #999999;
+  box-shadow: 0 0 0 1px #999999;
+}
+
+.timeline-step.current .timeline-marker {
   background: var(--ion-color-primary);
   box-shadow: 0 0 0 1px var(--ion-color-primary);
 }
@@ -61,8 +65,9 @@
   color: var(--ion-color-dark);
 }
 
-.timeline-step.status .timeline-label {
+.timeline-step.current .timeline-label {
   font-weight: 600;
+  color: var(--ion-color-dark);
 }
 
 .timeline-council {
