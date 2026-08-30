@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MemberCouncil, Voting } from 'swissparl';
+import { MemberCouncil, PersonInterest, Voting } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
 
@@ -88,6 +88,44 @@ export class CouncilMemberService {
         }
       })
       .pipe(map((list) => list[0]));
+  }
+
+  /**
+   * Fetch a member's entries in the register of interests.
+   *
+   * `Agency` is a flag rather than a name in this collection, so the
+   * organisation is read from `InterestName`.
+   * @param id The member's `PersonNumber`
+   * @returns The member's registered ties, in the register's own order
+   */
+  getInterests(id: number): Observable<PersonInterest[]> {
+    return this.swissParlService.fetchCollection<PersonInterest>(
+      'PersonInterest',
+      {
+        top: 200,
+        select: [
+          'ID',
+          'InterestName',
+          'InterestType',
+          'InterestTypeText',
+          'OrganizationType',
+          'OrganizationTypeText',
+          'FunctionInAgency',
+          'FunctionInAgencyText',
+          'Paid',
+          'SortOrder'
+        ],
+        filter: {
+          eq: [
+            {
+              PersonNumber: id,
+              Language: this.translocoService.getActiveLang().toUpperCase()
+            }
+          ]
+        },
+        orderby: { property: 'SortOrder', order: 'asc' }
+      }
+    );
   }
 
   getVotes(id: number): Observable<Voting[]> {

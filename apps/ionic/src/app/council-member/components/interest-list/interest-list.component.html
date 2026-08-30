@@ -1,0 +1,23 @@
+<ul class="interest-entries" *transloco="let t; prefix: 'councilMember.detail'">
+  @for (interest of interests(); track interest.id) {
+    <li class="interest">
+      <div class="interest-header">
+        <span class="interest-organisation">{{ interest.organisation }}</span>
+        @if (interest.paid) {
+          <ion-badge color="warning">{{ t('interestPaid') }}</ion-badge>
+        } @else {
+          <ion-badge color="medium">{{ t('interestUnpaid') }}</ion-badge>
+        }
+      </div>
+      @if (interest.role || interest.body) {
+        <p class="interest-role">
+          {{ interest.role }}
+          @if (interest.role && interest.body) {
+            <span> · </span>
+          }
+          {{ interest.body }}
+        </p>
+      }
+    </li>
+  }
+</ul>

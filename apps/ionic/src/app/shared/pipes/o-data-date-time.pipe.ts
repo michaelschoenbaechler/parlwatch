@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-export type ODataDateTimeFormat = 'date' | 'time' | 'datetime';
+export type ODataDateTimeFormat = 'date' | 'time' | 'datetime' | 'year';
 
 /**
  * The parliament API serialises `/Date(…)/` ticks as Swiss local wall-clock
@@ -47,15 +47,19 @@ export class ODataDateTimePipe implements PipeTransform {
 
     const options: Intl.DateTimeFormatOptions = { timeZone: API_TIME_ZONE };
 
-    if (format !== 'time') {
-      options.day = 'numeric';
-      options.month = 'numeric';
+    if (format === 'year') {
       options.year = 'numeric';
-    }
+    } else {
+      if (format !== 'time') {
+        options.day = 'numeric';
+        options.month = 'numeric';
+        options.year = 'numeric';
+      }
 
-    if (format !== 'date') {
-      options.hour = '2-digit';
-      options.minute = '2-digit';
+      if (format !== 'date') {
+        options.hour = '2-digit';
+        options.minute = '2-digit';
+      }
     }
 
     return new Date(timestamp).toLocaleString(SWISS_LOCALE, options);

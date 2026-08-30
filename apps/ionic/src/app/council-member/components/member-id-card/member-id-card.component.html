@@ -1,0 +1,52 @@
+<div class="id-card" *transloco="let t; prefix: 'councilMember.idCard'">
+  <div class="id-card-header">
+    <img
+      class="canton-flag"
+      [src]="
+        '/assets/cantons/' +
+        (councilMember().CantonAbbreviation | lowercase) +
+        '.svg'
+      "
+      [alt]="councilMember().CantonName ?? ''"
+    />
+    <div class="id-card-identity">
+      <h2 class="id-card-name">
+        {{ councilMember().FirstName }} {{ councilMember().LastName }}
+      </h2>
+      <p class="id-card-role">
+        @if (councilMember().CouncilName) {
+          <span>{{ councilMember().CouncilName }}</span>
+        }
+        @if (councilMember().CantonName) {
+          <span>{{ councilMember().CantonName }}</span>
+        }
+      </p>
+    </div>
+    @if (councilMember().Active === false) {
+      <ion-badge color="medium">{{ t('former') }}</ion-badge>
+    }
+  </div>
+
+  <dl class="id-card-fields">
+    @if (councilMember().PartyName) {
+      <dt>{{ t('party') }}</dt>
+      <dd>{{ councilMember().PartyName }}</dd>
+    }
+    @if (councilMember().ParlGroupName) {
+      <dt>{{ t('parlGroup') }}</dt>
+      <dd>{{ councilMember().ParlGroupName }}</dd>
+    }
+    @if (councilMember().DateJoining) {
+      <dt>{{ t('inOfficeSince') }}</dt>
+      <dd>{{ councilMember().DateJoining | oDataDateTime }}</dd>
+    }
+    @if (councilMember().DateOfBirth) {
+      <dt>{{ t('birthYear') }}</dt>
+      <dd>{{ councilMember().DateOfBirth | oDataDateTime: 'year' }}</dd>
+    }
+    @if (councilMember().Citizenship) {
+      <dt>{{ t('citizenship') }}</dt>
+      <dd>{{ councilMember().Citizenship }}</dd>
+    }
+  </dl>
+</div>

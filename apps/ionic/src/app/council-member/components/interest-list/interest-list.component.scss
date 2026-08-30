@@ -1,0 +1,34 @@
+.interest-entries {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.interest + .interest {
+  margin-top: 0.75rem;
+}
+
+.interest-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.interest-organisation {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.interest-header ion-badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.interest-role {
+  margin: 0.125rem 0 0 0;
+  font-size: 14px;
+  color: #666666;
+}

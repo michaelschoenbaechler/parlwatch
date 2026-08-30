@@ -15,8 +15,26 @@
     @if (!councilMemberViewModel().isLoading) { @if
     (!councilMemberViewModel().hasError &&
     councilMemberViewModel().councilMember; as councilMember) {
-    <app-council-member-card [councilMember]="councilMember" />
-    @if (getMandatesAsHtmlList()) {
+    <app-member-id-card [councilMember]="councilMember" />
+    @if (interestViewModel().isLoading) {
+    <app-text-card title="{{ t('councilMember.detail.interests') }}">
+      <div class="loading-voting-record-container">
+        <ion-spinner class="spinner" />
+      </div>
+    </app-text-card>
+    } @else if (interestViewModel().hasNoInterests) {
+    <app-text-card title="{{ t('councilMember.detail.interests') }}">
+      <p class="no-votes-text">
+        <small> {{ t('councilMember.detail.noInterests') }} </small>
+      </p>
+    </app-text-card>
+    } @else { @for (group of interestViewModel().groups; track group.type) {
+    <app-text-card
+      title="{{ group.type || t('councilMember.detail.otherInterests') }}"
+    >
+      <app-interest-list [interests]="group.interests" />
+    </app-text-card>
+    } } @if (getMandatesAsHtmlList()) {
     <app-text-card
       title="{{ t('councilMember.detail.mandates') }}"
       [HtmlText]="getMandatesAsHtmlList()"
