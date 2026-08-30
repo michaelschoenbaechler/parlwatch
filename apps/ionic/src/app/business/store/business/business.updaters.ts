@@ -180,18 +180,23 @@ export function createApplyDefaultSessionState(
 }
 
 /**
- * Marks the selected-business request as loading, keeping the previous entity
- * on screen so the detail page does not flash empty while reloading.
+ * Marks the selected-business request as loading.
+ * @param id The business being loaded
  * @returns Partial updater setting the detail request to loading
  */
-export function createLoadSelectedBusinessState(): PartialStateUpdater<BusinessSlice> {
-  return (state) => ({
-    ...state,
-    selectedBusinessRequestState: onRequestLoad(
-      state.selectedBusinessRequestState,
-      state.selectedBusinessRequestState.data
-    )
-  });
+export function createLoadSelectedBusinessState(
+  id: number
+): PartialStateUpdater<BusinessSlice> {
+  return (state) => {
+    const previous = state.selectedBusinessRequestState.data ?? null;
+    return {
+      ...state,
+      selectedBusinessRequestState: {
+        ...onRequestLoad(state.selectedBusinessRequestState),
+        data: previous?.ID === id ? previous : null
+      }
+    };
+  };
 }
 
 /**

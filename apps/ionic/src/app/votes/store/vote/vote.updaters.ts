@@ -55,18 +55,23 @@ export function createSuccessVotesRequestState(
 }
 
 /**
- * Marks the selected-vote request as loading, keeping the previous vote on
- * screen so the detail page does not flash empty while reloading.
+ * Marks the selected-vote request as loading.
+ * @param id The vote being loaded
  * @returns Partial updater setting the detail request to loading
  */
-export function createLoadSelectedVoteState(): PartialStateUpdater<VoteSlice> {
-  return (state) => ({
-    ...state,
-    selectedVoteRequestState: onRequestLoad(
-      state.selectedVoteRequestState,
-      state.selectedVoteRequestState.data
-    )
-  });
+export function createLoadSelectedVoteState(
+  id: number
+): PartialStateUpdater<VoteSlice> {
+  return (state) => {
+    const previous = state.selectedVoteRequestState.data ?? null;
+    return {
+      ...state,
+      selectedVoteRequestState: {
+        ...onRequestLoad(state.selectedVoteRequestState),
+        data: previous?.ID === id ? previous : null
+      }
+    };
+  };
 }
 
 /**

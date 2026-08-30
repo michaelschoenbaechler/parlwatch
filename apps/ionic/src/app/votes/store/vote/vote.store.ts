@@ -140,7 +140,7 @@ export const VoteStore = signalStore(
     const _selectVote = rxMethod<number>(
       pipe(
         filter((id: number) => !_hasBallots(id)),
-        tap(() => patchState(store, createLoadSelectedVoteState())),
+        tap((id) => patchState(store, createLoadSelectedVoteState(id))),
         mergeMap((id: number) =>
           voteService.getVote(id).pipe(
             tapResponse({

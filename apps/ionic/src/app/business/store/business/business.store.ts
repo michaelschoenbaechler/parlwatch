@@ -134,7 +134,7 @@ export const BusinessStore = signalStore(
     // stand in for the detail page's full text and expanded votes.
     const _selectAndLoadBusiness = rxMethod<number>(
       pipe(
-        tap(() => patchState(store, createLoadSelectedBusinessState())),
+        tap((id) => patchState(store, createLoadSelectedBusinessState(id))),
         switchMap((id) =>
           businessService.getBusiness(id).pipe(
             tapResponse({
