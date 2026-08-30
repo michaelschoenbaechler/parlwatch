@@ -1,7 +1,12 @@
 import { Vote, Voting } from 'swissparl';
 import { RequestState } from '../../../shared/models/request-state.model';
 import { VoteFilter } from '../../services/votes.service';
-import { toVoteDecision, VoteDecision } from '../../models/vote-decision';
+import {
+  ParlGroupTally,
+  talliesByParlGroup,
+  toVoteDecision,
+  VoteDecision
+} from '../../models/vote-decision';
 
 export interface VoteListVm {
   businessGroups: VoteBusinessGroupVm[];
@@ -24,6 +29,7 @@ export interface VoteBusinessGroupVm {
 export interface VoteDetailVm {
   vote: Vote | null;
   votings: Voting[];
+  parlGroups: ParlGroupTally[];
   isLoading: boolean;
   hasError: boolean;
 }
@@ -84,6 +90,7 @@ export function createVoteDetailVm(
   return {
     vote: selected,
     votings: filterVotings(),
+    parlGroups: talliesByParlGroup(votings),
     isLoading: selectedVoteRequestState.loading && !selected,
     hasError: !!selectedVoteRequestState.error
   };

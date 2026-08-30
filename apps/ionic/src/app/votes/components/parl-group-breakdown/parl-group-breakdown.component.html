@@ -1,0 +1,17 @@
+<ul class="parl-group-list" *transloco="let t">
+  @for (group of groups(); track group.key) {
+    <li class="parl-group">
+      <div class="parl-group-header">
+        <span class="parl-group-dot" [style.background-color]="group.colour">
+        </span>
+        <span class="parl-group-name">{{ label(group) }}</span>
+        <span class="parl-group-counts">
+          <strong>{{ group.tally.yes }}</strong> {{ t('votes.decision.yes') }}
+          ·
+          <strong>{{ group.tally.no }}</strong> {{ t('votes.decision.no') }}
+        </span>
+      </div>
+      <app-voting-bar [tally]="group.tally" />
+    </li>
+  }
+</ul>

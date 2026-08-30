@@ -20,6 +20,11 @@
         >{{ t('toBusiness') }}
       </ion-button>
     </app-vote-card>
+    @if (viewModel().parlGroups.length > 0) {
+    <app-text-card title="{{ t('byParlGroup') }}">
+      <app-parl-group-breakdown [groups]="viewModel().parlGroups" />
+    </app-text-card>
+    }
     <app-text-card title="{{ t('voteHistory') }}">
       <ion-select
         justify="end"

@@ -6,13 +6,14 @@ import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Vote, Voting } from 'swissparl';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
+import { ParlGroupBreakdownComponent } from '../../components/parl-group-breakdown/parl-group-breakdown.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { VoteStore, VotingDecisionFilter } from '../../store/vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
 import {
-  PARL_GROUP_CODES,
+  parlGroupTranslationKey,
   toCssColour,
   toVoteDecision,
   VoteDecision
@@ -60,6 +61,7 @@ function recentVoteTitle(vote: Vote): string {
     ReactiveFormsModule,
     IonicModule,
     VoteCardComponent,
+    ParlGroupBreakdownComponent,
     TextCardComponent,
     LoadingScreenComponent,
     ErrorScreenComponent,
@@ -149,9 +151,9 @@ export class VoteDetailPage implements OnInit {
    * @returns Localised faction abbreviation
    */
   parlGroupLabel(voting: Voting): string {
-    const code = voting.ParlGroupCode;
-    return code && PARL_GROUP_CODES.includes(code)
-      ? this.transloco.translate(`votes.parlGroup.${code}`)
+    const key = parlGroupTranslationKey(voting.ParlGroupCode);
+    return key
+      ? this.transloco.translate(key)
       : (voting.ParlGroupNameAbbreviation ?? '');
   }
 

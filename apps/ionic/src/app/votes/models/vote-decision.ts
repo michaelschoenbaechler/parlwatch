@@ -22,6 +22,28 @@ export const PARL_GROUP_CODES: readonly string[] = [
 
 export type VoteTally = Record<VoteDecision, number> & { total: number };
 
+export interface ParlGroupTally {
+  key: string;
+  code: string;
+  abbreviation: string;
+  colour: string;
+  tally: VoteTally;
+}
+
+/**
+ * Translation key for a faction, or null when the app has no name for it.
+ * Keyed on `ParlGroupCode`, which is stable across languages unlike the name.
+ * @param code Faction code from a `Voting`
+ * @returns Transloco key, or null when the code is unknown
+ */
+export function parlGroupTranslationKey(
+  code: string | undefined
+): string | null {
+  return code && PARL_GROUP_CODES.includes(code)
+    ? `votes.parlGroup.${code}`
+    : null;
+}
+
 /**
  * Map the API's numeric decision code onto the buckets the app displays.
  * Observed codes: 1 Ja, 2 Nein, 3 Enthaltung, 5 Hat nicht teilgenommen,
@@ -74,6 +96,46 @@ export function tallyVotings(votings: Voting[] | undefined): VoteTally {
   }
 
   return tally;
+}
+
+/**
+ * Split a vote's ballots into one tally per faction, largest faction first.
+ *
+ * Buckets on `ParlGroupCode` so the grouping survives a language switch, and
+ * falls back to the abbreviation for ballots the API reports no code for.
+ * Members belonging to no faction end up in one bucket with an empty code.
+ * @param votings Votings of a vote; may be an unexpanded OData reference
+ * @returns One entry per faction, ordered by how many members it has
+ */
+export function talliesByParlGroup(
+  votings: Voting[] | undefined
+): ParlGroupTally[] {
+  // Without `$expand` the API returns a deferred reference instead of an array.
+  const list = Array.isArray(votings) ? votings : [];
+  const groups = new Map<string, ParlGroupTally>();
+
+  for (const voting of list) {
+    const code = voting.ParlGroupCode?.trim() ?? '';
+    const abbreviation = voting.ParlGroupNameAbbreviation?.trim() ?? '';
+    const key = code || abbreviation;
+
+    let group = groups.get(key);
+    if (!group) {
+      group = {
+        key,
+        code,
+        abbreviation,
+        colour: toCssColour(voting.ParlGroupColour),
+        tally: createEmptyTally()
+      };
+      groups.set(key, group);
+    }
+
+    group.tally[toVoteDecision(voting.Decision)] += 1;
+    group.tally.total += 1;
+  }
+
+  return [...groups.values()].sort((a, b) => b.tally.total - a.tally.total);
 }
 
 /**
