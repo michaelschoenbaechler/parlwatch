@@ -13,13 +13,46 @@
         debounce="300"
         [value]="store.query().searchTerm"
         (ionInput)="onSearch($event)"
+        (ionFocus)="onSearchFocus()"
         (keyup.enter)="onSearchEnter()"
       />
     </ion-toolbar>
   </ion-header>
 
   <ion-content role="feed" class="ion-padding">
-    @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
+    @if (showSuggestedSearches() && hasSuggestions()) {
+    <div slot="fixed" class="suggestions-overlay">
+      <div class="search-suggestions">
+        @if (visibleRecentSearches().length > 0) {
+        <p><small>{{ t('votes.voteList.recentSearches') }}</small></p>
+        <ion-list class="recent-list" lines="none">
+          @for (term of visibleRecentSearches(); track term) {
+          <ion-item button detail="false" (click)="onRecentSearchClick(term)">
+            <ion-icon name="time-outline" slot="start" size="small" />
+            <ion-label>{{ term }}</ion-label>
+          </ion-item>
+          }
+        </ion-list>
+        } @if (visibleRecentVotes().length > 0) {
+        <p><small>{{ t('votes.voteList.recentlyViewed') }}</small></p>
+        <ion-list inset="true" lines="full" class="recent-vote-list">
+          @for (vote of visibleRecentVotes(); track vote.id) {
+          <ion-item button detail="true" (click)="onRecentVoteClick(vote.id)">
+            <ion-icon name="stats-chart-outline" slot="start" size="small" />
+            <ion-label class="ion-text-wrap">{{ vote.title }}</ion-label>
+          </ion-item>
+          }
+        </ion-list>
+        }
+      </div>
+      <button
+        type="button"
+        class="suggestions-backdrop"
+        [attr.aria-label]="t('common.close')"
+        (click)="closeSuggestions()"
+      ></button>
+    </div>
+    } @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
     (!viewModel().noContent) {
     <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
       <ion-refresher-content />

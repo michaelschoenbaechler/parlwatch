@@ -126,6 +126,8 @@
   "votes.voteGroupCard.summary": "{{count}} Abstimmungen · zuletzt am {{date}}",
   "votes.voteGroupCard.summarySingle": "1 Abstimmung am {{date}}",
   "votes.voteGroupCard.unnamedVote": "Abstimmung",
+  "votes.voteList.recentSearches": "Zuletzt gesucht",
+  "votes.voteList.recentlyViewed": "Zuletzt angesehen",
   "votes.voteList.title": "Abstimmungen",
   "welcome.discover": "Jetzt Entdecken",
   "welcome.text": "Diese App, ein Open-Source-Projekt unter GPLv3-Lizenz, bezieht ihre Daten von den öffentlichen Webservices von parlament.ch. Bitte beachten Sie, dass die ständige<b>Verfügbarkeit dieser Schnittstelle nicht garantiert werden kann</b>. Sie sind herzlich eingeladen, zur Weiterentwicklung beizutragen und so tiefere Einblicke in die politische Landschaft zu ermöglichen. Vielen Dank für Ihre Unterstützung, damit die App weiterhin Open Source bleibt."

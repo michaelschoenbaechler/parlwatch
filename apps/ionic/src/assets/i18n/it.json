@@ -126,6 +126,8 @@
   "votes.voteGroupCard.summary": "{{count}} votazioni · ultima il {{date}}",
   "votes.voteGroupCard.summarySingle": "1 votazione il {{date}}",
   "votes.voteGroupCard.unnamedVote": "Votazione",
+  "votes.voteList.recentSearches": "Ricerche recenti",
+  "votes.voteList.recentlyViewed": "Visti di recente",
   "votes.voteList.title": "Missing value for 'votes.voteList.title'",
   "welcome.discover": "Missing value for 'welcome.discover'",
   "welcome.text": "Missing value for 'welcome.text'"

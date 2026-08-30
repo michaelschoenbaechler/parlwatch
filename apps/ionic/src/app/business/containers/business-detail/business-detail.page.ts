@@ -7,7 +7,7 @@ import { BusinessDetailTextComponent } from '../../components/business-detail-te
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { BusinessStore } from '../../store/business/business.store';
-import { RecentStore } from '../../store/recent/recent.store';
+import { RecentBusinessStore } from '../../store/recent/recent.store';
 
 @Component({
   selector: 'app-business-detail',
@@ -25,7 +25,7 @@ import { RecentStore } from '../../store/recent/recent.store';
 })
 export class BusinessDetailPage implements OnInit {
   readonly store = inject(BusinessStore);
-  readonly recentStore = inject(RecentStore);
+  readonly recentStore = inject(RecentBusinessStore);
   readonly route = inject(ActivatedRoute);
 
   readonly viewModel = computed(() => this.store.businessDetailViewModel());
@@ -34,7 +34,7 @@ export class BusinessDetailPage implements OnInit {
     effect(() => {
       const business = this.viewModel().business;
       if (business?.ID && business.Title) {
-        this.recentStore.recordBusiness({
+        this.recentStore.recordEntry({
           id: business.ID,
           title: business.Title
         });

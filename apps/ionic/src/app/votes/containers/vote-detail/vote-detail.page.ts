@@ -1,15 +1,16 @@
-import { Component, OnInit, inject, computed } from '@angular/core';
+import { Component, OnInit, effect, inject, computed } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { Voting } from 'swissparl';
+import { Vote, Voting } from 'swissparl';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { VoteStore, VotingDecisionFilter } from '../../store/vote';
+import { RecentVoteStore } from '../../store/recent/recent.store';
 import {
   PARL_GROUP_CODES,
   toCssColour,
@@ -31,6 +32,25 @@ const DECISION_COLORS: Record<VoteDecision, string> = {
   'not-participated': 'medium'
 };
 
+/**
+ * Label a vote is listed under in the "recently viewed" suggestions. Uses the
+ * business title, which is what the vote list itself shows and what makes the
+ * entry recognisable: a vote's own subject is often a generic label such as
+ * "Gesamtabstimmung", identical across unrelated votes. Falls back through the
+ * remaining title fields, each of which is optional on the API model.
+ * @param vote The vote that was opened
+ * @returns A display label, or an empty string when the vote carries no title
+ */
+function recentVoteTitle(vote: Vote): string {
+  const title =
+    vote.BusinessTitle?.trim() ||
+    vote.BillTitle?.trim() ||
+    vote.Subject?.trim();
+  const shortNumber = vote.BusinessShortNumber?.trim();
+
+  return [shortNumber, title].filter(Boolean).join(' - ');
+}
+
 @Component({
   selector: 'app-vote-detail',
   templateUrl: './vote-detail.page.html',
@@ -50,6 +70,7 @@ export class VoteDetailPage implements OnInit {
   readonly router = inject(Router);
   readonly route = inject(ActivatedRoute);
   readonly store = inject(VoteStore);
+  readonly recentStore = inject(RecentVoteStore);
   private readonly transloco = inject(TranslocoService);
 
   voteFilterControl = new FormControl<VotingDecisionFilter>('all');
@@ -60,6 +81,18 @@ export class VoteDetailPage implements OnInit {
   readonly viewModel = computed(() =>
     this.store.voteDetailViewModel(this.voteFilter() ?? 'all')
   );
+
+  constructor() {
+    effect(() => {
+      const vote = this.viewModel().vote;
+      if (!vote?.ID) return;
+
+      const title = recentVoteTitle(vote);
+      if (title) {
+        this.recentStore.recordEntry({ id: vote.ID, title });
+      }
+    });
+  }
 
   ngOnInit() {
     this.store.selectVote(parseInt(this.route.snapshot.params.id));

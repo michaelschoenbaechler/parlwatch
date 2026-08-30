@@ -28,7 +28,8 @@ import { BusinessStore } from '../../store/business/business.store';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
 import { SessionStore } from '../../store/session/session.store';
 import { TagStore } from '../../store/tag/tag.store';
-import { RecentStore } from '../../store/recent/recent.store';
+import { RecentBusinessStore } from '../../store/recent/recent.store';
+import { filterRecent } from '../../../shared/store/recent/recent.store';
 
 /** How many recent searches / businesses the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;
@@ -57,7 +58,7 @@ export class BusinessListPage implements OnInit {
   readonly businessTypesStore = inject(BusinessTypesStore);
   readonly sessionStore = inject(SessionStore);
   readonly tagStore = inject(TagStore);
-  readonly recentStore = inject(RecentStore);
+  readonly recentStore = inject(RecentBusinessStore);
   readonly router = inject(Router);
 
   readonly viewModel = computed(() =>
@@ -87,30 +88,28 @@ export class BusinessListPage implements OnInit {
     (this.businessStore.query().searchTerm ?? '').trim().toLowerCase()
   );
 
-  /**
-   * History is capped at the few newest entries, but filtering runs over the
-   * whole stored history, so typing can surface entries that have already
-   * dropped out of the top three.
-   */
   readonly visibleRecentSearches = computed(() =>
-    this.matchQuery(this.recentStore.searches(), (term) => term).slice(
-      0,
-      MAX_VISIBLE_RECENTS
-    )
+    filterRecent(
+      this.recentStore.searches(),
+      (term) => term,
+      this.suggestionFilter()
+    ).slice(0, MAX_VISIBLE_RECENTS)
   );
 
   readonly visibleRecentBusinesses = computed(() =>
-    this.matchQuery(
-      this.recentStore.businesses(),
-      (entry) => entry.title
+    filterRecent(
+      this.recentStore.entries(),
+      (entry) => entry.title,
+      this.suggestionFilter()
     ).slice(0, MAX_VISIBLE_RECENTS)
   );
 
   /** All topics on an empty query, only the matching ones while typing. */
   readonly visibleTags = computed(() =>
-    this.matchQuery(
+    filterRecent(
       this.tagStore.tagsViewModel().tags,
-      (tag) => tag.TagName ?? ''
+      (tag) => tag.TagName ?? '',
+      this.suggestionFilter()
     )
   );
 
@@ -121,21 +120,6 @@ export class BusinessListPage implements OnInit {
       this.visibleRecentSearches().length > 0 ||
       this.visibleRecentBusinesses().length > 0
   );
-
-  /**
-   * Narrow a list to the entries matching the current query, or return it
-   * untouched when there is no query.
-   * @param entries Entries to narrow
-   * @param toText Reads the text an entry is matched on
-   * @returns The matching entries
-   */
-  private matchQuery<T>(entries: T[], toText: (entry: T) => string): T[] {
-    const filter = this.suggestionFilter();
-    if (!filter) return entries;
-    return entries.filter((entry) =>
-      toText(entry).toLowerCase().includes(filter)
-    );
-  }
 
   /** Tags the list is currently filtered by, for the active-filter chips. */
   readonly activeTags = computed(() => {
