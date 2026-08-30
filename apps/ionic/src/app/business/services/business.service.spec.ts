@@ -141,7 +141,7 @@ describe('BusinessService', () => {
     ]);
   });
 
-  it('should get single business with expand Votes', (done) => {
+  it('should expand every collection the detail page renders', (done) => {
     const mockBusiness = { ID: 123, Title: 'Test Business' };
     swissParlServiceSpy.fetchCollection.and.returnValue(of([mockBusiness]));
 
@@ -149,7 +149,12 @@ describe('BusinessService', () => {
       expect(business).toEqual(mockBusiness as any);
       const [, options, config] =
         swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
-      expect(options.expand).toEqual(['Votes'] as any);
+      expect(options.expand).toEqual([
+        'Votes',
+        'Bills/Resolutions',
+        'Preconsultations',
+        'RelatedBusinesses'
+      ] as any);
       expect(config).toEqual({ deepParse: true });
       done();
     });
