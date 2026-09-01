@@ -14,6 +14,11 @@
   margin-bottom: 0;
 }
 
+/* Spaces the title off the card body, the way the timeline does. */
+.text-card-header:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .text-card-title {
   font-size: 12px;
   letter-spacing: 0.4px;

@@ -2,8 +2,17 @@ ion-item::part(native) {
   padding-left: 0;
 }
 
-app-text-card ion-list {
-  margin-top: 1rem;
+/* Voting record entries read like the business timeline steps. */
+app-text-card ion-list ion-label {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--ion-color-dark);
+}
+
+app-text-card ion-list ion-label p {
+  margin: 0.125rem 0 0 0;
+  font-size: 13px;
+  color: #666666;
 }
 
 .vote-item {
