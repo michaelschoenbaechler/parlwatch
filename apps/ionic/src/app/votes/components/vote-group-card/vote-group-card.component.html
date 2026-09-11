@@ -11,21 +11,9 @@
     "
     [HtmlText]="group().businessTitle"
   >
-    <ion-list class="vote-list">
-      @for (vote of group().votes; track vote.ID; let last = $last) {
-        <ion-item
-          button
-          detail="true"
-          [lines]="last ? 'none' : 'full'"
-          (click)="onVoteSelected(vote)"
-        >
-          <ion-label class="ion-text-wrap">
-            <h3>{{ vote.Subject || vote.BillTitle || t('unnamedVote') }}</h3>
-            <p>{{ vote.VoteEnd | oDataDateTime: 'datetime' }}</p>
-            <app-voting-bar [tally]="tallyOf(vote)" />
-          </ion-label>
-        </ion-item>
-      }
-    </ion-list>
+    <app-vote-items
+      [votes]="group().votes"
+      (voteSelected)="voteSelected.emit($event)"
+    />
   </app-text-card>
 </ng-container>

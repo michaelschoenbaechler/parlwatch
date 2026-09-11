@@ -1,0 +1,18 @@
+<ng-container *transloco="let t; prefix: 'votes.voteGroupCard'">
+  <ion-list class="vote-list">
+    @for (vote of votes(); track vote.ID; let last = $last) {
+      <ion-item
+        button
+        detail="true"
+        [lines]="last ? 'none' : 'full'"
+        (click)="onVoteSelected(vote)"
+      >
+        <ion-label class="ion-text-wrap">
+          <h3>{{ vote.Subject || vote.BillTitle || t('unnamedVote') }}</h3>
+          <p>{{ vote.VoteEnd | oDataDateTime: 'datetime' }}</p>
+          <app-voting-bar [tally]="tallyOf(vote)" />
+        </ion-label>
+      </ion-item>
+    }
+  </ion-list>
+</ng-container>

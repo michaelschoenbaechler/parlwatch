@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
@@ -7,6 +7,7 @@ import { BusinessCardComponent } from '../../components/business-card/business-c
 import { BusinessDetailTextComponent } from '../../components/business-detail-text/business-detail-text.component';
 import { BusinessTimelineComponent } from '../../components/business-timeline/business-timeline.component';
 import { RelatedBusinessListComponent } from '../../components/related-business-list/related-business-list.component';
+import { VoteItemsComponent } from '../../../votes/components/vote-items/vote-items.component';
 import { SpeechListComponent } from '../../../shared/components/speech-list/speech-list.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
@@ -15,6 +16,7 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
 import { BusinessStore } from '../../store/business/business.store';
 import { RecentBusinessStore } from '../../store/recent/recent.store';
 import { DebateStore } from '../../store/debate/debate.store';
+import { VoteStore } from '../../../votes/store/vote';
 
 @Component({
   selector: 'app-business-detail',
@@ -26,12 +28,12 @@ import { DebateStore } from '../../store/debate/debate.store';
     BusinessDetailTextComponent,
     BusinessTimelineComponent,
     RelatedBusinessListComponent,
+    VoteItemsComponent,
     SpeechListComponent,
     TextCardComponent,
     ODataDateTimePipe,
     LoadingScreenComponent,
     ErrorScreenComponent,
-    RouterLink,
     TranslocoDirective
   ]
 })
@@ -39,6 +41,7 @@ export class BusinessDetailPage implements OnInit {
   readonly store = inject(BusinessStore);
   readonly recentStore = inject(RecentBusinessStore);
   readonly debateStore = inject(DebateStore);
+  private readonly voteStore = inject(VoteStore);
   private readonly transloco = inject(TranslocoService);
   readonly route = inject(ActivatedRoute);
   readonly router = inject(Router);
@@ -56,6 +59,15 @@ export class BusinessDetailPage implements OnInit {
           id: business.ID,
           title: business.Title
         });
+      }
+    });
+
+    effect(() => {
+      const voteIds = this.viewModel()
+        .votes.map((vote) => vote.ID)
+        .filter((id): id is number => id !== undefined);
+      if (voteIds.length > 0) {
+        this.voteStore.loadTallies(voteIds);
       }
     });
   }
@@ -81,6 +93,22 @@ export class BusinessDetailPage implements OnInit {
         business.ID,
       presentationStyle: 'popover'
     });
+  }
+
+  /**
+   * Open one of the business's votes without leaving the current tab, so the
+   * tab bar stays put. The votes tab carries the vote detail at its own root;
+   * every other tab registers `voteDetailRoute` one level in.
+   * @param id Id of the tapped vote
+   */
+  onVote(id: number) {
+    const tabRoot = this.router.url.split('/').slice(0, 3).join('/');
+    const path =
+      tabRoot === '/layout/votes'
+        ? [tabRoot, 'detail', id]
+        : [tabRoot, 'votes', 'detail', id];
+
+    this.router.navigate(path).catch(console.error);
   }
 
   /**

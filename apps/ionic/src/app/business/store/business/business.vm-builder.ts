@@ -1,6 +1,6 @@
-import { Business, RelatedBusiness } from 'swissparl';
+import { Business, RelatedBusiness, Vote } from 'swissparl';
 import { RequestState } from '../../../shared/models/request-state.model';
-import { odataList } from '../../../shared/models/odata.model';
+import { odataList, odataTimestamp } from '../../../shared/models/odata.model';
 import {
   TimelineStep,
   toBusinessTimeline
@@ -18,10 +18,8 @@ export interface BusinessListVm {
 
 export interface BusinessDetailVm {
   business: Business | null;
-  hasVotes: boolean;
-  /** The business's path through parliament, oldest step first. */
+  votes: Vote[];
   timeline: TimelineStep[];
-  /** Businesses the API cross-references; empty for most businesses. */
   relatedBusinesses: RelatedBusiness[];
   isLoading: boolean;
   hasError: boolean;
@@ -80,10 +78,23 @@ export function createBusinessDetailVm(
   const selected = selectedBusinessRequestState.data ?? null;
   return {
     business: selected,
-    hasVotes: !!selected?.Votes?.length,
+    votes: sortedVotes(selected),
     timeline: toBusinessTimeline(selected),
     relatedBusinesses: odataList<RelatedBusiness>(selected?.RelatedBusinesses),
     isLoading: selectedBusinessRequestState.loading && !selected,
     hasError: !!selectedBusinessRequestState.error
   };
+}
+
+/**
+ * Read a business's expanded votes, newest first, so the detail page lists the
+ * most recent decision at the top.
+ * @param business The loaded business, or null while it is still missing
+ * @returns The votes ordered by `VoteEnd` descending
+ */
+function sortedVotes(business: Business | null): Vote[] {
+  // Copied before sorting: `odataList` hands back the store's own array.
+  return [...odataList<Vote>(business?.Votes)].sort(
+    (a, b) => odataTimestamp(b.VoteEnd) - odataTimestamp(a.VoteEnd)
+  );
 }

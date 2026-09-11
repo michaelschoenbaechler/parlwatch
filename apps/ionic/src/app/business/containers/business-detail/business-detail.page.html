@@ -11,18 +11,7 @@
   <ion-content class="ion-padding">
     @if (!viewModel().isLoading) { @if (!viewModel().hasError &&
     viewModel().business; as business) {
-    <app-business-card [business]="business">
-      @if (viewModel().hasVotes) {
-      <ion-button
-        expand="block"
-        size="small"
-        fill="outline"
-        [routerLink]="['/layout/votes']"
-        [queryParams]="{ BusinessShortNumber: business.BusinessShortNumber }"
-        >{{ t('business.detail.toVotes') }}
-      </ion-button>
-      }
-    </app-business-card>
+    <app-business-card [business]="business" />
     @if (viewModel().timeline.length > 0) {
     <app-text-card title="{{ t('business.timeline.title') }}">
       <app-business-timeline [steps]="viewModel().timeline" />
@@ -54,7 +43,21 @@
         (textRequested)="debateStore.loadText($event)"
       />
     </app-text-card>
-    } } @if (viewModel().relatedBusinesses.length > 0) {
+    } } @if (viewModel().votes.length > 0) {
+    <app-text-card
+      title="{{ t('business.votes.title') }}"
+      subtitle="{{
+        viewModel().votes.length === 1
+          ? t('business.votes.summarySingle')
+          : t('business.votes.summary', { count: viewModel().votes.length })
+      }}"
+    >
+      <app-vote-items
+        [votes]="viewModel().votes"
+        (voteSelected)="onVote($event)"
+      />
+    </app-text-card>
+    } @if (viewModel().relatedBusinesses.length > 0) {
     <app-text-card title="{{ t('business.related.title') }}">
       <app-related-business-list
         [relatedBusinesses]="viewModel().relatedBusinesses"

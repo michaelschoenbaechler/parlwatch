@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { businessDetailRoute } from '../business/routes';
+import { voteDetailRoute } from '../votes/vote-detail.route';
 
 const loadMemberDetail = () =>
   import('./containers/member-detail/member-detail.page').then(
@@ -27,5 +28,6 @@ export const COUNCIL_MEMBER_ROUTES: Route[] = [
     loadComponent: loadMemberDetail
   },
   // Reached from the member detail page.
-  businessDetailRoute
+  businessDetailRoute,
+  voteDetailRoute
 ];

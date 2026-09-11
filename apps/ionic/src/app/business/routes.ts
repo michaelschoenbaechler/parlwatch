@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { voteDetailRoute } from '../votes/vote-detail.route';
 
 const loadBusinessDetail = () =>
   import('./containers/business-detail/business-detail.page').then(
@@ -26,5 +27,7 @@ export const BUSINESS_ROUTES: Route[] = [
   {
     path: 'detail/:id',
     loadComponent: loadBusinessDetail
-  }
+  },
+  // Reached from the vote list on the business detail page.
+  voteDetailRoute
 ];

@@ -106,12 +106,10 @@ export const VoteStore = signalStore(
 
     _fetchVotes(store.query);
 
-    // One request per page of votes instead of one per card: the list only
-    // needs counts, and `Vote?$expand=Votings` costs ~257 KB per vote.
     const _fetchTallies = rxMethod<number[]>(
       pipe(
         filter((voteIds: number[]) => voteIds.length > 0),
-        switchMap((voteIds) =>
+        mergeMap((voteIds) =>
           voteService.getVoteTallies(voteIds).pipe(
             tapResponse({
               next: (votings) =>
@@ -156,6 +154,21 @@ export const VoteStore = signalStore(
     return {
       reloadVotes: _fetchVotes,
       selectVote: _selectVote,
+      /**
+       * Load the tallies for votes that are not part of the list — the votes a
+       * business carries on its detail page. Already-known ids are dropped so
+       * a revisit costs nothing, and the rest go out in batches the OR-filter
+       * can carry.
+       * @param voteIds Votes whose decision counts should be fetched
+       */
+      loadTallies: (voteIds: number[]) => {
+        const tallies = getState(store).tallies;
+        const missing = voteIds.filter((id) => tallies[id] === undefined);
+
+        for (let i = 0; i < missing.length; i += MAX_TALLY_BATCH) {
+          _fetchTallies(missing.slice(i, i + MAX_TALLY_BATCH));
+        }
+      },
       loadMore: () => patchState(store, createLoadMoreState()),
       refresh: () => patchState(store, createRefreshState()),
       updateQuery: (query: VoteFilter) =>
