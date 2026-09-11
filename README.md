@@ -2,13 +2,6 @@
 
 ParlWatch is an open-source project that makes Swiss parliamentary data easier to browse across client platforms.
 
-## Monorepo layout
-
-This repository uses `npm` workspaces so additional apps can be added without reshaping the repo again later.
-
-- `apps/ionic`: the Ionic + Angular + Capacitor application
-- `docs`: shared project documentation
-
 ## Getting started
 
 ### Prerequisites
