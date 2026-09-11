@@ -1,3 +1,33 @@
+# (2026-09-11)
+
+### Bug Fixes
+
+* **business:** detail has its own state now ([f98c2b0](https://github.com/michaelschoenbaechler/parlwatch/commit/f98c2b06ad16492061237adf23f989864d7fb65f))
+* **business:** show current status as active ([356c4d7](https://github.com/michaelschoenbaechler/parlwatch/commit/356c4d79019c8f08549cc90be67e8bf07e584dfb))
+* ci ([625ac01](https://github.com/michaelschoenbaechler/parlwatch/commit/625ac01008a302423c827d11c253e26fb2cb9482))
+* extend tests ([c7a70a1](https://github.com/michaelschoenbaechler/parlwatch/commit/c7a70a1e2c85c2b1ea70a24b7de0bde9e56d1080))
+* include selectedBusinessId in patchState during business update ([48a6273](https://github.com/michaelschoenbaechler/parlwatch/commit/48a62732751a4ccfdda5b89ea83a0da9ede47608))
+* make suggestions scrollable ([f9b6300](https://github.com/michaelschoenbaechler/parlwatch/commit/f9b63001e11e313b5f95b6f004c4619a4271d16d))
+* prettier ([846696f](https://github.com/michaelschoenbaechler/parlwatch/commit/846696f45fa52db09071085ae37c598c1f1da9aa))
+
+### Features
+
+* always display loading screen ([e17380a](https://github.com/michaelschoenbaechler/parlwatch/commit/e17380a014961436748a38852d98e62fd0282d49))
+* **business:** add debates ([9fc0293](https://github.com/michaelschoenbaechler/parlwatch/commit/9fc029369903573f8a338585e5e02ccf23624a84))
+* **business:** add timeline and related businesses ([a52a2ee](https://github.com/michaelschoenbaechler/parlwatch/commit/a52a2eee9d72a2285d3d11441f8a8567cdfdd641))
+* **business:** add votes to business detail ([2306519](https://github.com/michaelschoenbaechler/parlwatch/commit/2306519949e0d7775e6637a394f3ed96ddadda80))
+* **business:** default to current session filter and other perforamnce improvements ([0ad7e45](https://github.com/michaelschoenbaechler/parlwatch/commit/0ad7e45d9f1e1a477ca3c5acdafd3b331305c58b))
+* **business:** recenlty used ([7d30e4e](https://github.com/michaelschoenbaechler/parlwatch/commit/7d30e4e759c7f5769d8e196aed5c79fe2aaa5cca))
+* **council-member:** add more interests ([bc83a3a](https://github.com/michaelschoenbaechler/parlwatch/commit/bc83a3a20c4a6872c20add3818e4a83feeb25bba))
+* **members:** show speeches ([a4f094d](https://github.com/michaelschoenbaechler/parlwatch/commit/a4f094d56be9197bec6ab65b2e8b33695d40a6fe))
+* **routing:** nested routes under tabs ([7121612](https://github.com/michaelschoenbaechler/parlwatch/commit/7121612e68ddf6e66fd23ab9289342d8443fda14))
+* streamline typography ([89d868a](https://github.com/michaelschoenbaechler/parlwatch/commit/89d868a2cb1c2fbc04b093c92aa848b3ae5eb074))
+* **votes:** add more information to vote detail page ([4fe42b6](https://github.com/michaelschoenbaechler/parlwatch/commit/4fe42b6f4cfe1413c7fc650cf20b2670549205c3))
+* **votes:** breakdown by ParlGroup ([b80e689](https://github.com/michaelschoenbaechler/parlwatch/commit/b80e689addc9c5b059bd19aad3fd28b83397072d))
+* **votes:** group votes by business ([d41c072](https://github.com/michaelschoenbaechler/parlwatch/commit/d41c072fc4d96bb2793f8a3475ee70e1e2fe2498))
+* **votes:** improve search ([37e931b](https://github.com/michaelschoenbaechler/parlwatch/commit/37e931b1e5d43da53487ef180c908ce66a291ba5))
+* **votes:** recenlty used ([2c0d68e](https://github.com/michaelschoenbaechler/parlwatch/commit/2c0d68ea45bfbeb29d2d501193f447f229457142))
+
 ## <small>2026.4.1 (2026-04-01)</small>
 
 * fix: override vulnerable picomatch and handlebars ([e1d0c9d](https://github.com/michaelschoenbaechler/parlwatch/commit/e1d0c9d))
