@@ -76,7 +76,10 @@ jobs:
 
       - name: Generate changelog
         run: |
-          npx conventional-changelog -p angular -i CHANGELOG.md -s
+          npx conventional-changelog@8 \
+            --preset angular \
+            --infile CHANGELOG.md \
+            --pkg apps/ionic/package.json
           awk '/^## /{found++} found==2{exit} found{print}' CHANGELOG.md > /tmp/release-notes.md
 
       - name: Build web assets and sync iOS
@@ -147,7 +150,8 @@ jobs:
         run: |
           git add apps/ionic/package.json CHANGELOG.md package-lock.json
           git commit -m "chore(release): ${{ steps.version.outputs.version }}"
-          git tag "${{ steps.version.outputs.tag }}"
+          git tag -a "${{ steps.version.outputs.tag }}" \
+            -m "Release ${{ steps.version.outputs.version }}"
           git push origin HEAD:main --follow-tags
 
       - name: Create GitHub release

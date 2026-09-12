@@ -1,4 +1,4 @@
-# (2026-09-11)
+## [2026.9.12](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.4.1...2026.9.12) (2026-09-12)
 
 ### Bug Fixes
 
@@ -28,7 +28,7 @@
 * **votes:** improve search ([37e931b](https://github.com/michaelschoenbaechler/parlwatch/commit/37e931b1e5d43da53487ef180c908ce66a291ba5))
 * **votes:** recenlty used ([2c0d68e](https://github.com/michaelschoenbaechler/parlwatch/commit/2c0d68ea45bfbeb29d2d501193f447f229457142))
 
-## <small>2026.4.1 (2026-04-01)</small>
+## [2026.4.1](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.3.30...2026.4.1) (2026-04-01)
 
 * fix: override vulnerable picomatch and handlebars ([e1d0c9d](https://github.com/michaelschoenbaechler/parlwatch/commit/e1d0c9d))
 * fix: regenerate package-lock.json to sync dependencies ([e4107e7](https://github.com/michaelschoenbaechler/parlwatch/commit/e4107e7))
@@ -39,20 +39,20 @@
 
 
 
-## <small>2026.3.14 (2026-03-14)</small>
+## [2026.3.14](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.3.11...2026.3.14) (2026-03-14)
 
 * fix(deps): resolve dependabot security alerts ([378d6cc](https://github.com/michaelschoenbaechler/parlwatch/commit/378d6cc))
 
 
 
-## <small>2026.3.11 (2026-03-11)</small>
+## [2026.3.11](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.3.10...2026.3.11) (2026-03-11)
 
 * chore: update to Angular 21 ([5d2cd52](https://github.com/michaelschoenbaechler/parlwatch/commit/5d2cd52))
 * ci: use Xcode 26 on macOS 15 runner for iOS deploy ([be9b375](https://github.com/michaelschoenbaechler/parlwatch/commit/be9b375))
 
 
 
-## <small>2026.3.9 (2026-03-09)</small>
+## [2026.3.9](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.3.3...2026.3.9) (2026-03-09)
 
 * fix(deps): bump tar to 7.5.9 ([9b0c583](https://github.com/michaelschoenbaechler/parlwatch/commit/9b0c583))
 * fix(deps): resolve dependabot security alerts ([eec5199](https://github.com/michaelschoenbaechler/parlwatch/commit/eec5199))
@@ -61,7 +61,7 @@
 
 
 
-## <small>2026.3.9 (2026-03-09)</small>
+## [2026.3.9](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.3.3...2026.3.9) (2026-03-09)
 
 * test: add Karma/Jasmine testing setup with coverage and CI ([82d3ef0](https://github.com/michaelschoenbaechler/parlwatch/commit/82d3ef0))
 * fix(deps): bump tar to 7.5.9 ([9b0c583](https://github.com/michaelschoenbaechler/parlwatch/commit/9b0c583))
@@ -69,7 +69,7 @@
 
 
 
-## <small>2026.3.3 (2026-03-03)</small>
+## [2026.3.3](https://github.com/michaelschoenbaechler/parlwatch/compare/1.0.4...2026.3.3) (2026-03-03)
 
 * ci: add iOS deployment guide and automation ([5fca8b4](https://github.com/michaelschoenbaechler/parlwatch/commit/5fca8b4))
 * ci: improve iOS deployment process and provisioning profile handling ([92bd53c](https://github.com/michaelschoenbaechler/parlwatch/commit/92bd53c))
