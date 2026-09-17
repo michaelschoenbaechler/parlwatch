@@ -1,0 +1,100 @@
+name: Android Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deployment target
+        required: true
+        type: choice
+        options:
+          - internal
+          - production
+        default: internal
+      version_name:
+        description: Optional version name (versionName), e.g. 2026.3.3
+        required: false
+        type: string
+
+jobs:
+  deploy-android:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Zurich
+      ANDROID_PACKAGE_NAME: ch.michaelschoenbaechler.parlwatch
+      ANDROID_VERSION_NAME: ${{ github.event.inputs.version_name }}
+      ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      PLAY_STORE_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Build web assets and sync Android project
+        run: npm run android:prepare
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+
+      - name: Install signing assets from secrets
+        run: |
+          : "${ANDROID_KEYSTORE_BASE64:?Missing ANDROID_KEYSTORE_BASE64}"
+          : "${ANDROID_KEYSTORE_PASSWORD:?Missing ANDROID_KEYSTORE_PASSWORD}"
+          : "${ANDROID_KEY_ALIAS:?Missing ANDROID_KEY_ALIAS}"
+          : "${ANDROID_KEY_PASSWORD:?Missing ANDROID_KEY_PASSWORD}"
+          : "${PLAY_STORE_SERVICE_ACCOUNT_JSON:?Missing PLAY_STORE_SERVICE_ACCOUNT_JSON}"
+
+          KEYSTORE_PATH="$RUNNER_TEMP/parlwatch-release.keystore"
+          SERVICE_ACCOUNT_PATH="$RUNNER_TEMP/play-store-service-account.json"
+
+          umask 077
+          echo -n "$ANDROID_KEYSTORE_BASE64" | openssl base64 -d -A > "$KEYSTORE_PATH"
+          echo -n "$PLAY_STORE_SERVICE_ACCOUNT_JSON" | openssl base64 -d -A > "$SERVICE_ACCOUNT_PATH"
+
+          if ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$SERVICE_ACCOUNT_PATH"; then
+            echo "::error::PLAY_STORE_SERVICE_ACCOUNT_JSON does not decode to valid JSON."
+            exit 1
+          fi
+
+          echo "ANDROID_KEYSTORE_PATH=$KEYSTORE_PATH" >> "$GITHUB_ENV"
+          echo "PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH=$SERVICE_ACCOUNT_PATH" >> "$GITHUB_ENV"
+
+      - name: Install Fastlane dependencies
+        run: bundle install
+        working-directory: apps/ionic/android
+
+      - name: Deploy to Google Play
+        run: |
+          if [[ "${{ github.event.inputs.target }}" == "internal" ]]; then
+            bundle exec fastlane deploy_internal
+          else
+            bundle exec fastlane deploy_production
+          fi
+        working-directory: apps/ionic/android
+
+      - name: Remove decoded signing assets
+        if: always()
+        run: |
+          rm -f "$RUNNER_TEMP/parlwatch-release.keystore"
+          rm -f "$RUNNER_TEMP/play-store-service-account.json"
+          rm -f apps/ionic/android/app/build/signing/release.keystore
