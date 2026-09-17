@@ -61,6 +61,15 @@ We follow the [Conventional Commits specification](https://www.conventionalcommi
 
 Additionally, we have configured Husky to validate commits. The hooks are installed automatically by the `prepare` script when you run `npm install` from the repository root. Husky will then run the validation script on every commit.
 
+## Deployment
+
+The app ships to both mobile platforms through Fastlane and GitHub Actions. You do not need any of this to contribute code, but if you touch the native projects or the deployment workflows, see:
+
+- [docs/ios-deployment.md](docs/ios-deployment.md) for TestFlight and App Store releases
+- [docs/android-deployment.md](docs/android-deployment.md) for Play Store releases
+
+Native projects live in `apps/ionic/ios` and `apps/ionic/android`. Both are regenerated from the web build with `npm run ios:prepare` / `npm run android:prepare`.
+
 ## Submitting a Pull Request
 
 1. Create a new Pull Request against the master branch.
