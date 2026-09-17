@@ -1,0 +1,1 @@
+package_name(ENV.fetch("ANDROID_PACKAGE_NAME", "ch.michaelschoenbaechler.parlwatch"))

@@ -1,0 +1,139 @@
+require "base64"
+require "json"
+require "tmpdir"
+
+default_platform(:android)
+
+# Highest versionCode Google Play accepts.
+MAX_PLAY_VERSION_CODE = 2_100_000_000
+
+def required_env!(keys)
+  missing = keys.select { |key| ENV[key].to_s.strip.empty? }
+  return if missing.empty?
+
+  UI.user_error!("Missing required environment variable(s): #{missing.join(', ')}")
+end
+
+def play_store_json_key_from_env
+  # CI decodes the service account key into a temp file and cleans it up
+  # afterwards; locally the base64-encoded key is read straight from the env.
+  json_key_path = ENV["PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH"].to_s.strip
+  return json_key_path unless json_key_path.empty?
+
+  required_env!(%w[PLAY_STORE_SERVICE_ACCOUNT_JSON])
+
+  json_key = Base64.decode64(ENV["PLAY_STORE_SERVICE_ACCOUNT_JSON"])
+  begin
+    JSON.parse(json_key)
+  rescue JSON::ParserError
+    UI.user_error!("PLAY_STORE_SERVICE_ACCOUNT_JSON does not contain a base64-encoded service account JSON key")
+  end
+
+  json_key_path = File.join(Dir.tmpdir, "play-store-service-account.json")
+  File.write(json_key_path, json_key)
+  File.chmod(0600, json_key_path)
+  json_key_path
+end
+
+platform :android do
+  private_lane :set_ci_version_name do
+    version_name = ENV["ANDROID_VERSION_NAME"].to_s.strip
+
+    if version_name.empty? && ENV["CI"] == "true"
+      now = Time.now
+      version_name = now.strftime("%Y.%-m.%-d")
+    end
+
+    return if version_name.empty?
+
+    # Picked up by app/build.gradle when it configures the release build.
+    ENV["ANDROID_VERSION_NAME"] = version_name
+    UI.message("Building versionName #{version_name}")
+  end
+
+  private_lane :set_ci_version_code do
+    version_code = ENV["ANDROID_VERSION_CODE"].to_s.strip
+    version_code = ENV["GITHUB_RUN_ID"].to_s.strip if version_code.empty?
+    version_code = ENV["GITHUB_RUN_NUMBER"].to_s.strip if version_code.empty?
+    return if version_code.empty?
+
+    unless version_code.match?(/\A\d+\z/)
+      UI.user_error!("versionCode must be a positive integer, got '#{version_code}'")
+    end
+
+    if version_code.to_i > MAX_PLAY_VERSION_CODE
+      # GITHUB_RUN_ID is wider than the versionCode ceiling Google Play accepts,
+      # so fall back to the run number, which is monotonic per workflow.
+      fallback = ENV["GITHUB_RUN_NUMBER"].to_s.strip
+      unless fallback.match?(/\A\d+\z/) && fallback.to_i.between?(1, MAX_PLAY_VERSION_CODE)
+        UI.user_error!("versionCode #{version_code} exceeds the Google Play maximum of #{MAX_PLAY_VERSION_CODE}. Set ANDROID_VERSION_CODE explicitly.")
+      end
+
+      UI.important("versionCode #{version_code} exceeds the Google Play maximum, falling back to GITHUB_RUN_NUMBER #{fallback}")
+      version_code = fallback
+    end
+
+    # Picked up by app/build.gradle when it configures the release build.
+    ENV["ANDROID_VERSION_CODE"] = version_code
+    UI.message("Building versionCode #{version_code}")
+  end
+
+  private_lane :build_release do
+    required_env!(%w[ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD])
+
+    keystore_provided = !ENV["ANDROID_KEYSTORE_BASE64"].to_s.strip.empty? ||
+                        !ENV["ANDROID_KEYSTORE_PATH"].to_s.strip.empty?
+    unless keystore_provided
+      UI.user_error!("Missing signing keystore: set ANDROID_KEYSTORE_BASE64 (CI) or ANDROID_KEYSTORE_PATH (local)")
+    end
+
+    gradle(task: "clean")
+    gradle(task: "bundle", build_type: "Release")
+  end
+
+  private_lane :upload_bundle do |options|
+    aab_path = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH] ||
+               "app/build/outputs/bundle/release/app-release.aab"
+
+    supply(
+      package_name: ENV.fetch("ANDROID_PACKAGE_NAME", "ch.michaelschoenbaechler.parlwatch"),
+      json_key: options[:json_key],
+      track: options[:track],
+      release_status: options[:release_status],
+      aab: aab_path,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true
+    )
+  end
+
+  desc "Build and upload an Android App Bundle to the Play Store internal testing track"
+  lane :deploy_internal do
+    json_key = play_store_json_key_from_env
+    set_ci_version_name
+    set_ci_version_code
+    build_release
+
+    upload_bundle(
+      json_key: json_key,
+      track: "internal",
+      release_status: "completed"
+    )
+  end
+
+  desc "Build and upload an Android App Bundle to the Play Store production track"
+  lane :deploy_production do
+    json_key = play_store_json_key_from_env
+    set_ci_version_name
+    set_ci_version_code
+    build_release
+
+    # Uploaded as a draft so a human confirms the rollout in the Play Console.
+    upload_bundle(
+      json_key: json_key,
+      track: "production",
+      release_status: "draft"
+    )
+  end
+end
