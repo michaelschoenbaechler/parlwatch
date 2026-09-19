@@ -1,5 +1,6 @@
 <ng-container *transloco="let t; prefix: 'councilMember.filterForm'">
   <form [formGroup]="filterForm">
+    @if (!isCantonal()) {
     <h3>{{ t('title') }}</h3>
     <ion-list formArrayName="councils">
       @for (council of councils.controls; track council; let i = $index) {
@@ -11,8 +12,10 @@
       }
     </ion-list>
 
+    }
     <h3>{{ t('affiliation') }}</h3>
     <ion-list>
+      @if (!isCantonal()) {
       <ion-item>
         <ion-select
           formControlName="cantons"
@@ -47,6 +50,7 @@
           }
         </ion-select>
       </ion-item>
+      }
       <ion-item>
         <ion-select
           formControlName="parties"
@@ -66,6 +70,7 @@
       </ion-item>
     </ion-list>
 
+    @if (!isCantonal()) {
     <h3>{{ t('moreFilters') }}</h3>
     <ion-list>
       <ion-item>
@@ -75,6 +80,7 @@
       </ion-item>
     </ion-list>
     <small>*{{ t('formerCouncilMembers') }}</small>
+    }
   </form>
   @if (filterForm.dirty) {
     <div class="floating-button">

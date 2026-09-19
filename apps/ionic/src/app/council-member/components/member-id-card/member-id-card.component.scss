@@ -15,6 +15,20 @@
   padding: 1.25rem;
 }
 
+.portrait {
+  width: 3.25rem;
+  height: 3.25rem;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 50%;
+  border: #bbbbbb 1px solid;
+}
+
+.portrait + .canton-flag {
+  width: 2rem;
+  height: 2rem;
+}
+
 .canton-flag {
   width: 3.25rem;
   height: 3.25rem;

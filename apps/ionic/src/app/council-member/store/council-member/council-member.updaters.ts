@@ -6,6 +6,7 @@ import {
   onRequestLoad,
   onRequestSuccess
 } from '../../../shared/models/request-state.model';
+import { LoadedMember } from '../../models/cantonal-member';
 import { CouncilMemberState } from './council-member.store';
 
 /**
@@ -93,6 +94,58 @@ export function createErrorCouncilMemberRequestState(): PartialStateUpdater<Coun
     councilMemberRequestState: onRequestError(
       state.councilMemberRequestState,
       state.councilMemberRequestState.error
+    )
+  });
+}
+
+/**
+ * Marks the selected-member request as loading. The previous member stays
+ * on screen only when it is the same one, so a page never shows one
+ * member's card under another member's route.
+ * @param id The member being loaded
+ * @returns Partial updater setting the detail request to loading
+ */
+export function createLoadSelectedMemberState(
+  id: number
+): PartialStateUpdater<CouncilMemberState> {
+  return (state) => {
+    const previous = state.selectedMemberRequestState.data ?? null;
+    return {
+      ...state,
+      selectedMemberRequestState: {
+        ...onRequestLoad(state.selectedMemberRequestState),
+        data: previous?.ID === id ? previous : null
+      }
+    };
+  };
+}
+
+/**
+ * Stores the member the detail page shows.
+ * @param member The member, from the list or the detail endpoint
+ * @returns Partial updater setting the detail request to success
+ */
+export function createSuccessSelectedMemberState(
+  member: LoadedMember
+): PartialStateUpdater<CouncilMemberState> {
+  return (state) => ({
+    ...state,
+    selectedMemberRequestState: onRequestSuccess(
+      state.selectedMemberRequestState,
+      member
+    )
+  });
+}
+
+/**
+ * Marks the selected-member request as failed.
+ * @returns Partial updater setting the detail request to error
+ */
+export function createErrorSelectedMemberState(): PartialStateUpdater<CouncilMemberState> {
+  return (state) => ({
+    ...state,
+    selectedMemberRequestState: onRequestError(
+      state.selectedMemberRequestState
     )
   });
 }

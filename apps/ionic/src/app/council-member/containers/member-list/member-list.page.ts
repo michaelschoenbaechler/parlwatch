@@ -6,7 +6,7 @@ import {
   OnInit,
   viewChild
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { MemberCouncil } from 'swissparl';
@@ -14,6 +14,7 @@ import {
   InfiniteScrollCustomEvent,
   IonicModule,
   IonSearchbar,
+  NavController,
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -27,6 +28,17 @@ import {
   CouncilMemberFilterFormComponent
 } from '../../components/council-member-filter-form/council-member-filter-form.component';
 import { CouncilMemberStore } from '../../store/council-member/council-member.store';
+import { ParliamentStore } from '../../../parliament/store/parliament.store';
+import { ParliamentKey } from '../../../parliament/models/parliament.model';
+import {
+  detailPath,
+  listPath,
+  routeParliament
+} from '../../../parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
+import { ParliamentSwitcherComponent } from '../../../parliament/components/parliament-switcher/parliament-switcher.component';
+import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
+import { CantonHintCardComponent } from '../../../parliament/components/canton-hint-card/canton-hint-card.component';
 
 @UntilDestroy()
 @Component({
@@ -42,14 +54,24 @@ import { CouncilMemberStore } from '../../store/council-member/council-member.st
     NoContentScreenComponent,
     ErrorScreenComponent,
     CouncilMemberFilterFormComponent,
-    TranslocoDirective
-  ]
+    TranslocoDirective,
+    ParliamentSwitcherComponent,
+    ParliamentTitleComponent,
+    CantonHintCardComponent
+  ],
+  hostDirectives: [CantonalThemeDirective]
 })
 export class MemberListPage implements OnInit {
   readonly searchBar = viewChild.required<IonSearchbar>('searchBar');
 
   readonly store = inject(CouncilMemberStore);
+  readonly parliamentStore = inject(ParliamentStore);
   readonly router = inject(Router);
+  private readonly navController = inject(NavController);
+  private readonly route = inject(ActivatedRoute);
+
+  /** The parliament this page lists, fixed for the page's lifetime. */
+  readonly parliament: ParliamentKey = routeParliament(this.route);
 
   readonly viewModel = computed(() => this.store.councilMembersViewModel());
 
@@ -77,6 +99,22 @@ export class MemberListPage implements OnInit {
 
   ngOnInit() {
     this.presentingElement = document.querySelector('ion-router-outlet');
+    // The route is the source of truth; the store follows it so the other
+    // tabs open on the same parliament.
+    this.parliamentStore.setActiveParliament(this.parliament);
+    this.store.setParliament(this.parliament);
+  }
+
+  /**
+   * Switch to another parliament's list. Replaces the tab's stack rather
+   * than pushing onto it, so back never walks through old parliaments.
+   * @param parliament The parliament picked in the switcher
+   */
+  onParliamentChange(parliament: ParliamentKey) {
+    this.parliamentStore.setActiveParliament(parliament);
+    this.navController
+      .navigateRoot(listPath('council-member', parliament))
+      .catch(console.error);
   }
 
   toggleFilterModal() {
@@ -147,7 +185,9 @@ export class MemberListPage implements OnInit {
 
   onClickPerson(councilMember: MemberCouncil) {
     if (councilMember.ID !== undefined) {
-      this.router.navigate(['/layout/council-member/detail', councilMember.ID]);
+      this.router
+        .navigate(detailPath('council-member', this.parliament, councilMember.ID))
+        .catch(console.error);
     }
   }
 }

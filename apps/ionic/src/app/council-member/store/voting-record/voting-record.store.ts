@@ -16,7 +16,8 @@ import {
   createDefaultRequestState,
   RequestState
 } from '../../../shared/models/request-state.model';
-import { CouncilMemberService } from '../../services/council-member.service';
+import { CouncilMemberFacade } from '../../services/council-member.facade';
+import { ParliamentKey } from '../../../parliament/models/parliament.model';
 import {
   createErrorVotingRecordRequestState,
   createLoadVotingRecordRequestState,
@@ -45,13 +46,13 @@ export const VotingRecordStore = signalStore(
     };
   }),
   withMethods((store) => {
-    const councilMemberService = inject(CouncilMemberService);
+    const councilMemberFacade = inject(CouncilMemberFacade);
 
-    const loadVotingRecord = rxMethod<number>(
+    const loadVotingRecord = rxMethod<{ parliament: ParliamentKey; id: number }>(
       pipe(
         tap(() => patchState(store, createLoadVotingRecordRequestState())),
-        switchMap((id) =>
-          councilMemberService.getVotes(id).pipe(
+        switchMap(({ parliament, id }) =>
+          councilMemberFacade.getVotingRecord(parliament, id).pipe(
             tapResponse({
               next: (votes) =>
                 patchState(store, createVotingRecordState(votes)),
