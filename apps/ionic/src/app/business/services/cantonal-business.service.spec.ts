@@ -18,10 +18,6 @@ describe('CantonalBusinessService', () => {
   let service: CantonalBusinessService;
   let openParlData: jasmine.SpyObj<OpenParlDataService>;
 
-  /**
-   * Wire the service to recorded responses.
-   * @param responses Fixtures keyed by resource
-   */
   function configure(responses: Parameters<typeof createOpenParlDataSpy>[0]) {
     openParlData = createOpenParlDataSpy(responses);
     TestBed.resetTestingModule();
@@ -158,7 +154,6 @@ describe('CantonalBusinessService', () => {
         const cantonal = business.cantonal;
         expect(cantonal?.parliament).toBe('ZH');
 
-        // Members are tappable, the department is not.
         const authors = cantonal?.contributors.filter(
           (c) => c.personId !== null
         );
@@ -169,24 +164,20 @@ describe('CantonalBusinessService', () => {
         expect(bodies?.map((c) => c.name)).toContain('Baudirektion');
         expect(authors?.[0].role).toBe('Urheber/in');
 
-        // The timeline starts with the submission, labelled by the app.
         expect(cantonal?.timeline[0].kind).toBe('submission');
         expect(cantonal?.timeline[0].text).toBe('');
         expect(cantonal?.timeline[1].kind).toBe('status');
         expect(cantonal?.timeline[1].text).toBe('Antrag: Ablehnen');
         expect(cantonal?.timeline[1].council).toBe('Regierung');
 
-        // Documents are named readably and newest first.
         expect(cantonal?.documents.length).toBe(4);
         expect(cantonal?.documents[0].name).not.toContain('_');
         expect(cantonal?.documents[0].url).toMatch(/^https:\/\//);
 
-        // Votes carry their totals and come newest first.
         expect(cantonal?.votes.length).toBe(2);
         expect(cantonal?.votes[0].tally?.yes).toBe(164);
         expect(cantonal?.votes[0].cantonal?.parliament).toBe('ZH');
 
-        // Zürich publishes video only, so there is no transcript section.
         expect(cantonal?.speeches).toEqual([]);
         expect(cantonal?.texts).toEqual([]);
 
@@ -221,7 +212,6 @@ describe('CantonalBusinessService', () => {
         const speeches = cantonal?.speeches[0].speeches ?? [];
         expect(speeches.length).toBe(beAffairSpeeches.data.length);
         expect(speeches[0].speaker).not.toBe('');
-        // Bodies ship inline, so the list never has to fetch one.
         expect(Object.keys(cantonal?.speechTexts ?? {}).length).toBe(
           speeches.length
         );
@@ -269,28 +259,22 @@ describe('CantonalBusinessService', () => {
         expect(business.Title).toBe('');
 
         const cantonal = business.cantonal;
-        // Contributors without a role or a person id are still listed by name.
         expect(cantonal?.contributors.map((c) => c.name)).toEqual(['Nur Name']);
         expect(cantonal?.contributors[0].role).toBe('');
         expect(cantonal?.contributors[0].personId).toBeNull();
-        // An undated event is dropped, a native title stands in for a harmonised one.
         expect(cantonal?.timeline.length).toBe(1);
         expect(cantonal?.timeline[0].kind).toBe('status');
         expect(cantonal?.timeline[0].text).toBe('Nur Titel');
-        // The mirror link is good enough; a document without any link is not.
         expect(cantonal?.documents.map((d) => d.url)).toEqual([
           'https://files/x'
         ]);
         expect(cantonal?.documents[0].name).toBe('');
-        // Texts keep the canton's own section title.
         expect(cantonal?.texts.map((t) => t.title)).toEqual(['Antrag']);
-        // A voting without a business title falls back to its own.
         expect(cantonal?.votes[0].BusinessTitle).toBe('Nur Abstimmung');
         expect(cantonal?.votes[0].Subject).toBe('');
         expect(cantonal?.source.url).toBe('');
 
         service.getBusinessTypes('GL').subscribe((types) => {
-          // Buckets without an id or a label cannot be filtered on.
           expect(types).toEqual([]);
           done();
         });

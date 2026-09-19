@@ -80,7 +80,6 @@ export const SpeechStore = signalStore(
   withMethods((store) => {
     const councilMemberFacade = inject(CouncilMemberFacade);
 
-    /** Fetch one page; the facade decides what a page is per parliament. */
     const _fetchPage = rxMethod<{
       parliament: ParliamentKey;
       personNumber: number;
@@ -143,11 +142,6 @@ export const SpeechStore = signalStore(
     );
 
     return {
-      /**
-       * Load a member's first page, unless it is already on screen.
-       * @param parliament The member's parliament
-       * @param personNumber The member being viewed
-       */
       selectMember(parliament: ParliamentKey, personNumber: number) {
         if (
           store.personNumber() === personNumber &&

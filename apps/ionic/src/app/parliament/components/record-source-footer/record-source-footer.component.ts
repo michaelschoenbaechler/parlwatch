@@ -5,11 +5,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 import { RecordSource } from '../../models/record-source';
 
-/**
- * Closes every cantonal detail page: the attribution OpenParlData's licence
- * asks for, the date the record was last refreshed so staleness is visible,
- * and the way back to the canton's own page.
- */
 @Component({
   selector: 'app-record-source-footer',
   templateUrl: './record-source-footer.component.html',

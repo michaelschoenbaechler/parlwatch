@@ -9,11 +9,6 @@ const SEARCHES_KEY = 'spec.recentSearches';
 describe('recent store', () => {
   let storage: InMemoryStorageService;
 
-  /**
-   * Build a fresh store over the given storage contents.
-   * @param seed What storage holds before the store loads
-   * @returns The store, once it has read storage
-   */
   async function createStore(seed: Record<string, unknown> = {}) {
     storage = new InMemoryStorageService(seed);
     TestBed.configureTestingModule({
@@ -61,7 +56,6 @@ describe('recent store', () => {
 
     store.recordEntry({ id: 5, title: 'Federal five', parliament: 'ch' });
     store.recordEntry({ id: 5, title: 'Zürich five', parliament: 'ZH' });
-    // Re-opening the federal one moves it to the top instead of adding a third.
     store.recordEntry({ id: 5, title: 'Federal five', parliament: 'ch' });
 
     expect(store.entries().map((entry) => entry.title)).toEqual([

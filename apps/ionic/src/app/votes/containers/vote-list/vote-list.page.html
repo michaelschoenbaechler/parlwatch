@@ -48,7 +48,6 @@
           @for (vote of visibleRecentVotes(); track vote.parliament + '-' +
           vote.id) {
           <ion-item button detail="true" (click)="onRecentVoteClick(vote)">
-            <app-canton-stripe slot="start" [parliament]="vote.parliament" />
             <ion-icon name="stats-chart-outline" slot="start" size="small" />
             <ion-label class="ion-text-wrap">{{ vote.title }}</ion-label>
           </ion-item>

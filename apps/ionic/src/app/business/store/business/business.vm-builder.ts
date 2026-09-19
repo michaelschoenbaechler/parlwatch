@@ -79,7 +79,6 @@ export function createBusinessDetailVm(
   const selected = selectedBusinessRequestState.data ?? null;
   return {
     business: selected,
-    // A cantonal business arrives with its votes and timeline already built.
     votes: selected?.cantonal ? selected.cantonal.votes : sortedVotes(selected),
     timeline: selected?.cantonal
       ? selected.cantonal.timeline

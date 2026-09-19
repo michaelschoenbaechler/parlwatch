@@ -17,9 +17,7 @@
     @if (!viewModel().isLoading) { @if (!viewModel().hasError &&
     viewModel().business; as business) {
     <app-business-card [business]="business" />
-    @if (cantonal(); as cantonal) {
-    <!-- Cantonal business: sections built by the cantonal service. -->
-    @if (cantonal.contributors.length > 0) {
+    @if (cantonal(); as cantonal) { @if (cantonal.contributors.length > 0) {
     <app-text-card title="{{ t('business.contributors.title') }}">
       <app-business-contributor-list
         [contributors]="cantonal.contributors"
@@ -65,9 +63,7 @@
     </app-text-card>
     }
     <app-record-source-footer [source]="cantonal.source" />
-    } @else {
-    <!-- Federal business: unchanged. -->
-    @if (viewModel().timeline.length > 0) {
+    } @else { @if (viewModel().timeline.length > 0) {
     <app-text-card title="{{ t('business.timeline.title') }}">
       <app-business-timeline [steps]="viewModel().timeline" />
     </app-text-card>

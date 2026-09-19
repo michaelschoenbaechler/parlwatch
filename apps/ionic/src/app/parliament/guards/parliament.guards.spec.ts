@@ -15,12 +15,6 @@ import {
 @Component({ template: '' })
 class StubPage {}
 
-/**
- * The real feature routes, with every page swapped for an empty component
- * so the redirects and guards are exercised without rendering the app.
- * @param routes A feature's route table
- * @returns The same table, pages stubbed
- */
 function withStubPages(routes: Route[]): Route[] {
   return routes.map((route) => {
     const { loadComponent, children, ...rest } = route;
@@ -36,10 +30,6 @@ describe('parliament routing', () => {
   let router: Router;
   let store: InstanceType<typeof ParliamentStore>;
 
-  /**
-   * Boot the router over the feature routes with the given storage contents.
-   * @param seed What storage holds before the parliament store loads
-   */
   async function setUp(seed: Record<string, unknown> = {}) {
     TestBed.configureTestingModule({
       providers: [
@@ -99,7 +89,6 @@ describe('parliament routing', () => {
     await router.navigateByUrl('/layout/council-member/detail/4057');
     expect(router.url).toBe('/layout/council-member/ch/detail/4057');
 
-    // Cross-tab detail routes from before cantons existed.
     await router.navigateByUrl('/layout/votes/business/detail/7');
     expect(router.url).toBe('/layout/votes/ch/business/detail/7');
     await router.navigateByUrl('/layout/council-member/votes/detail/9');
@@ -119,12 +108,10 @@ describe('parliament routing', () => {
   it('opens a canton route without touching the active parliament', async () => {
     await setUp({ [CANTONS_OF_INTEREST_KEY]: ['BE'] });
 
-    // A recent entry from Bern opens in Bern while the switcher stays federal.
     await router.navigateByUrl('/layout/business/BE/detail/130335');
     expect(router.url).toBe('/layout/business/BE/detail/130335');
     expect(store.activeParliament()).toBe('ch');
 
-    // Even a canton the user no longer follows still opens.
     await router.navigateByUrl('/layout/votes/GR/detail/1');
     expect(router.url).toBe('/layout/votes/GR/detail/1');
     expect(store.activeParliament()).toBe('ch');

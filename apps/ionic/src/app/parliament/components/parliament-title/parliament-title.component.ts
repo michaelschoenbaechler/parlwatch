@@ -6,12 +6,6 @@ import {
 } from '@angular/core';
 import { cantonTheme, ParliamentKey } from '../../models/parliament.model';
 
-/**
- * A page title that names its parliament. Federal pages show the plain title
- * they always had; cantonal pages put the coat of arms and the canton's name
- * in front of it, so the reader knows at a glance which parliament they are
- * looking at.
- */
 @Component({
   selector: 'app-parliament-title',
   template: `

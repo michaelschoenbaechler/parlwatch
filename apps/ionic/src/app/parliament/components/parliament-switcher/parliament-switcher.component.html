@@ -11,11 +11,6 @@
       @for (entry of parliamentStore.switcherEntries(); track entry.key) {
         <ion-segment-button [value]="entry.key">
           @if (isCantonal(entry.key)) {
-            <img
-              class="coat-of-arms"
-              [src]="coatOfArmsPath(entry.key)"
-              alt=""
-            />
             <ion-label>{{ entry.label }}</ion-label>
           } @else {
             <ion-label>{{ t('federal') }}</ion-label>

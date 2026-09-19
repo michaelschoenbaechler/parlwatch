@@ -16,7 +16,6 @@ import { LoadedVote } from '../models/loaded-vote';
 import { toLoadedVote } from '../models/cantonal-vote';
 import { VoteFilter } from './votes.service';
 
-/** Only the fields the vote cards render, totals included. */
 const LIST_FIELDS = [
   'id',
   'affair_id',
@@ -39,11 +38,6 @@ const DETAIL_FIELDS = [
   'url_external'
 ].join(',');
 
-/**
- * One ballot per member. The person is expanded for the harmonised party,
- * which the breakdown groups on; the ballot itself carries only the
- * canton's own party label.
- */
 const BALLOT_FIELDS = [
   'id',
   'voting_id',
@@ -54,7 +48,6 @@ const BALLOT_FIELDS = [
   'person.party_harmonized'
 ].join(',');
 
-/** Headroom over the largest cantonal parliament (Zürich, 180 seats). */
 const MAX_BALLOTS = 500;
 
 @Injectable({
@@ -64,11 +57,6 @@ export class CantonalVoteService {
   private readonly openParlData = inject(OpenParlDataService);
   private readonly translocoService = inject(TranslocoService);
 
-  /**
-   * A page of a canton's council votes, newest first.
-   * @param filter The list query; `parliament` must be a canton
-   * @returns Votes in the federal shape, each carrying its tally
-   */
   getVotes(filter: VoteFilter): Observable<LoadedVote[]> {
     const { parliament, top, skip, searchTerm } = filter;
     const lang = this.translocoService.getActiveLang();
@@ -92,15 +80,6 @@ export class CantonalVoteService {
       );
   }
 
-  /**
-   * One vote with every member's ballot.
-   *
-   * Two requests: the voting record, and its ballots with their persons,
-   * which the record endpoint cannot expand two levels deep.
-   * @param parliament The canton
-   * @param id The voting id
-   * @returns The vote with its ballots and source
-   */
   getVote(parliament: CantonKey, id: number): Observable<LoadedVote> {
     const lang = this.translocoService.getActiveLang();
 

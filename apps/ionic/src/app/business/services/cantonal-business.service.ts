@@ -38,7 +38,6 @@ import { BusinessTextSection, toTextSection } from '../models/business-text';
 import { TimelineStep } from '../models/business-timeline';
 import { BusinessFilter } from './business.service';
 
-/** Only the fields the business cards render. */
 const LIST_FIELDS = [
   'id',
   'number',
@@ -48,13 +47,6 @@ const LIST_FIELDS = [
   'begin_date'
 ].join(',');
 
-/**
- * Everything the detail page renders, relation fields included. Documents
- * are the reason for the selection: each `docs` row otherwise carries the
- * document's full extracted text, tens of kilobytes per row. Speeches are
- * only probed for a transcript here; the ones that have one are fetched
- * again with their speaker, which this endpoint cannot expand.
- */
 const DETAIL_FIELDS = [
   'id',
   'body_key',
@@ -108,7 +100,6 @@ const DETAIL_FIELDS = [
 
 const DETAIL_EXPAND = 'contributors,events,docs,texts,speeches,votings';
 
-/** The speech rows the speech list renders, speaker included. */
 const SPEECH_FIELDS = [
   'id',
   'person_id',
@@ -119,10 +110,8 @@ const SPEECH_FIELDS = [
   'person.party'
 ].join(',');
 
-/** Ceiling on the speeches loaded for one business. */
 const MAX_SPEECHES = 200;
 
-/** Harmonised event id for "submitted", the one step the app labels itself. */
 const EVENT_SUBMITTED = 1;
 
 @Injectable({
@@ -132,11 +121,6 @@ export class CantonalBusinessService {
   private readonly openParlData = inject(OpenParlDataService);
   private readonly translocoService = inject(TranslocoService);
 
-  /**
-   * A page of a canton's business, newest first.
-   * @param filter The list query; `parliament` must be a canton
-   * @returns Business rows in the federal card shape
-   */
   getBusinesses(filter: BusinessFilter): Observable<Business[]> {
     const { parliament, top, skip, searchTerm, businessTypes } = filter;
     const lang = this.translocoService.getActiveLang();
@@ -158,11 +142,6 @@ export class CantonalBusinessService {
       .pipe(map((page) => page.data.map((affair) => toBusiness(affair, lang))));
   }
 
-  /**
-   * The harmonised types a canton's business comes in, for the type filter.
-   * @param parliament The canton
-   * @returns One option per harmonised type, alphabetical
-   */
   getBusinessTypes(parliament: CantonKey): Observable<BusinessType[]> {
     const lang = this.translocoService.getActiveLang();
 
@@ -174,16 +153,6 @@ export class CantonalBusinessService {
       .pipe(map((page) => toBusinessTypes(page.data, lang)));
   }
 
-  /**
-   * One business with everything its detail page shows.
-   *
-   * One request covers the record and its relations; a second one fetches
-   * the speeches with their speakers, but only for the few cantons that
-   * publish transcripts at all.
-   * @param parliament The canton
-   * @param id The affair id
-   * @returns The business, with its cantonal sections attached
-   */
   getBusiness(parliament: CantonKey, id: number): Observable<LoadedBusiness> {
     const lang = this.translocoService.getActiveLang();
 
@@ -196,8 +165,6 @@ export class CantonalBusinessService {
       .pipe(
         switchMap((page) => {
           const affair = singleRecord(page.data);
-          // Vote announcements carry text but no speaker; only a member's
-          // transcript is worth the second request.
           const hasTranscripts = relationList(affair.speeches).some(
             (speech) =>
               !!speech.person_id && !!localized(speech.text_content, lang)
@@ -214,12 +181,6 @@ export class CantonalBusinessService {
       );
   }
 
-  /**
-   * The speeches given on a business, with their speakers.
-   * @param affairId The affair id
-   * @param lang The app's active language
-   * @returns Speech rows, oldest first
-   */
   private getSpeeches(affairId: number, lang: string): Observable<OpdSpeech[]> {
     return this.openParlData
       .fetch<OpdSpeech>('speeches', {
@@ -235,16 +196,6 @@ export class CantonalBusinessService {
   }
 }
 
-/**
- * Map an affair onto the federal business card shape.
- *
- * The canton's own type and status labels go on the card, so the reader sees
- * the terms the canton uses ("Dringliche Anfrage", "Regierungsrat"). There is
- * no status date; the submission date takes the card's date slot instead.
- * @param affair The affair as the API returned it
- * @param lang The app's active language
- * @returns The business
- */
 export function toBusiness(affair: OpdAffair, lang: string): Business {
   return {
     ID: affair.id,
@@ -258,12 +209,6 @@ export function toBusiness(affair: OpdAffair, lang: string): Business {
   } as Business;
 }
 
-/**
- * Map a `group_by` aggregation onto the filter's option shape.
- * @param groups Aggregation buckets
- * @param lang The app's active language
- * @returns One option per harmonised type, alphabetical
- */
 export function toBusinessTypes(
   groups: OpdTypeGroup[],
   lang: string
@@ -280,14 +225,6 @@ export function toBusinessTypes(
     .sort((a, b) => a.BusinessTypeName.localeCompare(b.BusinessTypeName));
 }
 
-/**
- * Map a fully expanded affair onto the detail page's model.
- * @param affair The affair with its relations expanded
- * @param speeches The speeches given on it, speakers included
- * @param parliament The canton
- * @param lang The app's active language
- * @returns The business with its cantonal sections
- */
 export function toLoadedBusiness(
   affair: OpdAffair,
   speeches: OpdSpeech[],
@@ -315,12 +252,6 @@ export function toLoadedBusiness(
   };
 }
 
-/**
- * The people and bodies behind a business, in the canton's order.
- * @param contributors Contributor rows
- * @param lang The app's active language
- * @returns One entry per named contributor
- */
 function toContributors(
   contributors: OpdContributor[],
   lang: string
@@ -342,17 +273,6 @@ function toContributors(
     }));
 }
 
-/**
- * A business's path through the canton, oldest event first.
- *
- * The harmonised title is the label, so every canton's timeline reads in the
- * same vocabulary; the actor ("Regierung", "Parlament") takes the council
- * slot. The first event is the submission when the canton marks it as such,
- * which the timeline component labels itself.
- * @param events Event rows
- * @param lang The app's active language
- * @returns The timeline steps
- */
 function toTimeline(events: OpdEvent[], lang: string): TimelineStep[] {
   return [...events]
     .filter((event) => !!event.date)
@@ -378,17 +298,11 @@ function toTimeline(events: OpdEvent[], lang: string): TimelineStep[] {
     });
 }
 
-/**
- * The documents of a business, newest first.
- * @param docs Document rows
- * @returns One entry per document with a link
- */
 function toDocuments(docs: OpdDoc[]): BusinessDocument[] {
   return docs
     .filter((doc) => !!(doc.url || doc.url_oparl))
     .map((doc, index) => ({
       id: doc.id ?? index,
-      // File names double as titles in some cantons: "Vorlage_RR_429c-2020_…".
       name: doc.name?.trim().replace(/_/g, ' ') ?? '',
       url: (doc.url || doc.url_oparl) as string,
       date: toODataDate(doc.date)
@@ -396,12 +310,6 @@ function toDocuments(docs: OpdDoc[]): BusinessDocument[] {
     .sort((a, b) => odataTimestamp(b.date) - odataTimestamp(a.date));
 }
 
-/**
- * The business text, in the canton's own sections.
- * @param texts Text rows
- * @param lang The app's active language
- * @returns One section per text that holds something readable
- */
 function toTextSections(texts: OpdText[], lang: string): BusinessTextSection[] {
   return [...texts]
     .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
@@ -415,12 +323,6 @@ function toTextSections(texts: OpdText[], lang: string): BusinessTextSection[] {
     .filter((section): section is BusinessTextSection => section !== null);
 }
 
-/**
- * The speeches with a transcript, as one group for the speech list.
- * @param speeches Speech rows with their speaker expanded
- * @param lang The app's active language
- * @returns One group holding the speeches oldest first, or none
- */
 function toSpeechGroups(speeches: OpdSpeech[], lang: string): SpeechGroupVm[] {
   const rows: SpeechVm[] = speeches
     .filter(
@@ -457,13 +359,6 @@ function toSpeechGroups(speeches: OpdSpeech[], lang: string): SpeechGroupVm[] {
   ];
 }
 
-/**
- * The speech bodies, keyed by speech id. Cantonal transcripts ship inline,
- * so the speech list never has to ask for one.
- * @param speeches Speech rows
- * @param lang The app's active language
- * @returns Cleaned bodies for every speech that has one
- */
 function toSpeechTexts(
   speeches: OpdSpeech[],
   lang: string

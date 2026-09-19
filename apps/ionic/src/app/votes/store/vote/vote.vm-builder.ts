@@ -14,10 +14,6 @@ export interface VoteListVm {
   businessGroups: VoteBusinessGroupVm[];
   isRefreshing: boolean;
   noContent: boolean;
-  /**
-   * The parliament itself publishes no votes, as opposed to the current
-   * search matching nothing. Only a canton can be in this state.
-   */
   noVotingsPublished: boolean;
   isLoading: boolean;
   isLoadingMore: boolean;

@@ -8,10 +8,6 @@ import { LoadedVote } from '../models/loaded-vote';
 import { CantonalVoteService } from './cantonal-votes.service';
 import { VoteFilter, VoteService } from './votes.service';
 
-/**
- * Picks the federal or the cantonal vote source from the parliament key, so
- * the store and the pages are written once against one surface.
- */
 @Injectable({
   providedIn: 'root'
 })

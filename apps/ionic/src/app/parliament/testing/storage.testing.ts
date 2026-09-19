@@ -1,9 +1,5 @@
 import { StorageService } from '../../shared/services/storage.service';
 
-/**
- * An in-memory stand-in for the persistence boundary. Keeps what stores
- * write so a spec can read it back, or seed it before a store loads.
- */
 export class InMemoryStorageService implements Pick<
   StorageService,
   'get' | 'set'

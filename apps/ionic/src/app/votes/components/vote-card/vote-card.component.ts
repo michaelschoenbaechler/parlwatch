@@ -20,12 +20,6 @@ import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 export class VoteCardComponent {
   vote = input.required<LoadedVote>();
 
-  /**
-   * The detail page already loads every ballot for its member list, so the
-   * bar is counted locally instead of going through the store's batch. A
-   * cantonal vote's official totals win over a count of its ballots, which
-   * some cantons publish incompletely.
-   */
   readonly tally = computed(
     () => this.vote()?.tally ?? tallyVotings(this.vote()?.Votings)
   );

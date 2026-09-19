@@ -6,7 +6,6 @@ import {
   parliamentKeyGuard
 } from '../parliament/guards/parliament.guards';
 
-/** See `BUSINESS_ROUTES` for the parliament segment and the legacy redirects. */
 export const VOTE_ROUTES: Route[] = [
   {
     path: '',

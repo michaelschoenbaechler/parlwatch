@@ -7,7 +7,6 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { BusinessContributor } from '../../models/cantonal-business';
 
-/** The people and bodies behind a cantonal business, members tappable. */
 @Component({
   selector: 'app-business-contributor-list',
   template: `
@@ -73,10 +72,6 @@ export class BusinessContributorListComponent {
   readonly contributors = input.required<BusinessContributor[]>();
   readonly personSelected = output<number>();
 
-  /**
-   * Open a contributor's member page; departments and committees have none.
-   * @param contributor The row that was tapped
-   */
   onSelect(contributor: BusinessContributor) {
     if (contributor.personId !== null) {
       this.personSelected.emit(contributor.personId);

@@ -44,15 +44,6 @@ export function createCouncilMemberListVm(
   }
 }
 
-/**
- * Creates a view model for the council member detail view.
- *
- * Reads a dedicated request state rather than searching the list: ids are
- * only unique within one parliament, and a list refresh must not clobber
- * the member on screen.
- * @param selectedMemberRequestState Request state holding the loaded member
- * @returns A view model object with the member and UI state properties
- */
 export function createCouncilMemberDetailVm(
   selectedMemberRequestState: RequestState<LoadedMember | null>
 ): CouncilMemberDetailVm {

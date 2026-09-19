@@ -50,8 +50,6 @@ export const InterestStore = signalStore(
   withMethods((store) => {
     const councilMemberService = inject(CouncilMemberService);
 
-    // Cantonal interests arrive with the member record itself; only the
-    // federal register is a collection of its own.
     const loadInterests = rxMethod<{ parliament: ParliamentKey; id: number }>(
       pipe(
         filter(({ parliament }) => !isCantonal(parliament)),

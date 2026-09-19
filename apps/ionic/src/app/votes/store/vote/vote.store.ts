@@ -45,10 +45,6 @@ import {
 
 export type VoteSlice = {
   votesRequestState: RequestState<LoadedVote[]>;
-  /**
-   * Per-vote decision counts for federal votes, loaded in batches for the
-   * whole visible list. Cantonal votes carry their tally on the row itself.
-   */
   tallies: Record<number, VoteTally>;
   selectedVoteRequestState: RequestState<LoadedVote | null>;
   query: VoteFilter;
@@ -188,11 +184,6 @@ export const VoteStore = signalStore(
         patchState(store, (state) => ({
           query: { ...initialState.query, parliament: state.query.parliament }
         })),
-      /**
-       * Point the list at another parliament, dropping the old list and its
-       * search term.
-       * @param parliament The parliament to list
-       */
       setParliament(parliament: ParliamentKey) {
         patchState(store, (state) => {
           if (state.query.parliament === parliament) return {};

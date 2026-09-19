@@ -48,7 +48,6 @@ import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-
 import { ParliamentSwitcherComponent } from '../../../parliament/components/parliament-switcher/parliament-switcher.component';
 import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
 import { CantonHintCardComponent } from '../../../parliament/components/canton-hint-card/canton-hint-card.component';
-import { CantonStripeComponent } from '../../../parliament/components/canton-stripe/canton-stripe.component';
 
 /** How many recent searches / businesses the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;
@@ -69,8 +68,7 @@ const MAX_VISIBLE_RECENTS = 3;
     TranslocoDirective,
     ParliamentSwitcherComponent,
     ParliamentTitleComponent,
-    CantonHintCardComponent,
-    CantonStripeComponent
+    CantonHintCardComponent
   ],
   hostDirectives: [CantonalThemeDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -88,7 +86,6 @@ export class BusinessListPage implements OnInit {
   private readonly navController = inject(NavController);
   private readonly route = inject(ActivatedRoute);
 
-  /** The parliament this page lists, fixed for the page's lifetime. */
   readonly parliament: ParliamentKey = routeParliament(this.route);
   readonly isCantonal = isCantonal(this.parliament);
 
@@ -101,7 +98,6 @@ export class BusinessListPage implements OnInit {
 
   /** Name of the session the list is currently scoped to, if any. */
   readonly activeSessionName = computed(() => {
-    // Cantons have no sessions; the id only lingers for the federal list.
     if (this.isCantonal) return '';
     const sessionId = this.businessStore.query().sessionId;
     return (
@@ -176,18 +172,11 @@ export class BusinessListPage implements OnInit {
 
   ngOnInit() {
     this.presentingElement = document.querySelector('ion-router-outlet');
-    // The route is the source of truth; the store follows it so the other
-    // tabs open on the same parliament.
     this.parliamentStore.setActiveParliament(this.parliament);
     this.businessStore.setParliament(this.parliament);
     this.businessTypesStore.setParliament(this.parliament);
   }
 
-  /**
-   * Switch to another parliament's list. Replaces the tab's stack rather
-   * than pushing onto it, so back never walks through old parliaments.
-   * @param parliament The parliament picked in the switcher
-   */
   onParliamentChange(parliament: ParliamentKey) {
     this.parliamentStore.setActiveParliament(parliament);
     this.navController
@@ -246,11 +235,6 @@ export class BusinessListPage implements OnInit {
     this.closeSuggestions();
   }
 
-  /**
-   * Open a recently viewed business in its own parliament, whichever
-   * parliament the list shows. The switcher is left alone on purpose.
-   * @param entry The tapped history entry
-   */
   onRecentBusinessClick(entry: RecentEntry) {
     this.closeSuggestions();
     this.router

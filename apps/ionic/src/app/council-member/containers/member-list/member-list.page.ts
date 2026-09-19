@@ -70,7 +70,6 @@ export class MemberListPage implements OnInit {
   private readonly navController = inject(NavController);
   private readonly route = inject(ActivatedRoute);
 
-  /** The parliament this page lists, fixed for the page's lifetime. */
   readonly parliament: ParliamentKey = routeParliament(this.route);
 
   readonly viewModel = computed(() => this.store.councilMembersViewModel());
@@ -99,17 +98,10 @@ export class MemberListPage implements OnInit {
 
   ngOnInit() {
     this.presentingElement = document.querySelector('ion-router-outlet');
-    // The route is the source of truth; the store follows it so the other
-    // tabs open on the same parliament.
     this.parliamentStore.setActiveParliament(this.parliament);
     this.store.setParliament(this.parliament);
   }
 
-  /**
-   * Switch to another parliament's list. Replaces the tab's stack rather
-   * than pushing onto it, so back never walks through old parliaments.
-   * @param parliament The parliament picked in the switcher
-   */
   onParliamentChange(parliament: ParliamentKey) {
     this.parliamentStore.setActiveParliament(parliament);
     this.navController

@@ -12,10 +12,6 @@ import {
 import { LoadedVote } from './loaded-vote';
 import { VoteTally } from './vote-decision';
 
-/**
- * The federal decision codes the app's components switch on (see
- * `toVoteDecision`), mapped from the words OpenParlData uses.
- */
 const DECISION_CODES: Record<string, number> = {
   yes: 1,
   no: 2,
@@ -23,23 +19,12 @@ const DECISION_CODES: Record<string, number> = {
   absent: 5
 };
 
-/** Code for a ballot that is neither yes, no, abstention nor absence. */
 const DECISION_OTHER = 7;
 
-/**
- * Map an OpenParlData ballot value to the federal decision code.
- * @param vote The ballot as the API words it
- * @returns The numeric code the vote components understand
- */
 export function toDecisionCode(vote: string | null | undefined): number {
   return DECISION_CODES[vote ?? ''] ?? DECISION_OTHER;
 }
 
-/**
- * Read a voting's totals into the app's tally shape.
- * @param voting The voting
- * @returns The decision counts
- */
 export function toTally(voting: OpdVoting): VoteTally {
   const tally: VoteTally = {
     yes: voting.results_yes ?? 0,
@@ -53,17 +38,6 @@ export function toTally(voting: OpdVoting): VoteTally {
   return tally;
 }
 
-/**
- * Map a cantonal voting onto the federal vote shape the vote components render.
- *
- * A voting's own title often just repeats the business title (Zürich) but
- * can name the specific question (Bern: "Art. T2-2, Rückweisungsantrag"), so
- * it is shown as the subject only when it says something new.
- * @param voting The voting as the API returned it
- * @param parliament The canton the voting belongs to
- * @param lang The app's active language
- * @returns The vote, carrying its tally and source
- */
 export function toLoadedVote(
   voting: OpdVoting,
   parliament: CantonKey,
@@ -95,17 +69,6 @@ export function toLoadedVote(
   } as LoadedVote;
 }
 
-/**
- * Map one member's ballot onto the federal `Voting` shape.
- *
- * The faction bucket is the harmonised party when the ballot carries its
- * person expanded, otherwise the canton's own party label; the party
- * breakdown and the member list key on it through `ParlGroupNameAbbreviation`.
- * @param vote The ballot as the API returned it
- * @param votingId The voting the ballot belongs to
- * @param lang The app's active language
- * @returns The ballot
- */
 export function toVoting(
   vote: OpdVote,
   votingId: number | undefined,

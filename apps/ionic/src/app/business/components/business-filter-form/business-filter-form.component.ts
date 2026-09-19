@@ -25,10 +25,6 @@ export class BusinessFilterFormComponent {
   readonly sessionStore = inject(SessionStore);
   readonly tagStore = inject(TagStore);
 
-  /**
-   * The parliament being filtered. Sessions, topics and statuses exist only
-   * federally; a canton offers the harmonised type alone.
-   */
   readonly parliament = input<ParliamentKey>(FEDERAL_PARLIAMENT_KEY);
   readonly isCantonal = computed(() => isCantonal(this.parliament()));
 

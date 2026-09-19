@@ -89,7 +89,6 @@ export class VoteDetailPage implements OnInit {
   readonly recentStore = inject(RecentVoteStore);
   private readonly transloco = inject(TranslocoService);
 
-  /** The parliament this vote belongs to, read from the route only. */
   readonly parliament: ParliamentKey = routeParliament(this.route);
   readonly isCantonal = isCantonal(this.parliament);
 
@@ -141,10 +140,6 @@ export class VoteDetailPage implements OnInit {
       .catch(console.error);
   }
 
-  /**
-   * Open the member behind a ballot, staying inside the current tab.
-   * @param voting The tapped ballot
-   */
   onMember(voting: Voting) {
     if (voting.PersonNumber === undefined) return;
 
@@ -198,12 +193,6 @@ export class VoteDetailPage implements OnInit {
       : (voting.ParlGroupNameAbbreviation ?? '');
   }
 
-  /**
-   * The second line under a member's name: faction and canton federally,
-   * the party alone for a cantonal ballot, which has no canton to add.
-   * @param voting The member's voting record
-   * @returns The line, or an empty string
-   */
   memberSubtitle(voting: Voting): string {
     return [this.parlGroupLabel(voting), voting.CantonName]
       .filter((part) => !!part)
