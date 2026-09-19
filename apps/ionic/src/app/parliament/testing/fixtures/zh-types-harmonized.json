@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "total_records": 13
+  },
+  "data": [
+    {
+      "type_harmonized_id": 12,
+      "type_harmonized_wikidata_id": "Q2052854",
+      "count": 7568,
+      "body_keys": [
+        "ZH"
+      ],
+      "type_harmonized": {
+        "de": "Anfrage",
+        "fr": "Question",
+        "it": "Interrogazione",
+        "rm": "Dumonda",
+        "en": "Question"
+      }
+    },
+    {
+      "type_harmonized_id": 9,
+      "type_harmonized_wikidata_id": null,
+      "count": 3388,
+      "body_keys": [
+        "ZH"
+      ],
+      "type_harmonized": {
+        "de": "Regierungsgeschäft",
+        "fr": "Affaires gouvernementales",
+        "it": "Affari governativi",
+        "rm": "fatschentas da la regenza",
+        "en": "Government affairs"
+      }
+    },
+    {
+      "type_harmonized_id": 3,
+      "type_harmonized_wikidata_id": "Q2106323",
+      "count": 2655,
+      "body_keys": [
+        "ZH"
+      ],
+      "type_harmonized": {
+        "de": "Postulat",
+        "fr": "Postulat",
+        "it": "Postulato",
+        "rm": "Moziun",
+        "en": "Postulate"
+      }
+    },
+    {
+      "type_harmonized_id": 2,
+      "type_harmonized_wikidata_id": "Q1949668",
+      "count": 1101,
+      "body_keys": [
+        "ZH"
+      ],
+      "type_harmonized": {
+        "de": "Motion",
+        "fr": "Motion",
+        "it": "Mozione",
+        "rm": "Moziun",
+        "en": "Motion"
+      }
+    },
+    {
+      "type_harmonized_id": 6,
+      "type_harmonized_wikidata_id": "Q40231",
+      "count": 1100,
+      "body_keys": [
+        "ZH"
+      ],
+      "type_harmonized": {
+        "de": "Wahl",
+        "fr": "Élection",
+        "it": "Elezioni",
+        "rm": "Iniziativa parlamentara",
+        "en": "Votaziun"
+      }
+    }
+  ]
+}

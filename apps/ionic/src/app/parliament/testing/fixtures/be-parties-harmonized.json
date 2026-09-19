@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "total_records": 17
+  },
+  "data": [
+    {
+      "party_harmonized_wikidata_id": "Q385258",
+      "count": 224,
+      "body_keys": [
+        "BE"
+      ],
+      "party_harmonized": {
+        "de": "Schweizerische Volkspartei",
+        "fr": "Union démocratique du centre",
+        "it": "Unione democratica di centro",
+        "en": "Swiss People's Party"
+      }
+    },
+    {
+      "party_harmonized_wikidata_id": "Q303745",
+      "count": 199,
+      "body_keys": [
+        "BE"
+      ],
+      "party_harmonized": {
+        "de": "Sozialdemokratische Partei",
+        "fr": "Parti Socialiste",
+        "it": "Partito Socialista",
+        "en": "Social Democratic Party of Switzerland"
+      }
+    },
+    {
+      "party_harmonized_wikidata_id": "Q202638",
+      "count": 60,
+      "body_keys": [
+        "BE"
+      ],
+      "party_harmonized": {
+        "de": "FDP.Die Liberalen",
+        "fr": "PLR.Les Libéraux-Radicaux",
+        "it": "PLR.I Liberali Radicali",
+        "en": "FDP.The Liberals"
+      }
+    },
+    {
+      "party_harmonized_wikidata_id": null,
+      "count": 57,
+      "body_keys": [
+        "BE"
+      ],
+      "party_harmonized": {}
+    },
+    {
+      "party_harmonized_wikidata_id": "Q659739",
+      "count": 55,
+      "body_keys": [
+        "BE"
+      ],
+      "party_harmonized": {
+        "de": "Die Grünen",
+        "fr": "Les Verts",
+        "it": "I Verdi",
+        "en": "Green Party of Switzerland"
+      }
+    }
+  ]
+}

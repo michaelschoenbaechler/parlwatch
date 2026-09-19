@@ -1,0 +1,25 @@
+{
+  "url_external": {
+    "de": "https://zh.recapp.ch/shareparl?agendaItemUid=487bb552-c419-4ee0-a7d1-6889bddf1264&segmentUid=b6455fbc-3ae3-45ac-8f64-ee9ae10fcc50"
+  },
+  "affair_title": {
+    "de": "Solaranlagen in geschützten Ortsbildern"
+  },
+  "title": {
+    "de": "Solaranlagen in geschützten Ortsbildern"
+  },
+  "results_absent": 15,
+  "results_yes": 164,
+  "id": 105953,
+  "meaning_of_no": {},
+  "affair_id": 91382,
+  "date": "2026-09-14T07:42:13",
+  "meaning_of_yes": {},
+  "results_abstention": 0,
+  "updated_external_at": "2026-09-18T01:11:38",
+  "results_no": 1,
+  "updated_at": null,
+  "type": {
+    "de": "Normal"
+  }
+}

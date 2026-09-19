@@ -30,7 +30,7 @@ describe('BusinessService', () => {
   });
 
   it('should query businesses with language filter and exclude 00.000', () => {
-    service.getBusinesses({ top: 10 }).subscribe();
+    service.getBusinesses({ parliament: 'ch', top: 10 }).subscribe();
 
     const [collection, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -42,7 +42,9 @@ describe('BusinessService', () => {
   });
 
   it('should add substring filter for search term', () => {
-    service.getBusinesses({ top: 10, searchTerm: 'budget' }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, searchTerm: 'budget' })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -56,7 +58,9 @@ describe('BusinessService', () => {
   });
 
   it('should convert short business number and use ID filter', () => {
-    service.getBusinesses({ top: 10, searchTerm: '23.3456' }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, searchTerm: '23.3456' })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -65,7 +69,7 @@ describe('BusinessService', () => {
   });
 
   it('should order by SubmissionDate desc', () => {
-    service.getBusinesses({ top: 10 }).subscribe();
+    service.getBusinesses({ parliament: 'ch', top: 10 }).subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -77,7 +81,9 @@ describe('BusinessService', () => {
 
   it('should filter by business types when provided', () => {
     const businessTypes = [{ ID: 1 }, { ID: 2 }] as any;
-    service.getBusinesses({ top: 10, businessTypes }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, businessTypes })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -91,7 +97,9 @@ describe('BusinessService', () => {
       { id: 10, ids: [10] },
       { id: 20, ids: [20] }
     ] as any;
-    service.getBusinesses({ top: 10, businessStatuses }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, businessStatuses })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -102,7 +110,9 @@ describe('BusinessService', () => {
 
   it('should expand a status option that covers several ids', () => {
     const businessStatuses = [{ id: 229, ids: [27, 229] }] as any;
-    service.getBusinesses({ top: 10, businessStatuses }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, businessStatuses })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -112,13 +122,17 @@ describe('BusinessService', () => {
   });
 
   it('should filter by session only when one is selected', () => {
-    service.getBusinesses({ top: 10, sessionId: 5214 }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, sessionId: 5214 })
+      .subscribe();
     let filter = (
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args[1] as any
     ).filter;
     expect(filter.eq).toContain({ SubmissionSession: 5214 });
 
-    service.getBusinesses({ top: 10, sessionId: null }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, sessionId: null })
+      .subscribe();
     filter = (
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args[1] as any
     ).filter;
@@ -126,7 +140,7 @@ describe('BusinessService', () => {
   });
 
   it('should request only the fields the list renders', () => {
-    service.getBusinesses({ top: 10 }).subscribe();
+    service.getBusinesses({ parliament: 'ch', top: 10 }).subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -161,7 +175,9 @@ describe('BusinessService', () => {
   });
 
   it('should match tag ids exactly, not as bare substrings', () => {
-    service.getBusinesses({ top: 10, tagIds: [52, 66] }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, tagIds: [52, 66] })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -181,7 +197,9 @@ describe('BusinessService', () => {
   });
 
   it('should not add a tag filter when no tags are selected', () => {
-    service.getBusinesses({ top: 10, tagIds: [] }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, tagIds: [] })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
@@ -229,7 +247,9 @@ describe('BusinessService', () => {
   });
 
   it("should remove 'ne' exclusion for short-number search", () => {
-    service.getBusinesses({ top: 10, searchTerm: '23.3456' }).subscribe();
+    service
+      .getBusinesses({ parliament: 'ch', top: 10, searchTerm: '23.3456' })
+      .subscribe();
 
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;

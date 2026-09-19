@@ -1,0 +1,268 @@
+{
+  "url_external": {
+    "de": "https://www.gr.be.ch/de/start/geschaefte/geschaeftssuche/geschaeftsdetail.html?guid=10546aad749249b394f00c3ea4c61b9b",
+    "fr": "https://www.gr.be.ch/de/start/geschaefte/geschaeftssuche/geschaeftsdetail.html?guid=10546aad749249b394f00c3ea4c61b9b"
+  },
+  "state_name": {
+    "de": "Annahme",
+    "fr": "Adoption"
+  },
+  "body_key": "BE",
+  "title": {
+    "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+    "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+  },
+  "id": 130335,
+  "updated_at": "2026-09-18T01:01:23",
+  "type_name": {
+    "de": "Gesetz",
+    "fr": "Loi"
+  },
+  "begin_date": "2024-09-12T00:00:00",
+  "number": "2022.STA.530",
+  "contributors": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 3,
+      "has_more": false
+    },
+    "data": [
+      {
+        "person_id": null,
+        "position": 200,
+        "fullname": "Kommission für Staatspolitik und Aussenbeziehungen",
+        "id": 1010143,
+        "role_harmonized": {
+          "de": "Zuständige Kommission",
+          "fr": "Commission compétente",
+          "it": "Commissione competente",
+          "rm": "Cumissiun cumpetenta",
+          "en": "Assigned Committee"
+        },
+        "role": {
+          "de": "Vorberatende Kommission",
+          "fr": "Commission"
+        },
+        "party": {},
+        "type": "group"
+      },
+      {
+        "person_id": null,
+        "position": 1,
+        "fullname": "STA",
+        "id": 971246,
+        "role_harmonized": {
+          "de": "Federführendes Departement",
+          "fr": "Département responsable",
+          "it": "Dipartimento responsabile",
+          "rm": "Departament responsabel",
+          "en": "Leading Department"
+        },
+        "role": {
+          "de": "Federführung",
+          "fr": "Responsabilité"
+        },
+        "party": {},
+        "type": "group"
+      },
+      {
+        "person_id": null,
+        "position": 1,
+        "fullname": "STA Staatskanzlei",
+        "id": 117957,
+        "role_harmonized": {
+          "de": "Federführendes Departement",
+          "fr": "Département responsable",
+          "it": "Dipartimento responsabile",
+          "rm": "Departament responsabel",
+          "en": "Leading Department"
+        },
+        "role": {
+          "de": "Federführung",
+          "fr": "Responsabilité"
+        },
+        "party": {},
+        "type": "group"
+      }
+    ]
+  },
+  "events": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 2,
+      "has_more": false
+    },
+    "data": [
+      {
+        "position": 1,
+        "title": {
+          "de": "Traktandiert"
+        },
+        "title_harmonized_id": 24,
+        "id": 674319,
+        "date": "2024-09-12T00:00:00",
+        "title_harmonized": {
+          "de": "Traktandiert",
+          "fr": "A l'ordre du jour",
+          "it": "All'ordine del giorno",
+          "en": "Agenda"
+        },
+        "actor": {
+          "de": "Parlament"
+        }
+      },
+      {
+        "position": 2,
+        "title": {
+          "de": "Traktandiert"
+        },
+        "title_harmonized_id": 24,
+        "id": 674320,
+        "date": "2024-11-25T00:00:00",
+        "title_harmonized": {
+          "de": "Traktandiert",
+          "fr": "A l'ordre du jour",
+          "it": "All'ordine del giorno",
+          "en": "Agenda"
+        },
+        "actor": {
+          "de": "Parlament"
+        }
+      }
+    ]
+  },
+  "docs": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 1,
+      "has_more": false
+    },
+    "data": [
+      {
+        "id": 22864,
+        "date": null,
+        "url": "https://ogd.parl.apps.be.ch/pdf-upload/9dfc6ba6b8ea41da89c68c7f6bae990e-332.pdf",
+        "name": "Vortrag-24.04.2024-de",
+        "url_oparl": "https://files.openparldata.ch/doc/BE/c2397643b5881960404a2458f6a6dc96422bbbc8b21e2f711fa4bc01aaeceda1"
+      }
+    ]
+  },
+  "texts": null,
+  "speeches": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 257,
+      "has_more": true
+    },
+    "data": [
+      {
+        "person_id": 7258,
+        "text_content": {
+          "de": "<b>Hans Schori, Wiler bei Seedorf (SVP),</b> Fraktionssprecher. Wir haben es gehört: Die Antwort der Kommissionsmehrheit und des Regierungsrates auf die Rückweisung mit der Auflage, eine Sunset-Klausel einzubauen, hat die Auflage klar nicht erfüllt. Das haben vor allem auch die vielen Zusatzanträge, die vielleicht ein bisschen zur Konfusion beigetragen haben, eigentlich gezeigt und haben die Sunset-Klausel eingefordert.<p>Jetzt steht hier trotzdem wieder dieser Bericht zur Debatte, der Evaluationsbericht, der vorher in der Synopse nach 10 Jahren hätte geliefert werden sollen. Jetzt hat man sich auf einen möglichen Ansatz geeinigt, nämlich, dies auf den 31.8.2030 zurückzudatieren.<p>Das kann man machen, wenn man meint, es brauche diesen Bericht. Wir von der SVP sind nach wie vor der Meinung, es brauche kein Berichtlein. Wir wissen eigentlich heute schon, wie das Resultat herauskommt, auch wenn man auf die nationale Ebene schaut mit der ersten Durchführung. In diesem Sinn gesehen, jetzt in der Abstimmung: zuerst dem Antrag der SAK (Buri) zustimmen, gegen die Synopse, und am Schluss den obsiegenden Antrag ablehnen. Dann können wir nachher direkt zur Sunset-Klausel übergehen. Danke."
+        },
+        "id": 2800866
+      },
+      {
+        "person_id": 7349,
+        "text_content": {
+          "de": "<b>Präsidentin.</b> Wir kommen zur Abstimmung: Wer den Antrag der SAK und des Regierungsrates annimmt, stimmt Ja, wer den Antrag der SVP annimmt, stimmt Nein."
+        },
+        "id": 2800864
+      }
+    ]
+  },
+  "votings": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 14,
+      "has_more": false
+    },
+    "data": [
+      {
+        "url_external": {
+          "de": "https://www.tagblatt.gr.be.ch/shareparl?agendaItemUid=07cd7aa22a3042728a7b7d8e05af0380&segmentUid=66e31678e001903d875543f6"
+        },
+        "affair_title": {
+          "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "title": {
+          "de": "2022.STA.530: Art. T2 und Art. T2-1 / art. T2 et art. T2-1Antrag SAK-Minderheit (Ja), Antrag SAK-Mehrheit und Regierungsrat (Nein)Proposition minorité de la CIRE (oui), proposition majorité de la CIRE et Conseil-exécutif (non)Annahme Antrag SAK-Mehrheit und RegierungsratAdoption proposition majorité de la CIRE et Conseil-exécutif",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "results_absent": 1,
+        "results_yes": 62,
+        "id": 4244,
+        "affair_id": 130335,
+        "date": "2024-09-12T15:07:22",
+        "results_abstention": 1,
+        "results_no": 77
+      },
+      {
+        "url_external": {
+          "de": "https://www.tagblatt.gr.be.ch/shareparl?agendaItemUid=07cd7aa22a3042728a7b7d8e05af0380&segmentUid=f1bbb1e9-a949-4ade-bc69-55e4e9f541de"
+        },
+        "affair_title": {
+          "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "title": {
+          "de": "2022.STA.530: 1. Lesung / 1re lectureAnnahme / Adoption",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "results_absent": 2,
+        "results_yes": 89,
+        "id": 4206,
+        "affair_id": 130335,
+        "date": "2024-09-12T15:23:53",
+        "results_abstention": 2,
+        "results_no": 50
+      },
+      {
+        "url_external": {
+          "de": "https://www.tagblatt.gr.be.ch/shareparl?agendaItemUid=07cd7aa22a3042728a7b7d8e05af0380&segmentUid=66e31678e001903d87554387"
+        },
+        "affair_title": {
+          "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "title": {
+          "de": "2022.STA.530Antrag SVP (Ja), Antrag SAK-Mehrheit und Regierungsrat (Nein)Proposition UDC (oui), proposition majorité de la CIRE et Conseil-exécutif (non) Annahme Antrag SAK-Mehrheit und RegierungsratAdoption proposition majorité de la CIRE et Conseil-exécutif",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "results_absent": 0,
+        "results_yes": 52,
+        "id": 3812,
+        "affair_id": 130335,
+        "date": "2024-09-12T13:58:36",
+        "results_abstention": 0,
+        "results_no": 93
+      },
+      {
+        "url_external": {
+          "de": "https://www.tagblatt.gr.be.ch/shareparl?agendaItemUid=07cd7aa22a3042728a7b7d8e05af0380&segmentUid=66e31678e001903d875543b3"
+        },
+        "affair_title": {
+          "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "title": {
+          "de": "2022.STA.530: Art. 49d (neu) / art. 49d (nouveau)Rückweisungsantrag SVPProposition de renvoi UDCAblehnung / Rejet",
+          "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+        },
+        "results_absent": 0,
+        "results_yes": 60,
+        "id": 3701,
+        "affair_id": 130335,
+        "date": "2024-09-12T14:24:00",
+        "results_abstention": 0,
+        "results_no": 85
+      }
+    ]
+  }
+}

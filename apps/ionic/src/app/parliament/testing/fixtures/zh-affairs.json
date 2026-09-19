@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 3,
+    "total_records": 19313,
+    "has_more": true
+  },
+  "data": [
+    {
+      "state_name": {
+        "de": "Regierungsrat"
+      },
+      "title": {
+        "de": "Stellenabbau von Zimmer Biomet – Auswirkungen auf den Wirtschafts- und Industriestandort Zürich"
+      },
+      "id": 338597,
+      "type_name": {
+        "de": "Dringliche Anfrage"
+      },
+      "begin_date": "2026-09-14T00:00:00",
+      "number": "354/2026"
+    },
+    {
+      "state_name": {
+        "de": "Regierungsrat"
+      },
+      "title": {
+        "de": "Pflege von Grünstreifen und Böschungen entlang von Strassen und Wegen"
+      },
+      "id": 338600,
+      "type_name": {
+        "de": "Anfrage"
+      },
+      "begin_date": "2026-09-14T00:00:00",
+      "number": "349/2026"
+    },
+    {
+      "state_name": {
+        "de": "Regierungsrat"
+      },
+      "title": {
+        "de": "Wachstum der Zürcher Kantonalbank, Risikotragfähigkeit und Staatsgarantie"
+      },
+      "id": 338601,
+      "type_name": {
+        "de": "Anfrage"
+      },
+      "begin_date": "2026-09-14T00:00:00",
+      "number": "347/2026"
+    }
+  ]
+}

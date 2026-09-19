@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 3,
+    "total_records": 8185,
+    "has_more": true
+  },
+  "data": [
+    {
+      "state_name": {},
+      "title": {
+        "de": "Bericht der Justizkommission zum Budget 2027 und des Aufgaben-/Finanzplan 2028-2030 der Gerichtsbehörden und der Staatsanwaltschaft",
+        "fr": "Rapport de la Commission de justice sur le budget 2027 et le plan intégré mission-financement 2028-2030 des autorités judiciaires et du Ministère public"
+      },
+      "id": 338305,
+      "type_name": {
+        "de": "Bericht GR",
+        "fr": "Rapport GC"
+      },
+      "begin_date": "2026-09-11T21:27:44.845769",
+      "number": "2026.GRPARL.88"
+    },
+    {
+      "state_name": {},
+      "title": {
+        "de": "Methernitha in Linden: Schwerer Missbrauch, behördliches Wegschauen, fehlende Aufarbeitung – was unternimmt der Kanton Bern?",
+        "fr": "Methernitha à Linden : que fait le canton de Berne vu les graves abus, l'indifférence des autorités, l'absence de tout travail de mémoire ?"
+      },
+      "id": 338708,
+      "type_name": {
+        "de": "Interpellation",
+        "fr": "Interpellation"
+      },
+      "begin_date": "2026-09-11T00:00:00",
+      "number": "2026.GRPARL.604"
+    },
+    {
+      "state_name": {},
+      "title": {
+        "de": "Eine zeitgemässe Erbschaftssteuer für den Kanton Bern",
+        "fr": "Un impôt sur les successions moderne pour le canton de Berne"
+      },
+      "id": 338767,
+      "type_name": {
+        "de": "Motion",
+        "fr": "Motion"
+      },
+      "begin_date": "2026-09-10T00:00:00",
+      "number": "2026.GRPARL.591"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "active": true,
+  "firstname": "Mandy",
+  "body_key": "ZH",
+  "city": "Zürich",
+  "party_harmonized": {
+    "de": "Sozialdemokratische Partei",
+    "fr": "Parti Socialiste",
+    "it": "Partito Socialista",
+    "en": "Social Democratic Party of Switzerland"
+  },
+  "id": 17820,
+  "electoral_district": {
+    "de": "II Zürich 3+9"
+  },
+  "parliamentary_group_name": {
+    "de": "Fraktion SP"
+  },
+  "image_url_oparl": "https://files.openparldata.ch/images/persons/original/ZH-17820_v1.jpg",
+  "birthday": "1989-01-01",
+  "lastname": "Abou Shoak",
+  "occupation": {
+    "de": "Sozialarbeiterin"
+  },
+  "website_parliament_url": {
+    "de": "https://www.kantonsrat.zh.ch/mitglieder/mitglied/?id=b42ac118cf8f4afa8591237b0b4c8e7b"
+  },
+  "updated_at": "2026-09-15T04:59:37",
+  "party": {
+    "de": "SP"
+  },
+  "memberships": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 3,
+      "has_more": false
+    },
+    "data": [
+      {
+        "active": true,
+        "id": 75331,
+        "begin_date": "2023-05-08",
+        "role_name": {
+          "de": "Mitglied"
+        },
+        "type_harmonized_oparl_id": 2,
+        "group_name": {
+          "de": "Kommission für Justiz und öffentliche Sicherheit"
+        }
+      },
+      {
+        "active": true,
+        "id": 74452,
+        "begin_date": "2023-05-08",
+        "role_name": {
+          "de": "Mitglied"
+        },
+        "type_harmonized_oparl_id": 10,
+        "group_name": {
+          "de": "Kantonsrat Zürich",
+          "fr": "Kantonsrat Zürich",
+          "it": "Kantonsrat Zürich"
+        }
+      },
+      {
+        "active": true,
+        "id": 74094,
+        "begin_date": "2023-05-08",
+        "role_name": {
+          "de": "Mitglied"
+        },
+        "type_harmonized_oparl_id": 4,
+        "group_name": {
+          "de": "Fraktion SP"
+        }
+      }
+    ]
+  },
+  "interests": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 5,
+      "has_more": false
+    },
+    "data": [
+      {
+        "type_payment": {},
+        "id": 25207,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "SP Frauen Schweiz"
+        },
+        "role_name": {
+          "de": "Geschäftsleitung"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 25206,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "FIZ Fachstelle Frauenhandel und Frauenmigration"
+        },
+        "role_name": {
+          "de": "Co-Präsidentin"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 25205,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Bla*sh afro- und queer-feministisches Schwarzes Netzwerk"
+        },
+        "role_name": {
+          "de": "Vorstandsmitglied"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 25204,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "AvenirSocial Zürich & Schaffhausen"
+        },
+        "role_name": {
+          "de": "Regioleitung Zürich/Schaffhausen"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 25203,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Brava (ehemals Terre des Femmes)"
+        },
+        "role_name": {
+          "de": "Verantwortliche Bildung & Beratung"
+        },
+        "type": {}
+      }
+    ]
+  },
+  "person_images": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 1,
+      "has_more": false
+    },
+    "data": [
+      {
+        "latest": true,
+        "profile_url": "https://files.openparldata.ch/images/persons/profile/ZH-17820_v1.jpg"
+      }
+    ]
+  }
+}

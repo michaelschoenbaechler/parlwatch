@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 3,
+    "total_records": 525,
+    "has_more": true
+  },
+  "data": [
+    {
+      "affair_id": 335441,
+      "text_content": {
+        "de": "<b>Präsidentin.</b> Der Ordnungsantrag ist angenommen worden.<p>Dann noch rasch eine Information der SAK: Um 13.45 Uhr findet eine Sitzung in der Wandelhalle statt.<p>Gut, jetzt möchte ich die Nachmittagssitzung aber trotzdem noch offiziell eröffnen, das ist vor lauter Anträgen und Unvorhergesehenem noch nicht geschehen. Herzlich willkommen, ich hoffe, dass Sie alle – und auch der Regierungsrat – gut gespeist haben, und somit eröffne ich die Nachmittagssitzung. <i>(Die Präsidentin läutet die Glocke. / La présidente agite sa cloche.)</i><p>Jetzt kommen wir zu Traktandum 49. Das ist ein Kreditgeschäft der WEU, «Kantonsbeitrag zur Finanzierung der Feuerwehr-Sonderstützpunkte für die Personenrettung bei Unfällen. Objektkredit 2027–2030». Wir führen eine freie Debatte, weil dieser Kredit dem fakultativen Finanzreferendum untersteht. Ich gebe das Wort dem Kommissionssprecher, Grossrat André Roggli."
+      },
+      "date_start": "2026-09-08T11:36:03.873000",
+      "id": 2821361,
+      "affair": {
+        "meta": {
+          "offset": 0,
+          "limit": 100,
+          "total_records": 1,
+          "total_pages": 1,
+          "current_page": 1,
+          "has_more": false,
+          "next_page": null,
+          "prev_page": null,
+          "first_page": "https://api.openparldata.ch/v1/speeches/2821361?expand=affair&affair_offset=0&affair_limit=100",
+          "last_page": "https://api.openparldata.ch/v1/speeches/2821361?expand=affair&affair_offset=0&affair_limit=100",
+          "self": "https://api.openparldata.ch/v1/speeches/2821361?expand=affair&affair_offset=0&affair_limit=100"
+        },
+        "data": [
+          {
+            "title": {
+              "de": "Kantonsbeitrag zur Finanzierung der Feuerwehr-Sonderstützpunkte für Personenrettung bei Unfällen. Objektkredit 2027–2030",
+              "fr": "Subvention cantonale destinée au financement des centres d’intervention spéciaux de sapeurs-pompiers pour le sauvetage de personnes en cas d’accident. Crédit d’objet 2027-2030"
+            },
+            "number": "2025.WEU.4779"
+          }
+        ]
+      }
+    },
+    {
+      "affair_id": 296308,
+      "text_content": {
+        "de": "<b>Präsidentin.</b> Sie haben diese Motion abgelehnt."
+      },
+      "date_start": "2026-06-10T12:16:01.820000",
+      "id": 2812897,
+      "affair": {
+        "meta": {
+          "offset": 0,
+          "limit": 100,
+          "total_records": 1,
+          "total_pages": 1,
+          "current_page": 1,
+          "has_more": false,
+          "next_page": null,
+          "prev_page": null,
+          "first_page": "https://api.openparldata.ch/v1/speeches/2812897?expand=affair&affair_offset=0&affair_limit=100",
+          "last_page": "https://api.openparldata.ch/v1/speeches/2812897?expand=affair&affair_offset=0&affair_limit=100",
+          "self": "https://api.openparldata.ch/v1/speeches/2812897?expand=affair&affair_offset=0&affair_limit=100"
+        },
+        "data": [
+          {
+            "title": {
+              "de": "Ausweitung weiterer Tourismusorte untersuchen (Richtlinienmotion)",
+              "fr": "Liste des lieux à vocation touristique : est-ce envisageable de l`étoffer ? (Motion ayant valeur de directive)"
+            },
+            "number": "2025.GRPARL.526"
+          }
+        ]
+      }
+    },
+    {
+      "affair_id": 296308,
+      "text_content": {
+        "de": "<b>Präsidentin.</b> Wir kommen zur Abstimmung. Wer diese Motion annehmen will, stimmt Ja, wer sie ablehnt, stimmt Nein."
+      },
+      "date_start": "2026-06-10T12:15:37.900000",
+      "id": 2812899,
+      "affair": {
+        "meta": {
+          "offset": 0,
+          "limit": 100,
+          "total_records": 1,
+          "total_pages": 1,
+          "current_page": 1,
+          "has_more": false,
+          "next_page": null,
+          "prev_page": null,
+          "first_page": "https://api.openparldata.ch/v1/speeches/2812899?expand=affair&affair_offset=0&affair_limit=100",
+          "last_page": "https://api.openparldata.ch/v1/speeches/2812899?expand=affair&affair_offset=0&affair_limit=100",
+          "self": "https://api.openparldata.ch/v1/speeches/2812899?expand=affair&affair_offset=0&affair_limit=100"
+        },
+        "data": [
+          {
+            "title": {
+              "de": "Ausweitung weiterer Tourismusorte untersuchen (Richtlinienmotion)",
+              "fr": "Liste des lieux à vocation touristique : est-ce envisageable de l`étoffer ? (Motion ayant valeur de directive)"
+            },
+            "number": "2025.GRPARL.526"
+          }
+        ]
+      }
+    }
+  ]
+}
