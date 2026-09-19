@@ -1,9 +1,9 @@
 import { Component, computed, input } from '@angular/core';
-import { Vote } from 'swissparl';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 import { tallyVotings } from '../../models/vote-decision';
+import { LoadedVote } from '../../models/loaded-vote';
 import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 
 @Component({
@@ -18,13 +18,17 @@ import { VotingBarComponent } from '../voting-bar/voting-bar.component';
   ]
 })
 export class VoteCardComponent {
-  vote = input.required<Vote>();
+  vote = input.required<LoadedVote>();
 
   /**
    * The detail page already loads every ballot for its member list, so the
-   * bar is counted locally instead of going through the store's batch.
+   * bar is counted locally instead of going through the store's batch. A
+   * cantonal vote's official totals win over a count of its ballots, which
+   * some cantons publish incompletely.
    */
-  readonly tally = computed(() => tallyVotings(this.vote()?.Votings));
+  readonly tally = computed(
+    () => this.vote()?.tally ?? tallyVotings(this.vote()?.Votings)
+  );
 
   /**
    * What a yes/no vote stood for. The API stores these once in whichever

@@ -11,13 +11,18 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { filter, pipe, tap } from 'rxjs';
 import { switchMap, mergeMap } from 'rxjs/operators';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { Vote } from 'swissparl';
 import { tapResponse } from '@ngrx/operators';
 import {
   createDefaultRequestState,
   RequestState
 } from '../../../shared/models/request-state.model';
+import {
+  FEDERAL_PARLIAMENT_KEY,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
 import { VoteFilter, VoteService } from '../../services/votes.service';
+import { VoteFacade } from '../../services/votes.facade';
+import { LoadedVote } from '../../models/loaded-vote';
 import { talliesByVote, VoteTally } from '../../models/vote-decision';
 import {
   createErrorVotesRequestState,
@@ -39,18 +44,22 @@ import {
 } from './vote.vm-builder';
 
 export type VoteSlice = {
-  votesRequestState: RequestState<Vote[]>;
-  /** Per-vote decision counts, loaded in batches for the whole visible list. */
+  votesRequestState: RequestState<LoadedVote[]>;
+  /**
+   * Per-vote decision counts for federal votes, loaded in batches for the
+   * whole visible list. Cantonal votes carry their tally on the row itself.
+   */
   tallies: Record<number, VoteTally>;
-  selectedVoteRequestState: RequestState<Vote | null>;
+  selectedVoteRequestState: RequestState<LoadedVote | null>;
   query: VoteFilter;
 };
 
 const initialState: VoteSlice = {
-  votesRequestState: createDefaultRequestState<Vote[]>([]),
+  votesRequestState: createDefaultRequestState<LoadedVote[]>([]),
   tallies: {},
-  selectedVoteRequestState: createDefaultRequestState<Vote | null>(null),
+  selectedVoteRequestState: createDefaultRequestState<LoadedVote | null>(null),
   query: {
+    parliament: FEDERAL_PARLIAMENT_KEY,
     top: 10,
     skip: 0,
     searchTerm: ''
@@ -73,6 +82,7 @@ export const VoteStore = signalStore(
       pendingTallyIds: computed(() => {
         const tallies = store.tallies();
         return (store.votesRequestState().data ?? [])
+          .filter((vote) => vote.tally === undefined)
           .map((vote) => vote.ID)
           .filter(
             (id): id is number => id !== undefined && tallies[id] === undefined
@@ -83,12 +93,13 @@ export const VoteStore = signalStore(
   }),
   withMethods((store) => {
     const voteService = inject(VoteService);
+    const voteFacade = inject(VoteFacade);
 
     const _fetchVotes = rxMethod<VoteFilter>(
       pipe(
         tap(() => patchState(store, createLoadVotesRequestState())),
         switchMap((query) =>
-          voteService.getVotes(query).pipe(
+          voteFacade.getVotes(query).pipe(
             tapResponse({
               next: (votes) => {
                 const updaterFn =
@@ -135,12 +146,12 @@ export const VoteStore = signalStore(
       );
     };
 
-    const _selectVote = rxMethod<number>(
+    const _selectVote = rxMethod<{ parliament: ParliamentKey; id: number }>(
       pipe(
-        filter((id: number) => !_hasBallots(id)),
-        tap((id) => patchState(store, createLoadSelectedVoteState(id))),
-        mergeMap((id: number) =>
-          voteService.getVote(id).pipe(
+        filter(({ id }) => !_hasBallots(id)),
+        tap(({ id }) => patchState(store, createLoadSelectedVoteState(id))),
+        mergeMap(({ parliament, id }) =>
+          voteFacade.getVote(parliament, id).pipe(
             tapResponse({
               next: (vote) =>
                 patchState(store, createSuccessSelectedVoteState(vote)),
@@ -174,7 +185,22 @@ export const VoteStore = signalStore(
       updateQuery: (query: VoteFilter) =>
         patchState(store, patchQueryState(query)),
       resetQuery: () =>
-        patchState(store, () => ({ query: initialState.query })),
+        patchState(store, (state) => ({
+          query: { ...initialState.query, parliament: state.query.parliament }
+        })),
+      /**
+       * Point the list at another parliament, dropping the old list and its
+       * search term.
+       * @param parliament The parliament to list
+       */
+      setParliament: (parliament: ParliamentKey) =>
+        patchState(store, (state) => {
+          if (state.query.parliament === parliament) return {};
+          return {
+            votesRequestState: { ...state.votesRequestState, data: [] },
+            query: { ...initialState.query, parliament }
+          };
+        }),
       voteDetailViewModel(filter: VotingDecisionFilter) {
         return createVoteDetailVm(store.selectedVoteRequestState(), filter);
       }

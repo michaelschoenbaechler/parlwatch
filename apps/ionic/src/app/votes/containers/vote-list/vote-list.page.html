@@ -1,8 +1,17 @@
 <ng-container *transloco="let t;">
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{ t('votes.voteList.title') }}</ion-title>
+      <ion-title>
+        <app-parliament-title
+          [parliament]="parliament"
+          [title]="t('votes.voteList.title')"
+        />
+      </ion-title>
     </ion-toolbar>
+    <app-parliament-switcher
+      [selected]="parliament"
+      (parliamentChange)="onParliamentChange($event)"
+    />
     <ion-toolbar>
       <ion-searchbar
         #searchBar
@@ -36,8 +45,10 @@
         } @if (visibleRecentVotes().length > 0) {
         <p><small>{{ t('votes.voteList.recentlyViewed') }}</small></p>
         <ion-list inset="true" lines="full" class="recent-vote-list">
-          @for (vote of visibleRecentVotes(); track vote.id) {
-          <ion-item button detail="true" (click)="onRecentVoteClick(vote.id)">
+          @for (vote of visibleRecentVotes(); track vote.parliament + '-' +
+          vote.id) {
+          <ion-item button detail="true" (click)="onRecentVoteClick(vote)">
+            <app-canton-stripe slot="start" [parliament]="vote.parliament" />
             <ion-icon name="stats-chart-outline" slot="start" size="small" />
             <ion-label class="ion-text-wrap">{{ vote.title }}</ion-label>
           </ion-item>
@@ -52,7 +63,9 @@
         (click)="closeSuggestions()"
       ></button>
     </div>
-    } @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
+    }
+    <app-canton-hint-card />
+    @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
     (!viewModel().noContent) {
     <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
       <ion-refresher-content />
@@ -66,6 +79,13 @@
     >
       <ion-infinite-scroll-content />
     </ion-infinite-scroll>
+    } @else if (viewModel().noVotingsPublished && canton) {
+    <app-inline-notice
+      tone="info"
+      [message]="t('parliament.noVotings', { parliament: canton.name })"
+      [linkLabel]="t('parliament.officialSite')"
+      [linkUrl]="canton.websiteUrl"
+    />
     } @else {
     <app-no-content-screen (resetFilter)="resetFilter()" />
     } } @else {

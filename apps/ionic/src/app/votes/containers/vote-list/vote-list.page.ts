@@ -4,14 +4,16 @@ import {
   computed,
   effect,
   inject,
+  OnInit,
   signal,
   viewChild
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   InfiniteScrollCustomEvent,
   IonicModule,
   IonSearchbar,
+  NavController,
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -22,7 +24,27 @@ import { ErrorScreenComponent } from '../../../shared/components/error-screen/er
 import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
 import { VoteStore } from '../../store/vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
-import { filterRecent } from '../../../shared/store/recent/recent.store';
+import {
+  filterRecent,
+  RecentEntry
+} from '../../../shared/store/recent/recent.store';
+import { InlineNoticeComponent } from '../../../shared/components/inline-notice/inline-notice.component';
+import { ParliamentStore } from '../../../parliament/store/parliament.store';
+import {
+  cantonOf,
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
+import {
+  detailPath,
+  listPath,
+  routeParliament
+} from '../../../parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
+import { ParliamentSwitcherComponent } from '../../../parliament/components/parliament-switcher/parliament-switcher.component';
+import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
+import { CantonHintCardComponent } from '../../../parliament/components/canton-hint-card/canton-hint-card.component';
+import { CantonStripeComponent } from '../../../parliament/components/canton-stripe/canton-stripe.component';
 
 /** How many recent searches / votes the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;
@@ -38,16 +60,33 @@ const MAX_VISIBLE_RECENTS = 3;
     LoadingScreenComponent,
     ErrorScreenComponent,
     NoContentScreenComponent,
-    TranslocoDirective
+    TranslocoDirective,
+    InlineNoticeComponent,
+    ParliamentSwitcherComponent,
+    ParliamentTitleComponent,
+    CantonHintCardComponent,
+    CantonStripeComponent
   ],
+  hostDirectives: [CantonalThemeDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VoteListPage {
+export class VoteListPage implements OnInit {
   readonly searchBar = viewChild.required<IonSearchbar>('searchBar');
 
   readonly store = inject(VoteStore);
   readonly recentStore = inject(RecentVoteStore);
+  readonly parliamentStore = inject(ParliamentStore);
   readonly router = inject(Router);
+  private readonly navController = inject(NavController);
+  private readonly route = inject(ActivatedRoute);
+
+  /** The parliament this page lists, fixed for the page's lifetime. */
+  readonly parliament: ParliamentKey = routeParliament(this.route);
+
+  /** Name and website of the canton, for the "publishes no votes" notice. */
+  readonly canton = isCantonal(this.parliament)
+    ? cantonOf(this.parliament)
+    : null;
 
   readonly viewModel = computed(() => this.store.votesListViewModel());
 
@@ -93,6 +132,25 @@ export class VoteListPage {
     });
   }
 
+  ngOnInit() {
+    // The route is the source of truth; the store follows it so the other
+    // tabs open on the same parliament.
+    this.parliamentStore.setActiveParliament(this.parliament);
+    this.store.setParliament(this.parliament);
+  }
+
+  /**
+   * Switch to another parliament's list. Replaces the tab's stack rather
+   * than pushing onto it, so back never walks through old parliaments.
+   * @param parliament The parliament picked in the switcher
+   */
+  onParliamentChange(parliament: ParliamentKey) {
+    this.parliamentStore.setActiveParliament(parliament);
+    this.navController
+      .navigateRoot(listPath('votes', parliament))
+      .catch(console.error);
+  }
+
   retrySearch() {
     this.store.reloadVotes(this.store.query());
   }
@@ -112,9 +170,16 @@ export class VoteListPage {
     this.closeSuggestions();
   }
 
-  onRecentVoteClick(id: number) {
+  /**
+   * Open a recently viewed vote in its own parliament, whichever parliament
+   * the list shows. The switcher is left alone on purpose.
+   * @param entry The tapped history entry
+   */
+  onRecentVoteClick(entry: RecentEntry) {
     this.closeSuggestions();
-    this.onClickVote(id);
+    this.router
+      .navigate(detailPath('votes', entry.parliament ?? 'ch', entry.id))
+      .catch(console.error);
   }
 
   onSearch(event: any) {
@@ -154,6 +219,8 @@ export class VoteListPage {
   }
 
   onClickVote(id: number) {
-    this.router.navigate(['/layout/votes/detail', id]);
+    this.router
+      .navigate(detailPath('votes', this.parliament, id))
+      .catch(console.error);
   }
 }

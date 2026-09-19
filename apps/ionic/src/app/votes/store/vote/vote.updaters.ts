@@ -1,5 +1,4 @@
 import { PartialStateUpdater } from '@ngrx/signals';
-import { Vote } from 'swissparl';
 import {
   onRequestError,
   onRequestLoad,
@@ -7,6 +6,7 @@ import {
 } from '../../../shared/models/request-state.model';
 import { VoteFilter } from '../../services/votes.service';
 import { VoteTally } from '../../models/vote-decision';
+import { LoadedVote } from '../../models/loaded-vote';
 import { VoteSlice } from '.';
 
 /**
@@ -29,7 +29,7 @@ export function createLoadVotesRequestState(): PartialStateUpdater<VoteSlice> {
  * @returns Partial updater to append data and mark success
  */
 export function createSuccessVotesAppendRequestState(
-  votes: Vote[]
+  votes: LoadedVote[]
 ): PartialStateUpdater<VoteSlice> {
   return (state) => ({
     ...state,
@@ -46,7 +46,7 @@ export function createSuccessVotesAppendRequestState(
  * @returns Partial updater to replace data and mark success
  */
 export function createSuccessVotesRequestState(
-  votes: Vote[]
+  votes: LoadedVote[]
 ): PartialStateUpdater<VoteSlice> {
   return (state) => ({
     ...state,
@@ -80,7 +80,7 @@ export function createLoadSelectedVoteState(
  * @returns Partial updater setting the detail request to success
  */
 export function createSuccessSelectedVoteState(
-  vote: Vote
+  vote: LoadedVote
 ): PartialStateUpdater<VoteSlice> {
   return (state) => ({
     ...state,
