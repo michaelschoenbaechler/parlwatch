@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 3,
+    "total_records": 2652,
+    "has_more": true
+  },
+  "data": [
+    {
+      "affair_title": {
+        "de": "Solaranlagen in geschützten Ortsbildern"
+      },
+      "title": {
+        "de": "Solaranlagen in geschützten Ortsbildern"
+      },
+      "results_absent": 15,
+      "results_yes": 164,
+      "id": 105953,
+      "affair_id": 91382,
+      "date": "2026-09-14T07:42:13",
+      "results_abstention": 0,
+      "results_no": 1
+    },
+    {
+      "affair_title": {
+        "de": "Wahl Mitglied Baurekursgericht (BRG) für Adrian Bergmann"
+      },
+      "title": {
+        "de": "Wahl Mitglied Baurekursgericht (BRG) für Adrian Bergmann"
+      },
+      "results_absent": 23,
+      "results_yes": 157,
+      "id": 105954,
+      "affair_id": 337845,
+      "date": "2026-09-14T06:19:39",
+      "results_abstention": 0,
+      "results_no": 0
+    },
+    {
+      "affair_title": {
+        "de": "Gemeindegesetz (GG), Änderung, Virtuelle Behördensitzungen"
+      },
+      "title": {
+        "de": "Gemeindegesetz (GG), Änderung, Virtuelle Behördensitzungen"
+      },
+      "results_absent": 3,
+      "results_yes": 119,
+      "id": 105760,
+      "affair_id": 218077,
+      "date": "2026-09-07T09:33:13",
+      "results_abstention": 0,
+      "results_no": 58
+    }
+  ]
+}

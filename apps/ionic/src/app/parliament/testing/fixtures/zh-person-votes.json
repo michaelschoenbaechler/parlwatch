@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 3,
+    "total_records": 2276,
+    "has_more": true
+  },
+  "data": [
+    {
+      "vote": "yes",
+      "voting_id": 105954,
+      "id": 69976881,
+      "voting": [
+        {
+          "title": {
+            "de": "Wahl Mitglied Baurekursgericht (BRG) für Adrian Bergmann"
+          },
+          "affair_id": 337845,
+          "date": "2026-09-14T06:19:39",
+          "affair_title": {
+            "de": "Wahl Mitglied Baurekursgericht (BRG) für Adrian Bergmann"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "voting_id": 105953,
+      "id": 69976880,
+      "voting": [
+        {
+          "title": {
+            "de": "Solaranlagen in geschützten Ortsbildern"
+          },
+          "affair_id": 91382,
+          "date": "2026-09-14T07:42:13",
+          "affair_title": {
+            "de": "Solaranlagen in geschützten Ortsbildern"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "no",
+      "voting_id": 105761,
+      "id": 67421656,
+      "voting": [
+        {
+          "title": {
+            "de": "Gesetz über die Gerichts- und Behördenorganisation im Zivil- und Strafprozess (GOG), Änderung, Elektronische Verfahrenshandlungen"
+          },
+          "affair_id": 218891,
+          "date": "2026-09-07T07:49:31",
+          "affair_title": {
+            "de": "Gesetz über die Gerichts- und Behördenorganisation im Zivil- und Strafprozess (GOG), Änderung, Elektronische Verfahrenshandlungen"
+          }
+        }
+      ]
+    }
+  ]
+}

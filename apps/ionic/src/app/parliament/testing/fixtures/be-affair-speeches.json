@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 200,
+    "total_records": 247,
+    "has_more": true
+  },
+  "data": [
+    {
+      "person_id": 7349,
+      "text_content": {
+        "de": "<i><b>1. Lesung / 1</b><b>re</b><b> lecture</b></i><p><b>Präsidentin.</b> Der Herr Staatsschreiber, Christoph Auer, und die Vizestaatsschreiberin, Mirjam Tschumi, sind eingetroffen. Von daher fahren wir weiter mit Traktandum 12, mit dem Gesetz über die politischen Rechte (PRG). Es ist die 1. Lesung. Es geht um Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen. Die zuständige Komm"
+      },
+      "person_role": {},
+      "id": 2797897,
+      "date_start": "2024-09-12T09:23:40.225000",
+      "person": {
+        "meta": {
+          "offset": 0,
+          "limit": 100,
+          "total_records": 1,
+          "has_more": false
+        },
+        "data": [
+          {
+            "fullname": "Dominique Bühler",
+            "party": {
+              "de": "GRÜNE",
+              "fr": "Les VERT-E-S"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "person_id": 7065,
+      "text_content": {
+        "de": "<b><i><i><b>Eintretens- und Grundsatzdebatte / Débat d’entrée en matière et débat de principe</b></i></i></b><p><b>Simon Buri, Konolfingen (GLP),</b> SAK-Sprecher. Transparenz schafft Vertrauen, und Transparenz ist der Bevölkerung ein Anliegen. Das haben verschiedene Volksabstimmungen in anderen Kantonen gezeigt, so z. B. 2018 in unserem Nachbarkanton Freiburg und im gleichen Jahr auch im Kanton S"
+      },
+      "person_role": {},
+      "id": 2797836,
+      "date_start": "2024-09-12T09:24:40.769000",
+      "person": {
+        "meta": {
+          "offset": 0,
+          "limit": 100,
+          "total_records": 1,
+          "has_more": false
+        },
+        "data": [
+          {
+            "fullname": "Simon Buri",
+            "party": {
+              "de": "GLP",
+              "fr": "PVL"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "person_id": 7349,
+      "text_content": {
+        "de": "<b>Präsidentin.</b> Dann hätten die Antragsteller des Nichteintretensantrags das Wort, wenn es von der SVP gewünscht ist. – Es ist gewünscht, okay: Grossrat Hans Schori."
+      },
+      "person_role": {},
+      "id": 2797845,
+      "date_start": "2024-09-12T09:26:04.012000",
+      "person": {
+        "meta": {
+          "offset": 0,
+          "limit": 100,
+          "total_records": 1,
+          "has_more": false
+        },
+        "data": [
+          {
+            "fullname": "Dominique Bühler",
+            "party": {
+              "de": "GRÜNE",
+              "fr": "Les VERT-E-S"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

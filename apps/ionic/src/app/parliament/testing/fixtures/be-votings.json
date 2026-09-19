@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 3,
+    "total_records": 1586,
+    "has_more": true
+  },
+  "data": [
+    {
+      "affair_title": {
+        "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+        "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+      },
+      "title": {
+        "de": "2022.STA.530: 1. Lesung / 1re lectureAnnahme / Adoption",
+        "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+      },
+      "results_absent": 2,
+      "results_yes": 89,
+      "id": 4206,
+      "affair_id": 130335,
+      "date": "2024-09-12T15:23:53",
+      "results_abstention": 2,
+      "results_no": 50
+    },
+    {
+      "affair_title": {
+        "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+        "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+      },
+      "title": {
+        "de": "2022.STA.530: Art. T2-2 (neu) / art. T2-2 (nouveau)Rückweisungsantrag FDPProposition de renvoi PLRAnnahme / Adoption",
+        "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+      },
+      "results_absent": 1,
+      "results_yes": 74,
+      "id": 3469,
+      "affair_id": 130335,
+      "date": "2024-09-12T15:17:03",
+      "results_abstention": 1,
+      "results_no": 67
+    },
+    {
+      "affair_title": {
+        "de": "Gesetz über die politischen Rechte (PRG) (Änderung) (Transparenz bei der Finanzierung von Wahl- und Abstimmungskampagnen)",
+        "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+      },
+      "title": {
+        "de": "2022.STA.530: Art. T2 und Art. T2-1 / art. T2 et art. T2-1Antrag SAK-Minderheit (Ja), Antrag SAK-Mehrheit und Regierungsrat (Nein)Proposition minorité de la CIRE (oui), proposition majorité de la CIRE et Conseil-exécutif (non)Annahme Antrag SAK-Mehrheit und RegierungsratAdoption proposition majorité de la CIRE et Conseil-exécutif",
+        "fr": "Loi sur les droits politiques (LDP) (Modification) (Transparence du financement des campagnes de votation et des campagnes électorales)"
+      },
+      "results_absent": 1,
+      "results_yes": 62,
+      "id": 4244,
+      "affair_id": 130335,
+      "date": "2024-09-12T15:07:22",
+      "results_abstention": 1,
+      "results_no": 77
+    }
+  ]
+}

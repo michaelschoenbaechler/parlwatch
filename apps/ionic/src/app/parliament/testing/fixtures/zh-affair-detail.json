@@ -1,0 +1,300 @@
+{
+  "url_external": {
+    "de": "https://www.kantonsrat.zh.ch/geschaefte/geschaeft/?id=fcbfd04d7eeb4e1e9cc21fdc4a6ac75b"
+  },
+  "state_name": {
+    "de": "Kantonsrat"
+  },
+  "body_key": "ZH",
+  "title": {
+    "de": "Solaranlagen in geschützten Ortsbildern"
+  },
+  "id": 91382,
+  "updated_at": "2026-09-18T01:02:27",
+  "type_name": {
+    "de": "Motion"
+  },
+  "begin_date": "2020-11-23T00:00:00",
+  "number": "429/2020",
+  "contributors": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 5,
+      "has_more": false
+    },
+    "data": [
+      {
+        "person_id": 17614,
+        "position": 1,
+        "fullname": "Baudirektion",
+        "id": 1085311,
+        "role_harmonized": {
+          "de": "Federführendes Departement",
+          "fr": "Département responsable",
+          "it": "Dipartimento responsabile",
+          "rm": "Departament responsabel",
+          "en": "Leading Department"
+        },
+        "role": {
+          "de": "Direktion",
+          "fr": "Direction"
+        },
+        "party": {},
+        "type": "group"
+      },
+      {
+        "person_id": 17614,
+        "position": 4,
+        "fullname": "Farid Zeroual",
+        "id": 796470,
+        "role_harmonized": {
+          "de": "Urheber/in",
+          "fr": "Auteur",
+          "it": "Autore",
+          "rm": "Autur",
+          "en": "Author"
+        },
+        "role": {
+          "de": "Mitunterzeichnerin / Mitunterzeichner"
+        },
+        "party": {
+          "de": "Die Mitte"
+        },
+        "type": "person"
+      },
+      {
+        "person_id": 17796,
+        "position": 3,
+        "fullname": "Markus Schaaf",
+        "id": 796469,
+        "role_harmonized": {
+          "de": "Urheber/in",
+          "fr": "Auteur",
+          "it": "Autore",
+          "rm": "Autur",
+          "en": "Author"
+        },
+        "role": {
+          "de": "Mitunterzeichnerin / Mitunterzeichner"
+        },
+        "party": {
+          "de": "EVP"
+        },
+        "type": "person"
+      },
+      {
+        "person_id": 18138,
+        "position": 2,
+        "fullname": "Domenik Ledergerber",
+        "id": 796468,
+        "role_harmonized": {
+          "de": "Urheber/in",
+          "fr": "Auteur",
+          "it": "Autore",
+          "rm": "Autur",
+          "en": "Author"
+        },
+        "role": {
+          "de": "Mitunterzeichnerin / Mitunterzeichner"
+        },
+        "party": {
+          "de": "SVP"
+        },
+        "type": "person"
+      }
+    ]
+  },
+  "events": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 10,
+      "has_more": false
+    },
+    "data": [
+      {
+        "position": 1,
+        "title": {
+          "de": "Eingereicht"
+        },
+        "title_harmonized_id": 1,
+        "id": 580528,
+        "date": "2020-11-23T00:00:00",
+        "title_harmonized": {
+          "de": "Eingereicht",
+          "fr": "Déposé",
+          "it": "Presentato",
+          "en": "Submitted"
+        },
+        "actor": {}
+      },
+      {
+        "position": 2,
+        "title": {
+          "de": "Stellungnahme Regierungsrat"
+        },
+        "title_harmonized_id": 29,
+        "id": 580529,
+        "date": "2021-03-03T00:00:00",
+        "title_harmonized": {
+          "de": "Antrag: Ablehnen",
+          "fr": "Proposition : Rejeter",
+          "it": "Proposta: respingere",
+          "en": "Motion: Reject"
+        },
+        "actor": {
+          "de": "Regierung"
+        }
+      },
+      {
+        "position": 3,
+        "title": {
+          "de": "Bereit zur Traktandierung"
+        },
+        "title_harmonized_id": 47,
+        "id": 903027,
+        "date": "2021-04-12T08:15:00",
+        "title_harmonized": {
+          "de": "Bereit zur Traktandierung",
+          "fr": "Prêt pour l'ordre du jour",
+          "it": "Pronto per l'ordine del giorno",
+          "en": "Ready for the agenda"
+        },
+        "actor": {
+          "de": "Parlament"
+        }
+      },
+      {
+        "position": 5,
+        "title": {
+          "de": "Überweisung an Regierungsrat mit 93 JA, 80 NEIN, 0 ENTH."
+        },
+        "title_harmonized_id": 26,
+        "id": 580531,
+        "date": "2023-01-30T00:00:00",
+        "title_harmonized": {
+          "de": "Überwiesen",
+          "fr": "Transférer",
+          "it": "Trasmesso",
+          "en": "Transferred"
+        },
+        "actor": {
+          "de": "Parlament"
+        }
+      }
+    ]
+  },
+  "docs": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 8,
+      "has_more": false
+    },
+    "data": [
+      {
+        "id": 899101,
+        "date": "2026-04-14T00:00:00",
+        "url": "https://parlzhcdws.cmicloud.ch/parlzh5/cdws/Files/a3079b8f50d04ab79050839bdb7bd375-332/1/pdf",
+        "name": "Antrag_KPB_429d-2020_Solaranlagen_in_geschuetzten_Ortsbildern",
+        "url_oparl": "https://files.openparldata.ch/doc/ZH/32ed34374da3ea54e7bb39e5627f698e9c77857bfdec0cb5a23fad8d1db01a44"
+      },
+      {
+        "id": 590489,
+        "date": "2025-09-24T00:00:00",
+        "url": "https://parlzhcdws.cmicloud.ch/parlzh5/cdws/Files/4437aef67d1c46b593eef59dd3c797a8-332/1/pdf",
+        "name": "Vorlage_RR_429c-2020_Solaranlagen_in_geschuetzten_Ortsbildern",
+        "url_oparl": "https://files.openparldata.ch/doc/ZH/4e5435846a44c9647d5b6b09e2794c5adfa2cb44744c9662a22748c52408eff2"
+      },
+      {
+        "id": 473598,
+        "date": "2025-02-03T00:00:00",
+        "url": "https://parlzhcdws.cmicloud.ch/parlzh5/cdws/Files/f910dfa12e774be5a807affa7f5b55af-332/4/pdf",
+        "name": "KR_Teilprotokoll_2025-02-03_429b-2020_Solaranlagen_in_geschuetzten_Ortsbildern",
+        "url_oparl": "https://files.openparldata.ch/doc/ZH/ac16d8e75e0cf1b12467e93d6d6f5dd7ac31c2f9a8aa8ff9b5dd9f6fb711a109"
+      },
+      {
+        "id": 329995,
+        "date": "2021-03-03T00:00:00",
+        "url": "https://parlzhcdws.cmicloud.ch/parlzh5/cdws/Files/44d93fd2e879429fa1d63a623702c7cb-332/1/pdf",
+        "name": "Stellungnahme_RR_429-2020_Solaranlagen_in_geschuetzten_Ortsbildern",
+        "url_oparl": "https://files.openparldata.ch/doc/ZH/d7158e5a56213138eab8a3e9f3e7a391dab1cc88faebfbad354753ceaed64fd1"
+      }
+    ]
+  },
+  "texts": null,
+  "speeches": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 26,
+      "has_more": false
+    },
+    "data": [
+      {
+        "person_id": null,
+        "text_content": {
+          "de": "<p><b>Der Kantonsrat stimmt dem Antrag mit 164: 1 Stimmen (bei 0 Enthaltungen) zu. </b></p>"
+        },
+        "id": 2820401
+      },
+      {
+        "person_id": 17711,
+        "text_content": {},
+        "id": 2820402
+      },
+      {
+        "person_id": 17711,
+        "text_content": {},
+        "id": 2820400
+      }
+    ]
+  },
+  "votings": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 2,
+      "has_more": false
+    },
+    "data": [
+      {
+        "url_external": {
+          "de": "https://zh.recapp.ch/shareparl?agendaItemUid=487bb552-c419-4ee0-a7d1-6889bddf1264&segmentUid=b6455fbc-3ae3-45ac-8f64-ee9ae10fcc50"
+        },
+        "affair_title": {
+          "de": "Solaranlagen in geschützten Ortsbildern"
+        },
+        "title": {
+          "de": "Solaranlagen in geschützten Ortsbildern"
+        },
+        "results_absent": 15,
+        "results_yes": 164,
+        "id": 105953,
+        "affair_id": 91382,
+        "date": "2026-09-14T07:42:13",
+        "results_abstention": 0,
+        "results_no": 1
+      },
+      {
+        "url_external": {
+          "de": "https://parlzhcdws.cmicloud.ch/parlzh5/cdws/Files/d89c90141e1943c09b385cdf35f51439-332/1/pdf"
+        },
+        "affair_title": {
+          "de": "Solaranlagen in geschützten Ortsbildern"
+        },
+        "title": {
+          "de": "Solaranlagen in geschützten Ortsbildern"
+        },
+        "results_absent": 7,
+        "results_yes": 93,
+        "id": 48619,
+        "affair_id": 91382,
+        "date": "2023-01-30T16:14:23",
+        "results_abstention": 0,
+        "results_no": 80
+      }
+    ]
+  }
+}

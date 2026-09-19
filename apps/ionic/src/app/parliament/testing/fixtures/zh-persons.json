@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 3,
+    "total_records": 208,
+    "has_more": true
+  },
+  "data": [
+    {
+      "firstname": "Mandy",
+      "party_harmonized": {
+        "de": "Sozialdemokratische Partei",
+        "fr": "Parti Socialiste",
+        "it": "Partito Socialista",
+        "en": "Social Democratic Party of Switzerland"
+      },
+      "id": 17820,
+      "electoral_district": {
+        "de": "II Zürich 3+9"
+      },
+      "lastname": "Abou Shoak",
+      "party": {
+        "de": "SP"
+      }
+    },
+    {
+      "firstname": "Pia",
+      "party_harmonized": {
+        "de": "Sozialdemokratische Partei",
+        "fr": "Parti Socialiste",
+        "it": "Partito Socialista",
+        "en": "Social Democratic Party of Switzerland"
+      },
+      "id": 18218,
+      "electoral_district": {
+        "de": "II Zürich 3+9"
+      },
+      "lastname": "Ackermann",
+      "party": {
+        "de": "SP"
+      }
+    },
+    {
+      "firstname": "Ruth",
+      "party_harmonized": {
+        "de": "Die Mitte",
+        "fr": "Le Centre",
+        "it": "Alleanza del Centro",
+        "en": "The Centre"
+      },
+      "id": 17756,
+      "electoral_district": {
+        "de": "VI Zürich 11+12"
+      },
+      "lastname": "Ackermann",
+      "party": {
+        "de": "Die Mitte"
+      }
+    }
+  ]
+}

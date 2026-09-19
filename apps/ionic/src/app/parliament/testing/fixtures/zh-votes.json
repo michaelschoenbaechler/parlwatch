@@ -1,0 +1,250 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 500,
+    "total_records": 180,
+    "has_more": false
+  },
+  "data": [
+    {
+      "vote": "yes",
+      "person_id": 23987,
+      "person_party": {
+        "de": "SP"
+      },
+      "person_fullname": "Advije Delihasani-Ajdari",
+      "id": 69976610,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Sozialdemokratische Partei",
+            "fr": "Parti Socialiste",
+            "it": "Partito Socialista",
+            "en": "Social Democratic Party of Switzerland"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 18151,
+      "person_party": {
+        "de": "FDP"
+      },
+      "person_fullname": "Alexander Jäger",
+      "id": 69976828,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "FDP.Die Liberalen",
+            "fr": "PLR.Les Libéraux-Radicaux",
+            "it": "PLR.I Liberali Radicali",
+            "en": "FDP.The Liberals"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 17841,
+      "person_party": {
+        "de": "SVP"
+      },
+      "person_fullname": "Alexander Seiler",
+      "id": 69976781,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Schweizerische Volkspartei",
+            "fr": "Union démocratique du centre",
+            "it": "Unione democratica di centro",
+            "en": "Swiss People's Party"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 17767,
+      "person_party": {
+        "de": "Die Mitte"
+      },
+      "person_fullname": "Alexia Bischof",
+      "id": 69976739,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Die Mitte",
+            "fr": "Le Centre",
+            "it": "Alleanza del Centro",
+            "en": "The Centre"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 18045,
+      "person_party": {
+        "de": "GLP"
+      },
+      "person_fullname": "Andrea Gisler",
+      "id": 69976753,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Grünliberale Partei",
+            "fr": "Parti vert’libéral",
+            "it": "Partito Verde Liberale",
+            "en": "Green Liberal Party of Switzerland"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 17510,
+      "person_party": {
+        "de": "EVP"
+      },
+      "person_fullname": "Andrea Grossen-Aerni",
+      "id": 69976583,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Evangelische Volkspartei",
+            "fr": "Parti Evangelique",
+            "it": "Partito Evangelico",
+            "en": "Evangelical People's Party of Switzerland"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 17770,
+      "person_party": {
+        "de": "Grüne"
+      },
+      "person_fullname": "Benjamin Krähenmann",
+      "id": 69976745,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Die Grünen",
+            "fr": "Les Verts",
+            "it": "I Verdi",
+            "en": "Green Party of Switzerland"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 17578,
+      "person_party": {
+        "de": "AL"
+      },
+      "person_fullname": "Gianna Berger",
+      "id": 69976634,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Alternative Linke",
+            "fr": "La Gauche",
+            "it": "La Sinistra",
+            "en": "Alternative Left"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "yes",
+      "person_id": 17447,
+      "person_party": {
+        "de": "EDU"
+      },
+      "person_fullname": "Hans Egli",
+      "id": 69976532,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Eidgenössisch-Demokratische Union",
+            "fr": "Union Démocratique Fédérale",
+            "it": "Unione Democratica Federale",
+            "en": "Federal Democratic Union of Switzerland"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "absent",
+      "person_id": 22329,
+      "person_party": {
+        "de": "Die Mitte"
+      },
+      "person_fullname": "Claudia Bodmer-Furrer",
+      "id": 69976528,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Die Mitte",
+            "fr": "Le Centre",
+            "it": "Alleanza del Centro",
+            "en": "The Centre"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "absent",
+      "person_id": 17590,
+      "person_party": {
+        "de": "GLP"
+      },
+      "person_fullname": "Cristina Cortellini",
+      "id": 69976644,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Grünliberale Partei",
+            "fr": "Parti vert’libéral",
+            "it": "Partito Verde Liberale",
+            "en": "Green Liberal Party of Switzerland"
+          }
+        }
+      ]
+    },
+    {
+      "vote": "no",
+      "person_id": 17431,
+      "person_party": {
+        "de": "EVP"
+      },
+      "person_fullname": "Daniel Sommer",
+      "id": 69976522,
+      "voting_id": 105953,
+      "person": [
+        {
+          "party_harmonized": {
+            "de": "Evangelische Volkspartei",
+            "fr": "Parti Evangelique",
+            "it": "Partito Evangelico",
+            "en": "Evangelical People's Party of Switzerland"
+          }
+        }
+      ]
+    }
+  ]
+}

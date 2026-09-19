@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "offset": 0,
+    "limit": 50,
+    "total_records": 26,
+    "has_more": false
+  },
+  "data": [
+    {
+      "legislative_name": {
+        "de": "Grosser Rat",
+        "fr": "Grand Conseil",
+        "it": "Gran Consiglio",
+        "en": "Grand Council"
+      },
+      "body_key": "AG",
+      "id": 250,
+      "name": {
+        "de": "Aargau",
+        "en": "Aargau",
+        "fr": "Argovie",
+        "it": "Argovia"
+      },
+      "flag_image_oparl_url": "https://files.openparldata.ch/images/flags/original/250.svg",
+      "type": "canton"
+    },
+    {
+      "legislative_name": {
+        "de": "Kantonsrat",
+        "fr": "Conseil du canton",
+        "it": "Consiglio cantonale",
+        "en": "Cantonal Council"
+      },
+      "body_key": "AR",
+      "id": 252,
+      "name": {
+        "de": "Appenzell Ausserrhoden",
+        "en": "Appenzell Ausserrhoden",
+        "fr": "Appenzell Rhodes-Ext",
+        "it": "Appenzello Esterno"
+      },
+      "flag_image_oparl_url": "https://files.openparldata.ch/images/flags/original/252.svg",
+      "type": "canton"
+    },
+    {
+      "legislative_name": {
+        "de": "Grosser Rat",
+        "fr": "Grand Conseil",
+        "it": "Gran Consiglio",
+        "en": "Grand Council"
+      },
+      "body_key": "AI",
+      "id": 251,
+      "name": {
+        "de": "Appenzell Innerrhoden",
+        "en": "Appenzell Innerrhoden",
+        "fr": "Appenzell Rhodes-Int",
+        "it": "Appenzello Interno"
+      },
+      "flag_image_oparl_url": "https://files.openparldata.ch/images/flags/original/251.svg",
+      "type": "canton"
+    }
+  ]
+}

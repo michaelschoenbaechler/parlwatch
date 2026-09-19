@@ -1,0 +1,233 @@
+{
+  "active": true,
+  "firstname": "Anne",
+  "body_key": "BE",
+  "city": "Zweisimmen",
+  "party_harmonized": {
+    "de": "Schweizerische Volkspartei",
+    "fr": "Union démocratique du centre",
+    "it": "Unione democratica di centro",
+    "en": "Swiss People's Party"
+  },
+  "id": 7472,
+  "electoral_district": {
+    "de": "Oberland",
+    "fr": "Oberland"
+  },
+  "parliamentary_group_name": {
+    "de": "SVP",
+    "fr": "UDC"
+  },
+  "image_url_oparl": "https://files.openparldata.ch/images/persons/original/BE-7472_v1.jpg",
+  "birthday": "1961-01-01",
+  "lastname": "Speiser-Niess",
+  "occupation": {
+    "de": "Familienfrau / Projektberaterin",
+    "fr": "femme au foyer / conseillère de projet"
+  },
+  "website_parliament_url": {
+    "de": "https://www.gr.be.ch/de/start/grosser-rat/mitglieder/mitgliedersuche/mitgliederdetail.html?guid=c12d2f5a55aa4e76bc755ca91008592c",
+    "fr": "https://www.gr.be.ch/de/start/grosser-rat/mitglieder/mitgliedersuche/mitgliederdetail.html?guid=c12d2f5a55aa4e76bc755ca91008592c"
+  },
+  "updated_at": "2026-09-18T02:53:49",
+  "party": {
+    "de": "SVP",
+    "fr": "UDC"
+  },
+  "memberships": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 17,
+      "has_more": false
+    },
+    "data": [
+      {
+        "active": true,
+        "id": 279548,
+        "begin_date": "2026-06-29",
+        "role_name": {
+          "de": "Mitglied",
+          "fr": "Membre"
+        },
+        "type_harmonized_oparl_id": 2,
+        "group_name": {
+          "de": "Kommission für Staatspolitik und Aussenbeziehungen - Ausschuss Interparlamentarische Konferenz der Nordwestschweiz",
+          "fr": "Commission des institutions politiques et des relations extérieures - Section de la Conférence interparlementaire du Nord-Ouest de la Suisse"
+        }
+      },
+      {
+        "active": true,
+        "id": 279002,
+        "begin_date": "2026-06-01",
+        "role_name": {
+          "de": "Grossratspräsident/in",
+          "fr": "Président(e) du Grand Conseil"
+        },
+        "type_harmonized_oparl_id": 10,
+        "group_name": {
+          "de": "Grosser Rat - Präsidium",
+          "fr": "Présidence / Direction du Bureau du Grand Conseil"
+        }
+      },
+      {
+        "active": true,
+        "id": 278766,
+        "begin_date": "2026-06-01",
+        "role_name": {
+          "de": "Präsident/in",
+          "fr": "Président(e)"
+        },
+        "type_harmonized_oparl_id": 13,
+        "group_name": {
+          "de": "Grosser Rat - Büro",
+          "fr": "Bureau du Grand Conseil"
+        }
+      },
+      {
+        "active": true,
+        "id": 278718,
+        "begin_date": "2026-06-01",
+        "role_name": {
+          "de": "Grossratspräsident/in",
+          "fr": "Président(e) du Grand Conseil"
+        },
+        "type_harmonized_oparl_id": 10,
+        "group_name": {
+          "de": "Grosser Rat",
+          "fr": "Grand Conseil"
+        }
+      },
+      {
+        "active": false,
+        "id": 152265,
+        "begin_date": "2025-09-03",
+        "role_name": {
+          "de": "Mitglied",
+          "fr": "Membre"
+        },
+        "type_harmonized_oparl_id": 2,
+        "group_name": {
+          "de": "Kommission für Staatspolitik und Aussenbeziehungen - Ausschuss Interparlamentarische Konferenz der Nordwestschweiz",
+          "fr": "Commission des institutions politiques et des relations extérieures - Section de la Conférence interparlementaire du Nord-Ouest de la Suisse"
+        }
+      },
+      {
+        "active": false,
+        "id": 106915,
+        "begin_date": "2025-09-03",
+        "role_name": {
+          "de": "1. Vizepräsident/in",
+          "fr": "1er(e) vice-président(e)"
+        },
+        "type_harmonized_oparl_id": 13,
+        "group_name": {
+          "de": "Grosser Rat - Büro",
+          "fr": "Bureau du Grand Conseil"
+        }
+      }
+    ]
+  },
+  "interests": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 6,
+      "has_more": false
+    },
+    "data": [
+      {
+        "type_payment": {},
+        "id": 5149,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Gemeinderätin Zweisimmen, Ressort Bildung"
+        },
+        "role_name": {
+          "de": "Mitglied",
+          "fr": "Membre"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 5148,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Patronatskomitee Naturpark Diemtigtal"
+        },
+        "role_name": {
+          "de": "Mitglied",
+          "fr": "Membre"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 5147,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Geburtshaus Simmental Saanenland Maternité Alpine"
+        },
+        "role_name": {
+          "de": "Präsidium",
+          "fr": "Présidence"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 5146,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Bergregion Obersimmental Saanen (im Beirat ohne Stimmrecht)"
+        },
+        "role_name": {
+          "de": "Beirat",
+          "fr": "Conseil consultatif"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 5145,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Bildungskommission Zweisimmen"
+        },
+        "role_name": {
+          "de": "Präsidium",
+          "fr": "Présidence"
+        },
+        "type": {}
+      },
+      {
+        "type_payment": {},
+        "id": 5144,
+        "type_payment_harmonized": null,
+        "name": {
+          "de": "Spitex Saane-Simme"
+        },
+        "role_name": {
+          "de": "Vizepräsidium",
+          "fr": "Vice-présidence"
+        },
+        "type": {}
+      }
+    ]
+  },
+  "person_images": {
+    "meta": {
+      "offset": 0,
+      "limit": 100,
+      "total_records": 1,
+      "has_more": false
+    },
+    "data": [
+      {
+        "latest": true,
+        "profile_url": "https://files.openparldata.ch/images/persons/profile/BE-7472_v1.jpg"
+      }
+    ]
+  }
+}
