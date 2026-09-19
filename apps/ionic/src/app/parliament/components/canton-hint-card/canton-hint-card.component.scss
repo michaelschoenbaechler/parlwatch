@@ -1,0 +1,45 @@
+.hint-card {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  background: white;
+  margin: 0 0 0.75rem 0;
+  padding: 1rem 1.25rem 1.25rem 1.25rem;
+  border-top: 4px solid var(--ion-color-primary);
+}
+
+.hint-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hint-header > ion-icon {
+  font-size: 22px;
+  color: var(--ion-color-primary);
+}
+
+.hint-title {
+  flex: 1;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.hint-close {
+  --padding-start: 0.25rem;
+  --padding-end: 0.25rem;
+  margin: -0.5rem -0.5rem -0.5rem 0;
+  --color: #666666;
+}
+
+.hint-text {
+  margin: 0.5rem 0 0.75rem 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #666666;
+}
+
+ion-button:not(.hint-close) {
+  margin: 0;
+}

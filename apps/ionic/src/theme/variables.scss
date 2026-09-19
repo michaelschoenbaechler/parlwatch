@@ -81,3 +81,66 @@
 
   --ion-background-color: #ffffff;
 }
+
+/**
+ * Cantonal theme. Set on a page host by `CantonalThemeDirective` together
+ * with `--canton-colour-a` / `--canton-colour-b`, the canton's heraldic
+ * colours. Everything red on a federal page turns neutral here; the two
+ * colours only ever appear on the accent line under the header and the
+ * stripes on cards, so a Zürich page and a Bern page share one theme.
+ */
+.cantonal {
+  --ion-color-primary: #222428;
+  --ion-color-primary-rgb: 34, 36, 40;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1e2023;
+  --ion-color-primary-tint: #383a3e;
+
+  --ion-toolbar-color: #222428;
+  --ion-toolbar-background: #ffffff;
+}
+
+.cantonal ion-header {
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(
+      to right,
+      var(--canton-colour-a) 0 50%,
+      var(--canton-colour-b) 50% 100%
+    )
+    1;
+}
+
+.cantonal ion-header::after {
+  /* The iOS header shadow reads as a second line under the accent. */
+  display: none;
+}
+
+.cantonal ion-searchbar {
+  --background: #f4f5f8;
+}
+
+/* Cards: a thin stripe in the canton's colours down the left edge. */
+.cantonal .text-card,
+.cantonal .id-card {
+  position: relative;
+}
+
+.cantonal .text-card::before,
+.cantonal .id-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: linear-gradient(
+    to bottom,
+    var(--canton-colour-a) 0 50%,
+    var(--canton-colour-b) 50% 100%
+  );
+}
+
+.cantonal .id-card {
+  border-top-color: #ebebeb;
+}

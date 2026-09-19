@@ -1,0 +1,22 @@
+@if (parliamentStore.isCantonalEnabled()) {
+  <ion-toolbar class="switcher-toolbar">
+    <ion-segment
+      scrollable="true"
+      [value]="selected()"
+      (ionChange)="onChange($any($event))"
+    >
+      @for (entry of parliamentStore.switcherEntries(); track entry.key) {
+        <ion-segment-button [value]="entry.key">
+          @if (isCantonal(entry.key)) {
+            <img
+              class="coat-of-arms"
+              [src]="coatOfArmsPath(entry.key)"
+              alt=""
+            />
+          }
+          <ion-label>{{ entry.label }}</ion-label>
+        </ion-segment-button>
+      }
+    </ion-segment>
+  </ion-toolbar>
+}

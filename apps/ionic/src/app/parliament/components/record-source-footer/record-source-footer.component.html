@@ -1,0 +1,19 @@
+<footer class="record-source" *transloco="let t; prefix: 'parliament.source'">
+  <p class="record-source-line">
+    {{ t('attribution') }}
+    @if (source().updatedAt) {
+      · {{ t('updatedAt', { date: source().updatedAt | oDataDateTime }) }}
+    }
+  </p>
+  @if (source().url) {
+    <ion-button
+      expand="block"
+      size="small"
+      fill="outline"
+      (click)="openOfficialPage()"
+    >
+      {{ t('openOfficial') }}
+      <ion-icon slot="end" name="link-outline" />
+    </ion-button>
+  }
+</footer>
