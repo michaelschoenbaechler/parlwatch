@@ -1,7 +1,7 @@
 <ng-container *transloco="let t; prefix: 'business.detailText'">
   @for (section of sections(); track section.key) {
     <app-text-card
-      [title]="t(section.key)"
+      [title]="section.title || t(section.key)"
       [HtmlText]="section.isTruncated ? section.preview : section.html"
     >
       @if (section.isTruncated) {
@@ -23,7 +23,7 @@
       @if (openSection(); as section) {
         <ion-header>
           <ion-toolbar>
-            <ion-title>{{ t(section.key) }}</ion-title>
+            <ion-title>{{ section.title || t(section.key) }}</ion-title>
             <ion-buttons slot="end">
               <ion-button (click)="closeSection()">{{ t('close') }}</ion-button>
             </ion-buttons>

@@ -23,9 +23,14 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusinessDetailTextComponent {
-  readonly business = input.required<Business>();
+  /** A federal business, whose long-text fields become the sections. */
+  readonly business = input<Business | null>(null);
+  /** Ready-made sections, used for cantonal texts. Wins over `business`. */
+  readonly textSections = input<BusinessTextSection[] | null>(null);
 
-  readonly sections = computed(() => toBusinessTextSections(this.business()));
+  readonly sections = computed(
+    () => this.textSections() ?? toBusinessTextSections(this.business())
+  );
 
   /** The section being read in full, or null while the modal is closed. */
   readonly openSection = signal<BusinessTextSection | null>(null);

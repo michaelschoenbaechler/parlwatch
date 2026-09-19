@@ -1,8 +1,17 @@
 <ng-container *transloco="let t;">
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{ t('business.list.title') }}</ion-title>
+      <ion-title>
+        <app-parliament-title
+          [parliament]="parliament"
+          [title]="t('business.list.title')"
+        />
+      </ion-title>
     </ion-toolbar>
+    <app-parliament-switcher
+      [selected]="parliament"
+      (parliamentChange)="onParliamentChange($event)"
+    />
     <ion-toolbar>
       <ion-searchbar
         #searchBar
@@ -67,12 +76,14 @@
         } @if (visibleRecentBusinesses().length > 0) {
         <p><small>{{ t('business.list.recentlyViewed') }}</small></p>
         <ion-list inset="true" lines="full" class="recent-business-list">
-          @for (business of visibleRecentBusinesses(); track business.id) {
+          @for (business of visibleRecentBusinesses(); track business.parliament
+          + '-' + business.id) {
           <ion-item
             button
             detail="true"
-            (click)="onRecentBusinessClick(business.id)"
+            (click)="onRecentBusinessClick(business)"
           >
+            <app-canton-stripe slot="start" [parliament]="business.parliament" />
             <ion-icon name="bag-check-outline" slot="start" size="small" />
             <ion-label class="ion-text-wrap">{{ business.title }}</ion-label>
           </ion-item>
@@ -95,7 +106,9 @@
         (click)="closeSuggestions()"
       ></button>
     </div>
-    } @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
+    }
+    <app-canton-hint-card />
+    @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
     (!viewModel().noContent) {
     <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
       <ion-refresher-content />
@@ -135,7 +148,10 @@
       </ion-header>
       <ion-content class="ion-padding">
         @if (!hasFilterError()) {
-        <app-business-filter-form (submitFilter)="toggleFilterModal()" />
+        <app-business-filter-form
+          [parliament]="parliament"
+          (submitFilter)="toggleFilterModal()"
+        />
         } @else {
         <app-error-screen (retry)="retrySearch()" />
         }
