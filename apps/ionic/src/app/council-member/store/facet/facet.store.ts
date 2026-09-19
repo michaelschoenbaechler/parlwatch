@@ -38,7 +38,8 @@ export type FacetSlice = {
 };
 
 const initialFacetState: FacetSlice = {
-  facetsRequestState: createDefaultRequestState<MemberFacets>(emptyMemberFacets),
+  facetsRequestState:
+    createDefaultRequestState<MemberFacets>(emptyMemberFacets),
   parliament: FEDERAL_PARLIAMENT_KEY
 };
 

@@ -1,0 +1,19 @@
+<ion-list class="canton-list" lines="full">
+  @for (canton of cantons; track canton.key) {
+    <ion-item>
+      <img
+        class="coat-of-arms"
+        slot="start"
+        [src]="coatOfArmsPath(canton.key)"
+        alt=""
+      />
+      <ion-checkbox
+        justify="space-between"
+        [checked]="isSelected(canton.key)"
+        (ionChange)="toggle(canton.key)"
+      >
+        {{ canton.name }}
+      </ion-checkbox>
+    </ion-item>
+  }
+</ion-list>

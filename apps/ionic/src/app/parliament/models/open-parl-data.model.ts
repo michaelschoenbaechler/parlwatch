@@ -39,7 +39,10 @@ export function languageQuery(lang: string): {
  * @param lang The app's active language
  * @returns The best available text, or an empty string
  */
-export function localized(value: Localized | undefined | null, lang: string): string {
+export function localized(
+  value: Localized | undefined | null,
+  lang: string
+): string {
   if (!value) return '';
 
   for (const candidate of [lang, ...LANGUAGE_PREFERENCE]) {

@@ -118,13 +118,11 @@ export const ParliamentStore = signalStore(
 
     return {
       async load(): Promise<void> {
-        const [storedCantons, storedActive, hintDismissed] = await Promise.all(
-          [
-            storage.get<unknown[]>(CANTONS_OF_INTEREST_KEY, []),
-            storage.get<unknown>(ACTIVE_PARLIAMENT_KEY, FEDERAL_PARLIAMENT_KEY),
-            storage.get<boolean>(HINT_DISMISSED_KEY, false)
-          ]
-        );
+        const [storedCantons, storedActive, hintDismissed] = await Promise.all([
+          storage.get<unknown[]>(CANTONS_OF_INTEREST_KEY, []),
+          storage.get<unknown>(ACTIVE_PARLIAMENT_KEY, FEDERAL_PARLIAMENT_KEY),
+          storage.get<boolean>(HINT_DISMISSED_KEY, false)
+        ]);
 
         // Storage is trusted no further than a deep link: unknown keys are
         // dropped rather than allowed to break the switcher.
@@ -141,7 +139,11 @@ export const ParliamentStore = signalStore(
         resolveReady();
       },
 
-      /** Resolves once the persisted state has been read. */
+      /**
+       * Wait for the persisted state, so a redirect to the active parliament
+       * does not race the storage read on a cold start.
+       * @returns Resolves once `load` has run
+       */
       whenReady(): Promise<void> {
         return ready;
       },

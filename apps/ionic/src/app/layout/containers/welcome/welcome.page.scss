@@ -8,3 +8,21 @@
   padding: 2rem;
   color: #666666;
 }
+
+.canton-step-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ion-color-dark);
+}
+
+.canton-step-text {
+  padding: 0 0 1rem 0;
+}
+
+.canton-step-actions {
+  position: sticky;
+  bottom: 0;
+  padding: 1rem 0 0.5rem 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff 40%);
+}

@@ -12,3 +12,12 @@ ion-item {
 ion-button {
   margin-top: 1rem;
 }
+
+.cantons-intro {
+  margin: 0 0 0.5rem 0;
+  color: #666666;
+}
+
+ion-note[slot='end'] {
+  font-size: 12px;
+}

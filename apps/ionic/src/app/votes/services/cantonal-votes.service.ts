@@ -66,12 +66,8 @@ export class CantonalVoteService {
    * @param filter The list query; `parliament` must be a canton
    * @returns Votes in the federal shape, each carrying its tally
    */
-  getVotes({
-    parliament,
-    top,
-    skip,
-    searchTerm
-  }: VoteFilter): Observable<LoadedVote[]> {
+  getVotes(filter: VoteFilter): Observable<LoadedVote[]> {
+    const { parliament, top, skip, searchTerm } = filter;
     const lang = this.translocoService.getActiveLang();
 
     return this.openParlData

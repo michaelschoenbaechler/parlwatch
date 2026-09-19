@@ -96,12 +96,7 @@ export interface OpdVoting {
 
 /** How one member voted, as the API words it. */
 export type OpdVoteValue =
-  | 'yes'
-  | 'no'
-  | 'abstention'
-  | 'absent'
-  | 'further_option'
-  | string;
+  'yes' | 'no' | 'abstention' | 'absent' | 'further_option' | string;
 
 export interface OpdVote {
   id?: number;

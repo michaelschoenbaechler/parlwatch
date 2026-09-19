@@ -144,9 +144,7 @@ export function createSuccessSelectedMemberState(
 export function createErrorSelectedMemberState(): PartialStateUpdater<CouncilMemberState> {
   return (state) => ({
     ...state,
-    selectedMemberRequestState: onRequestError(
-      state.selectedMemberRequestState
-    )
+    selectedMemberRequestState: onRequestError(state.selectedMemberRequestState)
   });
 }
 

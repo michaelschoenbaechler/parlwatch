@@ -14,6 +14,20 @@
     />
     <ion-card>
       <ion-accordion-group>
+        <ion-accordion value="cantons">
+          <ion-item slot="header">
+            <ion-label>{{ t('cantons.title') }}</ion-label>
+            @if (parliamentStore.cantonsOfInterest().length > 0) {
+            <ion-note slot="end"
+              >{{ parliamentStore.cantonsOfInterest().join(', ') }}</ion-note
+            >
+            }
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <p class="cantons-intro">{{ t('cantons.text') }}</p>
+            <app-canton-picker />
+          </div>
+        </ion-accordion>
         <ion-accordion value="first">
           <ion-item slot="header">
             <ion-label>{{ t('language') }}</ion-label>

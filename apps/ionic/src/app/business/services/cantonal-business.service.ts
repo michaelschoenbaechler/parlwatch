@@ -135,13 +135,8 @@ export class CantonalBusinessService {
    * @param filter The list query; `parliament` must be a canton
    * @returns Business rows in the federal card shape
    */
-  getBusinesses({
-    parliament,
-    top,
-    skip,
-    searchTerm,
-    businessTypes
-  }: BusinessFilter): Observable<Business[]> {
+  getBusinesses(filter: BusinessFilter): Observable<Business[]> {
+    const { parliament, top, skip, searchTerm, businessTypes } = filter;
     const lang = this.translocoService.getActiveLang();
     const typeIds = (businessTypes ?? [])
       .map((type) => type.ID)
@@ -158,9 +153,7 @@ export class CantonalBusinessService {
         search: searchTerm?.trim() || undefined,
         ...languageQuery(lang)
       })
-      .pipe(
-        map((page) => page.data.map((affair) => toBusiness(affair, lang)))
-      );
+      .pipe(map((page) => page.data.map((affair) => toBusiness(affair, lang))));
   }
 
   /**
@@ -208,7 +201,9 @@ export class CantonalBusinessService {
           return (
             hasTranscripts ? this.getSpeeches(id, lang) : of([] as OpdSpeech[])
           ).pipe(
-            map((speeches) => toLoadedBusiness(affair, speeches, parliament, lang))
+            map((speeches) =>
+              toLoadedBusiness(affair, speeches, parliament, lang)
+            )
           );
         })
       );

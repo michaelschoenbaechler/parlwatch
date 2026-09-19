@@ -1,42 +1,41 @@
 <ng-container *transloco="let t">
   <form (ngSubmit)="onSubmit()">
     @if (!isCantonal()) {
-    <h3>{{ t('business.filterForm.session') }}</h3>
-    <ion-list>
-      <ion-item>
-        <ion-select
-          interface="popover"
-          [(ngModel)]="selectedSessionId"
-          name="session"
-          [label]="t('business.filterForm.session')"
-          labelPlacement="stacked"
-        >
-          <ion-select-option [value]="null">{{
-            t('business.filterForm.allSessions')
-          }}</ion-select-option>
-          @for (session of sessionViewModel().sessions; track session.ID) {
-            <ion-select-option [value]="session.ID">{{
-              session.SessionName
-            }}</ion-select-option>
-          }
-        </ion-select>
-      </ion-item>
-    </ion-list>
-
-    <h3>{{ t('business.filterForm.topic') }}</h3>
-    <ion-list>
-      @for (tag of tagCheckboxes(); track tag.ID) {
+      <h3>{{ t('business.filterForm.session') }}</h3>
+      <ion-list>
         <ion-item>
-          <ion-checkbox
-            labelPlacement="start"
-            [name]="'tag-' + tag.ID"
-            [(ngModel)]="tag.checked"
-            >{{ tag.TagName }}
-          </ion-checkbox>
+          <ion-select
+            interface="popover"
+            [(ngModel)]="selectedSessionId"
+            name="session"
+            [label]="t('business.filterForm.session')"
+            labelPlacement="stacked"
+          >
+            <ion-select-option [value]="null">{{
+              t('business.filterForm.allSessions')
+            }}</ion-select-option>
+            @for (session of sessionViewModel().sessions; track session.ID) {
+              <ion-select-option [value]="session.ID">{{
+                session.SessionName
+              }}</ion-select-option>
+            }
+          </ion-select>
         </ion-item>
-      }
-    </ion-list>
+      </ion-list>
 
+      <h3>{{ t('business.filterForm.topic') }}</h3>
+      <ion-list>
+        @for (tag of tagCheckboxes(); track tag.ID) {
+          <ion-item>
+            <ion-checkbox
+              labelPlacement="start"
+              [name]="'tag-' + tag.ID"
+              [(ngModel)]="tag.checked"
+              >{{ tag.TagName }}
+            </ion-checkbox>
+          </ion-item>
+        }
+      </ion-list>
     }
     <h3>{{ t('business.filterForm.type') }}</h3>
     <ion-list>
@@ -53,23 +52,22 @@
     </ion-list>
 
     @if (!isCantonal()) {
-    <h3>{{ t('business.filterForm.status') }}</h3>
-    <ion-list>
-      @for (
-        businessStatus of businessStatusCheckboxes();
-        track businessStatus.id
-      ) {
-        <ion-item>
-          <ion-checkbox
-            labelPlacement="start"
-            [name]="'status-' + businessStatus.id"
-            [(ngModel)]="businessStatus.checked"
-            >{{ t('business.status.' + businessStatus.id) }}
-          </ion-checkbox>
-        </ion-item>
-      }
-    </ion-list>
-
+      <h3>{{ t('business.filterForm.status') }}</h3>
+      <ion-list>
+        @for (
+          businessStatus of businessStatusCheckboxes();
+          track businessStatus.id
+        ) {
+          <ion-item>
+            <ion-checkbox
+              labelPlacement="start"
+              [name]="'status-' + businessStatus.id"
+              [(ngModel)]="businessStatus.checked"
+              >{{ t('business.status.' + businessStatus.id) }}
+            </ion-checkbox>
+          </ion-item>
+        }
+      </ion-list>
     }
     <div class="floating-button">
       <ion-button expand="block" type="submit">{{

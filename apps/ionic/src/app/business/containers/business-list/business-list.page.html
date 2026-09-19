@@ -83,7 +83,10 @@
             detail="true"
             (click)="onRecentBusinessClick(business)"
           >
-            <app-canton-stripe slot="start" [parliament]="business.parliament" />
+            <app-canton-stripe
+              slot="start"
+              [parliament]="business.parliament"
+            />
             <ion-icon name="bag-check-outline" slot="start" size="small" />
             <ion-label class="ion-text-wrap">{{ business.title }}</ion-label>
           </ion-item>

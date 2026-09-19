@@ -176,7 +176,7 @@ export const CouncilMemberStore = signalStore(
        * another.
        * @param parliament The parliament to list
        */
-      setParliament: (parliament: ParliamentKey) =>
+      setParliament(parliament: ParliamentKey) {
         patchState(store, (state) => {
           if (state.query.parliament === parliament) return {};
           return {
@@ -186,7 +186,8 @@ export const CouncilMemberStore = signalStore(
             },
             query: { ...initialState.query, parliament }
           };
-        })
+        });
+      }
     };
   })
 );

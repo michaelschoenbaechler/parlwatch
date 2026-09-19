@@ -1,0 +1,23 @@
+.canton-list {
+  padding: 0;
+  background: transparent;
+}
+
+ion-item {
+  --background: transparent;
+  --color: var(--ion-color-dark);
+  --border-color: #f0f0f0;
+}
+
+.coat-of-arms {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-inline-end: 0.75rem;
+  border: #bbbbbb 1px solid;
+  border-radius: 0.2rem;
+  background: white;
+}
+
+ion-checkbox {
+  font-size: 15px;
+}

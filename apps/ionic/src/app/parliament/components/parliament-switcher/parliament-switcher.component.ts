@@ -6,6 +6,7 @@ import {
   output
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { TranslocoDirective } from '@jsverse/transloco';
 import {
   coatOfArmsPath,
   isCantonal,
@@ -23,7 +24,7 @@ import { ParliamentStore } from '../../store/parliament.store';
   selector: 'app-parliament-switcher',
   templateUrl: './parliament-switcher.component.html',
   styleUrls: ['./parliament-switcher.component.scss'],
-  imports: [IonicModule],
+  imports: [IonicModule, TranslocoDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParliamentSwitcherComponent {
