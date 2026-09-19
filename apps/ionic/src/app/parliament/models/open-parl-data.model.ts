@@ -54,6 +54,23 @@ export function localized(
 }
 
 /**
+ * The single record of a detail response.
+ *
+ * The API answers a missing id with a 404, which never reaches here; this
+ * guards the mapping against an empty page from anywhere else, so a caller
+ * sees an error rather than a half-built view model.
+ * @param rows The page's rows
+ * @returns The one record
+ */
+export function singleRecord<T>(rows: T[]): T {
+  const record = rows[0];
+  if (record === undefined) {
+    throw new Error('OpenParlData returned no record');
+  }
+  return record;
+}
+
+/**
  * An expanded relation as the API ships it. Detail endpoints wrap the rows in
  * a page (`{ meta, data }`), list endpoints with a `fields` selection hand
  * back a bare array, and an unexpanded relation is missing altogether.

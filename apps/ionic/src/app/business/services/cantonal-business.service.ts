@@ -8,6 +8,7 @@ import {
   languageQuery,
   localized,
   relationList,
+  singleRecord,
   toODataDate
 } from '../../parliament/models/open-parl-data.model';
 import {
@@ -89,6 +90,7 @@ const DETAIL_FIELDS = [
   'texts.text',
   'texts.position',
   'speeches.id',
+  'speeches.person_id',
   'speeches.text_content',
   'votings.id',
   'votings.affair_id',
@@ -193,9 +195,12 @@ export class CantonalBusinessService {
       })
       .pipe(
         switchMap((page) => {
-          const affair = page.data[0];
-          const hasTranscripts = relationList(affair?.speeches).some(
-            (speech) => !!localized(speech.text_content, lang)
+          const affair = singleRecord(page.data);
+          // Vote announcements carry text but no speaker; only a member's
+          // transcript is worth the second request.
+          const hasTranscripts = relationList(affair.speeches).some(
+            (speech) =>
+              !!speech.person_id && !!localized(speech.text_content, lang)
           );
 
           return (

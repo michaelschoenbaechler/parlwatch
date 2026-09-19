@@ -69,15 +69,15 @@ export function toLoadedVote(
   parliament: CantonKey,
   lang: string
 ): LoadedVote {
-  const businessTitle = localized(voting.affair_title, lang);
   const title = localized(voting.title, lang);
+  const businessTitle = localized(voting.affair_title, lang) || title;
 
   return {
     ID: voting.id,
     BusinessNumber: voting.affair_id ?? undefined,
     BusinessShortNumber: '',
-    BusinessTitle: businessTitle || title,
-    Subject: title && title !== businessTitle ? title : '',
+    BusinessTitle: businessTitle,
+    Subject: title !== businessTitle ? title : '',
     MeaningYes: localized(voting.meaning_of_yes, lang),
     MeaningNo: localized(voting.meaning_of_no, lang),
     VoteEnd: toODataDate(voting.date),

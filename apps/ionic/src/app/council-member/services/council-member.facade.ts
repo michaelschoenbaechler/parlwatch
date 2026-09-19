@@ -86,7 +86,7 @@ export class CouncilMemberFacade {
   ): Observable<SpeechPage> {
     if (isCantonal(parliament)) {
       if (skip > 0) return of({ speeches: [], texts: {}, hasMore: false });
-      return this.cantonal.getSpeeches(id).pipe(
+      return this.cantonal.getSpeeches(parliament, id).pipe(
         map(({ groups, texts }) => ({
           speeches: groups.flatMap((group) => group.speeches),
           texts,
