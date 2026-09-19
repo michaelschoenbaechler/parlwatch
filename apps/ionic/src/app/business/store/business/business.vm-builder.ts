@@ -5,6 +5,7 @@ import {
   TimelineStep,
   toBusinessTimeline
 } from '../../models/business-timeline';
+import { LoadedBusiness } from '../../models/cantonal-business';
 import { BusinessFilter } from '../../services/business.service';
 
 export interface BusinessListVm {
@@ -17,7 +18,7 @@ export interface BusinessListVm {
 }
 
 export interface BusinessDetailVm {
-  business: Business | null;
+  business: LoadedBusiness | null;
   votes: Vote[];
   timeline: TimelineStep[];
   relatedBusinesses: RelatedBusiness[];
@@ -73,13 +74,16 @@ export function createBusinessListVm(
  * @returns A view model with the business and UI state properties
  */
 export function createBusinessDetailVm(
-  selectedBusinessRequestState: RequestState<Business | null>
+  selectedBusinessRequestState: RequestState<LoadedBusiness | null>
 ): BusinessDetailVm {
   const selected = selectedBusinessRequestState.data ?? null;
   return {
     business: selected,
-    votes: sortedVotes(selected),
-    timeline: toBusinessTimeline(selected),
+    // A cantonal business arrives with its votes and timeline already built.
+    votes: selected?.cantonal ? selected.cantonal.votes : sortedVotes(selected),
+    timeline: selected?.cantonal
+      ? selected.cantonal.timeline
+      : toBusinessTimeline(selected),
     relatedBusinesses: odataList<RelatedBusiness>(selected?.RelatedBusinesses),
     isLoading: selectedBusinessRequestState.loading && !selected,
     hasError: !!selectedBusinessRequestState.error

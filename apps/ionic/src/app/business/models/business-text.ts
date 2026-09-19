@@ -4,6 +4,11 @@ import { Business } from 'swissparl';
 export interface BusinessTextSection {
   /** Translation key under `business.detailText`, and the `@for` track key. */
   key: string;
+  /**
+   * Heading to show instead of the translated key. Set for cantonal texts,
+   * which carry the canton's own section titles.
+   */
+  title?: string;
   /** The section's full markup, shown in the modal. */
   html: string;
   /** Plain-text excerpt the card shows. */
@@ -53,16 +58,32 @@ export function toBusinessTextSections(
   const sections: BusinessTextSection[] = [];
 
   for (const field of TEXT_FIELDS) {
-    const html = field.read(business)?.trim();
-    if (!html) continue;
-
-    const plain = toPlainText(html);
-    if (!plain) continue;
-
-    sections.push({ key: field.key, html, ...toPreview(plain) });
+    const section = toTextSection(field.key, field.read(business));
+    if (section) sections.push(section);
   }
 
   return sections;
+}
+
+/**
+ * Build one section from a block of markup.
+ * @param key Identity of the section, and its translation key when untitled
+ * @param markup The section's full markup
+ * @param title Heading to show instead of the translated key
+ * @returns The section, or null when the markup holds no readable text
+ */
+export function toTextSection(
+  key: string,
+  markup: string | undefined,
+  title?: string
+): BusinessTextSection | null {
+  const html = markup?.trim();
+  if (!html) return null;
+
+  const plain = toPlainText(html);
+  if (!plain) return null;
+
+  return { key, html, ...toPreview(plain), ...(title && { title }) };
 }
 
 /**

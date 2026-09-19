@@ -4,7 +4,12 @@
       <ion-buttons slot="start">
         <ion-back-button text="Zurück" defaultHref="/layout/business" />
       </ion-buttons>
-      <ion-title>{{ t('business.detail.title') }}</ion-title>
+      <ion-title>
+        <app-parliament-title
+          [parliament]="parliament"
+          [title]="t('business.detail.title')"
+        />
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -12,6 +17,56 @@
     @if (!viewModel().isLoading) { @if (!viewModel().hasError &&
     viewModel().business; as business) {
     <app-business-card [business]="business" />
+    @if (cantonal(); as cantonal) {
+    <!-- Cantonal business: sections built by the cantonal service. -->
+    @if (cantonal.contributors.length > 0) {
+    <app-text-card title="{{ t('business.contributors.title') }}">
+      <app-business-contributor-list
+        [contributors]="cantonal.contributors"
+        (personSelected)="onContributor($event)"
+      />
+    </app-text-card>
+    } @if (viewModel().timeline.length > 0) {
+    <app-text-card title="{{ t('business.timeline.title') }}">
+      <app-business-timeline [steps]="viewModel().timeline" />
+    </app-text-card>
+    } @if (cantonal.documents.length > 0) {
+    <app-text-card title="{{ t('business.documents.title') }}">
+      <app-business-document-list
+        [documents]="cantonal.documents"
+        (documentSelected)="openDocument($event)"
+      />
+    </app-text-card>
+    } @if (cantonal.texts.length > 0) {
+    <app-business-detail-text [textSections]="cantonal.texts" />
+    } @if (cantonal.speeches.length > 0) {
+    <app-text-card title="{{ t('business.debate.title') }}">
+      <app-speech-list
+        [groups]="cantonal.speeches"
+        [texts]="cantonal.speechTexts"
+        [uiLanguage]="uiLanguage"
+        [showSpeaker]="true"
+        [showGroupHeader]="false"
+      />
+    </app-text-card>
+    } @if (viewModel().votes.length > 0) {
+    <app-text-card
+      title="{{ t('business.votes.title') }}"
+      subtitle="{{
+        viewModel().votes.length === 1
+          ? t('business.votes.summarySingle')
+          : t('business.votes.summary', { count: viewModel().votes.length })
+      }}"
+    >
+      <app-vote-items
+        [votes]="viewModel().votes"
+        (voteSelected)="onVote($event)"
+      />
+    </app-text-card>
+    }
+    <app-record-source-footer [source]="cantonal.source" />
+    } @else {
+    <!-- Federal business: unchanged. -->
     @if (viewModel().timeline.length > 0) {
     <app-text-card title="{{ t('business.timeline.title') }}">
       <app-business-timeline [steps]="viewModel().timeline" />
@@ -78,7 +133,7 @@
         <ion-icon slot="end" name="link-outline" />
       </ion-button>
     </app-text-card>
-    } @else {
+    } } @else {
     <app-error-screen (retry)="retry()" />
     } } @else {
     <app-loading-screen />

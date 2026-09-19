@@ -1,4 +1,4 @@
-import { Component, computed, inject, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -7,6 +7,11 @@ import { BusinessStore } from '../../store/business/business.store';
 import { SessionStore } from '../../store/session/session.store';
 import { TagStore } from '../../store/tag/tag.store';
 import { BUSINESS_STATUS_OPTIONS } from '../../models/business-status';
+import {
+  FEDERAL_PARLIAMENT_KEY,
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
 
 @Component({
   selector: 'app-business-filter-form',
@@ -19,6 +24,13 @@ export class BusinessFilterFormComponent {
   readonly businessTypeStore = inject(BusinessTypesStore);
   readonly sessionStore = inject(SessionStore);
   readonly tagStore = inject(TagStore);
+
+  /**
+   * The parliament being filtered. Sessions, topics and statuses exist only
+   * federally; a canton offers the harmonised type alone.
+   */
+  readonly parliament = input<ParliamentKey>(FEDERAL_PARLIAMENT_KEY);
+  readonly isCantonal = computed(() => isCantonal(this.parliament()));
 
   submitFilter = output<void>();
 

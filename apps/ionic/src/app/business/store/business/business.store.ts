@@ -18,9 +18,13 @@ import {
   RequestState
 } from '../../../shared/models/request-state.model';
 import {
-  BusinessFilter,
-  BusinessService
-} from '../../services/business.service';
+  FEDERAL_PARLIAMENT_KEY,
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
+import { BusinessFilter } from '../../services/business.service';
+import { BusinessFacade } from '../../services/business.facade';
+import { LoadedBusiness } from '../../models/cantonal-business';
 import { SessionStore } from '../session/session.store';
 import {
   createBusinessDetailVm,
@@ -47,16 +51,16 @@ export type BusinessSlice = {
    * list is fetched with a `$select` for the card fields only, so its rows
    * cannot serve the detail page, and a list refresh must not clobber it.
    */
-  selectedBusinessRequestState: RequestState<Business | null>;
+  selectedBusinessRequestState: RequestState<LoadedBusiness | null>;
   query: BusinessFilter;
 };
 
 const initialState: BusinessSlice = {
   businessRequestState: createDefaultRequestState<Business[]>([]),
-  selectedBusinessRequestState: createDefaultRequestState<Business | null>(
-    null
-  ),
+  selectedBusinessRequestState:
+    createDefaultRequestState<LoadedBusiness | null>(null),
   query: {
+    parliament: FEDERAL_PARLIAMENT_KEY,
     top: 20,
     skip: 0,
     searchTerm: '',
@@ -84,17 +88,21 @@ export const BusinessStore = signalStore(
     };
   }),
   withMethods((store) => {
-    const businessService = inject(BusinessService);
+    const businessFacade = inject(BusinessFacade);
 
     const sessionStore = inject(SessionStore);
 
     const _fetchBusinesses = rxMethod<BusinessFilter>(
       pipe(
         // Wait for the default session; undefined means "not resolved yet".
-        filter((query) => query.sessionId !== undefined),
+        // Cantons have no sessions, so their list never waits.
+        filter(
+          (query) =>
+            isCantonal(query.parliament) || query.sessionId !== undefined
+        ),
         tap(() => patchState(store, createLoadBusinessRequestState())),
         switchMap((query) =>
-          businessService.getBusinesses(query).pipe(
+          businessFacade.getBusinesses(query).pipe(
             tapResponse({
               next: (businesses) => {
                 const updaterFn =
@@ -132,11 +140,14 @@ export const BusinessStore = signalStore(
 
     // Always fetches: list rows only carry the card fields, so they can never
     // stand in for the detail page's full text and expanded votes.
-    const _selectAndLoadBusiness = rxMethod<number>(
+    const _selectAndLoadBusiness = rxMethod<{
+      parliament: ParliamentKey;
+      id: number;
+    }>(
       pipe(
-        tap((id) => patchState(store, createLoadSelectedBusinessState(id))),
-        switchMap((id) =>
-          businessService.getBusiness(id).pipe(
+        tap(({ id }) => patchState(store, createLoadSelectedBusinessState(id))),
+        switchMap(({ parliament, id }) =>
+          businessFacade.getBusiness(parliament, id).pipe(
             tapResponse({
               next: (business) =>
                 patchState(store, createSuccessSelectedBusinessState(business)),
@@ -156,8 +167,32 @@ export const BusinessStore = signalStore(
         patchState(store, patchQueryState(query)),
       resetQuery: () =>
         patchState(store, (state) => ({
-          query: { ...initialState.query, sessionId: state.query.sessionId }
-        }))
+          query: {
+            ...initialState.query,
+            parliament: state.query.parliament,
+            sessionId: state.query.sessionId
+          }
+        })),
+      /**
+       * Point the list at another parliament. Filters do not carry over: the
+       * type ids and sessions of one parliament mean nothing in another.
+       * @param parliament The parliament to list
+       */
+      setParliament: (parliament: ParliamentKey) =>
+        patchState(store, (state) => {
+          if (state.query.parliament === parliament) return {};
+          return {
+            businessRequestState: {
+              ...state.businessRequestState,
+              data: []
+            },
+            query: {
+              ...initialState.query,
+              parliament,
+              sessionId: state.query.sessionId
+            }
+          };
+        })
     };
   })
 );

@@ -1,5 +1,6 @@
 <ng-container *transloco="let t">
   <form (ngSubmit)="onSubmit()">
+    @if (!isCantonal()) {
     <h3>{{ t('business.filterForm.session') }}</h3>
     <ion-list>
       <ion-item>
@@ -36,6 +37,7 @@
       }
     </ion-list>
 
+    }
     <h3>{{ t('business.filterForm.type') }}</h3>
     <ion-list>
       @for (businessType of businessTypeCheckboxes(); track businessType.ID) {
@@ -50,6 +52,7 @@
       }
     </ion-list>
 
+    @if (!isCantonal()) {
     <h3>{{ t('business.filterForm.status') }}</h3>
     <ion-list>
       @for (
@@ -67,6 +70,7 @@
       }
     </ion-list>
 
+    }
     <div class="floating-button">
       <ion-button expand="block" type="submit">{{
         t('business.filterForm.apply')

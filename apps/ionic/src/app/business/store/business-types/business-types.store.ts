@@ -16,7 +16,11 @@ import {
   createDefaultRequestState,
   RequestState
 } from '../../../shared/models/request-state.model';
-import { BusinessService } from '../../services/business.service';
+import {
+  FEDERAL_PARLIAMENT_KEY,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
+import { BusinessFacade } from '../../services/business.facade';
 import { createBusinessTypesVm } from './business-types.vm-builder';
 import {
   createErrorBusinessTypesRequestState,
@@ -26,12 +30,20 @@ import {
 
 export type BusinessTypesState = {
   businessTypesRequestState: RequestState<BusinessType[]>;
+  /** The parliament the loaded types belong to. */
+  parliament: ParliamentKey;
 };
 
 const initialBusinessTypesState: BusinessTypesState = {
-  businessTypesRequestState: createDefaultRequestState<BusinessType[]>([])
+  businessTypesRequestState: createDefaultRequestState<BusinessType[]>([]),
+  parliament: FEDERAL_PARLIAMENT_KEY
 };
 
+/**
+ * The type options of the business filter, for one parliament at a time.
+ * Every parliament numbers its types differently, so switching parliament
+ * reloads the list rather than mixing two vocabularies.
+ */
 export const BusinessTypesStore = signalStore(
   { providedIn: 'root' },
   withDevtools('BusinessTypesStore'),
@@ -44,13 +56,13 @@ export const BusinessTypesStore = signalStore(
     };
   }),
   withMethods((store) => {
-    const businessService = inject(BusinessService);
+    const businessFacade = inject(BusinessFacade);
 
-    const _loadBusinessTypes = rxMethod<void>(
+    const _loadBusinessTypes = rxMethod<ParliamentKey>(
       pipe(
         tap(() => patchState(store, createLoadBusinessTypesRequestState())),
-        switchMap(() =>
-          businessService.getBusinessTypes().pipe(
+        switchMap((parliament) =>
+          businessFacade.getBusinessTypes(parliament).pipe(
             tapResponse({
               next: (types) =>
                 patchState(
@@ -65,8 +77,22 @@ export const BusinessTypesStore = signalStore(
       )
     );
 
-    _loadBusinessTypes();
+    _loadBusinessTypes(store.parliament);
 
-    return {};
+    return {
+      /**
+       * Load the types of a parliament, unless they are already in hand.
+       * @param parliament The parliament whose types the filter offers
+       */
+      setParliament(parliament: ParliamentKey) {
+        if (store.parliament() === parliament) return;
+        patchState(store, {
+          parliament,
+          businessTypesRequestState: createDefaultRequestState<BusinessType[]>(
+            []
+          )
+        });
+      }
+    };
   })
 );

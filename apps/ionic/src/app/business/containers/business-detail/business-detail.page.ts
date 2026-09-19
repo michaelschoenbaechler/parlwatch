@@ -7,6 +7,8 @@ import { BusinessCardComponent } from '../../components/business-card/business-c
 import { BusinessDetailTextComponent } from '../../components/business-detail-text/business-detail-text.component';
 import { BusinessTimelineComponent } from '../../components/business-timeline/business-timeline.component';
 import { RelatedBusinessListComponent } from '../../components/related-business-list/related-business-list.component';
+import { BusinessContributorListComponent } from '../../components/business-contributor-list/business-contributor-list.component';
+import { BusinessDocumentListComponent } from '../../components/business-document-list/business-document-list.component';
 import { VoteItemsComponent } from '../../../votes/components/vote-items/vote-items.component';
 import { SpeechListComponent } from '../../../shared/components/speech-list/speech-list.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
@@ -17,6 +19,18 @@ import { BusinessStore } from '../../store/business/business.store';
 import { RecentBusinessStore } from '../../store/recent/recent.store';
 import { DebateStore } from '../../store/debate/debate.store';
 import { VoteStore } from '../../../votes/store/vote';
+import {
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
+import {
+  detailPathInTab,
+  routeParliament
+} from '../../../parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '../../../parliament/components/record-source-footer/record-source-footer.component';
+import { BusinessDocument } from '../../models/cantonal-business';
 
 @Component({
   selector: 'app-business-detail',
@@ -28,14 +42,19 @@ import { VoteStore } from '../../../votes/store/vote';
     BusinessDetailTextComponent,
     BusinessTimelineComponent,
     RelatedBusinessListComponent,
+    BusinessContributorListComponent,
+    BusinessDocumentListComponent,
     VoteItemsComponent,
     SpeechListComponent,
     TextCardComponent,
     ODataDateTimePipe,
     LoadingScreenComponent,
     ErrorScreenComponent,
-    TranslocoDirective
-  ]
+    TranslocoDirective,
+    ParliamentTitleComponent,
+    RecordSourceFooterComponent
+  ],
+  hostDirectives: [CantonalThemeDirective]
 })
 export class BusinessDetailPage implements OnInit {
   readonly store = inject(BusinessStore);
@@ -46,7 +65,16 @@ export class BusinessDetailPage implements OnInit {
   readonly route = inject(ActivatedRoute);
   readonly router = inject(Router);
 
+  /** The parliament this business belongs to, read from the route only. */
+  readonly parliament: ParliamentKey = routeParliament(this.route);
+  readonly isCantonal = isCantonal(this.parliament);
+
   readonly viewModel = computed(() => this.store.businessDetailViewModel());
+
+  /** The cantonal sections, present only for a cantonal business. */
+  readonly cantonal = computed(
+    () => this.viewModel().business?.cantonal ?? null
+  );
 
   /** Debates are recorded verbatim, so speeches carry their own language. */
   readonly uiLanguage = this.transloco.getActiveLang();
@@ -57,12 +85,16 @@ export class BusinessDetailPage implements OnInit {
       if (business?.ID && business.Title) {
         this.recentStore.recordEntry({
           id: business.ID,
-          title: business.Title
+          title: business.Title,
+          parliament: this.parliament
         });
       }
     });
 
     effect(() => {
+      // Cantonal votes arrive with their totals; only federal ones need the
+      // batched ballot request.
+      if (this.isCantonal) return;
       const voteIds = this.viewModel()
         .votes.map((vote) => vote.ID)
         .filter((id): id is number => id !== undefined);
@@ -74,12 +106,19 @@ export class BusinessDetailPage implements OnInit {
 
   ngOnInit() {
     const businessId = parseInt(this.route.snapshot.params.id);
-    this.store.selectBusiness(businessId);
-    this.debateStore.selectBusiness(businessId);
+    this.store.selectBusiness({ parliament: this.parliament, id: businessId });
+    // The federal debate lives in the transcript service; cantonal speeches
+    // come with the business itself.
+    if (!this.isCantonal) {
+      this.debateStore.selectBusiness(businessId);
+    }
   }
 
   retry() {
-    this.store.selectBusiness(parseInt(this.route.snapshot.params.id));
+    this.store.selectBusiness({
+      parliament: this.parliament,
+      id: parseInt(this.route.snapshot.params.id)
+    });
   }
 
   /** Open the business on parlament.ch, where the full dossier lives. */
@@ -96,19 +135,34 @@ export class BusinessDetailPage implements OnInit {
   }
 
   /**
+   * Open a cantonal document in the system browser.
+   * @param document The tapped document
+   */
+  openDocument(document: BusinessDocument) {
+    Browser.open({ url: document.url, presentationStyle: 'popover' }).catch(
+      console.error
+    );
+  }
+
+  /**
    * Open one of the business's votes without leaving the current tab, so the
-   * tab bar stays put. The votes tab carries the vote detail at its own root;
-   * every other tab registers `voteDetailRoute` one level in.
+   * tab bar stays put.
    * @param id Id of the tapped vote
    */
   onVote(id: number) {
-    const tabRoot = this.router.url.split('/').slice(0, 3).join('/');
-    const path =
-      tabRoot === '/layout/votes'
-        ? [tabRoot, 'detail', id]
-        : [tabRoot, 'votes', 'detail', id];
+    this.router
+      .navigate(detailPathInTab(this.router.url, 'votes', id))
+      .catch(console.error);
+  }
 
-    this.router.navigate(path).catch(console.error);
+  /**
+   * Open a contributor's member page, staying inside the current tab.
+   * @param personId The contributor's person id
+   */
+  onContributor(personId: number) {
+    this.router
+      .navigate(detailPathInTab(this.router.url, 'council-member', personId))
+      .catch(console.error);
   }
 
   /**
@@ -116,6 +170,8 @@ export class BusinessDetailPage implements OnInit {
    * @param id Business number of the related business
    */
   onRelatedBusiness(id: number) {
-    this.router.navigate(['/layout/business/detail', id]).catch(console.error);
+    this.router
+      .navigate(detailPathInTab(this.router.url, 'business', id))
+      .catch(console.error);
   }
 }

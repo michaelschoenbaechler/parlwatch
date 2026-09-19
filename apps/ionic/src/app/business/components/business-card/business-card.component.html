@@ -1,10 +1,6 @@
 <app-text-card
   [title]="business().BusinessShortNumber + ' - ' + business().BusinessTypeName"
-  [subtitle]="
-    business().BusinessStatusText +
-    ' am ' +
-    (business().BusinessStatusDate | oDataDateTime)
-  "
+  [subtitle]="subtitle()"
   [HtmlText]="business().Title"
 >
   @if (getTagNames().length > 0) {

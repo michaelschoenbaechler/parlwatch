@@ -6,6 +6,7 @@ import {
   onRequestSuccess
 } from '../../../shared/models/request-state.model';
 import { BusinessFilter } from '../../services/business.service';
+import { LoadedBusiness } from '../../models/cantonal-business';
 import { BusinessSlice } from './business.store';
 
 /**
@@ -205,7 +206,7 @@ export function createLoadSelectedBusinessState(
  * @returns Partial updater setting the detail request to success
  */
 export function createSuccessSelectedBusinessState(
-  business: Business
+  business: LoadedBusiness
 ): PartialStateUpdater<BusinessSlice> {
   return (state) => ({
     ...state,

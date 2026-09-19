@@ -4,9 +4,12 @@ import { map } from 'rxjs/operators';
 import { Business, BusinessType, Session, Tags } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
+import { ParliamentKey } from '../../parliament/models/parliament.model';
 import { BusinessStatusOption } from '../models/business-status';
 
 export type BusinessFilter = {
+  /** The parliament whose business is listed. */
+  parliament: ParliamentKey;
   top: number;
   skip?: number;
   searchTerm?: string;
