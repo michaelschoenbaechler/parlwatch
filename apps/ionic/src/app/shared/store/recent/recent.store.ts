@@ -8,11 +8,23 @@ import {
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { StorageService } from '../../services/storage.service';
+import {
+  ParliamentKey,
+  toParliamentKey
+} from '../../../parliament/models/parliament.model';
 
-/** A previously viewed entity, keyed on the id its detail page routes on. */
+/**
+ * A previously viewed entity, keyed on the id its detail page routes on
+ * together with the parliament that id belongs to.
+ */
 export interface RecentEntry {
   id: number;
   title: string;
+  /**
+   * The parliament the entity was viewed in. Optional on the type because
+   * entries stored before cantons existed carry none; those are federal.
+   */
+  parliament?: ParliamentKey;
 }
 
 export type RecentSlice = {
@@ -61,7 +73,7 @@ export function createRecentStore(config: RecentStoreConfig) {
             storage.get<string[]>(config.searchesKey, [])
           ]);
           patchState(store, {
-            entries: entries.slice(0, STORED_ENTRIES),
+            entries: entries.slice(0, STORED_ENTRIES).map(withParliament),
             searches: searches.slice(0, STORED_SEARCHES)
           });
         },
@@ -69,13 +81,14 @@ export function createRecentStore(config: RecentStoreConfig) {
         recordEntry(entry: RecentEntry): void {
           if (!entry.id || !entry.title) return;
 
+          const recorded = withParliament(entry);
           const current = store.entries();
           // Nothing to do when it is already the newest entry.
-          if (current[0]?.id === entry.id) return;
+          if (current[0] && isSameEntity(current[0], recorded)) return;
 
           const entries = [
-            entry,
-            ...current.filter((existing) => existing.id !== entry.id)
+            recorded,
+            ...current.filter((existing) => !isSameEntity(existing, recorded))
           ].slice(0, STORED_ENTRIES);
 
           patchState(store, { entries });
@@ -106,6 +119,27 @@ export function createRecentStore(config: RecentStoreConfig) {
       }
     })
   );
+}
+
+/**
+ * Pin an entry to a parliament. Entries written before cantons existed carry
+ * no key and are federal; entries written since always carry one.
+ * @param entry The entry as stored or as recorded
+ * @returns The entry with its parliament key filled in
+ */
+function withParliament(entry: RecentEntry): RecentEntry {
+  return { ...entry, parliament: toParliamentKey(entry.parliament) };
+}
+
+/**
+ * Whether two entries are the same record. Ids are only unique within one
+ * parliament: a federal business and a cantonal one can share a number.
+ * @param a One entry
+ * @param b Another entry
+ * @returns True when both point at the same record
+ */
+function isSameEntity(a: RecentEntry, b: RecentEntry): boolean {
+  return a.id === b.id && a.parliament === b.parliament;
 }
 
 /**

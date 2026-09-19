@@ -1,5 +1,9 @@
 import { Route } from '@angular/router';
 import { voteDetailRoute } from '../votes/vote-detail.route';
+import {
+  activeParliamentRedirectGuard,
+  parliamentKeyGuard
+} from '../parliament/guards/parliament.guards';
 
 const loadBusinessDetail = () =>
   import('./containers/business-detail/business-detail.page').then(
@@ -16,18 +20,38 @@ export const businessDetailRoute: Route = {
   loadComponent: loadBusinessDetail
 };
 
+/**
+ * Every feature URL carries its parliament right after the feature:
+ * `/layout/business/:parliament/...`. The key-less URLs from before cantons
+ * existed stay registered as redirects to their federal equivalent, so stored
+ * navigation state and old deep links keep working.
+ */
 export const BUSINESS_ROUTES: Route[] = [
   {
     path: '',
-    loadComponent: () =>
-      import('./containers/business-list/business-list.page').then(
-        (m) => m.BusinessListPage
-      )
+    pathMatch: 'full',
+    canActivate: [activeParliamentRedirectGuard],
+    children: []
   },
+  { path: 'detail/:id', redirectTo: 'ch/detail/:id' },
+  { path: 'votes/detail/:id', redirectTo: 'ch/votes/detail/:id' },
   {
-    path: 'detail/:id',
-    loadComponent: loadBusinessDetail
-  },
-  // Reached from the vote list on the business detail page.
-  voteDetailRoute
+    path: ':parliament',
+    canActivate: [parliamentKeyGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./containers/business-list/business-list.page').then(
+            (m) => m.BusinessListPage
+          )
+      },
+      {
+        path: 'detail/:id',
+        loadComponent: loadBusinessDetail
+      },
+      // Reached from the vote list on the business detail page.
+      voteDetailRoute
+    ]
+  }
 ];
