@@ -1,11 +1,5 @@
 import { Localized, Relation } from './open-parl-data.model';
 
-/**
- * The OpenParlData records the app reads, reduced to the fields it uses.
- * Every field is optional: the API omits what a canton does not publish and
- * the services select only what a page renders.
- */
-
 export interface OpdAffair {
   id?: number;
   body_key?: string;
@@ -94,7 +88,6 @@ export interface OpdVoting {
   votes?: Relation<OpdVote>;
 }
 
-/** How one member voted, as the API words it. */
 export type OpdVoteValue =
   'yes' | 'no' | 'abstention' | 'absent' | 'further_option' | string;
 
@@ -133,7 +126,6 @@ export interface OpdPerson {
   person_images?: Relation<OpdPersonImage>;
 }
 
-/** `type_harmonized_oparl_id` values the app tells apart. */
 export const MEMBERSHIP_TYPE_COMMISSION = 2;
 export const MEMBERSHIP_TYPE_FRAKTION = 4;
 export const MEMBERSHIP_TYPE_PARLIAMENT = 10;
@@ -179,14 +171,12 @@ export interface OpdBody {
   type?: string | null;
 }
 
-/** One bucket of an `affairs/group_by/types_harmonized` aggregation. */
 export interface OpdTypeGroup {
   type_harmonized_id?: number | null;
   type_harmonized?: Localized;
   count?: number;
 }
 
-/** One bucket of a `persons/group_by/parties_harmonized` aggregation. */
 export interface OpdPartyGroup {
   party_harmonized_wikidata_id?: string | null;
   party_harmonized?: Localized;

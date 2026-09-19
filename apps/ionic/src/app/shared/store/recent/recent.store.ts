@@ -13,17 +13,9 @@ import {
   toParliamentKey
 } from '../../../parliament/models/parliament.model';
 
-/**
- * A previously viewed entity, keyed on the id its detail page routes on
- * together with the parliament that id belongs to.
- */
 export interface RecentEntry {
   id: number;
   title: string;
-  /**
-   * The parliament the entity was viewed in. Optional on the type because
-   * entries stored before cantons existed carry none; those are federal.
-   */
   parliament?: ParliamentKey;
 }
 
@@ -121,23 +113,10 @@ export function createRecentStore(config: RecentStoreConfig) {
   );
 }
 
-/**
- * Pin an entry to a parliament. Entries written before cantons existed carry
- * no key and are federal; entries written since always carry one.
- * @param entry The entry as stored or as recorded
- * @returns The entry with its parliament key filled in
- */
 function withParliament(entry: RecentEntry): RecentEntry {
   return { ...entry, parliament: toParliamentKey(entry.parliament) };
 }
 
-/**
- * Whether two entries are the same record. Ids are only unique within one
- * parliament: a federal business and a cantonal one can share a number.
- * @param a One entry
- * @param b Another entry
- * @returns True when both point at the same record
- */
 function isSameEntity(a: RecentEntry, b: RecentEntry): boolean {
   return a.id === b.id && a.parliament === b.parliament;
 }

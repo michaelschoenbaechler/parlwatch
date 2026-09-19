@@ -27,10 +27,6 @@ describe('CantonalVoteService', () => {
   let service: CantonalVoteService;
   let openParlData: jasmine.SpyObj<OpenParlDataService>;
 
-  /**
-   * Wire the service to recorded responses.
-   * @param responses Fixtures keyed by resource
-   */
   function configure(responses: Parameters<typeof createOpenParlDataSpy>[0]) {
     openParlData = createOpenParlDataSpy(responses);
     TestBed.resetTestingModule();
@@ -103,7 +99,6 @@ describe('CantonalVoteService', () => {
 
         configure({ votings: zhVotings });
         service.getVotes({ parliament: 'ZH', top: 10 }).subscribe((zh) => {
-          // Zürich repeats the business title on the voting.
           expect(zh[0].Subject).toBe('');
           done();
         });
@@ -146,7 +141,6 @@ describe('CantonalVoteService', () => {
             .de
         );
 
-        // The breakdown groups on those parties, largest first.
         const groups = talliesByParlGroup(vote.Votings);
         expect(groups.length).toBeGreaterThan(1);
         expect(groups[0].tally.total).toBeGreaterThanOrEqual(
@@ -227,7 +221,6 @@ describe('VoteFacade', () => {
     facade.getVotes({ parliament: 'BE', top: 10 }).subscribe();
     facade.getVote('ZH', 105953).subscribe();
 
-    // One request for the list, two for the detail.
     expect(openParlData.fetch).toHaveBeenCalledTimes(3);
     expect(swissParl.fetchCollection).not.toHaveBeenCalled();
   });

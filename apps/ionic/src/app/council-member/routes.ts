@@ -19,7 +19,6 @@ export const councilMemberDetailRoute: Route = {
   loadComponent: loadMemberDetail
 };
 
-/** See `BUSINESS_ROUTES` for the parliament segment and the legacy redirects. */
 export const COUNCIL_MEMBER_ROUTES: Route[] = [
   {
     path: '',

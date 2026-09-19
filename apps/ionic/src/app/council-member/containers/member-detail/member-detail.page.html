@@ -25,9 +25,7 @@
       [imageUrl]="cantonal()?.imageUrl ?? ''"
       [occupation]="cantonal()?.occupation ?? ''"
     />
-    @if (cantonal(); as cantonal) {
-    <!-- Cantonal member: every section only when the canton publishes it. -->
-    @if (cantonal.fraktion.length > 0) {
+    @if (cantonal(); as cantonal) { @if (cantonal.fraktion.length > 0) {
     <app-text-card title="{{ t('councilMember.idCard.parlGroup') }}">
       <app-member-membership-list [memberships]="cantonal.fraktion" />
     </app-text-card>
@@ -91,9 +89,7 @@
     </app-text-card>
     }
     <app-record-source-footer [source]="cantonal.source" />
-    } @else {
-    <!-- Federal member: unchanged. -->
-    @if (interestViewModel().isLoading) {
+    } @else { @if (interestViewModel().isLoading) {
     <app-text-card title="{{ t('councilMember.detail.interests') }}">
       <div class="loading-voting-record-container">
         <ion-spinner class="spinner" />

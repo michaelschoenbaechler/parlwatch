@@ -44,11 +44,6 @@ import {
 
 export type CouncilMemberState = {
   councilMemberRequestState: RequestState<MemberCouncil[]>;
-  /**
-   * The member shown on the detail page. Kept apart from the list: ids are
-   * only unique within one parliament, and a cantonal list row lacks the
-   * memberships and interests the detail page shows.
-   */
   selectedMemberRequestState: RequestState<LoadedMember | null>;
   query: CouncilMemberFilter;
 };
@@ -113,14 +108,6 @@ export const CouncilMemberStore = signalStore(
 
     _fetchMembers(store.query);
 
-    /**
-     * A federal list row carries everything the detail page shows, so it is
-     * reused. A cantonal row does not, and a row from another parliament may
-     * share the id, so anything cantonal is always fetched.
-     * @param parliament The member's parliament
-     * @param id The member's id
-     * @returns The list row that can serve as the detail, if any
-     */
     const _listedMember = (
       parliament: ParliamentKey,
       id: number
@@ -170,12 +157,6 @@ export const CouncilMemberStore = signalStore(
         patchState(store, (state) => ({
           query: { ...initialState.query, parliament: state.query.parliament }
         })),
-      /**
-       * Point the list at another parliament. Filters do not carry over:
-       * councils, cantons and party ids of one parliament mean nothing in
-       * another.
-       * @param parliament The parliament to list
-       */
       setParliament(parliament: ParliamentKey) {
         patchState(store, (state) => {
           if (state.query.parliament === parliament) return {};

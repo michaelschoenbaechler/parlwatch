@@ -33,7 +33,6 @@ import {
 
 export type FacetSlice = {
   facetsRequestState: RequestState<MemberFacets>;
-  /** The parliament the loaded options belong to. */
   parliament: ParliamentKey;
 };
 
@@ -43,13 +42,6 @@ const initialFacetState: FacetSlice = {
   parliament: FEDERAL_PARLIAMENT_KEY
 };
 
-/**
- * The option lists behind the member list's canton, faction and party filters.
- *
- * Loaded once per parliament and kept while that parliament is shown: the
- * underlying reference data changes at most once a legislature, and the
- * filter modal must open instantly. A canton offers harmonised parties only.
- */
 export const MemberFacetStore = signalStore(
   { providedIn: 'root' },
   withDevtools('MemberFacetStore'),
@@ -113,11 +105,6 @@ export const MemberFacetStore = signalStore(
     );
 
     return {
-      /**
-       * Loads the option lists of a parliament, unless they are already in
-       * hand.
-       * @param parliament The parliament being filtered
-       */
       ensureFacetsLoaded: (parliament: ParliamentKey) => {
         const state = store.facetsRequestState();
         if (store.parliament() === parliament) {

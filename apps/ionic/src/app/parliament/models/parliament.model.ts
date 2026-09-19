@@ -1,12 +1,3 @@
-/**
- * The parliament a page shows its data for.
- *
- * `ch` is the federal parliament, served by the existing OData source. Every
- * other key is a canton abbreviation and is served by OpenParlData, which uses
- * the same string as its `body_key`. All "is this cantonal?" decisions derive
- * from the key; there is no separate flag.
- */
-
 export const FEDERAL_PARLIAMENT_KEY = 'ch';
 
 export type FederalParliamentKey = typeof FEDERAL_PARLIAMENT_KEY;
@@ -41,32 +32,16 @@ export type CantonKey =
 
 export type ParliamentKey = FederalParliamentKey | CantonKey;
 
-/** What the app knows about a canton without asking any API. */
 export interface Canton {
   key: CantonKey;
-  /** German name, the only UI language the app ships. */
   name: string;
-  /**
-   * The two heraldic colours, as CSS colours. Not available from any API, so
-   * they ship with the app. A canton whose arms are a single tincture repeats
-   * it with white.
-   */
   colours: [string, string];
-  /** The cantonal parliament's official website. */
   websiteUrl: string;
-  /**
-   * The language the parliament keeps its records in, which is where a
-   * transcript is looked for. Bilingual cantons record in German first.
-   */
   language: 'de' | 'fr' | 'it';
 }
 
 const WHITE = '#ffffff';
 
-/**
- * The 26 cantons in the order the settings list shows them: alphabetical by
- * German name.
- */
 export const CANTONS: readonly Canton[] = [
   {
     key: 'AG',
@@ -257,67 +232,30 @@ const CANTONS_BY_KEY: ReadonlyMap<string, Canton> = new Map(
   CANTONS.map((canton) => [canton.key, canton])
 );
 
-/**
- * Whether a string names one of the 26 cantons.
- * @param value Candidate key, typically a route segment or a stored value
- * @returns True when it is a canton abbreviation the app knows
- */
 export function isCantonKey(value: unknown): value is CantonKey {
   return typeof value === 'string' && CANTONS_BY_KEY.has(value);
 }
 
-/**
- * Whether a string is a parliament key the app can route to.
- * @param value Candidate key
- * @returns True for `ch` and every canton abbreviation
- */
 export function isParliamentKey(value: unknown): value is ParliamentKey {
   return value === FEDERAL_PARLIAMENT_KEY || isCantonKey(value);
 }
 
-/**
- * Whether a parliament key names a canton rather than the federal parliament.
- * @param key The parliament key
- * @returns True for every key except `ch`
- */
 export function isCantonal(key: ParliamentKey): key is CantonKey {
   return key !== FEDERAL_PARLIAMENT_KEY;
 }
 
-/**
- * Turn an untrusted value into a parliament key.
- *
- * Old stored navigation state and recent entries carry no key at all, and a
- * deep link can carry anything; both fall back to the federal parliament so
- * nothing the user had before the update stops working.
- * @param value Candidate key, or nothing
- * @returns The key when it is valid, otherwise `ch`
- */
 export function toParliamentKey(value: unknown): ParliamentKey {
   return isParliamentKey(value) ? value : FEDERAL_PARLIAMENT_KEY;
 }
 
-/**
- * Look a canton up by key.
- * @param key The canton's abbreviation
- * @returns The canton
- */
 export function cantonOf(key: CantonKey): Canton {
-  // The key type guarantees the entry exists; the map lookup is only typed loosely.
   return CANTONS_BY_KEY.get(key) as Canton;
 }
 
-/**
- * Path of a canton's coat of arms. The arms ship with the app, so cantonal
- * pages render their badge without a network round trip.
- * @param key The canton's abbreviation
- * @returns Path under `assets/`
- */
 export function coatOfArmsPath(key: CantonKey): string {
   return `/assets/cantons/${key.toLowerCase()}.svg`;
 }
 
-/** Everything a cantonal page needs to dress itself in its canton. */
 export interface CantonTheme {
   key: CantonKey;
   name: string;
@@ -325,12 +263,6 @@ export interface CantonTheme {
   coatOfArms: string;
 }
 
-/**
- * The theme a parliament's pages use.
- * @param key The parliament key of the page
- * @returns The canton's theme, or null for the federal parliament, whose pages
- * keep their existing look
- */
 export function cantonTheme(key: ParliamentKey): CantonTheme | null {
   if (!isCantonal(key)) return null;
 

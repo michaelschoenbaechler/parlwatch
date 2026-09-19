@@ -14,10 +14,6 @@ export class BusinessCardComponent {
 
   private readonly datePipe = new ODataDateTimePipe();
 
-  /**
-   * Status line under the title. Federal rows date the status itself; a
-   * cantonal row carries no status date, so its submission date stands in.
-   */
   readonly subtitle = computed(() => {
     const business = this.business();
     const status = business.BusinessStatusText?.trim() ?? '';

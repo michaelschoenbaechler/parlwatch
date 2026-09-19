@@ -35,13 +35,6 @@ export class VoteItemsComponent {
   readonly votes = input.required<LoadedVote[]>();
   readonly voteSelected = output<number>();
 
-  /**
-   * Counts for a vote, or undefined while its batch is still loading. A
-   * cantonal vote brings its own counts; a federal one waits for the batch.
-   * Every field of the API model is optional, so an id-less vote has no tally.
-   * @param vote The vote the row renders
-   * @returns The vote's tally, when it is already known
-   */
   tallyOf(vote: LoadedVote) {
     if (vote.tally) return vote.tally;
     return vote.ID === undefined ? undefined : this.store.tallies()[vote.ID];

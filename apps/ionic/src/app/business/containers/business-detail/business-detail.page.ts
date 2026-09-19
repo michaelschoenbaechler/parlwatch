@@ -65,13 +65,11 @@ export class BusinessDetailPage implements OnInit {
   readonly route = inject(ActivatedRoute);
   readonly router = inject(Router);
 
-  /** The parliament this business belongs to, read from the route only. */
   readonly parliament: ParliamentKey = routeParliament(this.route);
   readonly isCantonal = isCantonal(this.parliament);
 
   readonly viewModel = computed(() => this.store.businessDetailViewModel());
 
-  /** The cantonal sections, present only for a cantonal business. */
   readonly cantonal = computed(
     () => this.viewModel().business?.cantonal ?? null
   );
@@ -92,8 +90,6 @@ export class BusinessDetailPage implements OnInit {
     });
 
     effect(() => {
-      // Cantonal votes arrive with their totals; only federal ones need the
-      // batched ballot request.
       if (this.isCantonal) return;
       const voteIds = this.viewModel()
         .votes.map((vote) => vote.ID)
@@ -107,8 +103,6 @@ export class BusinessDetailPage implements OnInit {
   ngOnInit() {
     const businessId = parseInt(this.route.snapshot.params.id);
     this.store.selectBusiness({ parliament: this.parliament, id: businessId });
-    // The federal debate lives in the transcript service; cantonal speeches
-    // come with the business itself.
     if (!this.isCantonal) {
       this.debateStore.selectBusiness(businessId);
     }
@@ -134,31 +128,18 @@ export class BusinessDetailPage implements OnInit {
     });
   }
 
-  /**
-   * Open a cantonal document in the system browser.
-   * @param document The tapped document
-   */
   openDocument(document: BusinessDocument) {
     Browser.open({ url: document.url, presentationStyle: 'popover' }).catch(
       console.error
     );
   }
 
-  /**
-   * Open one of the business's votes without leaving the current tab, so the
-   * tab bar stays put.
-   * @param id Id of the tapped vote
-   */
   onVote(id: number) {
     this.router
       .navigate(detailPathInTab(this.router.url, 'votes', id))
       .catch(console.error);
   }
 
-  /**
-   * Open a contributor's member page, staying inside the current tab.
-   * @param personId The contributor's person id
-   */
   onContributor(personId: number) {
     this.router
       .navigate(detailPathInTab(this.router.url, 'council-member', personId))

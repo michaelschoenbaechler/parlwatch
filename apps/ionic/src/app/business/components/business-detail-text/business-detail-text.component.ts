@@ -23,9 +23,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusinessDetailTextComponent {
-  /** A federal business, whose long-text fields become the sections. */
   readonly business = input<Business | null>(null);
-  /** Ready-made sections, used for cantonal texts. Wins over `business`. */
   readonly textSections = input<BusinessTextSection[] | null>(null);
 
   readonly sections = computed(

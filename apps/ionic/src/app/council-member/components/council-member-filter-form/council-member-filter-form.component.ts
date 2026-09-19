@@ -51,10 +51,6 @@ export class CouncilMemberFilterFormComponent implements OnInit {
 
   preset = input<CouncilMemberFilterForm>();
 
-  /**
-   * The parliament being filtered. Councils, cantons, factions and former
-   * members exist only federally; a canton offers the harmonised party alone.
-   */
   readonly parliament = input<ParliamentKey>(FEDERAL_PARLIAMENT_KEY);
   readonly isCantonal = computed(() => isCantonal(this.parliament()));
 

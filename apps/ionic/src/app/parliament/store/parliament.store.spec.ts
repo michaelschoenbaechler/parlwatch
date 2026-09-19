@@ -11,11 +11,6 @@ import {
 describe('ParliamentStore', () => {
   let storage: InMemoryStorageService;
 
-  /**
-   * Build a fresh store over the given storage contents.
-   * @param seed What storage holds before the store loads
-   * @returns The store, once it has read storage
-   */
   async function createStore(seed: Record<string, unknown> = {}) {
     storage = new InMemoryStorageService(seed);
     TestBed.configureTestingModule({
@@ -42,7 +37,6 @@ describe('ParliamentStore', () => {
     store.toggleCanton('BE');
 
     expect(store.isCantonalEnabled()).toBeTrue();
-    // Bern sorts before Zürich in the settings list, whatever the tap order.
     expect(store.cantonsOfInterest()).toEqual(['BE', 'ZH']);
     expect(store.switcherEntries().map((entry) => entry.key)).toEqual([
       'ch',
@@ -118,7 +112,6 @@ describe('ParliamentStore', () => {
     });
     const store = TestBed.inject(ParliamentStore);
 
-    // A cold start on /layout/business/BE syncs the store before it has loaded.
     store.setActiveParliament('BE');
     await store.whenReady();
 
@@ -133,7 +126,6 @@ describe('ParliamentStore', () => {
     });
 
     expect(store.cantonsOfInterest()).toEqual(['ZH']);
-    // Bern is no longer followed, so the list pages open on the federal parliament.
     expect(store.activeParliament()).toBe('ch');
   });
 });

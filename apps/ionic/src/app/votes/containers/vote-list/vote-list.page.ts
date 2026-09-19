@@ -44,7 +44,6 @@ import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-
 import { ParliamentSwitcherComponent } from '../../../parliament/components/parliament-switcher/parliament-switcher.component';
 import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
 import { CantonHintCardComponent } from '../../../parliament/components/canton-hint-card/canton-hint-card.component';
-import { CantonStripeComponent } from '../../../parliament/components/canton-stripe/canton-stripe.component';
 
 /** How many recent searches / votes the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;
@@ -64,8 +63,7 @@ const MAX_VISIBLE_RECENTS = 3;
     InlineNoticeComponent,
     ParliamentSwitcherComponent,
     ParliamentTitleComponent,
-    CantonHintCardComponent,
-    CantonStripeComponent
+    CantonHintCardComponent
   ],
   hostDirectives: [CantonalThemeDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -80,10 +78,8 @@ export class VoteListPage implements OnInit {
   private readonly navController = inject(NavController);
   private readonly route = inject(ActivatedRoute);
 
-  /** The parliament this page lists, fixed for the page's lifetime. */
   readonly parliament: ParliamentKey = routeParliament(this.route);
 
-  /** Name and website of the canton, for the "publishes no votes" notice. */
   readonly canton = isCantonal(this.parliament)
     ? cantonOf(this.parliament)
     : null;
@@ -133,17 +129,10 @@ export class VoteListPage implements OnInit {
   }
 
   ngOnInit() {
-    // The route is the source of truth; the store follows it so the other
-    // tabs open on the same parliament.
     this.parliamentStore.setActiveParliament(this.parliament);
     this.store.setParliament(this.parliament);
   }
 
-  /**
-   * Switch to another parliament's list. Replaces the tab's stack rather
-   * than pushing onto it, so back never walks through old parliaments.
-   * @param parliament The parliament picked in the switcher
-   */
   onParliamentChange(parliament: ParliamentKey) {
     this.parliamentStore.setActiveParliament(parliament);
     this.navController
@@ -170,11 +159,6 @@ export class VoteListPage implements OnInit {
     this.closeSuggestions();
   }
 
-  /**
-   * Open a recently viewed vote in its own parliament, whichever parliament
-   * the list shows. The switcher is left alone on purpose.
-   * @param entry The tapped history entry
-   */
   onRecentVoteClick(entry: RecentEntry) {
     this.closeSuggestions();
     this.router

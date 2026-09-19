@@ -8,7 +8,6 @@ import { IonicModule } from '@ionic/angular';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 import { BusinessDocument } from '../../models/cantonal-business';
 
-/** The documents of a cantonal business; each opens in the system browser. */
 @Component({
   selector: 'app-business-document-list',
   template: `

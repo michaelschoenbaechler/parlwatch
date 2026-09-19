@@ -58,7 +58,6 @@ export class MemberDetailPage implements OnInit {
   readonly route = inject(ActivatedRoute);
   readonly router = inject(Router);
 
-  /** The parliament this member sits in, read from the route only. */
   readonly parliament: ParliamentKey = routeParliament(this.route);
   readonly isCantonal = isCantonal(this.parliament);
 
@@ -66,7 +65,6 @@ export class MemberDetailPage implements OnInit {
     this.councilMemberStore.councilMemberDetailViewModel()
   );
 
-  /** The cantonal sections, present only for a cantonal member. */
   readonly cantonal = computed(
     () => this.councilMemberViewModel().councilMember?.cantonal ?? null
   );
@@ -98,12 +96,6 @@ export class MemberDetailPage implements OnInit {
     });
   }
 
-  /**
-   * Follow a voting-record row. Federal rows lead to the business, whose
-   * page lists the vote; cantonal rows lead straight to the vote, which is
-   * what the row records.
-   * @param voting The tapped row
-   */
   onClickBusiness(voting: Voting) {
     if (this.isCantonal && voting.IdVote !== undefined) {
       this.router

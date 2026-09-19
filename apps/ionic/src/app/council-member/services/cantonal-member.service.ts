@@ -39,7 +39,6 @@ import { FacetOption } from '../models/member-facets';
 import { InterestGroupVm } from '../models/person-interest';
 import { CouncilMemberFilter } from './council-member.service';
 
-/** Only the fields the member cards render. */
 const LIST_FIELDS = [
   'id',
   'firstname',
@@ -102,22 +101,11 @@ const SPEECH_FIELDS = [
   'affair.number'
 ].join(',');
 
-/** How much of a member's record the detail page shows. */
 const MAX_VOTES = 100;
 const MAX_SPEECHES = 50;
 
-/**
- * Harmonised parties are keyed by Wikidata id (`Q303745`). The filter form
- * and the federal filter shape work with numbers, so the id travels as its
- * numeric part and is put back together for the request.
- */
 const WIKIDATA_PREFIX = 'Q';
 
-/**
- * Turn a Wikidata id into the number the filter carries.
- * @param wikidataId The id, e.g. `Q303745`
- * @returns Its numeric part, or undefined for anything else
- */
 export function wikidataNumber(
   wikidataId: string | null | undefined
 ): number | undefined {
@@ -132,11 +120,6 @@ export class CantonalMemberService {
   private readonly openParlData = inject(OpenParlDataService);
   private readonly translocoService = inject(TranslocoService);
 
-  /**
-   * A page of a canton's sitting members, by last name.
-   * @param filter The list query; `parliament` must be a canton
-   * @returns Members in the federal card shape
-   */
   getMembers(filter: CouncilMemberFilter): Observable<MemberCouncil[]> {
     const { parliament, top, skip, searchTerm, parties } = filter;
     const lang = this.translocoService.getActiveLang();
@@ -165,11 +148,6 @@ export class CantonalMemberService {
       );
   }
 
-  /**
-   * The harmonised parties represented in a canton, for the party filter.
-   * @param parliament The canton
-   * @returns One option per party, alphabetical
-   */
   getParties(parliament: CantonKey): Observable<FacetOption[]> {
     const lang = this.translocoService.getActiveLang();
 
@@ -181,12 +159,6 @@ export class CantonalMemberService {
       .pipe(map((page) => toPartyOptions(page.data, lang)));
   }
 
-  /**
-   * One member with ID card, memberships and interests, in one request.
-   * @param parliament The canton
-   * @param id The person id
-   * @returns The member with the cantonal sections attached
-   */
   getMember(parliament: CantonKey, id: number): Observable<LoadedMember> {
     const lang = this.translocoService.getActiveLang();
 
@@ -201,15 +173,6 @@ export class CantonalMemberService {
       );
   }
 
-  /**
-   * How a member voted, newest first, where the canton publishes ballots.
-   *
-   * Goes through the `votes` collection rather than the person's relation
-   * endpoint, which ignores `expand`. Ballots not linked to a voting are
-   * left out at the source; some cantons carry many of them.
-   * @param id The person id
-   * @returns One entry per ballot with a known voting
-   */
   getVotingRecord(id: number): Observable<MemberVoteRecord[]> {
     const lang = this.translocoService.getActiveLang();
 
@@ -226,16 +189,6 @@ export class CantonalMemberService {
       .pipe(map((page) => toVotingRecord(page.data, lang)));
   }
 
-  /**
-   * A member's speeches with a transcript, newest first.
-   *
-   * Most speech rows are video segments without text, so the transcript
-   * column of the canton's language is required at the source; otherwise a
-   * page of fifty could come back empty for a member who speaks often.
-   * @param parliament The canton
-   * @param id The person id
-   * @returns Speeches grouped by business, bodies included
-   */
   getSpeeches(parliament: CantonKey, id: number): Observable<MemberSpeeches> {
     const lang = this.translocoService.getActiveLang();
 
@@ -253,18 +206,6 @@ export class CantonalMemberService {
   }
 }
 
-/**
- * Map a person onto the federal member card shape.
- *
- * The canton's own party label takes the abbreviation slot and the
- * electoral district the council slot, so the card reads "SP · II Zürich
- * 3+9" the way it reads "SP Nationalrat" federally. The coat of arms on the
- * card is the canton's.
- * @param person The person as the API returned it
- * @param parliament The canton
- * @param lang The app's active language
- * @returns The member
- */
 export function toMember(
   person: OpdPerson,
   parliament: CantonKey,
@@ -287,12 +228,6 @@ export function toMember(
   } as MemberCouncil;
 }
 
-/**
- * Map a `group_by` aggregation onto the filter's option shape.
- * @param groups Aggregation buckets
- * @param lang The app's active language
- * @returns One option per party with a Wikidata id, alphabetical
- */
 export function toPartyOptions(
   groups: OpdPartyGroup[],
   lang: string
@@ -309,13 +244,6 @@ export function toPartyOptions(
   return [...options.values()].sort((a, b) => a.label.localeCompare(b.label));
 }
 
-/**
- * Map a fully expanded person onto the detail page's model.
- * @param person The person with memberships, interests and images expanded
- * @param parliament The canton
- * @param lang The app's active language
- * @returns The member with the cantonal sections
- */
 export function toLoadedMember(
   person: OpdPerson,
   parliament: CantonKey,
@@ -346,13 +274,6 @@ export function toLoadedMember(
   };
 }
 
-/**
- * The member's seats of one harmonised group type.
- * @param memberships Active memberships
- * @param type The harmonised group type to keep
- * @param lang The app's active language
- * @returns One entry per named group
- */
 function toMemberships(
   memberships: OpdMembership[],
   type: number,
@@ -370,24 +291,10 @@ function toMemberships(
     .sort((a, b) => a.group.localeCompare(b.group));
 }
 
-/**
- * Drop the role when it only says "member": on a list of memberships that
- * goes without saying, and it would pad every row.
- * @param role The role as the canton words it
- * @returns The role, or an empty string for a plain member
- */
 function withoutPlainMember(role: string): string {
   return /^(mitglied|membre|membro)$/i.test(role) ? '' : role;
 }
 
-/**
- * Group a member's declared interests by legal form, the way the federal
- * register is shown. Cantons rarely record a form, so most land in the
- * unspecified group, which the page titles as "further interests".
- * @param interests Interest rows
- * @param lang The app's active language
- * @returns One group per form, named forms first
- */
 function toInterestGroups(
   interests: OpdInterest[],
   lang: string
@@ -430,23 +337,10 @@ function toInterestGroups(
   return ordered;
 }
 
-/**
- * Whether the register records the mandate as paid. The harmonised value is
- * `paid` or `honorary`; most cantons record neither, and then no badge is
- * shown at all.
- * @param interest The interest row
- * @returns True when the register says the mandate is paid
- */
 function isPaid(interest: OpdInterest): boolean {
   return (interest.type_payment_harmonized ?? '').toLowerCase() === 'paid';
 }
 
-/**
- * Map ballots with their votings onto the voting-record rows.
- * @param votes Ballot rows with the voting expanded
- * @param lang The app's active language
- * @returns One row per ballot whose voting is known, newest first
- */
 export function toVotingRecord(
   votes: OpdVote[],
   lang: string
@@ -467,18 +361,11 @@ export function toVotingRecord(
     });
   }
 
-  // Ids follow import order, which is only roughly the order of the votes.
   return records.sort(
     (a, b) => odataTimestamp(b.date) - odataTimestamp(a.date)
   );
 }
 
-/**
- * Map a member's speeches onto the speech list, grouped by business.
- * @param speeches Speech rows with the affair expanded
- * @param lang The app's active language
- * @returns The groups and the bodies keyed by speech id
- */
 export function toMemberSpeeches(
   speeches: OpdSpeech[],
   lang: string

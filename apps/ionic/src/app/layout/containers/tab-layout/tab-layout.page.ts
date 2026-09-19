@@ -7,7 +7,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { filter } from 'rxjs';
 import { isCantonKey } from '../../../parliament/models/parliament.model';
 
-/** Index of the parliament segment in `/layout/<feature>/<parliament>/...`. */
 const PARLIAMENT_SEGMENT = 3;
 
 @Component({
@@ -21,9 +20,6 @@ export class TabLayoutPage {
   private readonly platform = inject(Platform);
 
   constructor() {
-    // The status bar sits on the toolbar: light text on the federal red,
-    // dark text on the white cantonal one. Following the URL keeps it right
-    // across pushes, pops and tab switches alike.
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

@@ -28,7 +28,6 @@ const LIST_FIELDS: Array<keyof Vote> = [
 const MAX_VOTINGS_PER_VOTE = 300;
 
 export type VoteFilter = {
-  /** The parliament whose votes are listed. */
   parliament: ParliamentKey;
   top: number;
   skip?: number;

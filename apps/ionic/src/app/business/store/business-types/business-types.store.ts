@@ -30,7 +30,6 @@ import {
 
 export type BusinessTypesState = {
   businessTypesRequestState: RequestState<BusinessType[]>;
-  /** The parliament the loaded types belong to. */
   parliament: ParliamentKey;
 };
 
@@ -39,11 +38,6 @@ const initialBusinessTypesState: BusinessTypesState = {
   parliament: FEDERAL_PARLIAMENT_KEY
 };
 
-/**
- * The type options of the business filter, for one parliament at a time.
- * Every parliament numbers its types differently, so switching parliament
- * reloads the list rather than mixing two vocabularies.
- */
 export const BusinessTypesStore = signalStore(
   { providedIn: 'root' },
   withDevtools('BusinessTypesStore'),
@@ -80,10 +74,6 @@ export const BusinessTypesStore = signalStore(
     _loadBusinessTypes(store.parliament);
 
     return {
-      /**
-       * Load the types of a parliament, unless they are already in hand.
-       * @param parliament The parliament whose types the filter offers
-       */
       setParliament(parliament: ParliamentKey) {
         if (store.parliament() === parliament) return;
         patchState(store, {

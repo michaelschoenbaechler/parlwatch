@@ -41,7 +41,6 @@ describe('OpenParlDataService', () => {
     expect(request.request.params.get('body_key')).toBe('ZH');
     expect(request.request.params.get('limit')).toBe('20');
     expect(request.request.params.get('offset')).toBe('0');
-    // Unset and empty parameters are left out rather than sent as "undefined".
     expect(request.request.params.has('search')).toBeFalse();
     expect(request.request.params.has('type_harmonized_id')).toBeFalse();
     request.flush({ data: [], meta: {} });
@@ -99,7 +98,6 @@ describe('OpenParlDataService', () => {
     };
 
     fail();
-    // The retry waits before the second attempt.
     setTimeout(fail, 600);
   });
 });

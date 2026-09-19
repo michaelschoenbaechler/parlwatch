@@ -20,12 +20,6 @@ export const businessDetailRoute: Route = {
   loadComponent: loadBusinessDetail
 };
 
-/**
- * Every feature URL carries its parliament right after the feature:
- * `/layout/business/:parliament/...`. The key-less URLs from before cantons
- * existed stay registered as redirects to their federal equivalent, so stored
- * navigation state and old deep links keep working.
- */
 export const BUSINESS_ROUTES: Route[] = [
   {
     path: '',

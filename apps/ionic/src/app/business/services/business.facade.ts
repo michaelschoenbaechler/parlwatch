@@ -9,10 +9,6 @@ import { LoadedBusiness } from '../models/cantonal-business';
 import { BusinessFilter, BusinessService } from './business.service';
 import { CantonalBusinessService } from './cantonal-business.service';
 
-/**
- * Picks the federal or the cantonal business source from the parliament key,
- * so the store and the pages are written once against one surface.
- */
 @Injectable({
   providedIn: 'root'
 })

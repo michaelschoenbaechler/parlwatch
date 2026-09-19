@@ -26,8 +26,6 @@ import {
 } from './cantonal-member.service';
 import { CouncilMemberFacade } from './council-member.facade';
 
-// The JSON imports type themselves from the first row; the record types
-// are what the service actually reads.
 const personVotes = zhPersonVotes.data as OpdVote[];
 const personSpeeches = bePersonSpeeches.data as OpdSpeech[];
 
@@ -75,7 +73,6 @@ describe('CantonalMemberService', () => {
       expect(query['limit']).toBe(20);
       expect(query['offset']).toBe(20);
       expect(query['search']).toBe('Abou');
-      // Party numbers travel back as the Wikidata ids the API filters on.
       expect(query['party_harmonized_wikidata_id']).toBe('Q303745,Q385258');
       expect(query['lang']).toBe('de');
     });
@@ -157,7 +154,6 @@ describe('CantonalMemberService', () => {
         expect(cantonal?.occupation).toBe('Sozialarbeiterin');
 
         expect(cantonal?.fraktion.map((m) => m.group)).toEqual(['Fraktion SP']);
-        // A plain "Mitglied" role is dropped; it goes without saying.
         expect(cantonal?.fraktion[0].role).toBe('');
         expect(cantonal?.fraktion[0].since).toMatch(/^\/Date\(\d+\)\/$/);
         expect(cantonal?.commissions.length).toBeGreaterThan(0);
@@ -169,7 +165,6 @@ describe('CantonalMemberService', () => {
           zhPersonDetail.interests.data.length
         );
         expect(cantonal?.interests[0].interests[0].paid).toBeFalse();
-        // Zürich records nothing about payment, so no badge is shown.
         expect(cantonal?.interests[0].interests[0].paymentRecorded).toBeFalse();
 
         expect(cantonal?.source.url).toContain('kantonsrat.zh.ch');
@@ -184,7 +179,6 @@ describe('CantonalMemberService', () => {
 
         const commissions = member.cantonal?.commissions ?? [];
         expect(commissions.length).toBeGreaterThan(0);
-        // The fixture holds no fraktion seat, so the section is empty.
         expect(member.cantonal?.fraktion).toEqual([]);
         done();
       });
@@ -243,18 +237,14 @@ describe('CantonalMemberService', () => {
       service.getMember('GL', 9).subscribe((member) => {
         expect(member.FirstName).toBe('');
         expect(member.LastName).toBe('');
-        // Without a harmonised party the native label stands in.
         expect(member.PartyName).toBe('Parteilos');
 
         const cantonal = member.cantonal;
         expect(cantonal?.imageUrl).toBe('');
         expect(cantonal?.fraktion.map((m) => m.group)).toEqual(['Fraktion X']);
-        // A role beyond plain membership is kept.
         expect(cantonal?.fraktion[0].role).toBe('Präsidentin');
         expect(cantonal?.fraktion[0].since).toBe('');
-        // Ended seats are not shown.
         expect(cantonal?.commissions).toEqual([]);
-        // Named legal forms first, the unspecified rest last, entries by name.
         expect(cantonal?.interests.map((g) => g.type)).toEqual(['Verein', '']);
         expect(cantonal?.interests[0].interests[0].paid).toBeTrue();
         expect(cantonal?.interests[0].interests[0].paymentRecorded).toBeTrue();
@@ -263,7 +253,6 @@ describe('CantonalMemberService', () => {
         ).toEqual(['A']);
 
         service.getVotingRecord(9).subscribe((record) => {
-          // A ballot without its voting cannot be shown.
           expect(record.length).toBe(1);
           expect(record[0].title).toBe('T');
           expect(record[0].businessNumber).toBeNull();
@@ -285,7 +274,6 @@ describe('CantonalMemberService', () => {
         expect(query['sort_by']).toBe('-voting_id');
 
         expect(record.length).toBe(personVotes.length);
-        // Newest first by the voting's date, whatever order the ids came in.
         const dates = record.map((entry) => odataTimestamp(entry.date));
         expect(dates).toEqual([...dates].sort((a, b) => b - a));
         const newest = personVotes.find(
@@ -307,7 +295,6 @@ describe('CantonalMemberService', () => {
         const { resource, query } = lastFetch(openParlData);
         expect(resource).toBe('speeches');
         expect(query['person_id']).toBe(7472);
-        // Bern records in German; Jura would be asked for French.
         expect(query['exclude_null']).toBe('text_content_de');
         expect(query['expand']).toBe('affair');
         expect(query['sort_by']).toBe('-date_start');

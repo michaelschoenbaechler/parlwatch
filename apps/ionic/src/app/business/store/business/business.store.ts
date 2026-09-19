@@ -95,7 +95,6 @@ export const BusinessStore = signalStore(
     const _fetchBusinesses = rxMethod<BusinessFilter>(
       pipe(
         // Wait for the default session; undefined means "not resolved yet".
-        // Cantons have no sessions, so their list never waits.
         filter(
           (query) =>
             isCantonal(query.parliament) || query.sessionId !== undefined
@@ -173,11 +172,6 @@ export const BusinessStore = signalStore(
             sessionId: state.query.sessionId
           }
         })),
-      /**
-       * Point the list at another parliament. Filters do not carry over: the
-       * type ids and sessions of one parliament mean nothing in another.
-       * @param parliament The parliament to list
-       */
       setParliament(parliament: ParliamentKey) {
         patchState(store, (state) => {
           if (state.query.parliament === parliament) return {};

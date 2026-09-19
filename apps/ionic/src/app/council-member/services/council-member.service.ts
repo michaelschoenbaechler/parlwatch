@@ -13,7 +13,6 @@ import { SwissParlService } from '../../shared/services/swissparl.service';
 import { ParliamentKey } from '../../parliament/models/parliament.model';
 
 export type CouncilMemberFilter = {
-  /** The parliament whose members are listed. */
   parliament: ParliamentKey;
   top: number;
   skip?: number;
@@ -23,11 +22,6 @@ export type CouncilMemberFilter = {
   cantons?: number[];
   /** Faction numbers; a member matches if they belong to any of them. */
   parlGroups?: number[];
-  /**
-   * Party numbers; a member matches if they belong to any of them. In a
-   * canton these are harmonised parties, keyed by the number of their
-   * Wikidata id.
-   */
   parties?: number[];
   showInactive?: boolean;
 };

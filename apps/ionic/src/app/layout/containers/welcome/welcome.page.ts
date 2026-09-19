@@ -17,7 +17,6 @@ export class WelcomePage implements OnInit {
   private platform = inject(Platform);
   readonly parliamentStore = inject(ParliamentStore);
 
-  /** The optional canton step, shown after the welcome text. */
   readonly showCantonStep = signal(false);
 
   ngOnInit(): void {
@@ -28,10 +27,6 @@ export class WelcomePage implements OnInit {
     this.showCantonStep.set(true);
   }
 
-  /**
-   * Leave the welcome flow. Whatever was ticked in the canton step is
-   * already in the store; skipping simply leaves the list empty.
-   */
   onStart() {
     this.setStatusBarStyle(Style.Dark);
     this.router.navigate(['/layout/votes']);

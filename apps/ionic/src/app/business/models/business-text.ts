@@ -4,10 +4,6 @@ import { Business } from 'swissparl';
 export interface BusinessTextSection {
   /** Translation key under `business.detailText`, and the `@for` track key. */
   key: string;
-  /**
-   * Heading to show instead of the translated key. Set for cantonal texts,
-   * which carry the canton's own section titles.
-   */
   title?: string;
   /** The section's full markup, shown in the modal. */
   html: string;
@@ -65,13 +61,6 @@ export function toBusinessTextSections(
   return sections;
 }
 
-/**
- * Build one section from a block of markup.
- * @param key Identity of the section, and its translation key when untitled
- * @param markup The section's full markup
- * @param title Heading to show instead of the translated key
- * @returns The section, or null when the markup holds no readable text
- */
 export function toTextSection(
   key: string,
   markup: string | undefined,

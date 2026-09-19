@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 import { MemberMembership } from '../../models/cantonal-member';
 
-/** A cantonal member's seats in a fraktion or in commissions. */
 @Component({
   selector: 'app-member-membership-list',
   template: `

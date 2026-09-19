@@ -19,7 +19,6 @@
 }
 
 .no {
-  /* Red for "no"; cantonal pages, whose primary is neutral, set the fallback. */
   background-color: var(--vote-no-colour, var(--ion-color-primary));
 }
 
