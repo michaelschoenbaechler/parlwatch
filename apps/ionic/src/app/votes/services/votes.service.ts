@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Vote, Voting } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
 import { SwissParlService } from '../../shared/services/swissparl.service';
+import { ParliamentKey } from '../../parliament/models/parliament.model';
 
 /**
  * Only the fields the vote cards render. Without this the API ships every
@@ -27,6 +28,8 @@ const LIST_FIELDS: Array<keyof Vote> = [
 const MAX_VOTINGS_PER_VOTE = 300;
 
 export type VoteFilter = {
+  /** The parliament whose votes are listed. */
+  parliament: ParliamentKey;
   top: number;
   skip?: number;
   searchTerm?: string;

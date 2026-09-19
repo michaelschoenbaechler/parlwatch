@@ -1,10 +1,10 @@
 import { Component, OnInit, effect, inject, computed } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { Vote, Voting } from 'swissparl';
+import { Voting } from 'swissparl';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 import { ParlGroupBreakdownComponent } from '../../components/parl-group-breakdown/parl-group-breakdown.component';
 import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
@@ -18,6 +18,18 @@ import {
   VoteDecision
 } from '../../models/vote-decision';
 import { parlGroupTranslationKey } from '../../../shared/models/parl-group.model';
+import { LoadedVote } from '../../models/loaded-vote';
+import {
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
+import {
+  detailPathInTab,
+  routeParliament
+} from '../../../parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '../../../parliament/components/record-source-footer/record-source-footer.component';
 
 const DECISION_ICONS: Record<VoteDecision, string> = {
   yes: 'checkmark-outline',
@@ -42,7 +54,7 @@ const DECISION_COLORS: Record<VoteDecision, string> = {
  * @param vote The vote that was opened
  * @returns A display label, or an empty string when the vote carries no title
  */
-function recentVoteTitle(vote: Vote): string {
+function recentVoteTitle(vote: LoadedVote): string {
   const title =
     vote.BusinessTitle?.trim() ||
     vote.BillTitle?.trim() ||
@@ -57,7 +69,6 @@ function recentVoteTitle(vote: Vote): string {
   templateUrl: './vote-detail.page.html',
   styleUrls: ['./vote-detail.page.scss'],
   imports: [
-    RouterLink,
     ReactiveFormsModule,
     IonicModule,
     VoteCardComponent,
@@ -65,8 +76,11 @@ function recentVoteTitle(vote: Vote): string {
     TextCardComponent,
     LoadingScreenComponent,
     ErrorScreenComponent,
-    TranslocoDirective
-  ]
+    TranslocoDirective,
+    ParliamentTitleComponent,
+    RecordSourceFooterComponent
+  ],
+  hostDirectives: [CantonalThemeDirective]
 })
 export class VoteDetailPage implements OnInit {
   readonly router = inject(Router);
@@ -74,6 +88,10 @@ export class VoteDetailPage implements OnInit {
   readonly store = inject(VoteStore);
   readonly recentStore = inject(RecentVoteStore);
   private readonly transloco = inject(TranslocoService);
+
+  /** The parliament this vote belongs to, read from the route only. */
+  readonly parliament: ParliamentKey = routeParliament(this.route);
+  readonly isCantonal = isCantonal(this.parliament);
 
   voteFilterControl = new FormControl<VotingDecisionFilter>('all');
   private readonly voteFilter = toSignal(this.voteFilterControl.valueChanges, {
@@ -91,27 +109,50 @@ export class VoteDetailPage implements OnInit {
 
       const title = recentVoteTitle(vote);
       if (title) {
-        this.recentStore.recordEntry({ id: vote.ID, title });
+        this.recentStore.recordEntry({
+          id: vote.ID,
+          title,
+          parliament: this.parliament
+        });
       }
     });
   }
 
   ngOnInit() {
-    this.store.selectVote(parseInt(this.route.snapshot.params.id));
+    this.store.selectVote({
+      parliament: this.parliament,
+      id: parseInt(this.route.snapshot.params.id)
+    });
   }
 
   retrySearch() {
-    this.store.selectVote(parseInt(this.route.snapshot.params.id));
+    this.store.selectVote({
+      parliament: this.parliament,
+      id: parseInt(this.route.snapshot.params.id)
+    });
   }
 
   goToBusiness() {
-    const vm = this.viewModel();
-    if (vm.vote) {
-      this.router.navigate([
-        '/layout/votes/business/detail',
-        vm.vote.BusinessNumber
-      ]);
-    }
+    const businessNumber = this.viewModel().vote?.BusinessNumber;
+    if (businessNumber === undefined) return;
+
+    this.router
+      .navigate(detailPathInTab(this.router.url, 'business', businessNumber))
+      .catch(console.error);
+  }
+
+  /**
+   * Open the member behind a ballot, staying inside the current tab.
+   * @param voting The tapped ballot
+   */
+  onMember(voting: Voting) {
+    if (voting.PersonNumber === undefined) return;
+
+    this.router
+      .navigate(
+        detailPathInTab(this.router.url, 'council-member', voting.PersonNumber)
+      )
+      .catch(console.error);
   }
 
   /**
@@ -155,6 +196,18 @@ export class VoteDetailPage implements OnInit {
     return key
       ? this.transloco.translate(key)
       : (voting.ParlGroupNameAbbreviation ?? '');
+  }
+
+  /**
+   * The second line under a member's name: faction and canton federally,
+   * the party alone for a cantonal ballot, which has no canton to add.
+   * @param voting The member's voting record
+   * @returns The line, or an empty string
+   */
+  memberSubtitle(voting: Voting): string {
+    return [this.parlGroupLabel(voting), voting.CantonName]
+      .filter((part) => !!part)
+      .join(' - ');
   }
 
   /**

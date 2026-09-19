@@ -1,6 +1,8 @@
 import { Vote, Voting } from 'swissparl';
 import { RequestState } from '../../../shared/models/request-state.model';
+import { isCantonal } from '../../../parliament/models/parliament.model';
 import { VoteFilter } from '../../services/votes.service';
+import { LoadedVote } from '../../models/loaded-vote';
 import {
   ParlGroupTally,
   talliesByParlGroup,
@@ -12,6 +14,11 @@ export interface VoteListVm {
   businessGroups: VoteBusinessGroupVm[];
   isRefreshing: boolean;
   noContent: boolean;
+  /**
+   * The parliament itself publishes no votes, as opposed to the current
+   * search matching nothing. Only a canton can be in this state.
+   */
+  noVotingsPublished: boolean;
   isLoading: boolean;
   isLoadingMore: boolean;
   hasError: boolean;
@@ -23,11 +30,11 @@ export interface VoteBusinessGroupVm {
   businessShortNumber: string;
   businessTitle: string;
   latestVoteEnd: string;
-  votes: Vote[];
+  votes: LoadedVote[];
 }
 
 export interface VoteDetailVm {
-  vote: Vote | null;
+  vote: LoadedVote | null;
   votings: Voting[];
   parlGroups: ParlGroupTally[];
   isLoading: boolean;
@@ -43,12 +50,17 @@ export type VotingDecisionFilter = 'all' | VoteDecision;
  * @returns VoteListVm derived from state and query
  */
 export function createVoteListVm(
-  votesRequestState: RequestState<Vote[]>,
+  votesRequestState: RequestState<LoadedVote[]>,
   query: VoteFilter
 ): VoteListVm {
   return {
     businessGroups: groupVotesByBusiness(items()),
     noContent: items().length === 0,
+    noVotingsPublished:
+      isCantonal(query.parliament) &&
+      votesRequestState.success &&
+      items().length === 0 &&
+      !(query.searchTerm ?? '').trim(),
     isLoading:
       votesRequestState.loading &&
       items().length === 0 &&
@@ -65,7 +77,7 @@ export function createVoteListVm(
    * Get the list or an empty array.
    * @returns Vote[] list (never null)
    */
-  function items(): Vote[] {
+  function items(): LoadedVote[] {
     return votesRequestState.data || [];
   }
 }
@@ -81,7 +93,7 @@ export function createVoteListVm(
  * @returns VoteDetailVm derived from state
  */
 export function createVoteDetailVm(
-  selectedVoteRequestState: RequestState<Vote | null>,
+  selectedVoteRequestState: RequestState<LoadedVote | null>,
   filter: VotingDecisionFilter
 ): VoteDetailVm {
   const selected = selectedVoteRequestState.data ?? null;
@@ -113,7 +125,9 @@ export function createVoteDetailVm(
  * @param votes Flat list of votes as delivered by the API
  * @returns One group per business, each holding its votes newest first
  */
-export function groupVotesByBusiness(votes: Vote[]): VoteBusinessGroupVm[] {
+export function groupVotesByBusiness(
+  votes: LoadedVote[]
+): VoteBusinessGroupVm[] {
   const groups = new Map<string, VoteBusinessGroupVm>();
 
   for (const vote of votes) {

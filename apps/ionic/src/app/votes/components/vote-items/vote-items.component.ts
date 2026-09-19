@@ -6,10 +6,10 @@ import {
   output
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { Vote } from 'swissparl';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 import { VoteStore } from '../../store/vote';
+import { LoadedVote } from '../../models/loaded-vote';
 import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 
 /**
@@ -32,16 +32,18 @@ import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 export class VoteItemsComponent {
   readonly store = inject(VoteStore);
 
-  readonly votes = input.required<Vote[]>();
+  readonly votes = input.required<LoadedVote[]>();
   readonly voteSelected = output<number>();
 
   /**
-   * Counts for a vote, or undefined while its batch is still loading. Every
-   * field of the API model is optional, so an id-less vote has no tally.
+   * Counts for a vote, or undefined while its batch is still loading. A
+   * cantonal vote brings its own counts; a federal one waits for the batch.
+   * Every field of the API model is optional, so an id-less vote has no tally.
    * @param vote The vote the row renders
    * @returns The vote's tally, when it is already known
    */
-  tallyOf(vote: Vote) {
+  tallyOf(vote: LoadedVote) {
+    if (vote.tally) return vote.tally;
     return vote.ID === undefined ? undefined : this.store.tallies()[vote.ID];
   }
 
@@ -49,7 +51,7 @@ export class VoteItemsComponent {
    * Open a vote's detail page, ignoring taps on a vote without an id.
    * @param vote The vote the tapped row renders
    */
-  onVoteSelected(vote: Vote) {
+  onVoteSelected(vote: LoadedVote) {
     if (vote.ID !== undefined) {
       this.voteSelected.emit(vote.ID);
     }
