@@ -169,6 +169,8 @@ describe('CantonalMemberService', () => {
           zhPersonDetail.interests.data.length
         );
         expect(cantonal?.interests[0].interests[0].paid).toBeFalse();
+        // Zürich records nothing about payment, so no badge is shown.
+        expect(cantonal?.interests[0].interests[0].paymentRecorded).toBeFalse();
 
         expect(cantonal?.source.url).toContain('kantonsrat.zh.ch');
         done();
@@ -255,6 +257,7 @@ describe('CantonalMemberService', () => {
         // Named legal forms first, the unspecified rest last, entries by name.
         expect(cantonal?.interests.map((g) => g.type)).toEqual(['Verein', '']);
         expect(cantonal?.interests[0].interests[0].paid).toBeTrue();
+        expect(cantonal?.interests[0].interests[0].paymentRecorded).toBeTrue();
         expect(
           cantonal?.interests[1].interests.map((i) => i.organisation)
         ).toEqual(['A']);

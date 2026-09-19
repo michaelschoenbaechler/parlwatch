@@ -3,10 +3,12 @@
     <li class="interest">
       <div class="interest-header">
         <span class="interest-organisation">{{ interest.organisation }}</span>
-        @if (interest.paid) {
-          <ion-badge color="warning">{{ t('interestPaid') }}</ion-badge>
-        } @else {
-          <ion-badge color="medium">{{ t('interestUnpaid') }}</ion-badge>
+        @if (interest.paymentRecorded !== false) {
+          @if (interest.paid) {
+            <ion-badge color="warning">{{ t('interestPaid') }}</ion-badge>
+          } @else {
+            <ion-badge color="medium">{{ t('interestUnpaid') }}</ion-badge>
+          }
         }
       </div>
       @if (interest.role || interest.body) {

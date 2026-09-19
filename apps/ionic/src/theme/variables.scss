@@ -99,6 +99,9 @@
 
   --ion-toolbar-color: #222428;
   --ion-toolbar-background: #ffffff;
+
+  /* "No" on a voting bar stays red where the primary colour no longer is. */
+  --vote-no-colour: #e3000f;
 }
 
 .cantonal ion-header {
