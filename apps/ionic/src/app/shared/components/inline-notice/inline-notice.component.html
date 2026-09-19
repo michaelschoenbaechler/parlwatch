@@ -1,0 +1,17 @@
+<div class="inline-notice" [class]="'inline-notice ' + tone()" role="status">
+  <ion-icon name="information-circle-outline" aria-hidden="true" />
+  <div class="inline-notice-body">
+    <p class="inline-notice-message">{{ message() }}</p>
+    @if (linkUrl() && linkLabel()) {
+      <a
+        class="inline-notice-link"
+        [href]="linkUrl()"
+        target="_blank"
+        rel="noopener"
+      >
+        {{ linkLabel() }}
+        <ion-icon name="open-outline" aria-hidden="true" />
+      </a>
+    }
+  </div>
+</div>
