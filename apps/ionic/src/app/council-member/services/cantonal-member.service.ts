@@ -410,7 +410,8 @@ function toInterestGroups(
       organisation,
       role: localized(interest.role_name, lang),
       body: '',
-      paid: isPaid(interest)
+      paid: isPaid(interest),
+      paymentRecorded: !!interest.type_payment_harmonized
     });
   }
 
@@ -431,8 +432,8 @@ function toInterestGroups(
 
 /**
  * Whether the register records the mandate as paid. The harmonised value is
- * `paid` or `honorary`; most cantons record neither, which the badge shows
- * as unpaid because it has no third state.
+ * `paid` or `honorary`; most cantons record neither, and then no badge is
+ * shown at all.
  * @param interest The interest row
  * @returns True when the register says the mandate is paid
  */

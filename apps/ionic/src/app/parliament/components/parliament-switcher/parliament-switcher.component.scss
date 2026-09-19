@@ -6,14 +6,26 @@
   --min-height: 0;
 }
 
+/*
+ * The segment sits in the toolbar, so it takes the toolbar's text colour:
+ * white on the federal red, dark on the white cantonal bar. Without this the
+ * checked button falls back to the primary colour, red on red.
+ */
 ion-segment-button {
   --padding-start: 0.5rem;
   --padding-end: 0.5rem;
+  --color: var(--ion-toolbar-color);
+  --color-checked: var(--ion-toolbar-color);
+  --indicator-color: var(--ion-toolbar-color);
   min-width: 4rem;
   min-height: 2rem;
   text-transform: none;
   font-weight: 600;
   letter-spacing: 0;
+}
+
+ion-segment-button:not(.segment-button-checked) {
+  opacity: 0.7;
 }
 
 ion-segment-button ion-label {

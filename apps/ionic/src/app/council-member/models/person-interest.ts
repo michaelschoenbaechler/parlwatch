@@ -13,6 +13,12 @@ export interface InterestVm {
   body: string;
   /** Whether the member is paid for the mandate. */
   paid: boolean;
+  /**
+   * Whether the register says anything about payment at all. The federal
+   * register always does; most cantonal ones do not, and then no badge is
+   * shown rather than a misleading "unpaid".
+   */
+  paymentRecorded?: boolean;
 }
 
 /** Ties sharing one legal form, the way the official register groups them. */

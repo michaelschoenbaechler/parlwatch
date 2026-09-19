@@ -73,6 +73,13 @@ export const ParliamentStore = signalStore(
 
     let resolveReady: () => void = () => undefined;
     const ready = new Promise<void>((resolve) => (resolveReady = resolve));
+    let loaded = false;
+    /**
+     * A parliament activated before storage was read, as happens when the
+     * app cold-starts on a list page. Applied on top of the stored value
+     * once it is known, instead of being overwritten by it.
+     */
+    let pendingActive: ParliamentKey | null = null;
 
     /**
      * Keep the active parliament valid: it must be `ch` or a canton the user
@@ -128,14 +135,18 @@ export const ParliamentStore = signalStore(
         // dropped rather than allowed to break the switcher.
         const cantonsOfInterest = storedCantons.filter(isCantonKey);
 
-        patchState(store, {
+        const next = {
           cantonsOfInterest,
           activeParliament: validActive(
-            toParliamentKey(storedActive),
+            pendingActive ?? toParliamentKey(storedActive),
             cantonsOfInterest
           ),
           hintDismissed: hintDismissed === true
-        });
+        };
+        patchState(store, next);
+        loaded = true;
+        if (pendingActive !== null) persist(next);
+        pendingActive = null;
         resolveReady();
       },
 
@@ -173,6 +184,11 @@ export const ParliamentStore = signalStore(
        * @param key The parliament to activate
        */
       setActiveParliament(key: ParliamentKey): void {
+        if (!loaded) {
+          pendingActive = key;
+          return;
+        }
+
         const activeParliament = validActive(key, store.cantonsOfInterest());
         if (activeParliament !== key) return;
         if (store.activeParliament() === activeParliament) return;
