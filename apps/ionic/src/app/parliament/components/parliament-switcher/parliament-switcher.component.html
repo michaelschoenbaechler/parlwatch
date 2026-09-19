@@ -1,5 +1,8 @@
 @if (parliamentStore.isCantonalEnabled()) {
-  <ion-toolbar class="switcher-toolbar">
+  <ion-toolbar
+    class="switcher-toolbar"
+    *transloco="let t; prefix: 'parliament'"
+  >
     <ion-segment
       scrollable="true"
       [value]="selected()"
@@ -13,8 +16,10 @@
               [src]="coatOfArmsPath(entry.key)"
               alt=""
             />
+            <ion-label>{{ entry.label }}</ion-label>
+          } @else {
+            <ion-label>{{ t('federal') }}</ion-label>
           }
-          <ion-label>{{ entry.label }}</ion-label>
         </ion-segment-button>
       }
     </ion-segment>

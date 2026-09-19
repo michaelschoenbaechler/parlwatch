@@ -88,9 +88,7 @@ export function toLoadedVote(
     cantonal: {
       parliament,
       source: {
-        updatedAt: toODataDate(
-          voting.updated_at ?? voting.updated_external_at
-        ),
+        updatedAt: toODataDate(voting.updated_at ?? voting.updated_external_at),
         url: localized(voting.url_external, lang)
       }
     }

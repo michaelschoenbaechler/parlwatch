@@ -135,13 +135,8 @@ export class CantonalMemberService {
    * @param filter The list query; `parliament` must be a canton
    * @returns Members in the federal card shape
    */
-  getMembers({
-    parliament,
-    top,
-    skip,
-    searchTerm,
-    parties
-  }: CouncilMemberFilter): Observable<MemberCouncil[]> {
+  getMembers(filter: CouncilMemberFilter): Observable<MemberCouncil[]> {
+    const { parliament, top, skip, searchTerm, parties } = filter;
     const lang = this.translocoService.getActiveLang();
     const partyIds = (parties ?? []).map((id) => `${WIKIDATA_PREFIX}${id}`);
 
@@ -264,7 +259,8 @@ export function toMember(
     FirstName: person.firstname?.trim() ?? '',
     LastName: person.lastname?.trim() ?? '',
     PartyAbbreviation: localized(person.party, lang),
-    PartyName: localized(person.party_harmonized, lang) || localized(person.party, lang),
+    PartyName:
+      localized(person.party_harmonized, lang) || localized(person.party, lang),
     ParlGroupName: localized(person.parliamentary_group_name, lang),
     CouncilName: localized(person.electoral_district, lang),
     CantonName: '',
@@ -323,11 +319,7 @@ export function toLoadedMember(
       electoralDistrict: localized(person.electoral_district, lang),
       occupation: localized(person.occupation, lang),
       fraktion: toMemberships(memberships, MEMBERSHIP_TYPE_FRAKTION, lang),
-      commissions: toMemberships(
-        memberships,
-        MEMBERSHIP_TYPE_COMMISSION,
-        lang
-      ),
+      commissions: toMemberships(memberships, MEMBERSHIP_TYPE_COMMISSION, lang),
       interests: toInterestGroups(relationList(person.interests), lang),
       source: {
         updatedAt: toODataDate(person.updated_at),

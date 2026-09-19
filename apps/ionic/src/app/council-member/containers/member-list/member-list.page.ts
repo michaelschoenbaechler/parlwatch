@@ -186,7 +186,9 @@ export class MemberListPage implements OnInit {
   onClickPerson(councilMember: MemberCouncil) {
     if (councilMember.ID !== undefined) {
       this.router
-        .navigate(detailPath('council-member', this.parliament, councilMember.ID))
+        .navigate(
+          detailPath('council-member', this.parliament, councilMember.ID)
+        )
         .catch(console.error);
     }
   }

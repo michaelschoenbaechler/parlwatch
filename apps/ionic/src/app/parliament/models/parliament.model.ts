@@ -157,7 +157,8 @@ export const CANTONS: readonly Canton[] = [
     key: 'SH',
     name: 'Schaffhausen',
     colours: ['#000000', '#ffd500'],
-    websiteUrl: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Parlament-3897-DE.html'
+    websiteUrl:
+      'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Parlament-3897-DE.html'
   },
   {
     key: 'SZ',

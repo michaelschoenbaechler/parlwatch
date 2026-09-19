@@ -48,7 +48,10 @@ export const VotingRecordStore = signalStore(
   withMethods((store) => {
     const councilMemberFacade = inject(CouncilMemberFacade);
 
-    const loadVotingRecord = rxMethod<{ parliament: ParliamentKey; id: number }>(
+    const loadVotingRecord = rxMethod<{
+      parliament: ParliamentKey;
+      id: number;
+    }>(
       pipe(
         tap(() => patchState(store, createLoadVotingRecordRequestState())),
         switchMap(({ parliament, id }) =>
