@@ -22,4 +22,8 @@ import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 })
 export class MemberIdCardComponent {
   readonly councilMember = input.required<MemberCouncil>();
+  /** Portrait, shown where a parliament publishes one. */
+  readonly imageUrl = input<string>('');
+  /** Occupation, which cantons record and the federal register does not. */
+  readonly occupation = input<string>('');
 }

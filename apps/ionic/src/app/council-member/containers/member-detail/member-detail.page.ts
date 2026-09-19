@@ -14,6 +14,19 @@ import { CouncilMemberStore } from '../../store/council-member/council-member.st
 import { VotingRecordStore } from '../../store/voting-record/voting-record.store';
 import { InterestStore } from '../../store/interest/interest.store';
 import { SpeechStore } from '../../store/speech/speech.store';
+import {
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
+import {
+  detailPathInTab,
+  routeParliament
+} from '../../../parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '../../../parliament/components/record-source-footer/record-source-footer.component';
+import { MemberMembershipListComponent } from '../../components/member-membership-list/member-membership-list.component';
+import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
 
 @UntilDestroy()
 @Component({
@@ -28,8 +41,13 @@ import { SpeechStore } from '../../store/speech/speech.store';
     TextCardComponent,
     LoadingScreenComponent,
     ErrorScreenComponent,
-    TranslocoDirective
-  ]
+    TranslocoDirective,
+    ParliamentTitleComponent,
+    RecordSourceFooterComponent,
+    MemberMembershipListComponent,
+    ODataDateTimePipe
+  ],
+  hostDirectives: [CantonalThemeDirective]
 })
 export class MemberDetailPage implements OnInit {
   readonly councilMemberStore = inject(CouncilMemberStore);
@@ -40,8 +58,17 @@ export class MemberDetailPage implements OnInit {
   readonly route = inject(ActivatedRoute);
   readonly router = inject(Router);
 
+  /** The parliament this member sits in, read from the route only. */
+  readonly parliament: ParliamentKey = routeParliament(this.route);
+  readonly isCantonal = isCantonal(this.parliament);
+
   readonly councilMemberViewModel = computed(() =>
     this.councilMemberStore.councilMemberDetailViewModel()
+  );
+
+  /** The cantonal sections, present only for a cantonal member. */
+  readonly cantonal = computed(
+    () => this.councilMemberViewModel().councilMember?.cantonal ?? null
   );
 
   readonly votingRecordViewModel = computed(() =>
@@ -56,26 +83,40 @@ export class MemberDetailPage implements OnInit {
   readonly uiLanguage = this.transloco.getActiveLang();
 
   ngOnInit() {
-    const councilMemberId = parseInt(this.route.snapshot.params.id);
-    this.councilMemberStore.selectCouncilMember(councilMemberId);
-    this.votingRecordStore.loadVotingRecord(councilMemberId);
-    this.interestStore.loadInterests(councilMemberId);
-    this.speechStore.selectMember(councilMemberId);
+    const id = parseInt(this.route.snapshot.params.id);
+    const parliament = this.parliament;
+    this.councilMemberStore.selectCouncilMember({ parliament, id });
+    this.votingRecordStore.loadVotingRecord({ parliament, id });
+    this.interestStore.loadInterests({ parliament, id });
+    this.speechStore.selectMember(parliament, id);
   }
 
   retry() {
-    this.councilMemberStore.selectCouncilMember(
-      parseInt(this.route.snapshot.params.id)
-    );
+    this.councilMemberStore.selectCouncilMember({
+      parliament: this.parliament,
+      id: parseInt(this.route.snapshot.params.id)
+    });
   }
 
+  /**
+   * Follow a voting-record row. Federal rows lead to the business, whose
+   * page lists the vote; cantonal rows lead straight to the vote, which is
+   * what the row records.
+   * @param voting The tapped row
+   */
   onClickBusiness(voting: Voting) {
+    if (this.isCantonal && voting.IdVote !== undefined) {
+      this.router
+        .navigate(detailPathInTab(this.router.url, 'votes', voting.IdVote))
+        .catch(console.error);
+      return;
+    }
+
     if (voting.BusinessNumber === undefined) return;
     this.router
-      .navigate([
-        '/layout/council-member/business/detail',
-        voting.BusinessNumber
-      ])
+      .navigate(
+        detailPathInTab(this.router.url, 'business', voting.BusinessNumber)
+      )
       .catch(console.error);
   }
 

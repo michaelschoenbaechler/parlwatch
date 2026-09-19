@@ -6,8 +6,8 @@ import {
   withState
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { filter, forkJoin, pipe, tap } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, pipe, tap } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
@@ -18,14 +18,16 @@ import {
   onRequestSuccess,
   RequestState
 } from '../../../shared/models/request-state.model';
-import { TranscriptService } from '../../../shared/services/transcript.service';
 import {
   cleanTranscriptText,
   groupSpeechesByBusiness,
-  SpeechVm,
-  toSpeeches,
-  withSubjectTitles
+  SpeechVm
 } from '../../../shared/models/transcript.model';
+import {
+  FEDERAL_PARLIAMENT_KEY,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
+import { CouncilMemberFacade } from '../../services/council-member.facade';
 
 /** How many speeches a page holds. */
 export const SPEECH_PAGE_SIZE = 20;
@@ -34,6 +36,7 @@ export type SpeechSlice = {
   speechesRequestState: RequestState<SpeechVm[]>;
   /** The member whose speeches are loaded, so a revisit does not refetch. */
   personNumber: number | null;
+  parliament: ParliamentKey;
   /** Whether the last page came back full, i.e. more may follow. */
   hasMore: boolean;
   /** Bodies of the speeches a reader has opened, keyed by transcript id. */
@@ -45,6 +48,7 @@ export type SpeechSlice = {
 const initialSpeechState: SpeechSlice = {
   speechesRequestState: createDefaultRequestState<SpeechVm[]>([]),
   personNumber: null,
+  parliament: FEDERAL_PARLIAMENT_KEY,
   hasMore: false,
   texts: {},
   loadingTextId: null
@@ -74,46 +78,38 @@ export const SpeechStore = signalStore(
     };
   }),
   withMethods((store) => {
-    const transcriptService = inject(TranscriptService);
+    const councilMemberFacade = inject(CouncilMemberFacade);
 
-    /**
-     * Fetch one page and label it with the businesses it was about. The titles
-     * come from a second collection, so both land together and the list never
-     * renders a page of untitled rows first.
-     */
-    const _fetchPage = rxMethod<{ personNumber: number; skip: number }>(
+    /** Fetch one page; the facade decides what a page is per parliament. */
+    const _fetchPage = rxMethod<{
+      parliament: ParliamentKey;
+      personNumber: number;
+      skip: number;
+    }>(
       pipe(
         tap(() =>
           patchState(store, (state) => ({
             speechesRequestState: onRequestLoad(state.speechesRequestState)
           }))
         ),
-        switchMap(({ personNumber, skip }) =>
-          transcriptService
-            .getSpeechesByMember(personNumber, SPEECH_PAGE_SIZE, skip)
+        switchMap(({ parliament, personNumber, skip }) =>
+          councilMemberFacade
+            .getSpeechPage(parliament, personNumber, SPEECH_PAGE_SIZE, skip)
             .pipe(
-              map((transcripts) => toSpeeches(transcripts)),
-              switchMap((speeches) =>
-                forkJoin({
-                  speeches: [speeches],
-                  titles: transcriptService.getSubjectTitles(
-                    speeches.map((speech) => speech.subjectId)
-                  )
-                })
-              ),
-              map(({ speeches, titles }) =>
-                withSubjectTitles(speeches, titles)
-              ),
               tapResponse({
                 next: (page) =>
                   patchState(store, (state) => ({
                     speechesRequestState: onRequestSuccess(
                       state.speechesRequestState,
                       skip === 0
-                        ? page
-                        : [...(state.speechesRequestState.data ?? []), ...page]
+                        ? page.speeches
+                        : [
+                            ...(state.speechesRequestState.data ?? []),
+                            ...page.speeches
+                          ]
                     ),
-                    hasMore: page.length === SPEECH_PAGE_SIZE
+                    texts: { ...state.texts, ...page.texts },
+                    hasMore: page.hasMore
                   })),
                 error: () =>
                   patchState(store, (state) => ({
@@ -132,7 +128,7 @@ export const SpeechStore = signalStore(
         filter((id) => store.texts()[id] === undefined),
         tap((id) => patchState(store, { loadingTextId: id })),
         switchMap((id) =>
-          transcriptService.getSpeechText(id).pipe(
+          councilMemberFacade.getSpeechText(store.parliament(), id).pipe(
             tapResponse({
               next: (text) =>
                 patchState(store, (state) => ({
@@ -149,16 +145,23 @@ export const SpeechStore = signalStore(
     return {
       /**
        * Load a member's first page, unless it is already on screen.
+       * @param parliament The member's parliament
        * @param personNumber The member being viewed
        */
-      selectMember(personNumber: number) {
-        if (store.personNumber() === personNumber) return;
+      selectMember(parliament: ParliamentKey, personNumber: number) {
+        if (
+          store.personNumber() === personNumber &&
+          store.parliament() === parliament
+        ) {
+          return;
+        }
 
         patchState(store, {
           ...initialSpeechState,
+          parliament,
           personNumber
         });
-        _fetchPage({ personNumber, skip: 0 });
+        _fetchPage({ parliament, personNumber, skip: 0 });
       },
 
       /** Append the next page, if the last one came back full. */
@@ -167,7 +170,11 @@ export const SpeechStore = signalStore(
         if (personNumber === null || !store.hasMore()) return;
         if (store.speechesRequestState().loading) return;
 
-        _fetchPage({ personNumber, skip: store.speeches().length });
+        _fetchPage({
+          parliament: store.parliament(),
+          personNumber,
+          skip: store.speeches().length
+        });
       },
 
       /**
@@ -181,7 +188,7 @@ export const SpeechStore = signalStore(
       retry() {
         const personNumber = store.personNumber();
         if (personNumber === null) return;
-        _fetchPage({ personNumber, skip: 0 });
+        _fetchPage({ parliament: store.parliament(), personNumber, skip: 0 });
       }
     };
   })

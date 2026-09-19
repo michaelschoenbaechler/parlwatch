@@ -7,7 +7,7 @@ import {
   withState
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, tap } from 'rxjs';
+import { filter, pipe, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
@@ -17,6 +17,10 @@ import {
   RequestState
 } from '../../../shared/models/request-state.model';
 import { CouncilMemberService } from '../../services/council-member.service';
+import {
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
 import {
   createErrorInterestRequestState,
   createLoadInterestRequestState,
@@ -46,10 +50,13 @@ export const InterestStore = signalStore(
   withMethods((store) => {
     const councilMemberService = inject(CouncilMemberService);
 
-    const loadInterests = rxMethod<number>(
+    // Cantonal interests arrive with the member record itself; only the
+    // federal register is a collection of its own.
+    const loadInterests = rxMethod<{ parliament: ParliamentKey; id: number }>(
       pipe(
+        filter(({ parliament }) => !isCantonal(parliament)),
         tap(() => patchState(store, createLoadInterestRequestState())),
-        switchMap((id) =>
+        switchMap(({ id }) =>
           councilMemberService.getInterests(id).pipe(
             tapResponse({
               next: (interests) =>

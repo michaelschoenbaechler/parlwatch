@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  OnInit,
+  output
+} from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -10,6 +17,11 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { AllCouncils, Council } from '../../containers/member-list/councils';
 import { FacetOption } from '../../models/member-facets';
 import { MemberFacetStore } from '../../store/facet/facet.store';
+import {
+  FEDERAL_PARLIAMENT_KEY,
+  isCantonal,
+  ParliamentKey
+} from '../../../parliament/models/parliament.model';
 
 export type CouncilMemberFilterForm = {
   councils: Council[];
@@ -39,6 +51,13 @@ export class CouncilMemberFilterFormComponent implements OnInit {
 
   preset = input<CouncilMemberFilterForm>();
 
+  /**
+   * The parliament being filtered. Councils, cantons, factions and former
+   * members exist only federally; a canton offers the harmonised party alone.
+   */
+  readonly parliament = input<ParliamentKey>(FEDERAL_PARLIAMENT_KEY);
+  readonly isCantonal = computed(() => isCantonal(this.parliament()));
+
   councilList = AllCouncils;
 
   readonly facets = this.facetStore.facets;
@@ -49,7 +68,7 @@ export class CouncilMemberFilterFormComponent implements OnInit {
   readonly applyFilter = output<CouncilMemberFilterForm>();
 
   ngOnInit() {
-    this.facetStore.ensureFacetsLoaded();
+    this.facetStore.ensureFacetsLoaded(this.parliament());
     this.filterForm = this.createForm();
   }
 

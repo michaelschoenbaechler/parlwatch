@@ -1,5 +1,8 @@
 <div class="id-card" *transloco="let t; prefix: 'councilMember.idCard'">
   <div class="id-card-header">
+    @if (imageUrl()) {
+      <img class="portrait" [src]="imageUrl()" alt="" />
+    }
     <img
       class="canton-flag"
       [src]="
@@ -39,6 +42,10 @@
     @if (councilMember().DateJoining) {
       <dt>{{ t('inOfficeSince') }}</dt>
       <dd>{{ councilMember().DateJoining | oDataDateTime }}</dd>
+    }
+    @if (occupation()) {
+      <dt>{{ t('occupation') }}</dt>
+      <dd>{{ occupation() }}</dd>
     }
     @if (councilMember().DateOfBirth) {
       <dt>{{ t('birthYear') }}</dt>

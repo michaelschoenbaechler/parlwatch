@@ -1,6 +1,7 @@
 import { MemberCouncil } from 'swissparl';
 import { RequestState } from '../../../shared/models/request-state.model';
 import { CouncilMemberFilter } from '../../services/council-member.service';
+import { LoadedMember } from '../../models/cantonal-member';
 import {
   CouncilMemberDetailVm,
   CouncilMemberListVm
@@ -45,22 +46,20 @@ export function createCouncilMemberListVm(
 
 /**
  * Creates a view model for the council member detail view.
- * This function finds a specific council member by ID from the available data
- * and creates a view model suitable for displaying detailed information about that member.
- * @param councilMemberRequestState - The current request state containing council member data and loading/error status
- * @param selectedCouncilMemberId - The ID of the council member to display, or null if none selected
- * @returns A view model object with the selected council member data and UI state properties
+ *
+ * Reads a dedicated request state rather than searching the list: ids are
+ * only unique within one parliament, and a list refresh must not clobber
+ * the member on screen.
+ * @param selectedMemberRequestState Request state holding the loaded member
+ * @returns A view model object with the member and UI state properties
  */
 export function createCouncilMemberDetailVm(
-  councilMemberRequestState: RequestState<MemberCouncil[]>,
-  selectedCouncilMemberId: number | null
+  selectedMemberRequestState: RequestState<LoadedMember | null>
 ): CouncilMemberDetailVm {
+  const selected = selectedMemberRequestState.data ?? null;
   return {
-    councilMember:
-      councilMemberRequestState.data?.find(
-        (cm) => cm.ID === selectedCouncilMemberId
-      ) || null,
-    isLoading: councilMemberRequestState.loading,
-    hasError: !!councilMemberRequestState.error
+    councilMember: selected,
+    isLoading: selectedMemberRequestState.loading && !selected,
+    hasError: !!selectedMemberRequestState.error
   };
 }

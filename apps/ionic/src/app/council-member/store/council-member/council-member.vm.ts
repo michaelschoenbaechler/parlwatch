@@ -1,4 +1,5 @@
 import { MemberCouncil } from 'swissparl';
+import { LoadedMember } from '../../models/cantonal-member';
 
 export interface CouncilMemberListVm {
   councilMembers: MemberCouncil[];
@@ -10,7 +11,7 @@ export interface CouncilMemberListVm {
 }
 
 export interface CouncilMemberDetailVm {
-  councilMember: MemberCouncil | null;
+  councilMember: LoadedMember | null;
   isLoading: boolean;
   hasError: boolean;
 }
