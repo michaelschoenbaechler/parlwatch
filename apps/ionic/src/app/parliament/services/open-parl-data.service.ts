@@ -61,8 +61,12 @@ export class OpenParlDataService {
       params = params.set(key, String(value));
     }
 
+    // Bare collections live under a trailing slash; without it the API
+    // answers with a redirect, which costs a round trip per request.
+    const path = resource.includes('/') ? resource : `${resource}/`;
+
     return this.http
-      .get<unknown>(`${OPEN_PARL_DATA_BASE_URL}${resource}`, { params })
+      .get<unknown>(`${OPEN_PARL_DATA_BASE_URL}${path}`, { params })
       .pipe(
         timeout(REQUEST_TIMEOUT_MS),
         retry({ count: RETRY_COUNT, delay: RETRY_DELAY_MS }),

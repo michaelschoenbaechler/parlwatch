@@ -3,7 +3,10 @@ import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TranslocoService } from '@jsverse/transloco';
 import { OpenParlDataService } from '../../parliament/services/open-parl-data.service';
-import { languageQuery } from '../../parliament/models/open-parl-data.model';
+import {
+  languageQuery,
+  singleRecord
+} from '../../parliament/models/open-parl-data.model';
 import {
   OpdVote,
   OpdVoting
@@ -117,7 +120,7 @@ export class CantonalVoteService {
     }).pipe(
       map(({ voting, ballots }) =>
         toLoadedVote(
-          { ...voting.data[0], votes: ballots.data },
+          { ...singleRecord(voting.data), votes: ballots.data },
           parliament,
           lang
         )

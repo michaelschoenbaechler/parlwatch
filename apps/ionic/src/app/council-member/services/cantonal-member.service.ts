@@ -8,6 +8,7 @@ import {
   languageQuery,
   localized,
   relationList,
+  singleRecord,
   toODataDate
 } from '../../parliament/models/open-parl-data.model';
 import {
@@ -20,13 +21,14 @@ import {
   OpdSpeech,
   OpdVote
 } from '../../parliament/models/open-parl-data.records';
-import { CantonKey } from '../../parliament/models/parliament.model';
+import { cantonOf, CantonKey } from '../../parliament/models/parliament.model';
 import {
   cleanTranscriptText,
   groupSpeechesByBusiness,
   SpeechVm
 } from '../../shared/models/transcript.model';
 import { toDecisionCode } from '../../votes/models/cantonal-vote';
+import { odataTimestamp } from '../../shared/models/odata.model';
 import {
   LoadedMember,
   MemberMembership,
@@ -194,11 +196,17 @@ export class CantonalMemberService {
         fields: DETAIL_FIELDS,
         ...languageQuery(lang)
       })
-      .pipe(map((page) => toLoadedMember(page.data[0], parliament, lang)));
+      .pipe(
+        map((page) => toLoadedMember(singleRecord(page.data), parliament, lang))
+      );
   }
 
   /**
    * How a member voted, newest first, where the canton publishes ballots.
+   *
+   * Goes through the `votes` collection rather than the person's relation
+   * endpoint, which ignores `expand`. Ballots not linked to a voting are
+   * left out at the source; some cantons carry many of them.
    * @param id The person id
    * @returns One entry per ballot with a known voting
    */
@@ -206,10 +214,12 @@ export class CantonalMemberService {
     const lang = this.translocoService.getActiveLang();
 
     return this.openParlData
-      .fetch<OpdVote>(`persons/${id}/votes`, {
+      .fetch<OpdVote>('votes', {
+        person_id: id,
+        exclude_null: 'voting_id',
         expand: 'voting',
         fields: VOTE_FIELDS,
-        sort_by: '-id',
+        sort_by: '-voting_id',
         limit: MAX_VOTES,
         ...languageQuery(lang)
       })
@@ -218,14 +228,21 @@ export class CantonalMemberService {
 
   /**
    * A member's speeches with a transcript, newest first.
+   *
+   * Most speech rows are video segments without text, so the transcript
+   * column of the canton's language is required at the source; otherwise a
+   * page of fifty could come back empty for a member who speaks often.
+   * @param parliament The canton
    * @param id The person id
    * @returns Speeches grouped by business, bodies included
    */
-  getSpeeches(id: number): Observable<MemberSpeeches> {
+  getSpeeches(parliament: CantonKey, id: number): Observable<MemberSpeeches> {
     const lang = this.translocoService.getActiveLang();
 
     return this.openParlData
-      .fetch<OpdSpeech>(`persons/${id}/speeches`, {
+      .fetch<OpdSpeech>('speeches', {
+        person_id: id,
+        exclude_null: `text_content_${cantonOf(parliament).language}`,
         expand: 'affair',
         fields: SPEECH_FIELDS,
         sort_by: '-date_start',
@@ -437,11 +454,10 @@ export function toVotingRecord(
 
   for (const vote of votes) {
     const voting = relationList(vote.voting)[0];
-    const votingId = vote.voting_id ?? voting?.id;
-    if (!voting || !votingId) continue;
+    if (!voting || !vote.voting_id) continue;
 
     records.push({
-      votingId,
+      votingId: vote.voting_id,
       title:
         localized(voting.affair_title, lang) || localized(voting.title, lang),
       businessNumber: voting.affair_id ?? null,
@@ -450,7 +466,10 @@ export function toVotingRecord(
     });
   }
 
-  return records;
+  // Ids follow import order, which is only roughly the order of the votes.
+  return records.sort(
+    (a, b) => odataTimestamp(b.date) - odataTimestamp(a.date)
+  );
 }
 
 /**
