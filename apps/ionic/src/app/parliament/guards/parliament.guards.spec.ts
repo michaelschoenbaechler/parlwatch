@@ -105,6 +105,45 @@ describe('parliament routing', () => {
     expect(router.url).toBe('/layout/votes/ch/detail/5');
   });
 
+  it('sends a list route for another parliament to the active one', async () => {
+    await setUp({
+      [CANTONS_OF_INTEREST_KEY]: ['ZH', 'BE'],
+      [ACTIVE_PARLIAMENT_KEY]: 'ZH'
+    });
+
+    await router.navigateByUrl('/layout/votes/ch');
+    expect(router.url).toBe('/layout/votes/ZH');
+
+    await router.navigateByUrl('/layout/council-member/BE');
+    expect(router.url).toBe('/layout/council-member/ZH');
+
+    await router.navigateByUrl('/layout/business/ZH');
+    expect(router.url).toBe('/layout/business/ZH');
+  });
+
+  it('sends the list of a removed canton back to the federal parliament', async () => {
+    await setUp({
+      [CANTONS_OF_INTEREST_KEY]: ['ZH'],
+      [ACTIVE_PARLIAMENT_KEY]: 'ZH'
+    });
+
+    await router.navigateByUrl('/layout/business/ZH');
+    store.setCantonsOfInterest([]);
+
+    await router.navigateByUrl('/layout/business/ZH');
+    expect(router.url).toBe('/layout/business/ch');
+  });
+
+  it('leaves a detail page of another parliament alone', async () => {
+    await setUp({
+      [CANTONS_OF_INTEREST_KEY]: ['ZH'],
+      [ACTIVE_PARLIAMENT_KEY]: 'ZH'
+    });
+
+    await router.navigateByUrl('/layout/business/ch/detail/20233456');
+    expect(router.url).toBe('/layout/business/ch/detail/20233456');
+  });
+
   it('opens a canton route without touching the active parliament', async () => {
     await setUp({ [CANTONS_OF_INTEREST_KEY]: ['BE'] });
 

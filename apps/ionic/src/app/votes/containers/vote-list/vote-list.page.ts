@@ -129,7 +129,6 @@ export class VoteListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.parliamentStore.setActiveParliament(this.parliament);
     this.store.setParliament(this.parliament);
   }
 

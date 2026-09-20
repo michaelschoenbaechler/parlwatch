@@ -98,7 +98,6 @@ export class MemberListPage implements OnInit {
 
   ngOnInit() {
     this.presentingElement = document.querySelector('ion-router-outlet');
-    this.parliamentStore.setActiveParliament(this.parliament);
     this.store.setParliament(this.parliament);
   }
 

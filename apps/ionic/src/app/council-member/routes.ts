@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { businessDetailRoute } from '../business/routes';
 import { voteDetailRoute } from '../votes/vote-detail.route';
 import {
+  activeParliamentListGuard,
   activeParliamentRedirectGuard,
   parliamentKeyGuard
 } from '../parliament/guards/parliament.guards';
@@ -35,6 +36,7 @@ export const COUNCIL_MEMBER_ROUTES: Route[] = [
     children: [
       {
         path: '',
+        canActivate: [activeParliamentListGuard],
         loadComponent: () =>
           import('./containers/member-list/member-list.page').then(
             (m) => m.MemberListPage
