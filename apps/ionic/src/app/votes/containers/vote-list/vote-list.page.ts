@@ -16,18 +16,18 @@ import {
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
+import { HideKeyboardOnEnterDirective } from '../../../shared/common/directives/hide-keyboard-on-enter.directive';
 import { VoteGroupCardComponent } from '../../components/vote-group-card/vote-group-card.component';
-import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
-import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
+import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
+import { NoContentScreenComponent } from '../../../shared/common/components/no-content-screen/no-content-screen.component';
 import { VoteStore } from '../../store/vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
 import {
   filterRecent,
   RecentEntry
-} from '../../../shared/store/recent/recent.store';
-import { InlineNoticeComponent } from '../../../shared/components/inline-notice/inline-notice.component';
+} from '../../../shared/common/store/recent/recent.store';
+import { InlineNoticeComponent } from '../../../shared/common/components/inline-notice/inline-notice.component';
 import {
   cantonOf,
   isCantonal,

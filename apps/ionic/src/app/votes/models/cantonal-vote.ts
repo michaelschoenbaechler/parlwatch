@@ -9,7 +9,10 @@ import {
   OpdVote,
   OpdVoting
 } from '../../shared/open-parl-data/models/open-parl-data.records';
-import { toDecisionCode, VoteTally } from '../../shared/models/vote-decision';
+import {
+  toDecisionCode,
+  VoteTally
+} from '../../shared/common/models/vote-decision';
 import { LoadedVote } from './loaded-vote';
 
 export function toTally(voting: OpdVoting): VoteTally {

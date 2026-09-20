@@ -18,7 +18,7 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import { BusinessService } from '../../services/business.service';
 import { createSessionsVm } from './session.vm-builder';
 

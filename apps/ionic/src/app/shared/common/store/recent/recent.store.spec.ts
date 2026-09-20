@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { InMemoryStorageService } from '../../parliament/testing/storage.testing';
+import { InMemoryStorageService } from '../../../parliament/testing/storage.testing';
 import { StorageService } from '../../services/storage.service';
 import { createRecentStore, filterRecent } from './recent.store';
 

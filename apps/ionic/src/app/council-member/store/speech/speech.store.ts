@@ -17,12 +17,12 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import {
   cleanTranscriptText,
   groupSpeechesByBusiness,
   SpeechVm
-} from '../../../shared/models/transcript.model';
+} from '../../../shared/common/models/transcript.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey

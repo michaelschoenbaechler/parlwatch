@@ -4,7 +4,7 @@ import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import { VotingRecordSlice } from './voting-record.store';
 
 /**

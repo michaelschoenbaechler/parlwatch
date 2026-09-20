@@ -5,7 +5,7 @@ import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import { LoadedMember } from '../../models/cantonal-member';
 import { CouncilMemberState } from './council-member.store';
 

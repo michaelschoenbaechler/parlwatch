@@ -1,5 +1,5 @@
 import { MemberCouncil } from 'swissparl';
-import { RequestState } from '../../../shared/models/request-state.model';
+import { RequestState } from '../../../shared/common/models/request-state.model';
 import { CouncilMemberFilter } from '../../services/council-member.service';
 import { LoadedMember } from '../../models/cantonal-member';
 import {

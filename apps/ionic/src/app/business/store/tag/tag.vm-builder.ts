@@ -1,5 +1,5 @@
 import { Tags } from 'swissparl';
-import { RequestState } from '../../../shared/models/request-state.model';
+import { RequestState } from '../../../shared/common/models/request-state.model';
 
 export interface TagsVm {
   tags: Tags[];

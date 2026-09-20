@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
+import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
 import { TimelineStep } from '../../models/business-timeline';
 
 @Component({

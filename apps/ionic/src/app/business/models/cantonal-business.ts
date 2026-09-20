@@ -1,7 +1,7 @@
 import { Business } from 'swissparl';
 import { CantonKey } from '../../shared/parliament/models/parliament.model';
 import { RecordSource } from '../../shared/open-parl-data/models/record-source';
-import { SpeechGroupVm } from '../../shared/models/transcript.model';
+import { SpeechGroupVm } from '../../shared/common/models/transcript.model';
 import { LoadedVote } from '../../votes/models/loaded-vote';
 import { BusinessTextSection } from './business-text';
 import { TimelineStep } from './business-timeline';

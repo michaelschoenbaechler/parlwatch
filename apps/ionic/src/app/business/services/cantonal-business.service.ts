@@ -27,8 +27,8 @@ import {
   cleanTranscriptText,
   SpeechGroupVm,
   SpeechVm
-} from '../../shared/models/transcript.model';
-import { odataTimestamp } from '../../shared/models/odata.model';
+} from '../../shared/common/models/transcript.model';
+import { odataTimestamp } from '../../shared/common/models/odata.model';
 import { toLoadedVote } from '../../votes/models/cantonal-vote';
 import {
   BusinessContributor,

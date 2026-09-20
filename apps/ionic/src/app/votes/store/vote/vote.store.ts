@@ -15,7 +15,7 @@ import { tapResponse } from '@ngrx/operators';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
@@ -23,7 +23,10 @@ import {
 import { VoteFilter, VoteService } from '../../services/votes.service';
 import { VoteFacade } from '../../services/votes.facade';
 import { LoadedVote } from '../../models/loaded-vote';
-import { talliesByVote, VoteTally } from '../../../shared/models/vote-decision';
+import {
+  talliesByVote,
+  VoteTally
+} from '../../../shared/common/models/vote-decision';
 import {
   createErrorVotesRequestState,
   createLoadMoreState,

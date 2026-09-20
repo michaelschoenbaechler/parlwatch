@@ -23,7 +23,8 @@ Please follow these guidelines when contributing:
     - `council-member/`: Components, pages and signal store related to council members
     - `layout/`: Tab navigation components for the application
     - `settings/`: Application settings and configurations like language and donation
-    - `shared/`: Shared components, directives, pipes and services
+    - `shared/`: Everything features may import from; features never import each other
+      - `common/`: Generic components, directives, pipes, models, services and stores
       - `swissparl/`: Client for the federal parliament's API (swissparl)
       - `open-parl-data/`: Client, records and fixtures for the cantonal parliaments' API (OpenParlData)
       - `parliament/`: The federal-or-canton concept every tab shares: keys, store, guards, switcher and theme

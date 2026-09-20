@@ -10,11 +10,11 @@ import { RelatedBusinessListComponent } from '../../components/related-business-
 import { BusinessContributorListComponent } from '../../components/business-contributor-list/business-contributor-list.component';
 import { BusinessDocumentListComponent } from '../../components/business-document-list/business-document-list.component';
 import { VoteItemsComponent } from '../../../votes/components/vote-items/vote-items.component';
-import { SpeechListComponent } from '../../../shared/components/speech-list/speech-list.component';
-import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
-import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
-import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { SpeechListComponent } from '../../../shared/common/components/speech-list/speech-list.component';
+import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
+import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
+import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
 import { BusinessStore } from '../../store/business/business.store';
 import { RecentBusinessStore } from '../../store/recent/recent.store';
 import { DebateStore } from '../../store/debate/debate.store';

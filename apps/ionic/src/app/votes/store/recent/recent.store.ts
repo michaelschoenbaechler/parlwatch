@@ -1,4 +1,4 @@
-import { createRecentStore } from '../../../shared/store/recent/recent.store';
+import { createRecentStore } from '../../../shared/common/store/recent/recent.store';
 
 /** Recently viewed votes and recent vote search terms. */
 export const RecentVoteStore = createRecentStore({

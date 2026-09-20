@@ -1,5 +1,5 @@
 import { Vote, Voting } from 'swissparl';
-import { RequestState } from '../../../shared/models/request-state.model';
+import { RequestState } from '../../../shared/common/models/request-state.model';
 import { isCantonal } from '../../../shared/parliament/models/parliament.model';
 import { VoteFilter } from '../../services/votes.service';
 import { LoadedVote } from '../../models/loaded-vote';
@@ -8,7 +8,7 @@ import {
   talliesByParlGroup,
   toVoteDecision,
   VoteDecision
-} from '../../../shared/models/vote-decision';
+} from '../../../shared/common/models/vote-decision';
 
 export interface VoteListVm {
   businessGroups: VoteBusinessGroupVm[];

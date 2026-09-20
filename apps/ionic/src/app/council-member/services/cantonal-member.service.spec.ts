@@ -13,13 +13,13 @@ import beParties from '../../shared/open-parl-data/testing/fixtures/be-parties-h
 import zhPersonVotes from '../../shared/open-parl-data/testing/fixtures/zh-person-votes.json';
 import bePersonSpeeches from '../../shared/open-parl-data/testing/fixtures/be-person-speeches.json';
 import { SwissParlService } from '../../shared/swissparl/swissparl.service';
-import { TranscriptService } from '../../shared/services/transcript.service';
+import { TranscriptService } from '../../shared/common/services/transcript.service';
 import {
   OpdSpeech,
   OpdVote
 } from '../../shared/open-parl-data/models/open-parl-data.records';
 import { relationList } from '../../shared/open-parl-data/models/open-parl-data.model';
-import { odataTimestamp } from '../../shared/models/odata.model';
+import { odataTimestamp } from '../../shared/common/models/odata.model';
 import {
   CantonalMemberService,
   wikidataNumber

@@ -7,7 +7,7 @@ import {
   SubjectTitle,
   TRANSCRIPT_TYPE_SPEECH
 } from '../models/transcript.model';
-import { SwissParlService } from '../swissparl/swissparl.service';
+import { SwissParlService } from '../../swissparl/swissparl.service';
 
 /**
  * Everything the speech list shows. `Text` is deliberately absent: it averages
