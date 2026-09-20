@@ -75,6 +75,12 @@ describe('parliament model', () => {
     }
   });
 
+  it('paints the whole accent line in the other colour when one is white', () => {
+    expect(cantonTheme('ZH')?.colours).toEqual(['#0066b3', '#0066b3']);
+    expect(cantonTheme('LU')?.colours).toEqual(['#0066b3', '#0066b3']);
+    expect(cantonTheme('BE')?.colours).toEqual(['#e30613', '#000000']);
+  });
+
   it('resolves the federal parliament to no cantonal theme', () => {
     expect(cantonTheme(FEDERAL_PARLIAMENT_KEY)).toBeNull();
     expect(isCantonal(FEDERAL_PARLIAMENT_KEY)).toBeFalse();
