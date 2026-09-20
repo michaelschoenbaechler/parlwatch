@@ -2,16 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { MemberCouncil, Voting } from 'swissparl';
-import {
-  isCantonal,
-  ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
-import { TranscriptService } from '@parlwatch/shared/common/services/transcript.service';
+import { isCantonal, ParliamentKey } from '@parlwatch/shared/parliament/models';
+import { TranscriptService } from '@parlwatch/shared/common/services';
 import {
   SpeechVm,
   toSpeeches,
   withSubjectTitles
-} from '@parlwatch/shared/common/models/transcript.model';
+} from '@parlwatch/shared/common/models';
 import { LoadedMember, MemberVoteRecord } from '../models/cantonal-member';
 import { FacetOption } from '../models/member-facets';
 import { CantonalMemberService } from './cantonal-member.service';

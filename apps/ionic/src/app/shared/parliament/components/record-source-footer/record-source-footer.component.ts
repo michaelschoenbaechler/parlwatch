@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
-import { RecordSource } from '@parlwatch/shared/open-parl-data/models/record-source';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
+import { RecordSource } from '@parlwatch/shared/open-parl-data/models';
 
 @Component({
   selector: 'app-record-source-footer',

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
-import { SwissParlService } from '@parlwatch/shared/swissparl/swissparl.service';
+import { SwissParlService } from '@parlwatch/shared/swissparl';
 import { BusinessService } from './business.service';
 
 describe('BusinessService', () => {

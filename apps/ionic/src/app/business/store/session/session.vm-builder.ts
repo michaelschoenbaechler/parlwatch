@@ -1,5 +1,5 @@
 import { Session } from 'swissparl';
-import { RequestState } from '@parlwatch/shared/common/models/request-state.model';
+import { RequestState } from '@parlwatch/shared/common/models';
 
 export interface SessionsVm {
   sessions: Session[];

@@ -4,7 +4,7 @@ import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '@parlwatch/shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models';
 import { CouncilMemberFilter } from '../../services/council-member.service';
 import { LoadedMember } from '../../models/cantonal-member';
 import { CouncilMemberState } from './council-member.store';

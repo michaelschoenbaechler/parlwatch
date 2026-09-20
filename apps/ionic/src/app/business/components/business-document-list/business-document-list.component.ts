@@ -5,7 +5,7 @@ import {
   output
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
 import { BusinessDocument } from '../../models/cantonal-business';
 
 @Component({

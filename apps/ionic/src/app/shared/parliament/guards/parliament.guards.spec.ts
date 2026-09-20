@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Route, Router } from '@angular/router';
-import { StorageService } from '@parlwatch/shared/common/services/storage.service';
+import { StorageService } from '@parlwatch/shared/common/services';
 import { BUSINESS_ROUTES } from '../../../business/routes';
 import { COUNCIL_MEMBER_ROUTES } from '../../../council-member/routes';
 import { VOTE_ROUTES } from '../../../votes/routes';

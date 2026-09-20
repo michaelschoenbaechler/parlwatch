@@ -12,20 +12,18 @@ import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
+  cleanTranscriptText,
   createDefaultRequestState,
   onRequestError,
   onRequestLoad,
   onRequestSuccess,
-  RequestState
-} from '@parlwatch/shared/common/models/request-state.model';
-import { TranscriptService } from '@parlwatch/shared/common/services/transcript.service';
-import {
-  cleanTranscriptText,
+  RequestState,
   SpeechGroupVm,
   toDebateStages,
   toSpeeches,
   toStageLabel
-} from '@parlwatch/shared/common/models/transcript.model';
+} from '@parlwatch/shared/common/models';
+import { TranscriptService } from '@parlwatch/shared/common/services';
 
 export type DebateSlice = {
   stagesRequestState: RequestState<SpeechGroupVm[]>;

@@ -1,7 +1,7 @@
 import { Vote } from 'swissparl';
-import { ParliamentKey } from '@parlwatch/shared/parliament/models/parliament.model';
-import { RecordSource } from '@parlwatch/shared/open-parl-data/models/record-source';
-import { VoteTally } from '@parlwatch/shared/common/models/vote-decision';
+import { ParliamentKey } from '@parlwatch/shared/parliament/models';
+import { RecordSource } from '@parlwatch/shared/open-parl-data/models';
+import { VoteTally } from '@parlwatch/shared/common/models';
 
 export interface LoadedVote extends Vote {
   tally?: VoteTally;

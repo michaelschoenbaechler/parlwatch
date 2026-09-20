@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonicModule, Platform } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { CantonPickerComponent } from '@parlwatch/shared/parliament/components/canton-picker/canton-picker.component';
-import { ParliamentStore } from '@parlwatch/shared/parliament/store/parliament.store';
+import { CantonPickerComponent } from '@parlwatch/shared/parliament/components';
+import { ParliamentStore } from '@parlwatch/shared/parliament/store';
 
 @Component({
   selector: 'app-welcome',

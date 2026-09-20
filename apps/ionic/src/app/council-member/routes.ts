@@ -3,7 +3,7 @@ import {
   activeParliamentListGuard,
   activeParliamentRedirectGuard,
   parliamentKeyGuard
-} from '@parlwatch/shared/parliament/guards/parliament.guards';
+} from '@parlwatch/shared/parliament/guards';
 import { businessDetailRoute } from '../business/routes';
 import { voteDetailRoute } from '../votes/vote-detail.route';
 

@@ -4,6 +4,12 @@
   "author": "Michael Schönbächler",
   "homepage": "https://github.com/michaelschoenbaechler",
   "description": "Easy access for everyone to parliamentary data",
+  "sideEffects": [
+    "src/main.ts",
+    "src/polyfills.ts",
+    "src/test.ts",
+    "**/*.spec.ts"
+  ],
   "scripts": {
     "ng": "ng",
     "postinstall": "node scripts/copy-ionicons.mjs",

@@ -1,7 +1,7 @@
 import { Business } from 'swissparl';
-import { CantonKey } from '@parlwatch/shared/parliament/models/parliament.model';
-import { RecordSource } from '@parlwatch/shared/open-parl-data/models/record-source';
-import { SpeechGroupVm } from '@parlwatch/shared/common/models/transcript.model';
+import { CantonKey } from '@parlwatch/shared/parliament/models';
+import { RecordSource } from '@parlwatch/shared/open-parl-data/models';
+import { SpeechGroupVm } from '@parlwatch/shared/common/models';
 import { LoadedVote } from '../../votes/models/loaded-vote';
 import { BusinessTextSection } from './business-text';
 import { TimelineStep } from './business-timeline';

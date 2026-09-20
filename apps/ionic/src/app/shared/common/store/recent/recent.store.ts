@@ -10,7 +10,7 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   ParliamentKey,
   toParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models';
 import { StorageService } from '../../services/storage.service';
 
 export interface RecentEntry {

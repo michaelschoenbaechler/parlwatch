@@ -15,8 +15,8 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
-} from '@parlwatch/shared/common/models/request-state.model';
-import { ParliamentKey } from '@parlwatch/shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/common/models';
+import { ParliamentKey } from '@parlwatch/shared/parliament/models';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
 import {
   createErrorVotingRecordRequestState,

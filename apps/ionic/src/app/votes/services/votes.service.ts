@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Vote, Voting } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
-import { SwissParlService } from '@parlwatch/shared/swissparl/swissparl.service';
-import { ParliamentKey } from '@parlwatch/shared/parliament/models/parliament.model';
+import { SwissParlService } from '@parlwatch/shared/swissparl';
+import { ParliamentKey } from '@parlwatch/shared/parliament/models';
 
 /**
  * Only the fields the vote cards render. Without this the API ships every

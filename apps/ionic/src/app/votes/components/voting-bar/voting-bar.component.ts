@@ -5,7 +5,7 @@ import {
   VOTE_DECISIONS,
   VoteDecision,
   VoteTally
-} from '@parlwatch/shared/common/models/vote-decision';
+} from '@parlwatch/shared/common/models';
 
 interface VotingBarSegment {
   decision: VoteDecision;

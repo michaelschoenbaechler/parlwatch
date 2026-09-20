@@ -1,5 +1,5 @@
 import { Voting } from 'swissparl';
-import { RequestState } from '@parlwatch/shared/common/models/request-state.model';
+import { RequestState } from '@parlwatch/shared/common/models';
 import { VotingRecordVm } from './voting-record.vm';
 
 /**

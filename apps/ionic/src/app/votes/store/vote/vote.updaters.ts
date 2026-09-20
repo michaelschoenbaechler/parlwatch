@@ -2,9 +2,9 @@ import { PartialStateUpdater } from '@ngrx/signals';
 import {
   onRequestError,
   onRequestLoad,
-  onRequestSuccess
-} from '@parlwatch/shared/common/models/request-state.model';
-import { VoteTally } from '@parlwatch/shared/common/models/vote-decision';
+  onRequestSuccess,
+  VoteTally
+} from '@parlwatch/shared/common/models';
 import { VoteFilter } from '../../services/votes.service';
 import { LoadedVote } from '../../models/loaded-vote';
 import { VoteSlice } from '.';
