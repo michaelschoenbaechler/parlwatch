@@ -11,7 +11,7 @@ import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 
 @Component({
   selector: 'app-business-filter-form',

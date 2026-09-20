@@ -1,13 +1,14 @@
 import { Voting } from 'swissparl';
+import { toTally, toVoting } from '../../votes/models/cantonal-vote';
 import {
   createEmptyTally,
   talliesByParlGroup,
   talliesByVote,
   tallyVotings,
   toCssColour,
+  toDecisionCode,
   toVoteDecision
 } from './vote-decision';
-import { toDecisionCode, toTally, toVoting } from './cantonal-vote';
 
 describe('vote decisions', () => {
   it('maps the federal codes onto the four buckets', () => {

@@ -9,8 +9,8 @@ import {
   Voting
 } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
-import { SwissParlService } from '../../shared/services/swissparl.service';
-import { ParliamentKey } from '../../parliament/models/parliament.model';
+import { SwissParlService } from '../../shared/swissparl/swissparl.service';
+import { ParliamentKey } from '../../shared/parliament/models/parliament.model';
 
 export type CouncilMemberFilter = {
   parliament: ParliamentKey;

@@ -7,7 +7,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { Voting } from 'swissparl';
 import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
-import { VoteDecisionIconDirective } from '../../../votes/directives/vote-decision-icon.directive';
+import { VoteDecisionIconDirective } from '../../../shared/directives/vote-decision-icon.directive';
 
 @Component({
   selector: 'app-voting-record-list',

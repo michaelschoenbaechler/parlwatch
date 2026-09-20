@@ -26,7 +26,7 @@ import {
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
 
 /** How many speeches a page holds. */

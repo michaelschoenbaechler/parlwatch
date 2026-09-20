@@ -24,6 +24,9 @@ Please follow these guidelines when contributing:
     - `layout/`: Tab navigation components for the application
     - `settings/`: Application settings and configurations like language and donation
     - `shared/`: Shared components, directives, pipes and services
+      - `swissparl/`: Client for the federal parliament's API (swissparl)
+      - `open-parl-data/`: Client, records and fixtures for the cantonal parliaments' API (OpenParlData)
+      - `parliament/`: The federal-or-canton concept every tab shares: keys, store, guards, switcher and theme
     - `votes/`: Components and pages related to voting on particular businesses
   - `src/assets/`: Static assets like images and stylesheets
   - `src/environments/`: Environment-specific configurations

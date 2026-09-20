@@ -1,6 +1,6 @@
 import { Business } from 'swissparl';
-import { CantonKey } from '../../parliament/models/parliament.model';
-import { RecordSource } from '../../parliament/models/record-source';
+import { CantonKey } from '../../shared/parliament/models/parliament.model';
+import { RecordSource } from '../../shared/open-parl-data/models/record-source';
 import { SpeechGroupVm } from '../../shared/models/transcript.model';
 import { LoadedVote } from '../../votes/models/loaded-vote';
 import { BusinessTextSection } from './business-text';

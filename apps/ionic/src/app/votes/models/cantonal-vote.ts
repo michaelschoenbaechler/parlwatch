@@ -1,29 +1,16 @@
 import { Voting } from 'swissparl';
-import { CantonKey } from '../../parliament/models/parliament.model';
+import { CantonKey } from '../../shared/parliament/models/parliament.model';
 import {
   localized,
   relationList,
   toODataDate
-} from '../../parliament/models/open-parl-data.model';
+} from '../../shared/open-parl-data/models/open-parl-data.model';
 import {
   OpdVote,
   OpdVoting
-} from '../../parliament/models/open-parl-data.records';
+} from '../../shared/open-parl-data/models/open-parl-data.records';
+import { toDecisionCode, VoteTally } from '../../shared/models/vote-decision';
 import { LoadedVote } from './loaded-vote';
-import { VoteTally } from './vote-decision';
-
-const DECISION_CODES: Record<string, number> = {
-  yes: 1,
-  no: 2,
-  abstention: 3,
-  absent: 5
-};
-
-const DECISION_OTHER = 7;
-
-export function toDecisionCode(vote: string | null | undefined): number {
-  return DECISION_CODES[vote ?? ''] ?? DECISION_OTHER;
-}
 
 export function toTally(voting: OpdVoting): VoteTally {
   const tally: VoteTally = {

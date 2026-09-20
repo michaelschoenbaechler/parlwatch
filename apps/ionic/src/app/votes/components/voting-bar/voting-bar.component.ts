@@ -5,7 +5,7 @@ import {
   VOTE_DECISIONS,
   VoteDecision,
   VoteTally
-} from '../../models/vote-decision';
+} from '../../../shared/models/vote-decision';
 
 interface VotingBarSegment {
   decision: VoteDecision;

@@ -19,7 +19,7 @@ import {
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 import { BusinessFacade } from '../../services/business.facade';
 import { createBusinessTypesVm } from './business-types.vm-builder';
 import {

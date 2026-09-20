@@ -17,14 +17,14 @@ import { SpeechStore } from '../../store/speech/speech.store';
 import {
   isCantonal,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 import {
   detailPathInTab,
   routeParliament
-} from '../../../parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
-import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
-import { RecordSourceFooterComponent } from '../../../parliament/components/record-source-footer/record-source-footer.component';
+} from '../../../shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '../../../shared/parliament/components/record-source-footer/record-source-footer.component';
 import { MemberMembershipListComponent } from '../../components/member-membership-list/member-membership-list.component';
 import { VotingRecordListComponent } from '../../components/voting-record-list/voting-record-list.component';
 
