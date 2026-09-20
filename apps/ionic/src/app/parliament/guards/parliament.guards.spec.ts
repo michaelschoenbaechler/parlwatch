@@ -128,6 +128,7 @@ describe('parliament routing', () => {
     });
 
     await router.navigateByUrl('/layout/business/ZH');
+    await router.navigateByUrl('/layout/votes/ZH');
     store.setCantonsOfInterest([]);
 
     await router.navigateByUrl('/layout/business/ZH');
