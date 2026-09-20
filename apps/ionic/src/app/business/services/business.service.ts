@@ -27,6 +27,8 @@ export type BusinessFilter = {
  * Only the fields the business cards render. Without this the API ships every
  * long text field per business (~4.4 KB a row instead of ~0.5 KB).
  */
+const HEAD_FIELDS: Array<keyof Business> = ['ID', 'Modified', 'BusinessStatus'];
+
 const LIST_FIELDS: Array<keyof Business> = [
   'ID',
   'BusinessShortNumber',
@@ -186,6 +188,19 @@ export class BusinessService {
         { deepParse: true }
       )
       .pipe(map((list) => list[0]));
+  }
+
+  getBusinessHeads(ids: number[]): Observable<Business[]> {
+    return this.swissparlService.fetchCollection<Business>('Business', {
+      top: ids.length,
+      select: HEAD_FIELDS,
+      filter: {
+        eq: [
+          { Language: this.translocoService.getActiveLang().toUpperCase() },
+          { [`(${ids.map((id) => `ID eq ${id}`).join(' or ')})`]: true }
+        ]
+      }
+    });
   }
 
   private detectShortBusinessNumberAndConvert(str: string) {

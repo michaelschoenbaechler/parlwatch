@@ -14,3 +14,24 @@
   padding: 0.25rem 0.5rem;
   font-size: 14px;
 }
+
+:host {
+  display: block;
+  position: relative;
+}
+
+:host(.cantonal)::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0.5rem;
+  left: 0;
+  width: 0.25rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  background: linear-gradient(
+    to bottom,
+    var(--canton-colour-a) 0 50%,
+    var(--canton-colour-b) 50% 100%
+  );
+}

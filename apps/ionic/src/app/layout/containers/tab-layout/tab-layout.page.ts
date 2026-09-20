@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
+import { App } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonicModule, Platform } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { filter } from 'rxjs';
 import { isCantonal, urlParliament } from '@parlwatch/shared/parliament/models';
+import { WatchedBusinessStore } from '../../../business/store/watched/watched.store';
 
 @Component({
   selector: 'app-tab-layout',
@@ -16,6 +18,7 @@ import { isCantonal, urlParliament } from '@parlwatch/shared/parliament/models';
 export class TabLayoutPage {
   private readonly router = inject(Router);
   private readonly platform = inject(Platform);
+  readonly watchedStore = inject(WatchedBusinessStore);
 
   constructor() {
     this.router.events
@@ -24,6 +27,11 @@ export class TabLayoutPage {
         takeUntilDestroyed()
       )
       .subscribe((event) => this.syncStatusBar(event.urlAfterRedirects));
+
+    void this.watchedStore.check();
+    void App.addListener('appStateChange', ({ isActive }) => {
+      if (isActive) void this.watchedStore.check();
+    });
   }
 
   private syncStatusBar(url: string) {

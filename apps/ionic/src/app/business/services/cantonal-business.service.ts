@@ -20,7 +20,7 @@ import {
   singleRecord,
   toODataDate
 } from '@parlwatch/shared/open-parl-data/models';
-import { CantonKey } from '@parlwatch/shared/parliament/models';
+import { cantonOf, CantonKey } from '@parlwatch/shared/parliament/models';
 import {
   cleanTranscriptText,
   odataTimestamp,
@@ -35,6 +35,7 @@ import {
 } from '../models/cantonal-business';
 import { BusinessTextSection, toTextSection } from '../models/business-text';
 import { TimelineStep } from '../models/business-timeline';
+import { BusinessHead } from '../models/watched-business';
 import { BusinessFilter } from './business.service';
 
 const LIST_FIELDS = [
@@ -98,6 +99,8 @@ const DETAIL_FIELDS = [
 ].join(',');
 
 const DETAIL_EXPAND = 'contributors,events,docs,texts,speeches,votings';
+
+const HEAD_FIELDS = ['id', 'updated_at', 'state_name'].join(',');
 
 const SPEECH_FIELDS = [
   'id',
@@ -180,6 +183,25 @@ export class CantonalBusinessService {
       );
   }
 
+  getBusinessHead(parliament: CantonKey, id: number): Observable<BusinessHead> {
+    return this.openParlData
+      .fetch<OpdAffair>(`affairs/${id}`, {
+        fields: HEAD_FIELDS,
+        ...languageQuery(this.translocoService.getActiveLang())
+      })
+      .pipe(
+        map((page) => {
+          const affair = singleRecord(page.data);
+          return {
+            parliament,
+            id,
+            modified: toODataDate(affair.updated_at),
+            status: statusKeyOf(affair, parliament)
+          };
+        })
+      );
+  }
+
   private getSpeeches(affairId: number, lang: string): Observable<OpdSpeech[]> {
     return this.openParlData
       .fetch<OpdSpeech>('speeches', {
@@ -234,6 +256,7 @@ export function toLoadedBusiness(
     ...toBusiness(affair, lang),
     cantonal: {
       parliament,
+      statusKey: statusKeyOf(affair, parliament),
       contributors: toContributors(relationList(affair.contributors), lang),
       timeline: toTimeline(relationList(affair.events), lang),
       documents: toDocuments(relationList(affair.docs)),
@@ -249,6 +272,10 @@ export function toLoadedBusiness(
       }
     }
   };
+}
+
+function statusKeyOf(affair: OpdAffair, parliament: CantonKey): string {
+  return localized(affair.state_name, cantonOf(parliament).language);
 }
 
 function toContributors(

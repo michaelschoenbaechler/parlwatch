@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services';
 import { createOpenParlDataSpy } from '@parlwatch/shared/open-parl-data/testing';
@@ -35,6 +35,46 @@ describe('BusinessFacade', () => {
 
     expect(swissParl.fetchCollection).toHaveBeenCalledTimes(3);
     expect(openParlData.fetch).not.toHaveBeenCalled();
+  });
+
+  it('asks each source once for the heads of its watched businesses', (done) => {
+    swissParl.fetchCollection.and.returnValue(
+      of([{ ID: 1, Modified: '/Date(1)/', BusinessStatus: 202 }])
+    );
+
+    facade
+      .getBusinessHeads([
+        { parliament: 'ch', id: 1 },
+        { parliament: 'ch', id: 2 },
+        { parliament: 'ZH', id: 91382 }
+      ])
+      .subscribe(({ heads, failed }) => {
+        expect(swissParl.fetchCollection).toHaveBeenCalledTimes(1);
+        expect(openParlData.fetch).toHaveBeenCalledTimes(1);
+        expect(failed).toBeFalse();
+        expect(heads).toEqual([
+          { parliament: 'ch', id: 1, modified: '/Date(1)/', status: '202' },
+          jasmine.objectContaining({ parliament: 'ZH', id: 91382 })
+        ]);
+        done();
+      });
+  });
+
+  it('keeps the heads of the sources that answered when one fails', (done) => {
+    swissParl.fetchCollection.and.returnValue(
+      throwError(() => new Error('down'))
+    );
+
+    facade
+      .getBusinessHeads([
+        { parliament: 'ch', id: 1 },
+        { parliament: 'ZH', id: 91382 }
+      ])
+      .subscribe(({ heads, failed }) => {
+        expect(failed).toBeTrue();
+        expect(heads.map((head) => head.parliament)).toEqual(['ZH']);
+        done();
+      });
   });
 
   it('serves a canton from OpenParlData', () => {

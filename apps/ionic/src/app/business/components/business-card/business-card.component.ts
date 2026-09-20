@@ -1,7 +1,19 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input
+} from '@angular/core';
 import { Business } from 'swissparl';
 import { TextCardComponent } from '@parlwatch/shared/common/components';
 import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
+import { applyCantonTheme } from '@parlwatch/shared/parliament/directives';
+import {
+  cantonTheme,
+  ParliamentKey
+} from '@parlwatch/shared/parliament/models';
 
 @Component({
   selector: 'app-business-card',
@@ -11,7 +23,10 @@ import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
 })
 export class BusinessCardComponent {
   readonly business = input.required<Business>();
+  /** Set to colour the card by parliament where the page itself is not themed. */
+  readonly parliament = input<ParliamentKey>();
 
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly datePipe = new ODataDateTimePipe();
 
   readonly subtitle = computed(() => {
@@ -26,7 +41,13 @@ export class BusinessCardComponent {
       .join(' · ');
   });
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      const parliament = this.parliament();
+      if (parliament === undefined) return;
+      applyCantonTheme(this.host.nativeElement, cantonTheme(parliament));
+    });
+  }
 
   getTagNames(): string[] {
     const business = this.business();

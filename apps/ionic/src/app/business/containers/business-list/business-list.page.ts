@@ -42,6 +42,7 @@ import { TagStore } from '../../store/tag/tag.store';
 import { SessionStore } from '../../store/session/session.store';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
 import { BusinessStore } from '../../store/business/business.store';
+import { WatchedBusinessStore } from '../../store/watched/watched.store';
 import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 
@@ -77,6 +78,7 @@ export class BusinessListPage implements OnInit {
   readonly sessionStore = inject(SessionStore);
   readonly tagStore = inject(TagStore);
   readonly recentStore = inject(RecentBusinessStore);
+  readonly watchedStore = inject(WatchedBusinessStore);
   readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
@@ -273,6 +275,10 @@ export class BusinessListPage implements OnInit {
   handleRefresh(event: RefresherCustomEvent) {
     this.refreshOrLoadMoreEvent = event;
     this.businessStore.refresh();
+  }
+
+  openWatched() {
+    this.router.navigate(['/layout/business/following']).catch(console.error);
   }
 
   onClickBusiness(id: number) {

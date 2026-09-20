@@ -174,6 +174,21 @@ describe('BusinessService', () => {
     });
   });
 
+  it('should fetch the heads of several businesses in one request', () => {
+    service.getBusinessHeads([20233456, 20240001]).subscribe();
+
+    const [collection, options] =
+      swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
+    expect(collection).toBe('Business');
+    expect(options.select as any).toEqual(['ID', 'Modified', 'BusinessStatus']);
+    expect(options.top).toBe(2);
+    const filter = options.filter as any;
+    expect(filter.eq).toEqual([
+      { Language: 'DE' },
+      { '(ID eq 20233456 or ID eq 20240001)': true }
+    ]);
+  });
+
   it('should match tag ids exactly, not as bare substrings', () => {
     service
       .getBusinesses({ parliament: 'ch', top: 10, tagIds: [52, 66] })
