@@ -24,11 +24,11 @@
         (personSelected)="onContributor($event)"
       />
     </app-text-card>
-    } @if (viewModel().timeline.length > 0) {
+    } } @if (viewModel().timeline.length > 0) {
     <app-text-card title="{{ t('business.timeline.title') }}">
       <app-business-timeline [steps]="viewModel().timeline" />
     </app-text-card>
-    } @if (cantonal.documents.length > 0) {
+    } @if (cantonal(); as cantonal) { @if (cantonal.documents.length > 0) {
     <app-text-card title="{{ t('business.documents.title') }}">
       <app-business-document-list
         [documents]="cantonal.documents"
@@ -47,27 +47,7 @@
         [showGroupHeader]="false"
       />
     </app-text-card>
-    } @if (viewModel().votes.length > 0) {
-    <app-text-card
-      title="{{ t('business.votes.title') }}"
-      subtitle="{{
-        viewModel().votes.length === 1
-          ? t('business.votes.summarySingle')
-          : t('business.votes.summary', { count: viewModel().votes.length })
-      }}"
-    >
-      <app-vote-items
-        [votes]="viewModel().votes"
-        (voteSelected)="onVote($event)"
-      />
-    </app-text-card>
-    }
-    <app-record-source-footer [source]="cantonal.source" />
-    } @else { @if (viewModel().timeline.length > 0) {
-    <app-text-card title="{{ t('business.timeline.title') }}">
-      <app-business-timeline [steps]="viewModel().timeline" />
-    </app-text-card>
-    }
+    } } @else {
     <app-business-detail-text [business]="business" />
     @if (debateStore.isLoading()) {
     <app-text-card title="{{ t('business.debate.title') }}">
@@ -94,7 +74,7 @@
         (textRequested)="debateStore.loadText($event)"
       />
     </app-text-card>
-    } } @if (viewModel().votes.length > 0) {
+    } } } @if (viewModel().votes.length > 0) {
     <app-text-card
       title="{{ t('business.votes.title') }}"
       subtitle="{{
@@ -108,7 +88,9 @@
         (voteSelected)="onVote($event)"
       />
     </app-text-card>
-    } @if (viewModel().relatedBusinesses.length > 0) {
+    } @if (cantonal(); as cantonal) {
+    <app-record-source-footer [source]="cantonal.source" />
+    } @else { @if (viewModel().relatedBusinesses.length > 0) {
     <app-text-card title="{{ t('business.related.title') }}">
       <app-related-business-list
         [relatedBusinesses]="viewModel().relatedBusinesses"

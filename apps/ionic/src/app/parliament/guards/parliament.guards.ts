@@ -2,24 +2,16 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import {
   FEDERAL_PARLIAMENT_KEY,
-  isParliamentKey,
-  ParliamentKey
+  isParliamentKey
 } from '../models/parliament.model';
+import { withUrlParliament } from '../models/parliament-routes';
 import { ParliamentStore } from '../store/parliament.store';
-
-const PARLIAMENT_SEGMENT = 3;
-
-const withParliament = (url: string, parliament: ParliamentKey): string => {
-  const segments = url.split('/');
-  segments[PARLIAMENT_SEGMENT] = parliament;
-  return segments.join('/');
-};
 
 export const parliamentKeyGuard: CanActivateFn = (route, state) => {
   if (isParliamentKey(route.paramMap.get('parliament'))) return true;
 
   return inject(Router).parseUrl(
-    withParliament(state.url, FEDERAL_PARLIAMENT_KEY)
+    withUrlParliament(state.url, FEDERAL_PARLIAMENT_KEY)
   );
 };
 
@@ -54,5 +46,5 @@ export const activeParliamentListGuard: CanActivateFn = async (
   const active = store.activeParliament();
   if (route.paramMap.get('parliament') === active) return true;
 
-  return router.parseUrl(withParliament(state.url, active));
+  return router.parseUrl(withUrlParliament(state.url, active));
 };

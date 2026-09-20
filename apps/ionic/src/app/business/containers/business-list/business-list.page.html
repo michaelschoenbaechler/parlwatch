@@ -8,10 +8,7 @@
         />
       </ion-title>
     </ion-toolbar>
-    <app-parliament-switcher
-      [selected]="parliament"
-      (parliamentChange)="onParliamentChange($event)"
-    />
+    <app-parliament-switcher feature="business" [selected]="parliament" />
     <ion-toolbar>
       <ion-searchbar
         #searchBar

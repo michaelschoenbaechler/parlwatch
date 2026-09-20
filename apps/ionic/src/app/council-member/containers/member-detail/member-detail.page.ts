@@ -26,7 +26,7 @@ import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-
 import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
 import { RecordSourceFooterComponent } from '../../../parliament/components/record-source-footer/record-source-footer.component';
 import { MemberMembershipListComponent } from '../../components/member-membership-list/member-membership-list.component';
-import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
+import { VotingRecordListComponent } from '../../components/voting-record-list/voting-record-list.component';
 
 @UntilDestroy()
 @Component({
@@ -45,7 +45,7 @@ import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
     ParliamentTitleComponent,
     RecordSourceFooterComponent,
     MemberMembershipListComponent,
-    ODataDateTimePipe
+    VotingRecordListComponent
   ],
   hostDirectives: [CantonalThemeDirective]
 })

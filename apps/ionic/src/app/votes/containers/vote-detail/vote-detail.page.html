@@ -64,9 +64,7 @@
           <ion-icon
             size="small"
             slot="start"
-            [color]="decisionColor(voting)"
-            [name]="decisionIcon(voting)"
-            [attr.aria-label]="decisionLabel(voting)"
+            [appVoteDecisionIcon]="voting.Decision"
           />
           <ion-label>
             <h3>{{ voting.FirstName }} {{ voting.LastName }}</h3>

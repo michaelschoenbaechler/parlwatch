@@ -13,7 +13,6 @@ import {
   InfiniteScrollCustomEvent,
   IonicModule,
   IonSearchbar,
-  NavController,
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -29,7 +28,6 @@ import {
   RecentEntry
 } from '../../../shared/store/recent/recent.store';
 import { InlineNoticeComponent } from '../../../shared/components/inline-notice/inline-notice.component';
-import { ParliamentStore } from '../../../parliament/store/parliament.store';
 import {
   cantonOf,
   isCantonal,
@@ -37,7 +35,6 @@ import {
 } from '../../../parliament/models/parliament.model';
 import {
   detailPath,
-  listPath,
   routeParliament
 } from '../../../parliament/models/parliament-routes';
 import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
@@ -73,9 +70,7 @@ export class VoteListPage implements OnInit {
 
   readonly store = inject(VoteStore);
   readonly recentStore = inject(RecentVoteStore);
-  readonly parliamentStore = inject(ParliamentStore);
   readonly router = inject(Router);
-  private readonly navController = inject(NavController);
   private readonly route = inject(ActivatedRoute);
 
   readonly parliament: ParliamentKey = routeParliament(this.route);
@@ -130,13 +125,6 @@ export class VoteListPage implements OnInit {
 
   ngOnInit() {
     this.store.setParliament(this.parliament);
-  }
-
-  onParliamentChange(parliament: ParliamentKey) {
-    this.parliamentStore.setActiveParliament(parliament);
-    this.navController
-      .navigateRoot(listPath('votes', parliament))
-      .catch(console.error);
   }
 
   retrySearch() {
