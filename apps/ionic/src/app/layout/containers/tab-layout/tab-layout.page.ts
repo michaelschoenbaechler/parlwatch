@@ -5,9 +5,8 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonicModule, Platform } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { filter } from 'rxjs';
-import { isCantonKey } from '../../../parliament/models/parliament.model';
-
-const PARLIAMENT_SEGMENT = 3;
+import { isCantonal } from '../../../parliament/models/parliament.model';
+import { urlParliament } from '../../../parliament/models/parliament-routes';
 
 @Component({
   selector: 'app-tab-layout',
@@ -31,9 +30,9 @@ export class TabLayoutPage {
   private syncStatusBar(url: string) {
     if (!this.platform.is('capacitor')) return;
 
-    const segment = url.split('?')[0].split('/')[PARLIAMENT_SEGMENT];
+    const parliament = urlParliament(url);
     StatusBar.setStyle({
-      style: isCantonKey(segment) ? Style.Light : Style.Dark
+      style: parliament && isCantonal(parliament) ? Style.Light : Style.Dark
     }).catch((err) => console.warn(err));
   }
 }

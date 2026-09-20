@@ -14,7 +14,6 @@ import {
   InfiniteScrollCustomEvent,
   IonicModule,
   IonSearchbar,
-  NavController,
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -34,14 +33,12 @@ import {
   filterRecent,
   RecentEntry
 } from '../../../shared/store/recent/recent.store';
-import { ParliamentStore } from '../../../parliament/store/parliament.store';
 import {
   isCantonal,
   ParliamentKey
 } from '../../../parliament/models/parliament.model';
 import {
   detailPath,
-  listPath,
   routeParliament
 } from '../../../parliament/models/parliament-routes';
 import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
@@ -81,9 +78,7 @@ export class BusinessListPage implements OnInit {
   readonly sessionStore = inject(SessionStore);
   readonly tagStore = inject(TagStore);
   readonly recentStore = inject(RecentBusinessStore);
-  readonly parliamentStore = inject(ParliamentStore);
   readonly router = inject(Router);
-  private readonly navController = inject(NavController);
   private readonly route = inject(ActivatedRoute);
 
   readonly parliament: ParliamentKey = routeParliament(this.route);
@@ -174,13 +169,6 @@ export class BusinessListPage implements OnInit {
     this.presentingElement = document.querySelector('ion-router-outlet');
     this.businessStore.setParliament(this.parliament);
     this.businessTypesStore.setParliament(this.parliament);
-  }
-
-  onParliamentChange(parliament: ParliamentKey) {
-    this.parliamentStore.setActiveParliament(parliament);
-    this.navController
-      .navigateRoot(listPath('business', parliament))
-      .catch(console.error);
   }
 
   onSearchFocus() {

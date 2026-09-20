@@ -1,9 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { applyCantonTheme } from '../directives/cantonal-theme.directive';
 import { cantonTheme, toParliamentKey } from '../models/parliament.model';
+import { urlParliament } from '../models/parliament-routes';
 
+/** Themes the body so hoisted overlays and the tab bar follow the page. */
 @Injectable({ providedIn: 'root' })
 export class ParliamentThemeService {
   private readonly router = inject(Router);
@@ -12,33 +15,11 @@ export class ParliamentThemeService {
   constructor() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => this.apply());
+      .subscribe((event) =>
+        applyCantonTheme(
+          this.body,
+          cantonTheme(toParliamentKey(urlParliament(event.urlAfterRedirects)))
+        )
+      );
   }
-
-  private apply(): void {
-    const theme = cantonTheme(
-      toParliamentKey(routeParliament(this.router.routerState.snapshot.root))
-    );
-
-    this.body.classList.toggle('cantonal', !!theme);
-    if (theme) {
-      this.body.style.setProperty('--canton-colour-a', theme.colours[0]);
-      this.body.style.setProperty('--canton-colour-b', theme.colours[1]);
-    } else {
-      this.body.style.removeProperty('--canton-colour-a');
-      this.body.style.removeProperty('--canton-colour-b');
-    }
-  }
-}
-
-function routeParliament(root: ActivatedRouteSnapshot): string | null {
-  let parliament: string | null = null;
-  for (
-    let route: ActivatedRouteSnapshot | null = root;
-    route;
-    route = route.firstChild
-  ) {
-    parliament = route.paramMap.get('parliament') ?? parliament;
-  }
-  return parliament;
 }

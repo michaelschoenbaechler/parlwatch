@@ -14,7 +14,6 @@ import {
   InfiniteScrollCustomEvent,
   IonicModule,
   IonSearchbar,
-  NavController,
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -28,11 +27,9 @@ import {
   CouncilMemberFilterFormComponent
 } from '../../components/council-member-filter-form/council-member-filter-form.component';
 import { CouncilMemberStore } from '../../store/council-member/council-member.store';
-import { ParliamentStore } from '../../../parliament/store/parliament.store';
 import { ParliamentKey } from '../../../parliament/models/parliament.model';
 import {
   detailPath,
-  listPath,
   routeParliament
 } from '../../../parliament/models/parliament-routes';
 import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
@@ -65,9 +62,7 @@ export class MemberListPage implements OnInit {
   readonly searchBar = viewChild.required<IonSearchbar>('searchBar');
 
   readonly store = inject(CouncilMemberStore);
-  readonly parliamentStore = inject(ParliamentStore);
   readonly router = inject(Router);
-  private readonly navController = inject(NavController);
   private readonly route = inject(ActivatedRoute);
 
   readonly parliament: ParliamentKey = routeParliament(this.route);
@@ -99,13 +94,6 @@ export class MemberListPage implements OnInit {
   ngOnInit() {
     this.presentingElement = document.querySelector('ion-router-outlet');
     this.store.setParliament(this.parliament);
-  }
-
-  onParliamentChange(parliament: ParliamentKey) {
-    this.parliamentStore.setActiveParliament(parliament);
-    this.navController
-      .navigateRoot(listPath('council-member', parliament))
-      .catch(console.error);
   }
 
   toggleFilterModal() {

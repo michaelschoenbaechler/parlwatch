@@ -10,6 +10,20 @@ export const VOTE_DECISIONS: readonly VoteDecision[] = [
   'not-participated'
 ];
 
+export const DECISION_ICONS: Record<VoteDecision, string> = {
+  yes: 'checkmark-outline',
+  no: 'close-outline',
+  abstained: 'remove-outline',
+  'not-participated': 'ellipsis-horizontal-outline'
+};
+
+export const DECISION_COLOURS: Record<VoteDecision, string> = {
+  yes: 'success',
+  no: 'danger',
+  abstained: 'warning',
+  'not-participated': 'medium'
+};
+
 export type VoteTally = Record<VoteDecision, number> & { total: number };
 
 export interface ParlGroupTally {

@@ -42,39 +42,10 @@
     } @if (!votingRecordViewModel().isLoading &&
     !votingRecordViewModel().hasNoVotingRecord) {
     <app-text-card title="{{ t('councilMember.detail.votingRecord') }}">
-      <ion-list>
-        @for (voting of votingRecordViewModel().votingRecord; track voting.ID) {
-        <ion-item
-          button
-          detail="false"
-          (click)="onClickBusiness(voting)"
-          [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
-        >
-          <ion-icon
-            size="small"
-            [color]="
-                  voting.Decision === 1
-                    ? 'success'
-                    : voting.Decision === 2
-                    ? 'danger'
-                    : 'medium'
-                "
-            [name]="
-                  voting.Decision === 1
-                    ? 'checkmark-outline'
-                    : voting.Decision === 2
-                    ? 'close-outline'
-                    : 'remove-outline'
-                "
-            slot="start"
-          />
-          <ion-label class="ion-text-wrap">
-            {{ voting.BusinessTitle }}
-            <p>{{ voting.VoteEnd | oDataDateTime }}</p>
-          </ion-label>
-        </ion-item>
-        }
-      </ion-list>
+      <app-voting-record-list
+        [votings]="votingRecordViewModel().votingRecord"
+        (votingSelected)="onClickBusiness($event)"
+      />
     </app-text-card>
     } @if (!speechStore.isLoading() && !speechStore.hasError() &&
     speechStore.speeches().length > 0) {
@@ -157,37 +128,10 @@
         <small> {{ t('councilMember.detail.noVotes') }} </small>
       </p>
       } @else {
-      <ion-list>
-        @for (voting of votingRecordViewModel().votingRecord; track voting) {
-        <ion-item
-          (click)="onClickBusiness(voting)"
-          [disabled]="voting.Decision !== 1 && voting.Decision !== 2"
-        >
-          <ion-icon
-            size="small"
-            [color]="
-                  voting.Decision === 1
-                    ? 'success'
-                    : voting.Decision === 2
-                    ? 'danger'
-                    : 'medium'
-                "
-            [name]="
-                  voting.Decision === 1
-                    ? 'checkmark-outline'
-                    : voting.Decision === 2
-                    ? 'close-outline'
-                    : 'remove-outline'
-                "
-            slot="start"
-          />
-          <ion-label class="ion-text-wrap">
-            {{ voting.BusinessTitle }}
-            <p class="ion-color-danger">{{ voting.Subject }}</p>
-          </ion-label>
-        </ion-item>
-        }
-      </ion-list>
+      <app-voting-record-list
+        [votings]="votingRecordViewModel().votingRecord"
+        (votingSelected)="onClickBusiness($event)"
+      />
       } } @else {
       <div class="loading-voting-record-container">
         <ion-spinner class="spinner" />

@@ -12,11 +12,8 @@ import { LoadingScreenComponent } from '../../../shared/components/loading-scree
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { VoteStore, VotingDecisionFilter } from '../../store/vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
-import {
-  toCssColour,
-  toVoteDecision,
-  VoteDecision
-} from '../../models/vote-decision';
+import { toCssColour } from '../../models/vote-decision';
+import { VoteDecisionIconDirective } from '../../directives/vote-decision-icon.directive';
 import { parlGroupTranslationKey } from '../../../shared/models/parl-group.model';
 import { LoadedVote } from '../../models/loaded-vote';
 import {
@@ -30,20 +27,6 @@ import {
 import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
 import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
 import { RecordSourceFooterComponent } from '../../../parliament/components/record-source-footer/record-source-footer.component';
-
-const DECISION_ICONS: Record<VoteDecision, string> = {
-  yes: 'checkmark-outline',
-  no: 'close-outline',
-  abstained: 'remove-outline',
-  'not-participated': 'ellipsis-horizontal-outline'
-};
-
-const DECISION_COLORS: Record<VoteDecision, string> = {
-  yes: 'success',
-  no: 'danger',
-  abstained: 'warning',
-  'not-participated': 'medium'
-};
 
 /**
  * Label a vote is listed under in the "recently viewed" suggestions. Uses the
@@ -78,7 +61,8 @@ function recentVoteTitle(vote: LoadedVote): string {
     ErrorScreenComponent,
     TranslocoDirective,
     ParliamentTitleComponent,
-    RecordSourceFooterComponent
+    RecordSourceFooterComponent,
+    VoteDecisionIconDirective
   ],
   hostDirectives: [CantonalThemeDirective]
 })
@@ -148,35 +132,6 @@ export class VoteDetailPage implements OnInit {
         detailPathInTab(this.router.url, 'council-member', voting.PersonNumber)
       )
       .catch(console.error);
-  }
-
-  /**
-   * Icon name representing how a member voted.
-   * @param voting The member's voting record
-   * @returns Ionicon name
-   */
-  decisionIcon(voting: Voting): string {
-    return DECISION_ICONS[toVoteDecision(voting.Decision)];
-  }
-
-  /**
-   * Ionic colour representing how a member voted.
-   * @param voting The member's voting record
-   * @returns Ionic colour name
-   */
-  decisionColor(voting: Voting): string {
-    return DECISION_COLORS[toVoteDecision(voting.Decision)];
-  }
-
-  /**
-   * Translated label for how a member voted, used as the icon's accessible name.
-   * @param voting The member's voting record
-   * @returns Localised decision label
-   */
-  decisionLabel(voting: Voting): string {
-    return this.transloco.translate(
-      `votes.decision.${toVoteDecision(voting.Decision)}`
-    );
   }
 
   /**
