@@ -6,6 +6,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { OpenParlDataService } from '../../parliament/services/open-parl-data.service';
 import {
   languageQuery,
+  searchQuery,
   localized,
   relationList,
   singleRecord,
@@ -136,7 +137,7 @@ export class CantonalBusinessService {
         limit: top,
         fields: LIST_FIELDS,
         type_harmonized_id: typeIds.length ? typeIds.join(',') : undefined,
-        search: searchTerm?.trim() || undefined,
+        ...searchQuery(searchTerm, 'metadata,docs'),
         ...languageQuery(lang)
       })
       .pipe(map((page) => page.data.map((affair) => toBusiness(affair, lang))));

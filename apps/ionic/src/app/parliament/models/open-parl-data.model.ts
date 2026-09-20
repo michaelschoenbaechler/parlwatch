@@ -12,6 +12,24 @@ export function languageQuery(lang: string): {
   };
 }
 
+const NATURAL_SEARCH_MIN_LENGTH = 4;
+
+export function searchQuery(
+  term: string | undefined,
+  scope: 'metadata' | 'metadata,docs' = 'metadata'
+): { search?: string; search_scope?: string; search_mode?: string } {
+  const search = term?.trim();
+  if (!search) return {};
+
+  const stems =
+    search.includes(' ') || search.length >= NATURAL_SEARCH_MIN_LENGTH;
+  return {
+    search,
+    search_scope: scope,
+    search_mode: stems ? 'natural' : 'partial'
+  };
+}
+
 export function localized(
   value: Localized | undefined | null,
   lang: string
