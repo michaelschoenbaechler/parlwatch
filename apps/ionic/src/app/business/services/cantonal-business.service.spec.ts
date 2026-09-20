@@ -75,6 +75,21 @@ describe('CantonalBusinessService', () => {
       const { query } = lastFetch(openParlData);
       expect(query['type_harmonized_id']).toBe('12,3');
       expect(query['search']).toBe('Budget');
+      expect(query['search_scope']).toBe('metadata,docs');
+      expect(query['search_mode']).toBe('natural');
+    });
+
+    it('substring-matches short terms, stems longer ones and phrases', () => {
+      const modeFor = (searchTerm: string) => {
+        service
+          .getBusinesses({ parliament: 'ZH', top: 20, skip: 0, searchTerm })
+          .subscribe();
+        return lastFetch(openParlData).query['search_mode'];
+      };
+
+      expect(modeFor('SVP')).toBe('partial');
+      expect(modeFor('Velo')).toBe('natural');
+      expect(modeFor('Velo Winterthur')).toBe('natural');
     });
 
     it('maps affairs onto the business card with native type and state labels', (done) => {
