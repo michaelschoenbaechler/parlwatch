@@ -30,6 +30,7 @@ export type ParliamentSlice = {
 };
 
 export const CANTONS_OF_INTEREST_KEY = 'parliament.cantonsOfInterest';
+export const MAX_CANTONS_OF_INTEREST = 4;
 export const ACTIVE_PARLIAMENT_KEY = 'parliament.activeParliament';
 export const HINT_DISMISSED_KEY = 'parliament.hintDismissed';
 
@@ -45,6 +46,9 @@ export const ParliamentStore = signalStore(
   withState(initialState),
   withComputed((store) => ({
     isCantonalEnabled: computed(() => store.cantonsOfInterest().length > 0),
+    canAddCanton: computed(
+      () => store.cantonsOfInterest().length < MAX_CANTONS_OF_INTEREST
+    ),
 
     switcherEntries: computed<SwitcherEntry[]>(() => [
       { key: FEDERAL_PARLIAMENT_KEY, label: 'Bund' },
@@ -78,9 +82,9 @@ export const ParliamentStore = signalStore(
     };
 
     const setCantonsOfInterest = (keys: CantonKey[]): void => {
-      const cantonsOfInterest = CANTONS.map((canton) => canton.key).filter(
-        (key) => keys.includes(key)
-      );
+      const cantonsOfInterest = CANTONS.map((canton) => canton.key)
+        .filter((key) => keys.includes(key))
+        .slice(0, MAX_CANTONS_OF_INTEREST);
 
       patchState(store, (state) => {
         const next = {
@@ -104,7 +108,9 @@ export const ParliamentStore = signalStore(
           storage.get<boolean>(HINT_DISMISSED_KEY, false)
         ]);
 
-        const cantonsOfInterest = storedCantons.filter(isCantonKey);
+        const cantonsOfInterest = storedCantons
+          .filter(isCantonKey)
+          .slice(0, MAX_CANTONS_OF_INTEREST);
 
         const next = {
           cantonsOfInterest,
@@ -129,11 +135,11 @@ export const ParliamentStore = signalStore(
 
       toggleCanton(key: CantonKey): void {
         const current = store.cantonsOfInterest();
-        setCantonsOfInterest(
-          current.includes(key)
-            ? current.filter((existing) => existing !== key)
-            : [...current, key]
-        );
+        if (current.includes(key)) {
+          setCantonsOfInterest(current.filter((existing) => existing !== key));
+        } else if (store.canAddCanton()) {
+          setCantonsOfInterest([...current, key]);
+        }
       },
 
       setActiveParliament(key: ParliamentKey): void {

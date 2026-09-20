@@ -113,6 +113,7 @@
   "parliament.hint.title": "Neu: Kantonale Parlamente",
   "parliament.noVotings": "Das Parlament des Kantons {{parliament}} veröffentlicht keine Abstimmungsdaten.",
   "parliament.officialSite": "Zur offiziellen Website",
+  "parliament.picker.limit": "Maximal {{max}} Kantone.",
   "parliament.source.attribution": "Quelle: OpenParlData.ch",
   "parliament.source.openOfficial": "Auf der Website des Parlaments öffnen",
   "parliament.source.updatedAt": "Stand: {{date}}",

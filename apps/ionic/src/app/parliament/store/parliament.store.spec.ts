@@ -46,6 +46,25 @@ describe('ParliamentStore', () => {
     expect(store.showHint()).toBeFalse();
   });
 
+  it('follows at most four cantons', async () => {
+    const store = await createStore();
+
+    for (const key of ['ZH', 'BE', 'LU', 'AG', 'SG'] as const) {
+      store.toggleCanton(key);
+    }
+
+    expect(store.cantonsOfInterest()).toEqual(['AG', 'BE', 'LU', 'ZH']);
+    expect(store.canAddCanton()).toBeFalse();
+  });
+
+  it('caps a longer selection found in storage', async () => {
+    const store = await createStore({
+      [CANTONS_OF_INTEREST_KEY]: ['ZH', 'BE', 'LU', 'AG', 'SG', 'TG']
+    });
+
+    expect(store.cantonsOfInterest().length).toBe(4);
+  });
+
   it('activates only a canton of interest', async () => {
     const store = await createStore();
     store.setCantonsOfInterest(['ZH']);
