@@ -16,8 +16,8 @@ import { SwissParlService } from '../../shared/swissparl/swissparl.service';
 import {
   createDefaultRequestState,
   onRequestSuccess
-} from '../../shared/models/request-state.model';
-import { talliesByParlGroup } from '../../shared/models/vote-decision';
+} from '../../shared/common/models/request-state.model';
+import { talliesByParlGroup } from '../../shared/common/models/vote-decision';
 import { LoadedVote } from '../models/loaded-vote';
 import { createVoteListVm } from '../store/vote/vote.vm-builder';
 import { CantonalVoteService } from './cantonal-votes.service';

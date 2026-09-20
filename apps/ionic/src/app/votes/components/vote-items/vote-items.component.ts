@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
+import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
 import { VoteStore } from '../../store/vote';
 import { LoadedVote } from '../../models/loaded-vote';
 import { VotingBarComponent } from '../voting-bar/voting-bar.component';

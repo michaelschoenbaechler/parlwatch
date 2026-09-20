@@ -16,14 +16,14 @@ getTestBed().initTestEnvironment(
 // Import all spec files manually
 // NOTE: Automatic discovery with require.context doesn't work in Angular CLI test environment
 import './app/shared/swissparl/swissparl.service.spec';
-import './app/shared/store/recent/recent.store.spec';
-import './app/shared/models/transcript.model.spec';
+import './app/shared/common/store/recent/recent.store.spec';
+import './app/shared/common/models/transcript.model.spec';
 import './app/business/services/business.service.spec';
 import './app/business/services/business.facade.spec';
 import './app/business/services/cantonal-business.service.spec';
 import './app/council-member/services/cantonal-member.service.spec';
 import './app/votes/services/cantonal-votes.service.spec';
-import './app/shared/models/vote-decision.spec';
+import './app/shared/common/models/vote-decision.spec';
 import './app/votes/store/vote/vote.vm-builder.spec';
 import './app/shared/parliament/models/parliament.model.spec';
 import './app/shared/open-parl-data/models/open-parl-data.model.spec';

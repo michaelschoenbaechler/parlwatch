@@ -3,7 +3,7 @@ import { LowerCasePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { MemberCouncil } from 'swissparl';
-import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
+import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
 
 /**
  * The member detail page's header: an identity card for one council member.

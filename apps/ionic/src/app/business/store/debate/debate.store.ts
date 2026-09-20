@@ -17,15 +17,15 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '../../../shared/models/request-state.model';
-import { TranscriptService } from '../../../shared/services/transcript.service';
+} from '../../../shared/common/models/request-state.model';
+import { TranscriptService } from '../../../shared/common/services/transcript.service';
 import {
   cleanTranscriptText,
   SpeechGroupVm,
   toDebateStages,
   toSpeeches,
   toStageLabel
-} from '../../../shared/models/transcript.model';
+} from '../../../shared/common/models/transcript.model';
 
 export type DebateSlice = {
   stagesRequestState: RequestState<SpeechGroupVm[]>;

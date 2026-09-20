@@ -1,5 +1,8 @@
 import { Business, Preconsultation, Resolution } from 'swissparl';
-import { odataList, odataTimestamp } from '../../shared/models/odata.model';
+import {
+  odataList,
+  odataTimestamp
+} from '../../shared/common/models/odata.model';
 
 export type TimelineStepKind =
   'submission' | 'preconsultation' | 'resolution' | 'status';

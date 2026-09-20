@@ -19,10 +19,10 @@ import {
 import { TranslocoDirective } from '@jsverse/transloco';
 import { Business, Tags } from 'swissparl';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
-import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
-import { NoContentScreenComponent } from '../../../shared/components/no-content-screen/no-content-screen.component';
-import { HideKeyboardOnEnterDirective } from '../../../shared/directives/hide-keyboard-on-enter.directive';
+import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
+import { NoContentScreenComponent } from '../../../shared/common/components/no-content-screen/no-content-screen.component';
+import { HideKeyboardOnEnterDirective } from '../../../shared/common/directives/hide-keyboard-on-enter.directive';
 import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
 import { BusinessStore } from '../../store/business/business.store';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
@@ -32,7 +32,7 @@ import { RecentBusinessStore } from '../../store/recent/recent.store';
 import {
   filterRecent,
   RecentEntry
-} from '../../../shared/store/recent/recent.store';
+} from '../../../shared/common/store/recent/recent.store';
 import {
   isCantonal,
   ParliamentKey

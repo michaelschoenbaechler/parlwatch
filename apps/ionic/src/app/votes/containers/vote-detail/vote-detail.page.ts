@@ -7,14 +7,14 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Voting } from 'swissparl';
 import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 import { ParlGroupBreakdownComponent } from '../../components/parl-group-breakdown/parl-group-breakdown.component';
-import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
-import { LoadingScreenComponent } from '../../../shared/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
+import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
+import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
 import { VoteStore, VotingDecisionFilter } from '../../store/vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
-import { toCssColour } from '../../../shared/models/vote-decision';
-import { VoteDecisionIconDirective } from '../../../shared/directives/vote-decision-icon.directive';
-import { parlGroupTranslationKey } from '../../../shared/models/parl-group.model';
+import { toCssColour } from '../../../shared/common/models/vote-decision';
+import { VoteDecisionIconDirective } from '../../../shared/common/directives/vote-decision-icon.directive';
+import { parlGroupTranslationKey } from '../../../shared/common/models/parl-group.model';
 import { LoadedVote } from '../../models/loaded-vote';
 import {
   isCantonal,

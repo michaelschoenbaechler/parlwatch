@@ -1,5 +1,5 @@
 import { Voting } from 'swissparl';
-import { toTally, toVoting } from '../../votes/models/cantonal-vote';
+import { toTally, toVoting } from '../../../votes/models/cantonal-vote';
 import {
   createEmptyTally,
   talliesByParlGroup,

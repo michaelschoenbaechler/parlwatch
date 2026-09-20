@@ -3,7 +3,7 @@ import {
   toBusinessTextSections,
   toPlainText,
   toTextSection
-} from '../../business/models/business-text';
+} from '../../../business/models/business-text';
 import { odataList, odataTimestamp } from './odata.model';
 import {
   cleanTranscriptText,

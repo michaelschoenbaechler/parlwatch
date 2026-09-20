@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
+import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
 import { MemberMembership } from '../../models/cantonal-member';
 
 @Component({

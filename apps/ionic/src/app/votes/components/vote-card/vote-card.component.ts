@@ -1,8 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { TextCardComponent } from '../../../shared/components/text-card/text-card.component';
-import { ODataDateTimePipe } from '../../../shared/pipes/o-data-date-time.pipe';
-import { tallyVotings } from '../../../shared/models/vote-decision';
+import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
+import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
+import { tallyVotings } from '../../../shared/common/models/vote-decision';
 import { LoadedVote } from '../../models/loaded-vote';
 import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 

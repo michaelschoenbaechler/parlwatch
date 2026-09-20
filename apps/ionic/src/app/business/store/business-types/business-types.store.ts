@@ -15,7 +15,7 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey

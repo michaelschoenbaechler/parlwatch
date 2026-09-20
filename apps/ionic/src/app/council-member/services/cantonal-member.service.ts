@@ -29,9 +29,9 @@ import {
   cleanTranscriptText,
   groupSpeechesByBusiness,
   SpeechVm
-} from '../../shared/models/transcript.model';
-import { toDecisionCode } from '../../shared/models/vote-decision';
-import { odataTimestamp } from '../../shared/models/odata.model';
+} from '../../shared/common/models/transcript.model';
+import { toDecisionCode } from '../../shared/common/models/vote-decision';
+import { odataTimestamp } from '../../shared/common/models/odata.model';
 import {
   LoadedMember,
   MemberMembership,

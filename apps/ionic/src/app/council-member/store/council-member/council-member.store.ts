@@ -18,7 +18,7 @@ import { CouncilMemberFacade } from '../../services/council-member.facade';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,

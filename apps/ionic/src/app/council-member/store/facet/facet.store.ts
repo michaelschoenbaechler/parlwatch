@@ -17,7 +17,7 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '../../../shared/models/request-state.model';
+} from '../../../shared/common/models/request-state.model';
 import { CouncilMemberService } from '../../services/council-member.service';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
 import {

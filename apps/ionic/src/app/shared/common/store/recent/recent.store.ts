@@ -11,7 +11,7 @@ import { StorageService } from '../../services/storage.service';
 import {
   ParliamentKey,
   toParliamentKey
-} from '../../parliament/models/parliament.model';
+} from '../../../parliament/models/parliament.model';
 
 export interface RecentEntry {
   id: number;
