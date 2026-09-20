@@ -1,23 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services/open-parl-data.service';
+import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services';
 import {
   allFetches,
   createOpenParlDataSpy,
   lastFetch
-} from '@parlwatch/shared/open-parl-data/testing/open-parl-data.testing';
+} from '@parlwatch/shared/open-parl-data/testing';
 import zhVotings from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-votings.json';
 import beVotings from '@parlwatch/shared/open-parl-data/testing/fixtures/be-votings.json';
 import vdVotings from '@parlwatch/shared/open-parl-data/testing/fixtures/vd-votings.json';
 import zhVotingDetail from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-voting-detail.json';
 import zhVotes from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-votes.json';
-import { SwissParlService } from '@parlwatch/shared/swissparl/swissparl.service';
+import { SwissParlService } from '@parlwatch/shared/swissparl';
 import {
   createDefaultRequestState,
-  onRequestSuccess
-} from '@parlwatch/shared/common/models/request-state.model';
-import { talliesByParlGroup } from '@parlwatch/shared/common/models/vote-decision';
+  onRequestSuccess,
+  talliesByParlGroup
+} from '@parlwatch/shared/common/models';
 import { LoadedVote } from '../models/loaded-vote';
 import { createVoteListVm } from '../store/vote/vote.vm-builder';
 import { CantonalVoteService } from './cantonal-votes.service';

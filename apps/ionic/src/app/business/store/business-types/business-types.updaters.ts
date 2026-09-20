@@ -4,7 +4,7 @@ import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '@parlwatch/shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models';
 import { BusinessTypesState } from './business-types.store';
 
 /**

@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SubjectBusiness, Transcript } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
-import { SwissParlService } from '@parlwatch/shared/swissparl/swissparl.service';
+import { SwissParlService } from '@parlwatch/shared/swissparl';
 import {
   SubjectTitle,
   TRANSCRIPT_TYPE_SPEECH

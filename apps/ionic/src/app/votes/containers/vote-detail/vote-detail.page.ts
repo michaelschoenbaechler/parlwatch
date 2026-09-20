@@ -5,23 +5,27 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Voting } from 'swissparl';
-import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
-import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
-import { toCssColour } from '@parlwatch/shared/common/models/vote-decision';
-import { VoteDecisionIconDirective } from '@parlwatch/shared/common/directives/vote-decision-icon.directive';
-import { parlGroupTranslationKey } from '@parlwatch/shared/common/models/parl-group.model';
 import {
-  isCantonal,
-  ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+  ErrorScreenComponent,
+  LoadingScreenComponent,
+  TextCardComponent
+} from '@parlwatch/shared/common/components';
+import {
+  parlGroupTranslationKey,
+  toCssColour
+} from '@parlwatch/shared/common/models';
+import { VoteDecisionIconDirective } from '@parlwatch/shared/common/directives';
 import {
   detailPathInTab,
+  isCantonal,
+  ParliamentKey,
   routeParliament
-} from '@parlwatch/shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
-import { RecordSourceFooterComponent } from '@parlwatch/shared/parliament/components/record-source-footer/record-source-footer.component';
+} from '@parlwatch/shared/parliament/models';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives';
+import {
+  ParliamentTitleComponent,
+  RecordSourceFooterComponent
+} from '@parlwatch/shared/parliament/components';
 import { LoadedVote } from '../../models/loaded-vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
 import { VoteStore, VotingDecisionFilter } from '../../store/vote';

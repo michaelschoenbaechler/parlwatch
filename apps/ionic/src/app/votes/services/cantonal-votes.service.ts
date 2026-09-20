@@ -2,16 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services/open-parl-data.service';
+import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services';
 import {
   languageQuery,
-  singleRecord
-} from '@parlwatch/shared/open-parl-data/models/open-parl-data.model';
-import {
   OpdVote,
-  OpdVoting
-} from '@parlwatch/shared/open-parl-data/models/open-parl-data.records';
-import { CantonKey } from '@parlwatch/shared/parliament/models/parliament.model';
+  OpdVoting,
+  singleRecord
+} from '@parlwatch/shared/open-parl-data/models';
+import { CantonKey } from '@parlwatch/shared/parliament/models';
 import { LoadedVote } from '../models/loaded-vote';
 import { toLoadedVote } from '../models/cantonal-vote';
 import { VoteFilter } from './votes.service';

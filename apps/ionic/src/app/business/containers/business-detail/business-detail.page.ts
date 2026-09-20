@@ -3,22 +3,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { SpeechListComponent } from '@parlwatch/shared/common/components/speech-list/speech-list.component';
-import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
-import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
-import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
 import {
-  isCantonal,
-  ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+  ErrorScreenComponent,
+  LoadingScreenComponent,
+  SpeechListComponent,
+  TextCardComponent
+} from '@parlwatch/shared/common/components';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
 import {
   detailPathInTab,
+  isCantonal,
+  ParliamentKey,
   routeParliament
-} from '@parlwatch/shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
-import { RecordSourceFooterComponent } from '@parlwatch/shared/parliament/components/record-source-footer/record-source-footer.component';
+} from '@parlwatch/shared/parliament/models';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives';
+import {
+  ParliamentTitleComponent,
+  RecordSourceFooterComponent
+} from '@parlwatch/shared/parliament/components';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { BusinessDetailTextComponent } from '../../components/business-detail-text/business-detail-text.component';
 import { BusinessTimelineComponent } from '../../components/business-timeline/business-timeline.component';

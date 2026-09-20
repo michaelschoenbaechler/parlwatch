@@ -1,12 +1,12 @@
 import { Vote, Voting } from 'swissparl';
-import { RequestState } from '@parlwatch/shared/common/models/request-state.model';
-import { isCantonal } from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   ParlGroupTally,
+  RequestState,
   talliesByParlGroup,
   toVoteDecision,
   VoteDecision
-} from '@parlwatch/shared/common/models/vote-decision';
+} from '@parlwatch/shared/common/models';
+import { isCantonal } from '@parlwatch/shared/parliament/models';
 import { VoteFilter } from '../../services/votes.service';
 import { LoadedVote } from '../../models/loaded-vote';
 

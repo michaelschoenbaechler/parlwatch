@@ -1,9 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  isCantonal,
-  ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+import { isCantonal, ParliamentKey } from '@parlwatch/shared/parliament/models';
 import { LoadedVote } from '../models/loaded-vote';
 import { CantonalVoteService } from './cantonal-votes.service';
 import { VoteFilter, VoteService } from './votes.service';

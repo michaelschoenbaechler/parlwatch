@@ -18,7 +18,7 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '@parlwatch/shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models';
 import { BusinessService } from '../../services/business.service';
 import { createSessionsVm } from './session.vm-builder';
 

@@ -15,11 +15,8 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
-} from '@parlwatch/shared/common/models/request-state.model';
-import {
-  isCantonal,
-  ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/common/models';
+import { isCantonal, ParliamentKey } from '@parlwatch/shared/parliament/models';
 import { CouncilMemberService } from '../../services/council-member.service';
 import {
   createErrorInterestRequestState,

@@ -12,21 +12,19 @@ import { tapResponse } from '@ngrx/operators';
 import { computed, inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
+  cleanTranscriptText,
   createDefaultRequestState,
+  groupSpeechesByBusiness,
   onRequestError,
   onRequestLoad,
   onRequestSuccess,
-  RequestState
-} from '@parlwatch/shared/common/models/request-state.model';
-import {
-  cleanTranscriptText,
-  groupSpeechesByBusiness,
+  RequestState,
   SpeechVm
-} from '@parlwatch/shared/common/models/transcript.model';
+} from '@parlwatch/shared/common/models';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
 
 /** How many speeches a page holds. */

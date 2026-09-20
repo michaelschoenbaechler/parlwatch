@@ -1,5 +1,5 @@
 import { PersonInterest } from 'swissparl';
-import { RequestState } from '@parlwatch/shared/common/models/request-state.model';
+import { RequestState } from '@parlwatch/shared/common/models';
 import { toInterestGroups } from '../../models/person-interest';
 import { InterestVm } from './interest.vm';
 

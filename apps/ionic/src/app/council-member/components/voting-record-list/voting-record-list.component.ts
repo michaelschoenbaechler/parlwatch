@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Voting } from 'swissparl';
-import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
-import { VoteDecisionIconDirective } from '@parlwatch/shared/common/directives/vote-decision-icon.directive';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
+import { VoteDecisionIconDirective } from '@parlwatch/shared/common/directives';
 
 @Component({
   selector: 'app-voting-record-list',

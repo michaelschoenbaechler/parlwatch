@@ -18,7 +18,7 @@ import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models';
 import { AllCouncils, Council } from '../../containers/member-list/councils';
 import { FacetOption } from '../../models/member-facets';
 import { MemberFacetStore } from '../../store/facet/facet.store';

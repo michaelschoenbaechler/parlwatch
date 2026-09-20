@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services/open-parl-data.service';
+import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services';
 import {
   allFetches,
   createOpenParlDataSpy,
   lastFetch
-} from '@parlwatch/shared/open-parl-data/testing/open-parl-data.testing';
+} from '@parlwatch/shared/open-parl-data/testing';
 import zhAffairs from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-affairs.json';
 import beAffairs from '@parlwatch/shared/open-parl-data/testing/fixtures/be-affairs.json';
 import zhAffairDetail from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-affair-detail.json';

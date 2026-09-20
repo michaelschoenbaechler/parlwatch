@@ -1,18 +1,13 @@
 import { Voting } from 'swissparl';
-import { CantonKey } from '@parlwatch/shared/parliament/models/parliament.model';
+import { CantonKey } from '@parlwatch/shared/parliament/models';
 import {
   localized,
+  OpdVote,
+  OpdVoting,
   relationList,
   toODataDate
-} from '@parlwatch/shared/open-parl-data/models/open-parl-data.model';
-import {
-  OpdVote,
-  OpdVoting
-} from '@parlwatch/shared/open-parl-data/models/open-parl-data.records';
-import {
-  toDecisionCode,
-  VoteTally
-} from '@parlwatch/shared/common/models/vote-decision';
+} from '@parlwatch/shared/open-parl-data/models';
+import { toDecisionCode, VoteTally } from '@parlwatch/shared/common/models';
 import { LoadedVote } from './loaded-vote';
 
 export function toTally(voting: OpdVoting): VoteTally {

@@ -1,8 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
-import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
-import { tallyVotings } from '@parlwatch/shared/common/models/vote-decision';
+import { TextCardComponent } from '@parlwatch/shared/common/components';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
+import { tallyVotings } from '@parlwatch/shared/common/models';
 import { LoadedVote } from '../../models/loaded-vote';
 import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 

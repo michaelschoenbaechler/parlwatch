@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { Business } from 'swissparl';
-import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
-import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
+import { TextCardComponent } from '@parlwatch/shared/common/components';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
 
 @Component({
   selector: 'app-business-card',

@@ -14,16 +14,14 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { tapResponse } from '@ngrx/operators';
 import {
   createDefaultRequestState,
-  RequestState
-} from '@parlwatch/shared/common/models/request-state.model';
+  RequestState,
+  talliesByVote,
+  VoteTally
+} from '@parlwatch/shared/common/models';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
-import {
-  talliesByVote,
-  VoteTally
-} from '@parlwatch/shared/common/models/vote-decision';
+} from '@parlwatch/shared/parliament/models';
 import { VoteFilter, VoteService } from '../../services/votes.service';
 import { VoteFacade } from '../../services/votes.facade';
 import { LoadedVote } from '../../models/loaded-vote';

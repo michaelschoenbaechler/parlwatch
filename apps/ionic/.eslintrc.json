@@ -73,6 +73,10 @@
               {
                 "regex": "^\\.\\.?/(\\.\\./)*shared/",
                 "message": "Import shared code through @parlwatch/shared/… instead of a relative path."
+              },
+              {
+                "regex": "^@parlwatch/shared/(swissparl/|[^/]+/(?!testing/fixtures/)[^/]+/)",
+                "message": "Import from the folder barrel, e.g. @parlwatch/shared/common/models, not from a file inside it."
               }
             ]
           }
@@ -81,7 +85,7 @@
       }
     },
     {
-      "files": ["src/app/shared/**/*.ts"],
+      "files": ["src/app/shared/common/**/*.ts"],
       "rules": {
         "no-restricted-imports": [
           "error",
@@ -90,6 +94,86 @@
               {
                 "regex": "^(\\.\\./)+(common|open-parl-data|parliament|swissparl)/",
                 "message": "Import another shared area through @parlwatch/shared/… instead of a relative path."
+              },
+              {
+                "regex": "^@parlwatch/shared/(swissparl/|[^/]+/(?!testing/fixtures/)[^/]+/)",
+                "message": "Import from the folder barrel, e.g. @parlwatch/shared/common/models, not from a file inside it."
+              },
+              {
+                "regex": "^@parlwatch/shared/common(/|$)",
+                "message": "Inside a shared area import siblings relatively; its own barrels would create an import cycle."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/app/shared/open-parl-data/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "regex": "^(\\.\\./)+(common|open-parl-data|parliament|swissparl)/",
+                "message": "Import another shared area through @parlwatch/shared/… instead of a relative path."
+              },
+              {
+                "regex": "^@parlwatch/shared/(swissparl/|[^/]+/(?!testing/fixtures/)[^/]+/)",
+                "message": "Import from the folder barrel, e.g. @parlwatch/shared/common/models, not from a file inside it."
+              },
+              {
+                "regex": "^@parlwatch/shared/open-parl-data(/|$)",
+                "message": "Inside a shared area import siblings relatively; its own barrels would create an import cycle."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/app/shared/parliament/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "regex": "^(\\.\\./)+(common|open-parl-data|parliament|swissparl)/",
+                "message": "Import another shared area through @parlwatch/shared/… instead of a relative path."
+              },
+              {
+                "regex": "^@parlwatch/shared/(swissparl/|[^/]+/(?!testing/fixtures/)[^/]+/)",
+                "message": "Import from the folder barrel, e.g. @parlwatch/shared/common/models, not from a file inside it."
+              },
+              {
+                "regex": "^@parlwatch/shared/parliament(/|$)",
+                "message": "Inside a shared area import siblings relatively; its own barrels would create an import cycle."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/app/shared/swissparl/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "regex": "^(\\.\\./)+(common|open-parl-data|parliament|swissparl)/",
+                "message": "Import another shared area through @parlwatch/shared/… instead of a relative path."
+              },
+              {
+                "regex": "^@parlwatch/shared/(swissparl/|[^/]+/(?!testing/fixtures/)[^/]+/)",
+                "message": "Import from the folder barrel, e.g. @parlwatch/shared/common/models, not from a file inside it."
+              },
+              {
+                "regex": "^@parlwatch/shared/swissparl(/|$)",
+                "message": "Inside a shared area import siblings relatively; its own barrels would create an import cycle."
               }
             ]
           }

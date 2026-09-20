@@ -17,12 +17,12 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '@parlwatch/shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models';
 import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models';
 import { CouncilMemberService } from '../../services/council-member.service';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
 import {

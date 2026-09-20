@@ -6,7 +6,7 @@ import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
 import { BusinessStore } from '../../store/business/business.store';
 import { SessionStore } from '../../store/session/session.store';

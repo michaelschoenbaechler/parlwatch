@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Business, BusinessType } from 'swissparl';
-import {
-  isCantonal,
-  ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+import { isCantonal, ParliamentKey } from '@parlwatch/shared/parliament/models';
 import { LoadedBusiness } from '../models/cantonal-business';
 import { BusinessFilter, BusinessService } from './business.service';
 import { CantonalBusinessService } from './cantonal-business.service';

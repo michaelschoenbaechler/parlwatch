@@ -3,16 +3,10 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Business, BusinessType } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services/open-parl-data.service';
+import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services';
 import {
   languageQuery,
-  searchQuery,
   localized,
-  relationList,
-  singleRecord,
-  toODataDate
-} from '@parlwatch/shared/open-parl-data/models/open-parl-data.model';
-import {
   OpdAffair,
   OpdContributor,
   OpdDoc,
@@ -20,15 +14,19 @@ import {
   OpdSpeech,
   OpdText,
   OpdTypeGroup,
-  OpdVoting
-} from '@parlwatch/shared/open-parl-data/models/open-parl-data.records';
-import { CantonKey } from '@parlwatch/shared/parliament/models/parliament.model';
+  OpdVoting,
+  relationList,
+  searchQuery,
+  singleRecord,
+  toODataDate
+} from '@parlwatch/shared/open-parl-data/models';
+import { CantonKey } from '@parlwatch/shared/parliament/models';
 import {
   cleanTranscriptText,
+  odataTimestamp,
   SpeechGroupVm,
   SpeechVm
-} from '@parlwatch/shared/common/models/transcript.model';
-import { odataTimestamp } from '@parlwatch/shared/common/models/odata.model';
+} from '@parlwatch/shared/common/models';
 import { toLoadedVote } from '../../votes/models/cantonal-vote';
 import {
   BusinessContributor,

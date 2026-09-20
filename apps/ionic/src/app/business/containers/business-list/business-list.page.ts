@@ -18,26 +18,25 @@ import {
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { Business, Tags } from 'swissparl';
-import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
-import { NoContentScreenComponent } from '@parlwatch/shared/common/components/no-content-screen/no-content-screen.component';
-import { HideKeyboardOnEnterDirective } from '@parlwatch/shared/common/directives/hide-keyboard-on-enter.directive';
 import {
-  filterRecent,
-  RecentEntry
-} from '@parlwatch/shared/common/store/recent/recent.store';
-import {
-  isCantonal,
-  ParliamentKey
-} from '@parlwatch/shared/parliament/models/parliament.model';
+  ErrorScreenComponent,
+  LoadingScreenComponent,
+  NoContentScreenComponent
+} from '@parlwatch/shared/common/components';
+import { HideKeyboardOnEnterDirective } from '@parlwatch/shared/common/directives';
+import { filterRecent, RecentEntry } from '@parlwatch/shared/common/store';
 import {
   detailPath,
+  isCantonal,
+  ParliamentKey,
   routeParliament
-} from '@parlwatch/shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentSwitcherComponent } from '@parlwatch/shared/parliament/components/parliament-switcher/parliament-switcher.component';
-import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
-import { CantonHintCardComponent } from '@parlwatch/shared/parliament/components/canton-hint-card/canton-hint-card.component';
+} from '@parlwatch/shared/parliament/models';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives';
+import {
+  CantonHintCardComponent,
+  ParliamentSwitcherComponent,
+  ParliamentTitleComponent
+} from '@parlwatch/shared/parliament/components';
 import { RecentBusinessStore } from '../../store/recent/recent.store';
 import { TagStore } from '../../store/tag/tag.store';
 import { SessionStore } from '../../store/session/session.store';
