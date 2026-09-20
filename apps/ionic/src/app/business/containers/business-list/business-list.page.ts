@@ -172,7 +172,6 @@ export class BusinessListPage implements OnInit {
 
   ngOnInit() {
     this.presentingElement = document.querySelector('ion-router-outlet');
-    this.parliamentStore.setActiveParliament(this.parliament);
     this.businessStore.setParliament(this.parliament);
     this.businessTypesStore.setParliament(this.parliament);
   }

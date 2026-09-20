@@ -121,23 +121,6 @@ describe('ParliamentStore', () => {
     expect(store.showHint()).toBeFalse();
   });
 
-  it('applies a parliament activated before storage was read', async () => {
-    storage = new InMemoryStorageService({
-      [CANTONS_OF_INTEREST_KEY]: ['BE', 'ZH'],
-      [ACTIVE_PARLIAMENT_KEY]: 'ZH'
-    });
-    TestBed.configureTestingModule({
-      providers: [{ provide: StorageService, useValue: storage }]
-    });
-    const store = TestBed.inject(ParliamentStore);
-
-    store.setActiveParliament('BE');
-    await store.whenReady();
-
-    expect(store.activeParliament()).toBe('BE');
-    expect(storage.values.get(ACTIVE_PARLIAMENT_KEY)).toBe('BE');
-  });
-
   it('drops unknown keys and a stale active parliament found in storage', async () => {
     const store = await createStore({
       [CANTONS_OF_INTEREST_KEY]: ['ZH', 'XX', 42],

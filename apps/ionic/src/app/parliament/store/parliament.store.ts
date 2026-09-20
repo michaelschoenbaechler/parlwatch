@@ -64,8 +64,6 @@ export const ParliamentStore = signalStore(
 
     let resolveReady: () => void = () => undefined;
     const ready = new Promise<void>((resolve) => (resolveReady = resolve));
-    let loaded = false;
-    let pendingActive: ParliamentKey | null = null;
 
     const validActive = (
       active: ParliamentKey,
@@ -112,18 +110,14 @@ export const ParliamentStore = signalStore(
           .filter(isCantonKey)
           .slice(0, MAX_CANTONS_OF_INTEREST);
 
-        const next = {
+        patchState(store, {
           cantonsOfInterest,
           activeParliament: validActive(
-            pendingActive ?? toParliamentKey(storedActive),
+            toParliamentKey(storedActive),
             cantonsOfInterest
           ),
           hintDismissed: hintDismissed === true
-        };
-        patchState(store, next);
-        loaded = true;
-        if (pendingActive !== null) persist(next);
-        pendingActive = null;
+        });
         resolveReady();
       },
 
@@ -143,11 +137,6 @@ export const ParliamentStore = signalStore(
       },
 
       setActiveParliament(key: ParliamentKey): void {
-        if (!loaded) {
-          pendingActive = key;
-          return;
-        }
-
         const activeParliament = validActive(key, store.cantonsOfInterest());
         if (activeParliament !== key) return;
         if (store.activeParliament() === activeParliament) return;
