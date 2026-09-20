@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { CantonPickerComponent } from '../../../parliament/components/canton-picker/canton-picker.component';
-import { ParliamentStore } from '../../../parliament/store/parliament.store';
+import { CantonPickerComponent } from '../../../shared/parliament/components/canton-picker/canton-picker.component';
+import { ParliamentStore } from '../../../shared/parliament/store/parliament.store';
 
 @Component({
   selector: 'app-settings-overview',

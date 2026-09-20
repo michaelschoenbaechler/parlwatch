@@ -19,11 +19,11 @@ import {
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 import { VoteFilter, VoteService } from '../../services/votes.service';
 import { VoteFacade } from '../../services/votes.facade';
 import { LoadedVote } from '../../models/loaded-vote';
-import { talliesByVote, VoteTally } from '../../models/vote-decision';
+import { talliesByVote, VoteTally } from '../../../shared/models/vote-decision';
 import {
   createErrorVotesRequestState,
   createLoadMoreState,

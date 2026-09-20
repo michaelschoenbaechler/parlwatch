@@ -1,23 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '../../parliament/services/open-parl-data.service';
+import { OpenParlDataService } from '../../shared/open-parl-data/services/open-parl-data.service';
 import {
   allFetches,
   createOpenParlDataSpy,
   lastFetch
-} from '../../parliament/testing/open-parl-data.testing';
-import zhVotings from '../../parliament/testing/fixtures/zh-votings.json';
-import beVotings from '../../parliament/testing/fixtures/be-votings.json';
-import vdVotings from '../../parliament/testing/fixtures/vd-votings.json';
-import zhVotingDetail from '../../parliament/testing/fixtures/zh-voting-detail.json';
-import zhVotes from '../../parliament/testing/fixtures/zh-votes.json';
-import { SwissParlService } from '../../shared/services/swissparl.service';
+} from '../../shared/open-parl-data/testing/open-parl-data.testing';
+import zhVotings from '../../shared/open-parl-data/testing/fixtures/zh-votings.json';
+import beVotings from '../../shared/open-parl-data/testing/fixtures/be-votings.json';
+import vdVotings from '../../shared/open-parl-data/testing/fixtures/vd-votings.json';
+import zhVotingDetail from '../../shared/open-parl-data/testing/fixtures/zh-voting-detail.json';
+import zhVotes from '../../shared/open-parl-data/testing/fixtures/zh-votes.json';
+import { SwissParlService } from '../../shared/swissparl/swissparl.service';
 import {
   createDefaultRequestState,
   onRequestSuccess
 } from '../../shared/models/request-state.model';
-import { talliesByParlGroup } from '../models/vote-decision';
+import { talliesByParlGroup } from '../../shared/models/vote-decision';
 import { LoadedVote } from '../models/loaded-vote';
 import { createVoteListVm } from '../store/vote/vote.vm-builder';
 import { CantonalVoteService } from './cantonal-votes.service';

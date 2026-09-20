@@ -27,15 +27,15 @@ import {
   CouncilMemberFilterFormComponent
 } from '../../components/council-member-filter-form/council-member-filter-form.component';
 import { CouncilMemberStore } from '../../store/council-member/council-member.store';
-import { ParliamentKey } from '../../../parliament/models/parliament.model';
+import { ParliamentKey } from '../../../shared/parliament/models/parliament.model';
 import {
   detailPath,
   routeParliament
-} from '../../../parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
-import { ParliamentSwitcherComponent } from '../../../parliament/components/parliament-switcher/parliament-switcher.component';
-import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
-import { CantonHintCardComponent } from '../../../parliament/components/canton-hint-card/canton-hint-card.component';
+} from '../../../shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentSwitcherComponent } from '../../../shared/parliament/components/parliament-switcher/parliament-switcher.component';
+import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
+import { CantonHintCardComponent } from '../../../shared/parliament/components/canton-hint-card/canton-hint-card.component';
 
 @UntilDestroy()
 @Component({

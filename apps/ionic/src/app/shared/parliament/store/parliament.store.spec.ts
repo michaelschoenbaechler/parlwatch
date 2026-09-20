@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { StorageService } from '../../shared/services/storage.service';
+import { StorageService } from '../../services/storage.service';
 import { InMemoryStorageService } from '../testing/storage.testing';
 import {
   ACTIVE_PARLIAMENT_KEY,

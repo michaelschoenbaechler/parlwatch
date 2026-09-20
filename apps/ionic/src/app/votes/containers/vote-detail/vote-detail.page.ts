@@ -12,21 +12,21 @@ import { LoadingScreenComponent } from '../../../shared/components/loading-scree
 import { ErrorScreenComponent } from '../../../shared/components/error-screen/error-screen.component';
 import { VoteStore, VotingDecisionFilter } from '../../store/vote';
 import { RecentVoteStore } from '../../store/recent/recent.store';
-import { toCssColour } from '../../models/vote-decision';
-import { VoteDecisionIconDirective } from '../../directives/vote-decision-icon.directive';
+import { toCssColour } from '../../../shared/models/vote-decision';
+import { VoteDecisionIconDirective } from '../../../shared/directives/vote-decision-icon.directive';
 import { parlGroupTranslationKey } from '../../../shared/models/parl-group.model';
 import { LoadedVote } from '../../models/loaded-vote';
 import {
   isCantonal,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 import {
   detailPathInTab,
   routeParliament
-} from '../../../parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../parliament/directives/cantonal-theme.directive';
-import { ParliamentTitleComponent } from '../../../parliament/components/parliament-title/parliament-title.component';
-import { RecordSourceFooterComponent } from '../../../parliament/components/record-source-footer/record-source-footer.component';
+} from '../../../shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '../../../shared/parliament/components/record-source-footer/record-source-footer.component';
 
 /**
  * Label a vote is listed under in the "recently viewed" suggestions. Uses the

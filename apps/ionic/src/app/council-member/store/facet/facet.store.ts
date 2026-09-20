@@ -29,7 +29,7 @@ import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 
 export type FacetSlice = {
   facetsRequestState: RequestState<MemberFacets>;

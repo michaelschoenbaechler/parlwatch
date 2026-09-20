@@ -5,7 +5,7 @@ import {
   activeParliamentListGuard,
   activeParliamentRedirectGuard,
   parliamentKeyGuard
-} from '../parliament/guards/parliament.guards';
+} from '../shared/parliament/guards/parliament.guards';
 
 export const VOTE_ROUTES: Route[] = [
   {

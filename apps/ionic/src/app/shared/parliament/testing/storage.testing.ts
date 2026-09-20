@@ -1,4 +1,4 @@
-import { StorageService } from '../../shared/services/storage.service';
+import { StorageService } from '../../services/storage.service';
 
 export class InMemoryStorageService implements Pick<
   StorageService,

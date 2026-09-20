@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Business, BusinessType } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '../../parliament/services/open-parl-data.service';
+import { OpenParlDataService } from '../../shared/open-parl-data/services/open-parl-data.service';
 import {
   languageQuery,
   searchQuery,
@@ -11,7 +11,7 @@ import {
   relationList,
   singleRecord,
   toODataDate
-} from '../../parliament/models/open-parl-data.model';
+} from '../../shared/open-parl-data/models/open-parl-data.model';
 import {
   OpdAffair,
   OpdContributor,
@@ -21,8 +21,8 @@ import {
   OpdText,
   OpdTypeGroup,
   OpdVoting
-} from '../../parliament/models/open-parl-data.records';
-import { CantonKey } from '../../parliament/models/parliament.model';
+} from '../../shared/open-parl-data/models/open-parl-data.records';
+import { CantonKey } from '../../shared/parliament/models/parliament.model';
 import {
   cleanTranscriptText,
   SpeechGroupVm,

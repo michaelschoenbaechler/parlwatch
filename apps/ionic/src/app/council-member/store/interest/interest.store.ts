@@ -20,7 +20,7 @@ import { CouncilMemberService } from '../../services/council-member.service';
 import {
   isCantonal,
   ParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '../../../shared/parliament/models/parliament.model';
 import {
   createErrorInterestRequestState,
   createLoadInterestRequestState,

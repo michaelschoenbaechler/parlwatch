@@ -5,7 +5,7 @@ import { MemberCouncil, Voting } from 'swissparl';
 import {
   isCantonal,
   ParliamentKey
-} from '../../parliament/models/parliament.model';
+} from '../../shared/parliament/models/parliament.model';
 import { TranscriptService } from '../../shared/services/transcript.service';
 import {
   SpeechVm,

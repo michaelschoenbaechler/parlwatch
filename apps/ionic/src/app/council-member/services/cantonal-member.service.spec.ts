@@ -1,24 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '../../parliament/services/open-parl-data.service';
+import { OpenParlDataService } from '../../shared/open-parl-data/services/open-parl-data.service';
 import {
   createOpenParlDataSpy,
   lastFetch
-} from '../../parliament/testing/open-parl-data.testing';
-import zhPersons from '../../parliament/testing/fixtures/zh-persons.json';
-import zhPersonDetail from '../../parliament/testing/fixtures/zh-person-detail.json';
-import bePersonDetail from '../../parliament/testing/fixtures/be-person-detail.json';
-import beParties from '../../parliament/testing/fixtures/be-parties-harmonized.json';
-import zhPersonVotes from '../../parliament/testing/fixtures/zh-person-votes.json';
-import bePersonSpeeches from '../../parliament/testing/fixtures/be-person-speeches.json';
-import { SwissParlService } from '../../shared/services/swissparl.service';
+} from '../../shared/open-parl-data/testing/open-parl-data.testing';
+import zhPersons from '../../shared/open-parl-data/testing/fixtures/zh-persons.json';
+import zhPersonDetail from '../../shared/open-parl-data/testing/fixtures/zh-person-detail.json';
+import bePersonDetail from '../../shared/open-parl-data/testing/fixtures/be-person-detail.json';
+import beParties from '../../shared/open-parl-data/testing/fixtures/be-parties-harmonized.json';
+import zhPersonVotes from '../../shared/open-parl-data/testing/fixtures/zh-person-votes.json';
+import bePersonSpeeches from '../../shared/open-parl-data/testing/fixtures/be-person-speeches.json';
+import { SwissParlService } from '../../shared/swissparl/swissparl.service';
 import { TranscriptService } from '../../shared/services/transcript.service';
 import {
   OpdSpeech,
   OpdVote
-} from '../../parliament/models/open-parl-data.records';
-import { relationList } from '../../parliament/models/open-parl-data.model';
+} from '../../shared/open-parl-data/models/open-parl-data.records';
+import { relationList } from '../../shared/open-parl-data/models/open-parl-data.model';
 import { odataTimestamp } from '../../shared/models/odata.model';
 import {
   CantonalMemberService,

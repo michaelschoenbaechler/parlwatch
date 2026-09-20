@@ -24,6 +24,20 @@ export const DECISION_COLOURS: Record<VoteDecision, string> = {
   'not-participated': 'medium'
 };
 
+/** OpenParlData's vote strings, mapped onto the federal API's decision codes. */
+const DECISION_CODES: Record<string, number> = {
+  yes: 1,
+  no: 2,
+  abstention: 3,
+  absent: 5
+};
+
+const DECISION_OTHER = 7;
+
+export function toDecisionCode(vote: string | null | undefined): number {
+  return DECISION_CODES[vote ?? ''] ?? DECISION_OTHER;
+}
+
 export type VoteTally = Record<VoteDecision, number> & { total: number };
 
 export interface ParlGroupTally {

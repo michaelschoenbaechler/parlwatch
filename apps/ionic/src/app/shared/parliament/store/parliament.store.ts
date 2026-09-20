@@ -8,7 +8,7 @@ import {
 } from '@ngrx/signals';
 import { computed, inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { StorageService } from '../../shared/services/storage.service';
+import { StorageService } from '../../services/storage.service';
 import {
   CANTONS,
   CantonKey,

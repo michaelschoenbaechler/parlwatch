@@ -17,7 +17,7 @@ import {
   RequestState
 } from '../../../shared/models/request-state.model';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
-import { ParliamentKey } from '../../../parliament/models/parliament.model';
+import { ParliamentKey } from '../../../shared/parliament/models/parliament.model';
 import {
   createErrorVotingRecordRequestState,
   createLoadVotingRecordRequestState,
