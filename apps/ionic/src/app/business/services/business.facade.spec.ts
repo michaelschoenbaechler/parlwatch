@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '../../shared/open-parl-data/services/open-parl-data.service';
-import { createOpenParlDataSpy } from '../../shared/open-parl-data/testing/open-parl-data.testing';
-import zhAffairDetail from '../../shared/open-parl-data/testing/fixtures/zh-affair-detail.json';
-import { SwissParlService } from '../../shared/swissparl/swissparl.service';
+import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services/open-parl-data.service';
+import { createOpenParlDataSpy } from '@parlwatch/shared/open-parl-data/testing/open-parl-data.testing';
+import zhAffairDetail from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-affair-detail.json';
+import { SwissParlService } from '@parlwatch/shared/swissparl/swissparl.service';
 import { BusinessFacade } from './business.facade';
 
 describe('BusinessFacade', () => {

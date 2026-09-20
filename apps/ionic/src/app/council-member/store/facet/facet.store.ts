@@ -17,7 +17,12 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
+import {
+  FEDERAL_PARLIAMENT_KEY,
+  isCantonal,
+  ParliamentKey
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import { CouncilMemberService } from '../../services/council-member.service';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
 import {
@@ -25,11 +30,6 @@ import {
   MemberFacets,
   toMemberFacets
 } from '../../models/member-facets';
-import {
-  FEDERAL_PARLIAMENT_KEY,
-  isCantonal,
-  ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
 
 export type FacetSlice = {
   facetsRequestState: RequestState<MemberFacets>;

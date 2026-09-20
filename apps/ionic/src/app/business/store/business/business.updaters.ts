@@ -4,7 +4,7 @@ import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
 import { BusinessFilter } from '../../services/business.service';
 import { LoadedBusiness } from '../../models/cantonal-business';
 import { BusinessSlice } from './business.store';

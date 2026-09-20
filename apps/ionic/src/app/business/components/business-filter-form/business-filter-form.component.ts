@@ -2,16 +2,16 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
+import {
+  FEDERAL_PARLIAMENT_KEY,
+  isCantonal,
+  ParliamentKey
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
 import { BusinessStore } from '../../store/business/business.store';
 import { SessionStore } from '../../store/session/session.store';
 import { TagStore } from '../../store/tag/tag.store';
 import { BUSINESS_STATUS_OPTIONS } from '../../models/business-status';
-import {
-  FEDERAL_PARLIAMENT_KEY,
-  isCantonal,
-  ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
 
 @Component({
   selector: 'app-business-filter-form',

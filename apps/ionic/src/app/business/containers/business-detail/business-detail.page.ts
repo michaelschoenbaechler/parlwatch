@@ -3,6 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+import { SpeechListComponent } from '@parlwatch/shared/common/components/speech-list/speech-list.component';
+import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
+import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
+import {
+  isCantonal,
+  ParliamentKey
+} from '@parlwatch/shared/parliament/models/parliament.model';
+import {
+  detailPathInTab,
+  routeParliament
+} from '@parlwatch/shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '@parlwatch/shared/parliament/components/record-source-footer/record-source-footer.component';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { BusinessDetailTextComponent } from '../../components/business-detail-text/business-detail-text.component';
 import { BusinessTimelineComponent } from '../../components/business-timeline/business-timeline.component';
@@ -10,26 +26,10 @@ import { RelatedBusinessListComponent } from '../../components/related-business-
 import { BusinessContributorListComponent } from '../../components/business-contributor-list/business-contributor-list.component';
 import { BusinessDocumentListComponent } from '../../components/business-document-list/business-document-list.component';
 import { VoteItemsComponent } from '../../../votes/components/vote-items/vote-items.component';
-import { SpeechListComponent } from '../../../shared/common/components/speech-list/speech-list.component';
-import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
-import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
-import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
 import { BusinessStore } from '../../store/business/business.store';
 import { RecentBusinessStore } from '../../store/recent/recent.store';
 import { DebateStore } from '../../store/debate/debate.store';
 import { VoteStore } from '../../../votes/store/vote';
-import {
-  isCantonal,
-  ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
-import {
-  detailPathInTab,
-  routeParliament
-} from '../../../shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
-import { RecordSourceFooterComponent } from '../../../shared/parliament/components/record-source-footer/record-source-footer.component';
 import { BusinessDocument } from '../../models/cantonal-business';
 
 @Component({

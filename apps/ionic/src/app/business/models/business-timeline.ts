@@ -2,7 +2,7 @@ import { Business, Preconsultation, Resolution } from 'swissparl';
 import {
   odataList,
   odataTimestamp
-} from '../../shared/common/models/odata.model';
+} from '@parlwatch/shared/common/models/odata.model';
 
 export type TimelineStepKind =
   'submission' | 'preconsultation' | 'resolution' | 'status';

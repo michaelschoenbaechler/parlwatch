@@ -1,11 +1,11 @@
 import { PartialStateUpdater } from '@ngrx/signals';
 import { MemberCouncil } from 'swissparl';
-import { CouncilMemberFilter } from '../../services/council-member.service';
 import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
+import { CouncilMemberFilter } from '../../services/council-member.service';
 import { LoadedMember } from '../../models/cantonal-member';
 import { CouncilMemberState } from './council-member.store';
 

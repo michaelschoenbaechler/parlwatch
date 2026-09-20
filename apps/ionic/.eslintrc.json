@@ -51,8 +51,49 @@
           }
         ],
         "import/newline-after-import": "error",
-        "import/order": "error",
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "index"
+            ],
+            "pathGroups": [{ "pattern": "@parlwatch/**", "group": "internal" }],
+            "pathGroupsExcludedImportTypes": ["builtin"]
+          }
+        ],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "regex": "^\\.\\.?/(\\.\\./)*shared/",
+                "message": "Import shared code through @parlwatch/shared/… instead of a relative path."
+              }
+            ]
+          }
+        ],
         "unused-imports/no-unused-imports": "error"
+      }
+    },
+    {
+      "files": ["src/app/shared/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "regex": "^(\\.\\./)+(common|open-parl-data|parliament|swissparl)/",
+                "message": "Import another shared area through @parlwatch/shared/… instead of a relative path."
+              }
+            ]
+          }
+        ]
       }
     },
     {

@@ -15,12 +15,12 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/common/models/request-state.model';
-import { CouncilMemberService } from '../../services/council-member.service';
+} from '@parlwatch/shared/common/models/request-state.model';
 import {
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
+import { CouncilMemberService } from '../../services/council-member.service';
 import {
   createErrorInterestRequestState,
   createLoadInterestRequestState,

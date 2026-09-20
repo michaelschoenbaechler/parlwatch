@@ -13,17 +13,17 @@ import { switchMap } from 'rxjs/operators';
 import { MemberCouncil } from 'swissparl';
 import { tapResponse } from '@ngrx/operators';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { CouncilMemberFilter } from '../../services/council-member.service';
-import { CouncilMemberFacade } from '../../services/council-member.facade';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
+import { CouncilMemberFilter } from '../../services/council-member.service';
+import { CouncilMemberFacade } from '../../services/council-member.facade';
 import { LoadedMember } from '../../models/cantonal-member';
 import {
   createErrorCouncilMemberRequestState,

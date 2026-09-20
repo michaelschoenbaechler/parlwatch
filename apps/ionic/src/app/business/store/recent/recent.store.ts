@@ -1,4 +1,4 @@
-import { createRecentStore } from '../../../shared/common/store/recent/recent.store';
+import { createRecentStore } from '@parlwatch/shared/common/store/recent/recent.store';
 
 /** Recently viewed businesses and recent business search terms. */
 export const RecentBusinessStore = createRecentStore({

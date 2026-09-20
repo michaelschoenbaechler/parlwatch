@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   isCantonal,
   ParliamentKey
-} from '../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import { LoadedVote } from '../models/loaded-vote';
 import { CantonalVoteService } from './cantonal-votes.service';
 import { VoteFilter, VoteService } from './votes.service';

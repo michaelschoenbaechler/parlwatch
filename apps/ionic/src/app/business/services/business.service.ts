@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Business, BusinessType, Session, Tags } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
-import { SwissParlService } from '../../shared/swissparl/swissparl.service';
-import { ParliamentKey } from '../../shared/parliament/models/parliament.model';
+import { SwissParlService } from '@parlwatch/shared/swissparl/swissparl.service';
+import { ParliamentKey } from '@parlwatch/shared/parliament/models/parliament.model';
 import { BusinessStatusOption } from '../models/business-status';
 
 export type BusinessFilter = {

@@ -5,8 +5,8 @@ import {
   input
 } from '@angular/core';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { ParlGroupTally } from '../../../shared/common/models/vote-decision';
-import { parlGroupTranslationKey } from '../../../shared/common/models/parl-group.model';
+import { ParlGroupTally } from '@parlwatch/shared/common/models/vote-decision';
+import { parlGroupTranslationKey } from '@parlwatch/shared/common/models/parl-group.model';
 import { VotingBarComponent } from '../voting-bar/voting-bar.component';
 
 @Component({

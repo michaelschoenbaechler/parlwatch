@@ -15,18 +15,18 @@ import { tapResponse } from '@ngrx/operators';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
-import { VoteFilter, VoteService } from '../../services/votes.service';
-import { VoteFacade } from '../../services/votes.facade';
-import { LoadedVote } from '../../models/loaded-vote';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   talliesByVote,
   VoteTally
-} from '../../../shared/common/models/vote-decision';
+} from '@parlwatch/shared/common/models/vote-decision';
+import { VoteFilter, VoteService } from '../../services/votes.service';
+import { VoteFacade } from '../../services/votes.facade';
+import { LoadedVote } from '../../models/loaded-vote';
 import {
   createErrorVotesRequestState,
   createLoadMoreState,

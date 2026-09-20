@@ -6,7 +6,7 @@ import {
   REQUEST_TIMEOUT_MS,
   RETRY_COUNT,
   RETRY_DELAY_MS
-} from '../../swissparl/swissparl.service';
+} from '@parlwatch/shared/swissparl/swissparl.service';
 
 export const OPEN_PARL_DATA_BASE_URL = 'https://api.openparldata.ch/v1/';
 

@@ -16,12 +16,12 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import { BusinessFilter } from '../../services/business.service';
 import { BusinessFacade } from '../../services/business.facade';
 import { LoadedBusiness } from '../../models/cantonal-business';

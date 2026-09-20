@@ -4,27 +4,27 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Voting } from 'swissparl';
-import { MemberIdCardComponent } from '../../components/member-id-card/member-id-card.component';
-import { InterestListComponent } from '../../components/interest-list/interest-list.component';
-import { SpeechListComponent } from '../../../shared/common/components/speech-list/speech-list.component';
-import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
-import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
-import { CouncilMemberStore } from '../../store/council-member/council-member.store';
-import { VotingRecordStore } from '../../store/voting-record/voting-record.store';
-import { InterestStore } from '../../store/interest/interest.store';
-import { SpeechStore } from '../../store/speech/speech.store';
+import { SpeechListComponent } from '@parlwatch/shared/common/components/speech-list/speech-list.component';
+import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
+import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
 import {
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   detailPathInTab,
   routeParliament
-} from '../../../shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
-import { RecordSourceFooterComponent } from '../../../shared/parliament/components/record-source-footer/record-source-footer.component';
+} from '@parlwatch/shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '@parlwatch/shared/parliament/components/record-source-footer/record-source-footer.component';
+import { SpeechStore } from '../../store/speech/speech.store';
+import { InterestStore } from '../../store/interest/interest.store';
+import { VotingRecordStore } from '../../store/voting-record/voting-record.store';
+import { CouncilMemberStore } from '../../store/council-member/council-member.store';
+import { InterestListComponent } from '../../components/interest-list/interest-list.component';
+import { MemberIdCardComponent } from '../../components/member-id-card/member-id-card.component';
 import { MemberMembershipListComponent } from '../../components/member-membership-list/member-membership-list.component';
 import { VotingRecordListComponent } from '../../components/voting-record-list/voting-record-list.component';
 

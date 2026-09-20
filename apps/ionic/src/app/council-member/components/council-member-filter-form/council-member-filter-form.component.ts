@@ -14,14 +14,14 @@ import {
 } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { AllCouncils, Council } from '../../containers/member-list/councils';
-import { FacetOption } from '../../models/member-facets';
-import { MemberFacetStore } from '../../store/facet/facet.store';
 import {
   FEDERAL_PARLIAMENT_KEY,
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
+import { AllCouncils, Council } from '../../containers/member-list/councils';
+import { FacetOption } from '../../models/member-facets';
+import { MemberFacetStore } from '../../store/facet/facet.store';
 
 export type CouncilMemberFilterForm = {
   councils: Council[];

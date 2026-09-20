@@ -5,8 +5,8 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonicModule, Platform } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { filter } from 'rxjs';
-import { isCantonal } from '../../../shared/parliament/models/parliament.model';
-import { urlParliament } from '../../../shared/parliament/models/parliament-routes';
+import { isCantonal } from '@parlwatch/shared/parliament/models/parliament.model';
+import { urlParliament } from '@parlwatch/shared/parliament/models/parliament-routes';
 
 @Component({
   selector: 'app-tab-layout',

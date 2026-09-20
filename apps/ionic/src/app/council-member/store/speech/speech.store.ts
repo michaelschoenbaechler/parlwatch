@@ -17,16 +17,16 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
 import {
   cleanTranscriptText,
   groupSpeechesByBusiness,
   SpeechVm
-} from '../../../shared/common/models/transcript.model';
+} from '@parlwatch/shared/common/models/transcript.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import { CouncilMemberFacade } from '../../services/council-member.facade';
 
 /** How many speeches a page holds. */

@@ -18,33 +18,33 @@ import {
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { Business, Tags } from 'swissparl';
-import { BusinessCardComponent } from '../../components/business-card/business-card.component';
-import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
-import { NoContentScreenComponent } from '../../../shared/common/components/no-content-screen/no-content-screen.component';
-import { HideKeyboardOnEnterDirective } from '../../../shared/common/directives/hide-keyboard-on-enter.directive';
-import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
-import { BusinessStore } from '../../store/business/business.store';
-import { BusinessTypesStore } from '../../store/business-types/business-types.store';
-import { SessionStore } from '../../store/session/session.store';
-import { TagStore } from '../../store/tag/tag.store';
-import { RecentBusinessStore } from '../../store/recent/recent.store';
+import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
+import { NoContentScreenComponent } from '@parlwatch/shared/common/components/no-content-screen/no-content-screen.component';
+import { HideKeyboardOnEnterDirective } from '@parlwatch/shared/common/directives/hide-keyboard-on-enter.directive';
 import {
   filterRecent,
   RecentEntry
-} from '../../../shared/common/store/recent/recent.store';
+} from '@parlwatch/shared/common/store/recent/recent.store';
 import {
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   detailPath,
   routeParliament
-} from '../../../shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentSwitcherComponent } from '../../../shared/parliament/components/parliament-switcher/parliament-switcher.component';
-import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
-import { CantonHintCardComponent } from '../../../shared/parliament/components/canton-hint-card/canton-hint-card.component';
+} from '@parlwatch/shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentSwitcherComponent } from '@parlwatch/shared/parliament/components/parliament-switcher/parliament-switcher.component';
+import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
+import { CantonHintCardComponent } from '@parlwatch/shared/parliament/components/canton-hint-card/canton-hint-card.component';
+import { RecentBusinessStore } from '../../store/recent/recent.store';
+import { TagStore } from '../../store/tag/tag.store';
+import { SessionStore } from '../../store/session/session.store';
+import { BusinessTypesStore } from '../../store/business-types/business-types.store';
+import { BusinessStore } from '../../store/business/business.store';
+import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
+import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 
 /** How many recent searches / businesses the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;

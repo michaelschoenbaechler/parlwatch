@@ -5,8 +5,8 @@ import {
   output
 } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
-import { ODataDateTimePipe } from '../../../shared/common/pipes/o-data-date-time.pipe';
+import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes/o-data-date-time.pipe';
 import { VoteBusinessGroupVm } from '../../store/vote';
 import { VoteItemsComponent } from '../vote-items/vote-items.component';
 
