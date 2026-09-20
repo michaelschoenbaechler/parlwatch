@@ -23,6 +23,8 @@ export interface BusinessDocument {
 
 export interface CantonalBusinessDetail {
   parliament: CantonKey;
+  /** Status in the canton's own language, stable across UI language switches. */
+  statusKey: string;
   contributors: BusinessContributor[];
   timeline: TimelineStep[];
   documents: BusinessDocument[];

@@ -9,6 +9,9 @@
       <ion-tab-button tab="business">
         <ion-icon name="bag-check" />
         <ion-label>{{ t('layout.business') }}</ion-label>
+        @if (watchedStore.unseenCount() > 0) {
+        <ion-badge class="unseen-dot" color="danger" />
+        }
       </ion-tab-button>
 
       <ion-tab-button tab="council-member">

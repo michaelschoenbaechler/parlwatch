@@ -1,7 +1,14 @@
-import { Component, computed, effect, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  untracked
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import {
   ErrorScreenComponent,
@@ -31,6 +38,10 @@ import { VoteItemsComponent } from '../../../votes/components/vote-items/vote-it
 import { BusinessStore } from '../../store/business/business.store';
 import { RecentBusinessStore } from '../../store/recent/recent.store';
 import { DebateStore } from '../../store/debate/debate.store';
+import {
+  MAX_WATCHED_BUSINESSES,
+  WatchedBusinessStore
+} from '../../store/watched/watched.store';
 import { VoteStore } from '../../../votes/store/vote';
 import { BusinessDocument } from '../../models/cantonal-business';
 
@@ -62,13 +73,20 @@ export class BusinessDetailPage implements OnInit {
   readonly store = inject(BusinessStore);
   readonly recentStore = inject(RecentBusinessStore);
   readonly debateStore = inject(DebateStore);
+  readonly watchedStore = inject(WatchedBusinessStore);
   private readonly voteStore = inject(VoteStore);
   private readonly transloco = inject(TranslocoService);
+  private readonly toastController = inject(ToastController);
   readonly route = inject(ActivatedRoute);
   readonly router = inject(Router);
 
   readonly parliament: ParliamentKey = routeParliament(this.route);
   readonly isCantonal = isCantonal(this.parliament);
+  readonly businessId = parseInt(this.route.snapshot.params.id);
+
+  readonly isWatched = computed(() =>
+    this.watchedStore.isFollowed(this.parliament, this.businessId)
+  );
 
   readonly viewModel = computed(() => this.store.businessDetailViewModel());
 
@@ -92,6 +110,20 @@ export class BusinessDetailPage implements OnInit {
     });
 
     effect(() => {
+      const business = this.viewModel().business;
+      if (business?.ID !== this.businessId) return;
+      untracked(() => {
+        if (this.watchedStore.isFollowed(this.parliament, this.businessId)) {
+          this.watchedStore.markSeen(
+            this.parliament,
+            this.businessId,
+            business
+          );
+        }
+      });
+    });
+
+    effect(() => {
       if (this.isCantonal) return;
       const voteIds = this.viewModel()
         .votes.map((vote) => vote.ID)
@@ -103,18 +135,40 @@ export class BusinessDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    const businessId = parseInt(this.route.snapshot.params.id);
-    this.store.selectBusiness({ parliament: this.parliament, id: businessId });
+    this.store.selectBusiness({
+      parliament: this.parliament,
+      id: this.businessId
+    });
     if (!this.isCantonal) {
-      this.debateStore.selectBusiness(businessId);
+      this.debateStore.selectBusiness(this.businessId);
     }
   }
 
   retry() {
     this.store.selectBusiness({
       parliament: this.parliament,
-      id: parseInt(this.route.snapshot.params.id)
+      id: this.businessId
     });
+  }
+
+  async toggleWatch() {
+    if (this.isWatched()) {
+      this.watchedStore.unfollow(this.parliament, this.businessId);
+      return;
+    }
+
+    const business = this.viewModel().business;
+    if (!business || this.watchedStore.follow(this.parliament, business))
+      return;
+
+    const toast = await this.toastController.create({
+      message: this.transloco.translate('business.following.limit', {
+        max: MAX_WATCHED_BUSINESSES
+      }),
+      duration: 3000,
+      position: 'bottom'
+    });
+    await toast.present();
   }
 
   /** Open the business on parlament.ch, where the full dossier lives. */

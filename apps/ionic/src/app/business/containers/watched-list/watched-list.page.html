@@ -1,0 +1,65 @@
+<ng-container *transloco="let t; prefix: 'business.following'">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="Zurück" defaultHref="/layout/business" />
+      </ion-buttons>
+      <ion-title>{{ t('title') }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content />
+    </ion-refresher>
+
+    @if (store.entries().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="eye-outline" size="large" />
+      <p class="empty-title">{{ t('empty.title') }}</p>
+      <p class="empty-text">{{ t('empty.text') }}</p>
+    </div>
+    } @else {
+    <div class="watched-list">
+      @for (card of cards(); track card.entry.parliament + '-' + card.entry.id)
+      {
+      <ion-item-sliding #sliding>
+        <ion-item
+          button
+          detail="false"
+          [class.seen]="!card.entry.unseen"
+          (click)="open(card.entry)"
+        >
+          <app-business-card
+            [business]="card.business"
+            [parliament]="card.entry.parliament"
+          >
+            @if (card.lines.length > 0) {
+            <ul class="changes">
+              @for (line of card.lines; track line) {
+              <li>{{ line }}</li>
+              }
+            </ul>
+            }
+          </app-business-card>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option
+            color="danger"
+            (click)="unfollow(card.entry, sliding)"
+          >
+            <ion-icon slot="icon-only" name="eye-off-outline" />
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+      }
+    </div>
+    }
+
+    <footer class="last-check">
+      @if (store.lastCheck(); as check) { {{ t(check.ok ? 'lastCheck' :
+      'lastCheckFailed', { date: lastCheckDate() }) }} } @else { {{
+      t('neverChecked') }} }
+    </footer>
+  </ion-content>
+</ng-container>

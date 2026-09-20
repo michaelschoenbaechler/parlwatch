@@ -144,6 +144,26 @@ describe('CantonalBusinessService', () => {
     });
   });
 
+  describe('getBusinessHead', () => {
+    it('asks only for the timestamp and status of one affair', (done) => {
+      service.getBusinessHead('ZH', 91382).subscribe((head) => {
+        const { resource, query } = lastFetch(openParlData);
+        expect(resource).toBe('affairs/91382');
+        expect(query['fields']).toBe('id,updated_at,state_name');
+        expect(query['expand']).toBeUndefined();
+        expect(query['lang']).toBe('de');
+
+        expect(head).toEqual({
+          parliament: 'ZH',
+          id: 91382,
+          modified: jasmine.stringMatching(/^\/Date\(\d+\)\/$/),
+          status: 'Kantonsrat'
+        });
+        done();
+      });
+    });
+  });
+
   describe('getBusiness', () => {
     it('expands every relation the detail page renders, documents without their text', () => {
       service.getBusiness('ZH', 91382).subscribe();
@@ -293,6 +313,22 @@ describe('CantonalBusinessService', () => {
           expect(types).toEqual([]);
           done();
         });
+      });
+    });
+
+    it("exposes the status in the canton's own language as a stable key", (done) => {
+      configure({
+        'affairs/7': {
+          id: 7,
+          state_name: { de: 'Erledigt', fr: 'Liquidé' },
+          updated_at: '2026-09-20T13:18:51'
+        }
+      });
+
+      service.getBusiness('BE', 7).subscribe((business) => {
+        expect(business.BusinessStatusText).toBe('Erledigt');
+        expect(business.cantonal?.statusKey).toBe('Erledigt');
+        done();
       });
     });
 
