@@ -263,6 +263,12 @@ export interface CantonTheme {
   coatOfArms: string;
 }
 
+function accentColours([a, b]: [string, string]): [string, string] {
+  if (a === WHITE) return [b, b];
+  if (b === WHITE) return [a, a];
+  return [a, b];
+}
+
 export function cantonTheme(key: ParliamentKey): CantonTheme | null {
   if (!isCantonal(key)) return null;
 
@@ -270,7 +276,7 @@ export function cantonTheme(key: ParliamentKey): CantonTheme | null {
   return {
     key,
     name: canton.name,
-    colours: canton.colours,
+    colours: accentColours(canton.colours),
     coatOfArms: coatOfArmsPath(key)
   };
 }
