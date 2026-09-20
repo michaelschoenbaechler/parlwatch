@@ -6,9 +6,7 @@
     {
       "party_harmonized_wikidata_id": "Q385258",
       "count": 224,
-      "body_keys": [
-        "BE"
-      ],
+      "body_keys": ["BE"],
       "party_harmonized": {
         "de": "Schweizerische Volkspartei",
         "fr": "Union démocratique du centre",
@@ -19,9 +17,7 @@
     {
       "party_harmonized_wikidata_id": "Q303745",
       "count": 199,
-      "body_keys": [
-        "BE"
-      ],
+      "body_keys": ["BE"],
       "party_harmonized": {
         "de": "Sozialdemokratische Partei",
         "fr": "Parti Socialiste",
@@ -32,9 +28,7 @@
     {
       "party_harmonized_wikidata_id": "Q202638",
       "count": 60,
-      "body_keys": [
-        "BE"
-      ],
+      "body_keys": ["BE"],
       "party_harmonized": {
         "de": "FDP.Die Liberalen",
         "fr": "PLR.Les Libéraux-Radicaux",
@@ -45,17 +39,13 @@
     {
       "party_harmonized_wikidata_id": null,
       "count": 57,
-      "body_keys": [
-        "BE"
-      ],
+      "body_keys": ["BE"],
       "party_harmonized": {}
     },
     {
       "party_harmonized_wikidata_id": "Q659739",
       "count": 55,
-      "body_keys": [
-        "BE"
-      ],
+      "body_keys": ["BE"],
       "party_harmonized": {
         "de": "Die Grünen",
         "fr": "Les Verts",

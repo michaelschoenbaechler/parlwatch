@@ -21,3 +21,14 @@ ion-item {
 ion-checkbox {
   font-size: 15px;
 }
+
+.limit-note {
+  margin: 0 0 0.5rem;
+  font-size: 13px;
+  color: var(--ion-color-medium);
+}
+
+.limit-note.reached {
+  color: var(--ion-color-dark);
+  font-weight: 600;
+}

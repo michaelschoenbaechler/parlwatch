@@ -113,6 +113,7 @@
   "parliament.hint.title": "New: cantonal parliaments",
   "parliament.noVotings": "The parliament of the canton of {{parliament}} does not publish voting data.",
   "parliament.officialSite": "Official website",
+  "parliament.picker.limit": "Up to {{max}} cantons.",
   "parliament.source.attribution": "Source: OpenParlData.ch",
   "parliament.source.openOfficial": "Open on the parliament's website",
   "parliament.source.updatedAt": "As of {{date}}",

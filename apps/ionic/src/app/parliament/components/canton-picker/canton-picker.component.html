@@ -1,19 +1,25 @@
-<ion-list class="canton-list" lines="full">
-  @for (canton of cantons; track canton.key) {
-    <ion-item>
-      <img
-        class="coat-of-arms"
-        slot="start"
-        [src]="coatOfArmsPath(canton.key)"
-        alt=""
-      />
-      <ion-checkbox
-        justify="space-between"
-        [checked]="isSelected(canton.key)"
-        (ionChange)="toggle(canton.key)"
-      >
-        {{ canton.name }}
-      </ion-checkbox>
-    </ion-item>
-  }
-</ion-list>
+<ng-container *transloco="let t; prefix: 'parliament.picker'">
+  <p class="limit-note" [class.reached]="!parliamentStore.canAddCanton()">
+    {{ t('limit', { max: maxCantons }) }}
+  </p>
+  <ion-list class="canton-list" lines="full">
+    @for (canton of cantons; track canton.key) {
+      <ion-item>
+        <img
+          class="coat-of-arms"
+          slot="start"
+          [src]="coatOfArmsPath(canton.key)"
+          alt=""
+        />
+        <ion-checkbox
+          justify="space-between"
+          [checked]="isSelected(canton.key)"
+          [disabled]="isDisabled(canton.key)"
+          (ionChange)="toggle(canton.key)"
+        >
+          {{ canton.name }}
+        </ion-checkbox>
+      </ion-item>
+    }
+  </ion-list>
+</ng-container>
