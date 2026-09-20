@@ -3,9 +3,9 @@ import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
+import { VoteTally } from '@parlwatch/shared/common/models/vote-decision';
 import { VoteFilter } from '../../services/votes.service';
-import { VoteTally } from '../../../shared/common/models/vote-decision';
 import { LoadedVote } from '../../models/loaded-vote';
 import { VoteSlice } from '.';
 

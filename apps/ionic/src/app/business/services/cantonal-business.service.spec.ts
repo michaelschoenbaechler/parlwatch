@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '../../shared/open-parl-data/services/open-parl-data.service';
+import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services/open-parl-data.service';
 import {
   allFetches,
   createOpenParlDataSpy,
   lastFetch
-} from '../../shared/open-parl-data/testing/open-parl-data.testing';
-import zhAffairs from '../../shared/open-parl-data/testing/fixtures/zh-affairs.json';
-import beAffairs from '../../shared/open-parl-data/testing/fixtures/be-affairs.json';
-import zhAffairDetail from '../../shared/open-parl-data/testing/fixtures/zh-affair-detail.json';
-import beAffairDetail from '../../shared/open-parl-data/testing/fixtures/be-affair-detail.json';
-import beAffairSpeeches from '../../shared/open-parl-data/testing/fixtures/be-affair-speeches.json';
-import zhTypes from '../../shared/open-parl-data/testing/fixtures/zh-types-harmonized.json';
+} from '@parlwatch/shared/open-parl-data/testing/open-parl-data.testing';
+import zhAffairs from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-affairs.json';
+import beAffairs from '@parlwatch/shared/open-parl-data/testing/fixtures/be-affairs.json';
+import zhAffairDetail from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-affair-detail.json';
+import beAffairDetail from '@parlwatch/shared/open-parl-data/testing/fixtures/be-affair-detail.json';
+import beAffairSpeeches from '@parlwatch/shared/open-parl-data/testing/fixtures/be-affair-speeches.json';
+import zhTypes from '@parlwatch/shared/open-parl-data/testing/fixtures/zh-types-harmonized.json';
 import { CantonalBusinessService } from './cantonal-business.service';
 
 describe('CantonalBusinessService', () => {

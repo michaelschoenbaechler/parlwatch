@@ -4,7 +4,7 @@ import {
   onRequestError,
   onRequestLoad,
   onRequestSuccess
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
 import { VotingRecordSlice } from './voting-record.store';
 
 /**

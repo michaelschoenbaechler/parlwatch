@@ -1,14 +1,14 @@
 import { Vote, Voting } from 'swissparl';
-import { RequestState } from '../../../shared/common/models/request-state.model';
-import { isCantonal } from '../../../shared/parliament/models/parliament.model';
-import { VoteFilter } from '../../services/votes.service';
-import { LoadedVote } from '../../models/loaded-vote';
+import { RequestState } from '@parlwatch/shared/common/models/request-state.model';
+import { isCantonal } from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   ParlGroupTally,
   talliesByParlGroup,
   toVoteDecision,
   VoteDecision
-} from '../../../shared/common/models/vote-decision';
+} from '@parlwatch/shared/common/models/vote-decision';
+import { VoteFilter } from '../../services/votes.service';
+import { LoadedVote } from '../../models/loaded-vote';
 
 export interface VoteListVm {
   businessGroups: VoteBusinessGroupVm[];

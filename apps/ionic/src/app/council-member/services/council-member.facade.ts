@@ -5,13 +5,13 @@ import { MemberCouncil, Voting } from 'swissparl';
 import {
   isCantonal,
   ParliamentKey
-} from '../../shared/parliament/models/parliament.model';
-import { TranscriptService } from '../../shared/common/services/transcript.service';
+} from '@parlwatch/shared/parliament/models/parliament.model';
+import { TranscriptService } from '@parlwatch/shared/common/services/transcript.service';
 import {
   SpeechVm,
   toSpeeches,
   withSubjectTitles
-} from '../../shared/common/models/transcript.model';
+} from '@parlwatch/shared/common/models/transcript.model';
 import { LoadedMember, MemberVoteRecord } from '../models/cantonal-member';
 import { FacetOption } from '../models/member-facets';
 import { CantonalMemberService } from './cantonal-member.service';

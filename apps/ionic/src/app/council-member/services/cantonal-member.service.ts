@@ -3,14 +3,14 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MemberCouncil } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
-import { OpenParlDataService } from '../../shared/open-parl-data/services/open-parl-data.service';
+import { OpenParlDataService } from '@parlwatch/shared/open-parl-data/services/open-parl-data.service';
 import {
   languageQuery,
   localized,
   relationList,
   singleRecord,
   toODataDate
-} from '../../shared/open-parl-data/models/open-parl-data.model';
+} from '@parlwatch/shared/open-parl-data/models/open-parl-data.model';
 import {
   MEMBERSHIP_TYPE_COMMISSION,
   MEMBERSHIP_TYPE_FRAKTION,
@@ -20,18 +20,18 @@ import {
   OpdPerson,
   OpdSpeech,
   OpdVote
-} from '../../shared/open-parl-data/models/open-parl-data.records';
+} from '@parlwatch/shared/open-parl-data/models/open-parl-data.records';
 import {
   cantonOf,
   CantonKey
-} from '../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   cleanTranscriptText,
   groupSpeechesByBusiness,
   SpeechVm
-} from '../../shared/common/models/transcript.model';
-import { toDecisionCode } from '../../shared/common/models/vote-decision';
-import { odataTimestamp } from '../../shared/common/models/odata.model';
+} from '@parlwatch/shared/common/models/transcript.model';
+import { toDecisionCode } from '@parlwatch/shared/common/models/vote-decision';
+import { odataTimestamp } from '@parlwatch/shared/common/models/odata.model';
 import {
   LoadedMember,
   MemberMembership,

@@ -1,5 +1,5 @@
 import { BusinessType } from 'swissparl';
-import { RequestState } from '../../../shared/common/models/request-state.model';
+import { RequestState } from '@parlwatch/shared/common/models/request-state.model';
 
 export interface BusinessTypesVm {
   types: BusinessType[];

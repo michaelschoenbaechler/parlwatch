@@ -16,31 +16,31 @@ import {
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { HideKeyboardOnEnterDirective } from '../../../shared/common/directives/hide-keyboard-on-enter.directive';
-import { VoteGroupCardComponent } from '../../components/vote-group-card/vote-group-card.component';
-import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
-import { NoContentScreenComponent } from '../../../shared/common/components/no-content-screen/no-content-screen.component';
-import { VoteStore } from '../../store/vote';
-import { RecentVoteStore } from '../../store/recent/recent.store';
+import { HideKeyboardOnEnterDirective } from '@parlwatch/shared/common/directives/hide-keyboard-on-enter.directive';
+import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
+import { NoContentScreenComponent } from '@parlwatch/shared/common/components/no-content-screen/no-content-screen.component';
 import {
   filterRecent,
   RecentEntry
-} from '../../../shared/common/store/recent/recent.store';
-import { InlineNoticeComponent } from '../../../shared/common/components/inline-notice/inline-notice.component';
+} from '@parlwatch/shared/common/store/recent/recent.store';
+import { InlineNoticeComponent } from '@parlwatch/shared/common/components/inline-notice/inline-notice.component';
 import {
   cantonOf,
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   detailPath,
   routeParliament
-} from '../../../shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentSwitcherComponent } from '../../../shared/parliament/components/parliament-switcher/parliament-switcher.component';
-import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
-import { CantonHintCardComponent } from '../../../shared/parliament/components/canton-hint-card/canton-hint-card.component';
+} from '@parlwatch/shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentSwitcherComponent } from '@parlwatch/shared/parliament/components/parliament-switcher/parliament-switcher.component';
+import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
+import { CantonHintCardComponent } from '@parlwatch/shared/parliament/components/canton-hint-card/canton-hint-card.component';
+import { RecentVoteStore } from '../../store/recent/recent.store';
+import { VoteStore } from '../../store/vote';
+import { VoteGroupCardComponent } from '../../components/vote-group-card/vote-group-card.component';
 
 /** How many recent searches / votes the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;

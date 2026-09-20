@@ -1,4 +1,4 @@
-import { StorageService } from '../../common/services/storage.service';
+import { StorageService } from '@parlwatch/shared/common/services/storage.service';
 
 export class InMemoryStorageService implements Pick<
   StorageService,

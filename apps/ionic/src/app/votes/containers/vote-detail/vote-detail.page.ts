@@ -5,28 +5,28 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Voting } from 'swissparl';
-import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
-import { ParlGroupBreakdownComponent } from '../../components/parl-group-breakdown/parl-group-breakdown.component';
-import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
-import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
-import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
-import { VoteStore, VotingDecisionFilter } from '../../store/vote';
-import { RecentVoteStore } from '../../store/recent/recent.store';
-import { toCssColour } from '../../../shared/common/models/vote-decision';
-import { VoteDecisionIconDirective } from '../../../shared/common/directives/vote-decision-icon.directive';
-import { parlGroupTranslationKey } from '../../../shared/common/models/parl-group.model';
-import { LoadedVote } from '../../models/loaded-vote';
+import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
+import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
+import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
+import { toCssColour } from '@parlwatch/shared/common/models/vote-decision';
+import { VoteDecisionIconDirective } from '@parlwatch/shared/common/directives/vote-decision-icon.directive';
+import { parlGroupTranslationKey } from '@parlwatch/shared/common/models/parl-group.model';
 import {
   isCantonal,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import {
   detailPathInTab,
   routeParliament
-} from '../../../shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
-import { RecordSourceFooterComponent } from '../../../shared/parliament/components/record-source-footer/record-source-footer.component';
+} from '@parlwatch/shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
+import { RecordSourceFooterComponent } from '@parlwatch/shared/parliament/components/record-source-footer/record-source-footer.component';
+import { LoadedVote } from '../../models/loaded-vote';
+import { RecentVoteStore } from '../../store/recent/recent.store';
+import { VoteStore, VotingDecisionFilter } from '../../store/vote';
+import { ParlGroupBreakdownComponent } from '../../components/parl-group-breakdown/parl-group-breakdown.component';
+import { VoteCardComponent } from '../../components/vote-card/vote-card.component';
 
 /**
  * Label a vote is listed under in the "recently viewed" suggestions. Uses the

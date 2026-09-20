@@ -15,11 +15,11 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   createDefaultRequestState,
   RequestState
-} from '../../../shared/common/models/request-state.model';
+} from '@parlwatch/shared/common/models/request-state.model';
 import {
   FEDERAL_PARLIAMENT_KEY,
   ParliamentKey
-} from '../../../shared/parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
 import { BusinessFacade } from '../../services/business.facade';
 import { createBusinessTypesVm } from './business-types.vm-builder';
 import {

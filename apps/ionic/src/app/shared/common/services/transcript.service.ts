@@ -3,11 +3,11 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SubjectBusiness, Transcript } from 'swissparl';
 import { TranslocoService } from '@jsverse/transloco';
+import { SwissParlService } from '@parlwatch/shared/swissparl/swissparl.service';
 import {
   SubjectTitle,
   TRANSCRIPT_TYPE_SPEECH
 } from '../models/transcript.model';
-import { SwissParlService } from '../../swissparl/swissparl.service';
 
 /**
  * Everything the speech list shows. `Text` is deliberately absent: it averages

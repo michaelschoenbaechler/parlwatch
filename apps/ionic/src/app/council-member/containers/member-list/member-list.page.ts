@@ -17,25 +17,25 @@ import {
   RefresherCustomEvent
 } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { HideKeyboardOnEnterDirective } from '../../../shared/common/directives/hide-keyboard-on-enter.directive';
-import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
-import { LoadingScreenComponent } from '../../../shared/common/components/loading-screen/loading-screen.component';
-import { NoContentScreenComponent } from '../../../shared/common/components/no-content-screen/no-content-screen.component';
-import { ErrorScreenComponent } from '../../../shared/common/components/error-screen/error-screen.component';
+import { HideKeyboardOnEnterDirective } from '@parlwatch/shared/common/directives/hide-keyboard-on-enter.directive';
+import { LoadingScreenComponent } from '@parlwatch/shared/common/components/loading-screen/loading-screen.component';
+import { NoContentScreenComponent } from '@parlwatch/shared/common/components/no-content-screen/no-content-screen.component';
+import { ErrorScreenComponent } from '@parlwatch/shared/common/components/error-screen/error-screen.component';
+import { ParliamentKey } from '@parlwatch/shared/parliament/models/parliament.model';
+import {
+  detailPath,
+  routeParliament
+} from '@parlwatch/shared/parliament/models/parliament-routes';
+import { CantonalThemeDirective } from '@parlwatch/shared/parliament/directives/cantonal-theme.directive';
+import { ParliamentSwitcherComponent } from '@parlwatch/shared/parliament/components/parliament-switcher/parliament-switcher.component';
+import { ParliamentTitleComponent } from '@parlwatch/shared/parliament/components/parliament-title/parliament-title.component';
+import { CantonHintCardComponent } from '@parlwatch/shared/parliament/components/canton-hint-card/canton-hint-card.component';
+import { CouncilMemberStore } from '../../store/council-member/council-member.store';
 import {
   CouncilMemberFilterForm,
   CouncilMemberFilterFormComponent
 } from '../../components/council-member-filter-form/council-member-filter-form.component';
-import { CouncilMemberStore } from '../../store/council-member/council-member.store';
-import { ParliamentKey } from '../../../shared/parliament/models/parliament.model';
-import {
-  detailPath,
-  routeParliament
-} from '../../../shared/parliament/models/parliament-routes';
-import { CantonalThemeDirective } from '../../../shared/parliament/directives/cantonal-theme.directive';
-import { ParliamentSwitcherComponent } from '../../../shared/parliament/components/parliament-switcher/parliament-switcher.component';
-import { ParliamentTitleComponent } from '../../../shared/parliament/components/parliament-title/parliament-title.component';
-import { CantonHintCardComponent } from '../../../shared/parliament/components/canton-hint-card/canton-hint-card.component';
+import { CouncilMemberCardComponent } from '../../components/council-member-card/council-member-card.component';
 
 @UntilDestroy()
 @Component({

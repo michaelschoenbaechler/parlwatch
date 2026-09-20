@@ -1,7 +1,7 @@
 import { MemberCouncil } from 'swissparl';
-import { CantonKey } from '../../shared/parliament/models/parliament.model';
-import { RecordSource } from '../../shared/open-parl-data/models/record-source';
-import { SpeechGroupVm } from '../../shared/common/models/transcript.model';
+import { CantonKey } from '@parlwatch/shared/parliament/models/parliament.model';
+import { RecordSource } from '@parlwatch/shared/open-parl-data/models/record-source';
+import { SpeechGroupVm } from '@parlwatch/shared/common/models/transcript.model';
 import { InterestGroupVm } from './person-interest';
 
 export interface MemberMembership {

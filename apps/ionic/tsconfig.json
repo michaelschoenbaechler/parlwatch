@@ -11,6 +11,9 @@
     "declaration": false,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
+    "paths": {
+      "@parlwatch/shared/*": ["./src/app/shared/*"]
+    },
     "skipLibCheck": true,
     "importHelpers": true,
     "target": "ES2022",

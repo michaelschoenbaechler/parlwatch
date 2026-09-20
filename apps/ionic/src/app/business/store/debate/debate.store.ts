@@ -17,15 +17,15 @@ import {
   onRequestLoad,
   onRequestSuccess,
   RequestState
-} from '../../../shared/common/models/request-state.model';
-import { TranscriptService } from '../../../shared/common/services/transcript.service';
+} from '@parlwatch/shared/common/models/request-state.model';
+import { TranscriptService } from '@parlwatch/shared/common/services/transcript.service';
 import {
   cleanTranscriptText,
   SpeechGroupVm,
   toDebateStages,
   toSpeeches,
   toStageLabel
-} from '../../../shared/common/models/transcript.model';
+} from '@parlwatch/shared/common/models/transcript.model';
 
 export type DebateSlice = {
   stagesRequestState: RequestState<SpeechGroupVm[]>;

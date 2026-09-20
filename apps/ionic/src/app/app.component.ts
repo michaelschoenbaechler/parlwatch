@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ParliamentThemeService } from './shared/parliament/services/parliament-theme.service';
+import { ParliamentThemeService } from '@parlwatch/shared/parliament/services/parliament-theme.service';
 
 @Component({
   selector: 'app-root',

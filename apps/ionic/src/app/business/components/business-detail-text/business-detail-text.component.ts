@@ -8,8 +8,8 @@ import {
 import { Business } from 'swissparl';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { TextCardComponent } from '../../../shared/common/components/text-card/text-card.component';
-import { SafeHtmlPipe } from '../../../shared/common/pipes/safe-html.pipe';
+import { TextCardComponent } from '@parlwatch/shared/common/components/text-card/text-card.component';
+import { SafeHtmlPipe } from '@parlwatch/shared/common/pipes/safe-html.pipe';
 import {
   BusinessTextSection,
   toBusinessTextSections

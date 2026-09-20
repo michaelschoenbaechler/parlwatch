@@ -7,11 +7,11 @@ import {
 } from '@ngrx/signals';
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { StorageService } from '../../services/storage.service';
 import {
   ParliamentKey,
   toParliamentKey
-} from '../../../parliament/models/parliament.model';
+} from '@parlwatch/shared/parliament/models/parliament.model';
+import { StorageService } from '../../services/storage.service';
 
 export interface RecentEntry {
   id: number;

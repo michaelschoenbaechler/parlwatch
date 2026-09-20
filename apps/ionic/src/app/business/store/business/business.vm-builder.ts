@@ -1,9 +1,9 @@
 import { Business, RelatedBusiness, Vote } from 'swissparl';
-import { RequestState } from '../../../shared/common/models/request-state.model';
+import { RequestState } from '@parlwatch/shared/common/models/request-state.model';
 import {
   odataList,
   odataTimestamp
-} from '../../../shared/common/models/odata.model';
+} from '@parlwatch/shared/common/models/odata.model';
 import {
   TimelineStep,
   toBusinessTimeline
