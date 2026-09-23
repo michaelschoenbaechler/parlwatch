@@ -2,24 +2,6 @@ ion-toolbar {
   --padding-end: 1rem;
 }
 
-.watched-button {
-  position: relative;
-  overflow: visible;
-
-  ion-badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    --background: var(--ion-toolbar-color);
-    --color: var(--ion-toolbar-background);
-    min-width: 1rem;
-    padding: 0.1rem 0.3rem;
-    font-size: 11px;
-    line-height: 1;
-    border-radius: 0.5rem;
-  }
-}
-
 ion-modal ion-toolbar {
   --background: var(--ion-color-step-150);
   --color: var(--ion-color-secondary-contrast);

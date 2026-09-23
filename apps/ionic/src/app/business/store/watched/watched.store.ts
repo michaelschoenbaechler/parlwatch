@@ -102,6 +102,25 @@ export const WatchedBusinessStore = signalStore(
       return true;
     };
 
+    const follow = (
+      parliament: ParliamentKey,
+      business: LoadedBusiness
+    ): boolean => {
+      if (business.ID === undefined) return false;
+      return add({
+        parliament,
+        id: business.ID,
+        title: business.Title ?? '',
+        shortNumber: business.BusinessShortNumber ?? '',
+        typeName: business.BusinessTypeName ?? '',
+        followedAt: Date.now(),
+        modified: modifiedOf(business),
+        snapshot: snapshotOf(business),
+        changes: [],
+        unseen: false
+      });
+    };
+
     const inspect = async (
       entry: WatchedBusiness,
       head: BusinessHead
@@ -183,20 +202,23 @@ export const WatchedBusinessStore = signalStore(
         return !!find(parliament, id);
       },
 
-      follow(parliament: ParliamentKey, business: LoadedBusiness): boolean {
-        if (business.ID === undefined) return false;
-        return add({
-          parliament,
-          id: business.ID,
-          title: business.Title ?? '',
-          shortNumber: business.BusinessShortNumber ?? '',
-          typeName: business.BusinessTypeName ?? '',
-          followedAt: Date.now(),
-          modified: modifiedOf(business),
-          snapshot: snapshotOf(business),
-          changes: [],
-          unseen: false
-        });
+      follow,
+
+      /** From a list row, which lacks the detail the snapshot needs. */
+      async followById(
+        parliament: ParliamentKey,
+        id: number
+      ): Promise<boolean> {
+        if (find(parliament, id)) return true;
+        if (!store.canFollow()) return false;
+        try {
+          const business = await firstValueFrom(
+            facade.getBusiness(parliament, id)
+          );
+          return follow(parliament, business);
+        } catch {
+          return false;
+        }
       },
 
       restore(entry: WatchedBusiness): boolean {

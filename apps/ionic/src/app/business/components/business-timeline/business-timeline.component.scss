@@ -75,3 +75,50 @@
   font-size: 13px;
   color: #666666;
 }
+
+.timeline-step.next .timeline-marker {
+  background: white;
+  box-shadow: 0 0 0 1px #cccccc;
+  border-style: dashed;
+}
+
+.timeline-step:has(+ .next)::before {
+  background: none;
+  border-left: 1px dashed #cccccc;
+}
+
+.next-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  .timeline-label {
+    margin: 0;
+    color: #666666;
+  }
+
+  ion-button {
+    flex-shrink: 0;
+    margin: 0;
+    text-transform: none;
+  }
+}
+
+.timeline-step.next.watching {
+  .timeline-marker {
+    border-style: solid;
+    box-shadow: 0 0 0 2px var(--ion-color-primary);
+  }
+
+  .timeline-label {
+    color: var(--ion-color-dark);
+    font-weight: 600;
+  }
+
+  ion-button {
+    --color: #666666;
+    --background-hover: transparent;
+    --background-focused: transparent;
+  }
+}

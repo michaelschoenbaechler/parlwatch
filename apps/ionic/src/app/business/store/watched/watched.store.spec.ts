@@ -227,6 +227,24 @@ describe('WatchedBusinessStore', () => {
       expect(store.entries().length).toBe(MAX_WATCHED_BUSINESSES);
     });
 
+    it('follows from a list row by loading the detail first', async () => {
+      const store = await createStore();
+      facade.getBusiness.and.returnValue(of(federalA));
+
+      expect(await store.followById('ch', 20233456)).toBeTrue();
+
+      expect(facade.getBusiness).toHaveBeenCalledWith('ch', 20233456);
+      expect(store.entries()[0].snapshot).toEqual(snapshotOf(federalA));
+    });
+
+    it('does not follow from a list row when the detail cannot be loaded', async () => {
+      const store = await createStore();
+      facade.getBusiness.and.returnValue(throwError(() => new Error('down')));
+
+      expect(await store.followById('ch', 20233456)).toBeFalse();
+      expect(store.entries()).toEqual([]);
+    });
+
     it('restores an entry after unfollowing it', async () => {
       const store = await createStore();
       store.follow('ZH', cantonalA);

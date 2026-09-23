@@ -28,13 +28,6 @@ export const BUSINESS_ROUTES: Route[] = [
     canActivate: [activeParliamentRedirectGuard],
     children: []
   },
-  {
-    path: 'following',
-    loadComponent: () =>
-      import('./containers/watched-list/watched-list.page').then(
-        (m) => m.WatchedListPage
-      )
-  },
   { path: 'detail/:id', redirectTo: 'ch/detail/:id' },
   { path: 'votes/detail/:id', redirectTo: 'ch/votes/detail/:id' },
   {

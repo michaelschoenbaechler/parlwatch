@@ -23,4 +23,25 @@
       </div>
     </li>
   }
+  @if (watched() !== null) {
+    <li class="timeline-step next" [class.watching]="watched()">
+      <div class="timeline-marker"></div>
+      <div class="timeline-body next-body">
+        <p class="timeline-label">
+          {{ watched() ? t('next.watching') : t('next.question') }}
+        </p>
+        <ion-button
+          size="small"
+          [fill]="watched() ? 'clear' : 'solid'"
+          [attr.aria-pressed]="watched()"
+          (click)="watchToggled.emit()"
+        >
+          @if (!watched()) {
+            <ion-icon slot="start" name="eye-outline" />
+          }
+          {{ watched() ? t('next.stop') : t('next.notify') }}
+        </ion-button>
+      </div>
+    </li>
+  }
 </ol>

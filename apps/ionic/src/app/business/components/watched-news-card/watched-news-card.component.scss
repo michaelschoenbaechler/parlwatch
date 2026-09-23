@@ -1,0 +1,34 @@
+.news-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 0 0.75rem 0;
+  padding: 0.875rem 1rem;
+  border: 0;
+  border-left: 4px solid var(--ion-color-danger);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  background: white;
+  color: var(--ion-color-dark);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+ion-icon {
+  flex-shrink: 0;
+  font-size: 22px;
+  color: var(--ion-color-danger);
+}
+
+ion-icon:last-child {
+  font-size: 18px;
+  color: #666666;
+}
+
+.news-text {
+  flex: 1;
+}

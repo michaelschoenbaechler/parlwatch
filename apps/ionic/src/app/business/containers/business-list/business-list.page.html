@@ -7,65 +7,64 @@
           [title]="t('business.list.title')"
         />
       </ion-title>
-      <ion-buttons slot="end">
-        <ion-button
-          class="watched-button"
-          [attr.aria-label]="t('business.following.title')"
-          (click)="openWatched()"
-        >
-          <ion-icon slot="icon-only" name="eye-outline" />
-          @if (watchedStore.unseenCount() > 0) {
-          <ion-badge>{{ watchedStore.unseenCount() }}</ion-badge>
-          }
-        </ion-button>
-      </ion-buttons>
     </ion-toolbar>
-    <app-parliament-switcher feature="business" [selected]="parliament" />
-    <ion-toolbar>
-      <ion-searchbar
-        #searchBar
-        appHideKeyboardOnEnter
-        color="light"
-        enterkeyhint="search"
-        debounce="300"
-        placeholder="{{ t('common.search.placeholder') }}"
-        (ionInput)="onSearch($event)"
-        (ionFocus)="onSearchFocus()"
-        (keyup.enter)="onSearchEnter()"
-      />
-      <ion-icon
-        (click)="toggleFilterModal()"
-        slot="end"
-        size="large"
-        name="filter-outline"
-      />
-    </ion-toolbar>
-    @if (activeSessionName() || activeTags().length > 0 ||
-    (businessStore.query().businessTypes?.length ?? 0) > 0 ||
-    (businessStore.query().businessStatuses?.length ?? 0) > 0) {
-    <div class="active-filter-wrapper">
-      @if (activeSessionName()) {
-      <ion-chip>
-        <ion-label>{{ activeSessionName() }}</ion-label>
-      </ion-chip>
-      } @for (tag of activeTags(); track tag.ID) {
-      <ion-chip (click)="onActiveTagClick(tag)">
-        <ion-label>{{ tag.TagName }}</ion-label>
-        <ion-icon name="close-circle" />
-      </ion-chip>
-      } @for (businessType of businessStore.query().businessTypes; track
-      businessType.ID) {
-      <ion-chip>
-        <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
-      </ion-chip>
-      } @for (businessStatus of businessStore.query().businessStatuses; track
-      businessStatus.id) {
-      <ion-chip>
-        <ion-label>{{ t('business.status.' + businessStatus.id) }}</ion-label>
-      </ion-chip>
+    <app-parliament-switcher
+      feature="business"
+      [selected]="parliament"
+      [extraLabel]="t('business.following.watched')"
+      extraIcon="eye-outline"
+      [extraBadge]="watchedStore.unseenCount()"
+      [extraSelected]="view() === 'watched'"
+      (extraChosen)="setView('watched')"
+      (parliamentChosen)="setView('all')"
+    />
+    <div [hidden]="view() === 'watched'">
+      <ion-toolbar>
+        <ion-searchbar
+          #searchBar
+          appHideKeyboardOnEnter
+          color="light"
+          enterkeyhint="search"
+          debounce="300"
+          placeholder="{{ t('common.search.placeholder') }}"
+          (ionInput)="onSearch($event)"
+          (ionFocus)="onSearchFocus()"
+          (keyup.enter)="onSearchEnter()"
+        />
+        <ion-icon
+          (click)="toggleFilterModal()"
+          slot="end"
+          size="large"
+          name="filter-outline"
+        />
+      </ion-toolbar>
+      @if (activeSessionName() || activeTags().length > 0 ||
+      (businessStore.query().businessTypes?.length ?? 0) > 0 ||
+      (businessStore.query().businessStatuses?.length ?? 0) > 0) {
+      <div class="active-filter-wrapper">
+        @if (activeSessionName()) {
+        <ion-chip>
+          <ion-label>{{ activeSessionName() }}</ion-label>
+        </ion-chip>
+        } @for (tag of activeTags(); track tag.ID) {
+        <ion-chip (click)="onActiveTagClick(tag)">
+          <ion-label>{{ tag.TagName }}</ion-label>
+          <ion-icon name="close-circle" />
+        </ion-chip>
+        } @for (businessType of businessStore.query().businessTypes; track
+        businessType.ID) {
+        <ion-chip>
+          <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
+        </ion-chip>
+        } @for (businessStatus of businessStore.query().businessStatuses; track
+        businessStatus.id) {
+        <ion-chip>
+          <ion-label>{{ t('business.status.' + businessStatus.id) }}</ion-label>
+        </ion-chip>
+        }
+      </div>
       }
     </div>
-    }
   </ion-header>
 
   <ion-content role="feed" class="ion-padding">
@@ -114,18 +113,45 @@
         (click)="closeSuggestions()"
       ></button>
     </div>
-    }
+    } @if (view() === 'watched') {
+    <app-watched-list />
+    } @else {
     <app-canton-hint-card />
+    <app-watched-news-card
+      [count]="watchedStore.unseenCount()"
+      (opened)="setView('watched')"
+    />
     @if (!viewModel().isLoading) { @if (!viewModel().hasError) { @if
     (!viewModel().noContent) {
     <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
       <ion-refresher-content />
     </ion-refresher>
     @for (business of viewModel().businesses; track business) {
-    <app-business-card
-      [business]="business"
-      (click)="onBusinessCardClick(business)"
-    />
+    <ion-item-sliding #sliding class="card-sliding">
+      <ion-item button detail="false" (click)="onBusinessCardClick(business)">
+        <app-business-card [business]="business" />
+      </ion-item>
+      <ion-item-options side="end">
+        @if (business.ID !== undefined && watchedStore.isFollowed(parliament,
+        business.ID)) {
+        <ion-item-option
+          color="medium"
+          [attr.aria-label]="t('business.following.unwatch')"
+          (click)="toggleWatch(business, sliding)"
+        >
+          <ion-icon slot="icon-only" name="eye-off-outline" />
+        </ion-item-option>
+        } @else {
+        <ion-item-option
+          color="primary"
+          (click)="toggleWatch(business, sliding)"
+        >
+          <ion-icon slot="top" name="eye-outline" />
+          {{ t('business.following.watch') }}
+        </ion-item-option>
+        }
+      </ion-item-options>
+    </ion-item-sliding>
     }
     <ion-infinite-scroll
       threshold="100px"
@@ -139,7 +165,7 @@
     <app-error-screen (retry)="retrySearch()" />
     } } @else {
     <app-loading-screen />
-    }
+    } }
   </ion-content>
 
   <ion-modal [isOpen]="isModalOpen" [presentingElement]="presentingElement">

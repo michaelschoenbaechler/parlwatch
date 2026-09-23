@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
-  input
+  input,
+  output
 } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -27,12 +29,34 @@ export class ParliamentSwitcherComponent {
 
   readonly feature = input.required<ParliamentFeature>();
   readonly selected = input.required<ParliamentKey>();
+  /** An entry after the parliaments for a view that spans all of them. */
+  readonly extraLabel = input('');
+  readonly extraIcon = input('');
+  readonly extraBadge = input(0);
+  readonly extraSelected = input(false);
+  readonly extraChosen = output<void>();
+  readonly parliamentChosen = output<ParliamentKey>();
 
   readonly isCantonal = isCantonal;
+  readonly EXTRA = 'extra';
+
+  /** Past Bund and two cantons the extra entry's label no longer fits beside them. */
+  readonly compact = computed(
+    () =>
+      !!this.extraLabel() && this.parliamentStore.switcherEntries().length > 3
+  );
 
   onChange(event: CustomEvent<{ value?: unknown }>) {
-    const parliament = event.detail.value;
-    if (!isParliamentKey(parliament) || parliament === this.selected()) return;
+    const value = event.detail.value;
+    if (value === this.EXTRA) {
+      this.extraChosen.emit();
+      return;
+    }
+
+    const parliament = value;
+    if (!isParliamentKey(parliament)) return;
+    this.parliamentChosen.emit(parliament);
+    if (parliament === this.selected()) return;
 
     this.parliamentStore.setActiveParliament(parliament);
     this.navController
