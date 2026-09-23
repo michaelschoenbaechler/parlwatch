@@ -2,6 +2,11 @@ ion-toolbar {
   --padding-end: 1rem;
 }
 
+ion-toolbar[hidden],
+.active-filter-wrapper[hidden] {
+  display: none;
+}
+
 ion-modal ion-toolbar {
   --background: var(--ion-color-step-150);
   --color: var(--ion-color-secondary-contrast);
