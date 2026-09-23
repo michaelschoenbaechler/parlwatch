@@ -18,53 +18,51 @@
       (extraChosen)="setView('watched')"
       (parliamentChosen)="setView('all')"
     />
-    <div [hidden]="view() === 'watched'">
-      <ion-toolbar>
-        <ion-searchbar
-          #searchBar
-          appHideKeyboardOnEnter
-          color="light"
-          enterkeyhint="search"
-          debounce="300"
-          placeholder="{{ t('common.search.placeholder') }}"
-          (ionInput)="onSearch($event)"
-          (ionFocus)="onSearchFocus()"
-          (keyup.enter)="onSearchEnter()"
-        />
-        <ion-icon
-          (click)="toggleFilterModal()"
-          slot="end"
-          size="large"
-          name="filter-outline"
-        />
-      </ion-toolbar>
-      @if (activeSessionName() || activeTags().length > 0 ||
-      (businessStore.query().businessTypes?.length ?? 0) > 0 ||
-      (businessStore.query().businessStatuses?.length ?? 0) > 0) {
-      <div class="active-filter-wrapper">
-        @if (activeSessionName()) {
-        <ion-chip>
-          <ion-label>{{ activeSessionName() }}</ion-label>
-        </ion-chip>
-        } @for (tag of activeTags(); track tag.ID) {
-        <ion-chip (click)="onActiveTagClick(tag)">
-          <ion-label>{{ tag.TagName }}</ion-label>
-          <ion-icon name="close-circle" />
-        </ion-chip>
-        } @for (businessType of businessStore.query().businessTypes; track
-        businessType.ID) {
-        <ion-chip>
-          <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
-        </ion-chip>
-        } @for (businessStatus of businessStore.query().businessStatuses; track
-        businessStatus.id) {
-        <ion-chip>
-          <ion-label>{{ t('business.status.' + businessStatus.id) }}</ion-label>
-        </ion-chip>
-        }
-      </div>
+    <ion-toolbar [hidden]="view() === 'watched'">
+      <ion-searchbar
+        #searchBar
+        appHideKeyboardOnEnter
+        color="light"
+        enterkeyhint="search"
+        debounce="300"
+        placeholder="{{ t('common.search.placeholder') }}"
+        (ionInput)="onSearch($event)"
+        (ionFocus)="onSearchFocus()"
+        (keyup.enter)="onSearchEnter()"
+      />
+      <ion-icon
+        (click)="toggleFilterModal()"
+        slot="end"
+        size="large"
+        name="filter-outline"
+      />
+    </ion-toolbar>
+    @if (activeSessionName() || activeTags().length > 0 ||
+    (businessStore.query().businessTypes?.length ?? 0) > 0 ||
+    (businessStore.query().businessStatuses?.length ?? 0) > 0) {
+    <div class="active-filter-wrapper" [hidden]="view() === 'watched'">
+      @if (activeSessionName()) {
+      <ion-chip>
+        <ion-label>{{ activeSessionName() }}</ion-label>
+      </ion-chip>
+      } @for (tag of activeTags(); track tag.ID) {
+      <ion-chip (click)="onActiveTagClick(tag)">
+        <ion-label>{{ tag.TagName }}</ion-label>
+        <ion-icon name="close-circle" />
+      </ion-chip>
+      } @for (businessType of businessStore.query().businessTypes; track
+      businessType.ID) {
+      <ion-chip>
+        <ion-label>{{ businessType.BusinessTypeName }}</ion-label>
+      </ion-chip>
+      } @for (businessStatus of businessStore.query().businessStatuses; track
+      businessStatus.id) {
+      <ion-chip>
+        <ion-label>{{ t('business.status.' + businessStatus.id) }}</ion-label>
+      </ion-chip>
       }
     </div>
+    }
   </ion-header>
 
   <ion-content role="feed" class="ion-padding">
