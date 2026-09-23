@@ -34,17 +34,9 @@ export class WelcomePage implements OnInit {
   }
 
   async discover() {
-    await this.leave(['/layout/votes']);
-  }
-
-  async chooseCantons() {
-    await this.leave(['/layout/settings']);
-  }
-
-  private async leave(path: string[]) {
     await markIntroSeen(this.storage);
     this.setStatusBarStyle(Style.Dark);
-    await this.router.navigate(path);
+    await this.router.navigate(['/layout/votes']);
   }
 
   private setStatusBarStyle(style: Style) {
