@@ -213,10 +213,15 @@
   "votes.voteList.recentSearches": "Recent searches",
   "votes.voteList.recentlyViewed": "Recently viewed",
   "votes.voteList.title": "Missing value for 'votes.voteList.title'",
-  "welcome.cantons.continue": "Continue",
-  "welcome.cantons.skip": "Skip",
-  "welcome.cantons.text": "Would you like to follow a cantonal parliament alongside the federal one? You can change the selection in the settings at any time.",
-  "welcome.cantons.title": "Your canton",
-  "welcome.discover": "Missing value for 'welcome.discover'",
-  "welcome.text": "Missing value for 'welcome.text'"
+  "welcome.discover": "Start exploring",
+  "welcome.features.cantons.action": "Choose cantons",
+  "welcome.features.cantons.text": "Follow up to four cantonal parliaments alongside the federal one. You can change the selection in the settings at any time.",
+  "welcome.features.cantons.title": "Cantonal parliaments",
+  "welcome.features.openSource.text": "ParlWatch is open source and uses the open data of parlament.ch and OpenParlData.ch. Their availability cannot be guaranteed.",
+  "welcome.features.openSource.title": "Open and independent",
+  "welcome.features.overview.text": "See how the council voted, where a business stands and who sits in parliament.",
+  "welcome.features.overview.title": "Votes, businesses, council members",
+  "welcome.features.watch.text": "Tap “Notify me” in a business's timeline. As soon as something happens, the app shows it under “Watched”.",
+  "welcome.features.watch.title": "Watch businesses",
+  "welcome.lead": "Follow parliament without prior knowledge or effort."
 }

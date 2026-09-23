@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { TabLayoutPage } from './containers/tab-layout/tab-layout.page';
-import { firstTimeOpenGuard } from './guard/first-time-open.guard';
+import { introGuard } from './guard/intro.guard';
 
 export const TAB_ROUTES: Routes = [
   {
     path: 'layout',
     component: TabLayoutPage,
-    canActivate: [firstTimeOpenGuard],
+    canActivate: [introGuard],
     children: [
       {
         path: 'votes',

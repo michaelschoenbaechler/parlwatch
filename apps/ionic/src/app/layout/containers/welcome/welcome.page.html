@@ -1,33 +1,33 @@
-<ng-container *transloco="let t;">
+<ng-container *transloco="let t; prefix: 'welcome'">
   <ion-content>
-    <img
-      class="logo"
-      width="100"
-      src="assets/logo-caption.png"
-      alt="ParlWatch Logo"
-    />
-    @if (!showCantonStep()) {
-    <div class="ion-padding">
-      <p class="welcome-text">{{ t('welcome.text') }}</p>
-      <ion-button expand="block" color="primary" (click)="onDiscover()"
-        >{{ t('welcome.discover') }}
+    <div class="intro">
+      <img class="logo" src="assets/logo-caption.png" alt="ParlWatch" />
+      <p class="lead">{{ t('lead') }}</p>
+
+      <ul class="features">
+        @for (feature of features; track feature.key) {
+        <li class="feature">
+          <ion-icon [name]="feature.icon" aria-hidden="true" />
+          <div class="feature-body">
+            <h2>{{ t('features.' + feature.key + '.title') }}</h2>
+            <p>{{ t('features.' + feature.key + '.text') }}</p>
+            @if (feature.key === 'cantons') {
+            <ion-button size="small" fill="outline" (click)="chooseCantons()">
+              {{ t('features.cantons.action') }}
+              <ion-icon slot="end" name="arrow-forward-outline" />
+            </ion-button>
+            }
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </ion-content>
+  <ion-footer class="ion-no-border">
+    <div class="actions">
+      <ion-button expand="block" (click)="discover()">
+        {{ t('discover') }}
       </ion-button>
     </div>
-    } @else {
-    <div class="ion-padding canton-step">
-      <h2 class="canton-step-title">{{ t('welcome.cantons.title') }}</h2>
-      <p class="welcome-text canton-step-text">
-        {{ t('welcome.cantons.text') }}
-      </p>
-      <app-canton-picker />
-      <div class="canton-step-actions">
-        <ion-button expand="block" color="primary" (click)="onStart()">
-          @if (parliamentStore.isCantonalEnabled()) { {{
-          t('welcome.cantons.continue') }} } @else { {{
-          t('welcome.cantons.skip') }} }
-        </ion-button>
-      </div>
-    </div>
-    }
-  </ion-content>
+  </ion-footer>
 </ng-container>
