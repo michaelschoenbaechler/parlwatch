@@ -42,4 +42,13 @@ export class StorageService {
       // ignored on purpose
     }
   }
+
+  async remove(key: string): Promise<void> {
+    try {
+      const storage = await this.ready;
+      await storage.remove(key);
+    } catch {
+      // ignored on purpose
+    }
+  }
 }

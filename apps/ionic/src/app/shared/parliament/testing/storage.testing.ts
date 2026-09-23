@@ -2,7 +2,7 @@ import { StorageService } from '@parlwatch/shared/common/services';
 
 export class InMemoryStorageService implements Pick<
   StorageService,
-  'get' | 'set'
+  'get' | 'set' | 'remove'
 > {
   readonly values = new Map<string, unknown>();
 
@@ -18,5 +18,9 @@ export class InMemoryStorageService implements Pick<
 
   async set(key: string, value: unknown): Promise<void> {
     this.values.set(key, value);
+  }
+
+  async remove(key: string): Promise<void> {
+    this.values.delete(key);
   }
 }

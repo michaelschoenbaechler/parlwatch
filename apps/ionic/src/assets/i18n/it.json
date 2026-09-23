@@ -213,10 +213,15 @@
   "votes.voteList.recentSearches": "Ricerche recenti",
   "votes.voteList.recentlyViewed": "Visti di recente",
   "votes.voteList.title": "Missing value for 'votes.voteList.title'",
-  "welcome.cantons.continue": "Continua",
-  "welcome.cantons.skip": "Salta",
-  "welcome.cantons.text": "Vuoi seguire anche un parlamento cantonale oltre a quello federale? Puoi modificare la selezione in qualsiasi momento nelle impostazioni.",
-  "welcome.cantons.title": "Il tuo cantone",
-  "welcome.discover": "Missing value for 'welcome.discover'",
-  "welcome.text": "Missing value for 'welcome.text'"
+  "welcome.discover": "Scopri ora",
+  "welcome.features.cantons.action": "Scegliere i cantoni",
+  "welcome.features.cantons.text": "Segua fino a quattro parlamenti cantonali oltre a quello federale. Può modificare la selezione in qualsiasi momento nelle impostazioni.",
+  "welcome.features.cantons.title": "Parlamenti cantonali",
+  "welcome.features.openSource.text": "ParlWatch è open source e usa i dati aperti di parlament.ch e OpenParlData.ch. La loro disponibilità non può essere garantita.",
+  "welcome.features.openSource.title": "Aperto e indipendente",
+  "welcome.features.overview.text": "Scopra come ha votato il consiglio, a che punto è un oggetto e chi siede in Parlamento.",
+  "welcome.features.overview.title": "Votazioni, oggetti, parlamentari",
+  "welcome.features.watch.text": "Tocchi «Informarmi» nello svolgimento di un oggetto. Appena succede qualcosa, l'app lo mostra sotto «Osservato».",
+  "welcome.features.watch.title": "Osservare oggetti",
+  "welcome.lead": "Seguire il Parlamento, senza conoscenze preliminari e senza fatica."
 }

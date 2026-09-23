@@ -1,41 +1,54 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonicModule, Platform } from '@ionic/angular';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { CantonPickerComponent } from '@parlwatch/shared/parliament/components';
-import { ParliamentStore } from '@parlwatch/shared/parliament/store';
+import { StorageService } from '@parlwatch/shared/common/services';
+import { markIntroSeen } from '../../guard/intro.guard';
+
+interface Feature {
+  key: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.page.html',
   styleUrls: ['./welcome.page.scss'],
-  imports: [IonicModule, TranslocoDirective, CantonPickerComponent]
+  imports: [IonicModule, TranslocoDirective]
 })
 export class WelcomePage implements OnInit {
-  private router = inject(Router);
-  private platform = inject(Platform);
-  readonly parliamentStore = inject(ParliamentStore);
+  private readonly router = inject(Router);
+  private readonly platform = inject(Platform);
+  private readonly storage = inject(StorageService);
 
-  readonly showCantonStep = signal(false);
+  readonly features: Feature[] = [
+    { key: 'overview', icon: 'podium-outline' },
+    { key: 'cantons', icon: 'map-outline' },
+    { key: 'watch', icon: 'eye-outline' },
+    { key: 'openSource', icon: 'code-slash-outline' }
+  ];
 
   ngOnInit(): void {
     this.setStatusBarStyle(Style.Light);
   }
 
-  onDiscover() {
-    this.showCantonStep.set(true);
+  async discover() {
+    await this.leave(['/layout/votes']);
   }
 
-  onStart() {
+  async chooseCantons() {
+    await this.leave(['/layout/settings']);
+  }
+
+  private async leave(path: string[]) {
+    await markIntroSeen(this.storage);
     this.setStatusBarStyle(Style.Dark);
-    this.router.navigate(['/layout/votes']);
+    await this.router.navigate(path);
   }
 
-  setStatusBarStyle(style: Style) {
+  private setStatusBarStyle(style: Style) {
     if (!this.platform.is('capacitor')) return;
-    StatusBar.setStyle({ style }).catch((err) => {
-      console.warn(err);
-    });
+    StatusBar.setStyle({ style }).catch((err) => console.warn(err));
   }
 }

@@ -213,10 +213,15 @@
   "votes.voteList.recentSearches": "Recherches récentes",
   "votes.voteList.recentlyViewed": "Consultés récemment",
   "votes.voteList.title": "Missing value for 'votes.voteList.title'",
-  "welcome.cantons.continue": "Continuer",
-  "welcome.cantons.skip": "Passer",
-  "welcome.cantons.text": "Souhaitez-vous suivre un parlement cantonal en plus du Parlement fédéral ? Vous pouvez modifier la sélection à tout moment dans les réglages.",
-  "welcome.cantons.title": "Votre canton",
-  "welcome.discover": "Missing value for 'welcome.discover'",
-  "welcome.text": "Missing value for 'welcome.text'"
+  "welcome.discover": "Découvrir",
+  "welcome.features.cantons.action": "Choisir les cantons",
+  "welcome.features.cantons.text": "Suivez jusqu'à quatre parlements cantonaux en plus du Parlement fédéral. Vous pouvez modifier la sélection à tout moment dans les réglages.",
+  "welcome.features.cantons.title": "Parlements cantonaux",
+  "welcome.features.openSource.text": "ParlWatch est open source et utilise les données ouvertes de parlament.ch et d'OpenParlData.ch. Leur disponibilité ne peut pas être garantie.",
+  "welcome.features.openSource.title": "Ouvert et indépendant",
+  "welcome.features.overview.text": "Découvrez comment le conseil a voté, où en est un objet et qui siège au Parlement.",
+  "welcome.features.overview.title": "Votes, objets, parlementaires",
+  "welcome.features.watch.text": "Touchez « M'informer » dans le déroulement d'un objet. Dès qu'il se passe quelque chose, l'app l'affiche sous « Suivi ».",
+  "welcome.features.watch.title": "Suivre des objets",
+  "welcome.lead": "Suivre le Parlement, sans connaissances préalables ni effort."
 }
