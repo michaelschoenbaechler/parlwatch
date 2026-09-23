@@ -21,3 +21,9 @@ ion-button {
 ion-note[slot='end'] {
   font-size: 12px;
 }
+
+.intro-item {
+  border-top: 1px solid #f0f0f0;
+  --detail-icon-color: #666666;
+  --detail-icon-opacity: 1;
+}

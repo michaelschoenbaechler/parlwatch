@@ -99,6 +99,25 @@
           </div>
         </ion-accordion>
       </ion-accordion-group>
+      <ion-item
+        class="intro-item"
+        button
+        detail="true"
+        lines="none"
+        (click)="introOpen.set(true)"
+      >
+        <ion-label>{{ t('intro') }}</ion-label>
+      </ion-item>
     </ion-card>
   </ion-content>
+
+  <ion-modal
+    [isOpen]="introOpen()"
+    [presentingElement]="presentingElement"
+    (didDismiss)="introOpen.set(false)"
+  >
+    <ng-template>
+      <app-intro (done)="introOpen.set(false)" />
+    </ng-template>
+  </ion-modal>
 </ng-container>

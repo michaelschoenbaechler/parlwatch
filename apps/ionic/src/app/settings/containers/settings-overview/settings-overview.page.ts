@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { IonicModule } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+import { IntroComponent } from '@parlwatch/shared/common/components';
 import { CantonPickerComponent } from '@parlwatch/shared/parliament/components';
 import { ParliamentStore } from '@parlwatch/shared/parliament/store';
 
@@ -9,11 +10,23 @@ import { ParliamentStore } from '@parlwatch/shared/parliament/store';
   selector: 'app-settings-overview',
   templateUrl: './settings-overview.page.html',
   styleUrls: ['./settings-overview.page.scss'],
-  imports: [IonicModule, TranslocoDirective, CantonPickerComponent]
+  imports: [
+    IonicModule,
+    TranslocoDirective,
+    CantonPickerComponent,
+    IntroComponent
+  ]
 })
-export class SettingsOverviewPage {
+export class SettingsOverviewPage implements OnInit {
   private translocoService = inject(TranslocoService);
   readonly parliamentStore = inject(ParliamentStore);
+
+  readonly introOpen = signal(false);
+  presentingElement: HTMLElement | null = null;
+
+  ngOnInit() {
+    this.presentingElement = document.querySelector('ion-router-outlet');
+  }
 
   surveyClicked() {
     Browser.open({
