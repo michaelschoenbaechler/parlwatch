@@ -41,3 +41,33 @@ ion-segment-button:not(.segment-button-checked) {
 ion-segment-button ion-label {
   margin: 0;
 }
+
+ion-segment-button.extra ion-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+ion-badge {
+  --background: #ffffff;
+  --color: var(--ion-color-primary);
+  min-width: 1.1rem;
+  padding: 0.15rem 0.35rem;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 0.55rem;
+}
+
+ion-segment.compact ion-segment-button {
+  min-width: 3.25rem;
+}
+
+ion-segment-button.extra ion-icon {
+  font-size: 18px;
+}
+
+ion-segment-button.segment-button-checked ion-badge,
+:host-context(.cantonal) ion-badge {
+  --background: var(--ion-color-danger);
+  --color: #ffffff;
+}

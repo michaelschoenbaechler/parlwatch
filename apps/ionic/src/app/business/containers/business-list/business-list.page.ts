@@ -12,11 +12,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   InfiniteScrollCustomEvent,
+  IonContent,
   IonicModule,
+  IonItemSliding,
   IonSearchbar,
-  RefresherCustomEvent
+  RefresherCustomEvent,
+  ToastController
 } from '@ionic/angular';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Business, Tags } from 'swissparl';
 import {
   ErrorScreenComponent,
@@ -42,9 +45,14 @@ import { TagStore } from '../../store/tag/tag.store';
 import { SessionStore } from '../../store/session/session.store';
 import { BusinessTypesStore } from '../../store/business-types/business-types.store';
 import { BusinessStore } from '../../store/business/business.store';
-import { WatchedBusinessStore } from '../../store/watched/watched.store';
+import {
+  MAX_WATCHED_BUSINESSES,
+  WatchedBusinessStore
+} from '../../store/watched/watched.store';
 import { BusinessFilterFormComponent } from '../../components/business-filter-form/business-filter-form.component';
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
+import { WatchedNewsCardComponent } from '../../components/watched-news-card/watched-news-card.component';
+import { WatchedListComponent } from '../../components/watched-list/watched-list.component';
 
 /** How many recent searches / businesses the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;
@@ -65,13 +73,16 @@ const MAX_VISIBLE_RECENTS = 3;
     TranslocoDirective,
     ParliamentSwitcherComponent,
     ParliamentTitleComponent,
-    CantonHintCardComponent
+    CantonHintCardComponent,
+    WatchedNewsCardComponent,
+    WatchedListComponent
   ],
   hostDirectives: [CantonalThemeDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusinessListPage implements OnInit {
   readonly searchBar = viewChild.required<IonSearchbar>('searchBar');
+  private readonly content = viewChild(IonContent);
 
   readonly businessStore = inject(BusinessStore);
   readonly businessTypesStore = inject(BusinessTypesStore);
@@ -81,6 +92,8 @@ export class BusinessListPage implements OnInit {
   readonly watchedStore = inject(WatchedBusinessStore);
   readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly transloco = inject(TranslocoService);
+  private readonly toastController = inject(ToastController);
 
   readonly parliament: ParliamentKey = routeParliament(this.route);
   readonly isCantonal = isCantonal(this.parliament);
@@ -107,6 +120,8 @@ export class BusinessListPage implements OnInit {
   presentingElement: HTMLElement | null = null;
 
   readonly showSuggestedSearches = signal(false);
+
+  readonly view = signal<'all' | 'watched'>('all');
 
   /** Lowercased current query, used to narrow the suggestion panel. */
   private readonly suggestionFilter = computed(() =>
@@ -277,8 +292,36 @@ export class BusinessListPage implements OnInit {
     this.businessStore.refresh();
   }
 
-  openWatched() {
-    this.router.navigate(['/layout/business/following']).catch(console.error);
+  setView(view: 'all' | 'watched') {
+    if (view === this.view()) return;
+    this.showSuggestedSearches.set(false);
+    this.view.set(view);
+    this.content()?.scrollToTop().catch(console.error);
+  }
+
+  async toggleWatch(business: Business, sliding: IonItemSliding) {
+    await sliding.close();
+    const id = business.ID;
+    if (id === undefined) return;
+
+    if (this.watchedStore.isFollowed(this.parliament, id)) {
+      this.watchedStore.unfollow(this.parliament, id);
+      await this.toast('unfollowed');
+    } else if (!this.watchedStore.canFollow()) {
+      await this.toast('limit', { max: MAX_WATCHED_BUSINESSES });
+    } else {
+      const followed = await this.watchedStore.followById(this.parliament, id);
+      await this.toast(followed ? 'followed' : 'followFailed');
+    }
+  }
+
+  private async toast(key: string, params?: Record<string, unknown>) {
+    const toast = await this.toastController.create({
+      message: this.transloco.translate(`business.following.${key}`, params),
+      duration: 3000,
+      position: 'bottom'
+    });
+    await toast.present();
   }
 
   onClickBusiness(id: number) {

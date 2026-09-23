@@ -15,7 +15,7 @@ import {
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { Business } from 'swissparl';
 import { detailPath } from '@parlwatch/shared/parliament/models';
-import { BusinessCardComponent } from '../../components/business-card/business-card.component';
+import { BusinessCardComponent } from '../business-card/business-card.component';
 import { BusinessChange, WatchedBusiness } from '../../models/watched-business';
 import { WatchedBusinessStore } from '../../store/watched/watched.store';
 
@@ -31,12 +31,12 @@ const KIND_KEYS: Record<BusinessChange['kind'], [string, string]> = {
 
 @Component({
   selector: 'app-watched-list',
-  templateUrl: './watched-list.page.html',
-  styleUrls: ['./watched-list.page.scss'],
+  templateUrl: './watched-list.component.html',
+  styleUrls: ['./watched-list.component.scss'],
   imports: [IonicModule, TranslocoDirective, BusinessCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WatchedListPage {
+export class WatchedListComponent {
   readonly store = inject(WatchedBusinessStore);
   private readonly router = inject(Router);
   private readonly transloco = inject(TranslocoService);

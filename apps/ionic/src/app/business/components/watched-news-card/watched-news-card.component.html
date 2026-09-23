@@ -1,0 +1,11 @@
+<ng-container *transloco="let t; prefix: 'business.following'">
+  @if (count() > 0) {
+    <button type="button" class="news-card" (click)="opened.emit()">
+      <ion-icon name="eye" aria-hidden="true" />
+      <span class="news-text">
+        {{ count() === 1 ? t('newsSingle') : t('news', { count: count() }) }}
+      </span>
+      <ion-icon name="chevron-forward-outline" aria-hidden="true" />
+    </button>
+  }
+</ng-container>

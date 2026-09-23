@@ -1,11 +1,12 @@
-@if (parliamentStore.isCantonalEnabled()) {
+@if (parliamentStore.isCantonalEnabled() || extraLabel()) {
   <ion-toolbar
     class="switcher-toolbar"
     *transloco="let t; prefix: 'parliament'"
   >
     <ion-segment
       scrollable="true"
-      [value]="selected()"
+      [class.compact]="compact()"
+      [value]="extraSelected() ? EXTRA : selected()"
       (ionChange)="onChange($any($event))"
     >
       @for (entry of parliamentStore.switcherEntries(); track entry.key) {
@@ -15,6 +16,25 @@
           } @else {
             <ion-label>{{ t('federal') }}</ion-label>
           }
+        </ion-segment-button>
+      }
+      @if (extraLabel()) {
+        <ion-segment-button
+          class="extra"
+          [value]="EXTRA"
+          [attr.aria-label]="extraLabel()"
+        >
+          <ion-label>
+            @if (extraIcon()) {
+              <ion-icon [name]="extraIcon()" aria-hidden="true" />
+            }
+            @if (!compact()) {
+              {{ extraLabel() }}
+            }
+            @if (extraBadge() > 0) {
+              <ion-badge>{{ extraBadge() }}</ion-badge>
+            }
+          </ion-label>
         </ion-segment-button>
       }
     </ion-segment>

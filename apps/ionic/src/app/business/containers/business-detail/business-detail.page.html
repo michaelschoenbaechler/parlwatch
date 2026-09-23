@@ -10,19 +10,6 @@
           [title]="t('business.detail.title')"
         />
       </ion-title>
-      <ion-buttons slot="end">
-        <ion-button
-          [disabled]="!viewModel().business"
-          [attr.aria-label]="t(isWatched() ? 'business.following.unwatch' : 'business.following.watch')"
-          [attr.aria-pressed]="isWatched()"
-          (click)="toggleWatch()"
-        >
-          <ion-icon
-            slot="icon-only"
-            [name]="isWatched() ? 'eye' : 'eye-outline'"
-          />
-        </ion-button>
-      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
@@ -37,11 +24,15 @@
         (personSelected)="onContributor($event)"
       />
     </app-text-card>
-    } } @if (viewModel().timeline.length > 0) {
+    } }
     <app-text-card title="{{ t('business.timeline.title') }}">
-      <app-business-timeline [steps]="viewModel().timeline" />
+      <app-business-timeline
+        [steps]="viewModel().timeline"
+        [watched]="isWatched()"
+        (watchToggled)="toggleWatch()"
+      />
     </app-text-card>
-    } @if (cantonal(); as cantonal) { @if (cantonal.documents.length > 0) {
+    @if (cantonal(); as cantonal) { @if (cantonal.documents.length > 0) {
     <app-text-card title="{{ t('business.documents.title') }}">
       <app-business-document-list
         [documents]="cantonal.documents"
