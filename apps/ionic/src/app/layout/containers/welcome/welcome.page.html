@@ -11,12 +11,6 @@
           <div class="feature-body">
             <h2>{{ t('features.' + feature.key + '.title') }}</h2>
             <p>{{ t('features.' + feature.key + '.text') }}</p>
-            @if (feature.key === 'cantons') {
-            <ion-button size="small" fill="outline" (click)="chooseCantons()">
-              {{ t('features.cantons.action') }}
-              <ion-icon slot="end" name="arrow-forward-outline" />
-            </ion-button>
-            }
           </div>
         </li>
         }
