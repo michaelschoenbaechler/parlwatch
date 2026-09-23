@@ -1,4 +1,4 @@
-<ng-container *transloco="let t; prefix: 'welcome'">
+<ng-container *transloco="let t; prefix: 'shared.intro'">
   <ion-content>
     <div class="intro">
       <img class="logo" src="assets/logo-caption.png" alt="ParlWatch" />
@@ -6,20 +6,20 @@
 
       <ul class="features">
         @for (feature of features; track feature.key) {
-        <li class="feature">
-          <ion-icon [name]="feature.icon" aria-hidden="true" />
-          <div class="feature-body">
-            <h2>{{ t('features.' + feature.key + '.title') }}</h2>
-            <p>{{ t('features.' + feature.key + '.text') }}</p>
-          </div>
-        </li>
+          <li class="feature">
+            <ion-icon [name]="feature.icon" aria-hidden="true" />
+            <div class="feature-body">
+              <h2>{{ t('features.' + feature.key + '.title') }}</h2>
+              <p>{{ t('features.' + feature.key + '.text') }}</p>
+            </div>
+          </li>
         }
       </ul>
     </div>
   </ion-content>
   <ion-footer class="ion-no-border">
     <div class="actions">
-      <ion-button expand="block" (click)="discover()">
+      <ion-button expand="block" (click)="done.emit()">
         {{ t('discover') }}
       </ion-button>
     </div>
