@@ -1,3 +1,30 @@
+## [2026.9.23](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.9.12...2026.9.23) (2026-09-23)
+
+### Bug Fixes
+
+* **business:** keep the iOS header hairline off the parliament switcher ([bae19ae](https://github.com/michaelschoenbaechler/parlwatch/commit/bae19aee807239db38a80b6adb79c5c9a05bb382))
+* **layout:** keep the intro's only exit on "Jetzt entdecken" ([96aa1c3](https://github.com/michaelschoenbaechler/parlwatch/commit/96aa1c34819c432dee4e3e2a0bb1bbee50571a36))
+* **parliament:** full accent line when a canton colour is white ([0192428](https://github.com/michaelschoenbaechler/parlwatch/commit/01924283ace9dc68d2b2c054e1d8fe272b39f329))
+* **parliament:** keep every tab on the active parliament ([28a385f](https://github.com/michaelschoenbaechler/parlwatch/commit/28a385fdfbf70e9eb3266a4af9e79874b87aad98))
+* **parliament:** polish what a walk through the app turned up ([400bada](https://github.com/michaelschoenbaechler/parlwatch/commit/400badaac547f3f024c8e9d629783b2aeb2dba06))
+* **parliament:** query OpenParlData the way it actually answers ([333b11f](https://github.com/michaelschoenbaechler/parlwatch/commit/333b11f708bb45374a579553138a12807052412f))
+* **parliament:** theme overlays and tidy the switcher ([17fe9fe](https://github.com/michaelschoenbaechler/parlwatch/commit/17fe9fe5674e3f2425814574b5f6c9a8f5113f0e))
+
+### Features
+
+* **business:** list and show cantonal business from OpenParlData ([a3b359e](https://github.com/michaelschoenbaechler/parlwatch/commit/a3b359e297ffe09041110cbf98e667b81d5ec722))
+* **business:** search cantonal business inside its documents ([61d7713](https://github.com/michaelschoenbaechler/parlwatch/commit/61d771340c8583ae8aa6d0b5f4b679f9da5a8ced))
+* **business:** watch a business and get told when it changes ([eb13679](https://github.com/michaelschoenbaechler/parlwatch/commit/eb13679b9571572e2d31c7354c873266eb0011bb)), closes [#41](https://github.com/michaelschoenbaechler/parlwatch/issues/41)
+* **business:** watch from the timeline and the parliament switcher ([53955cb](https://github.com/michaelschoenbaechler/parlwatch/commit/53955cb93ddf9f0e0e119db406b98705bdfd4173))
+* **council-member:** list and show cantonal members from OpenParlData ([97e383e](https://github.com/michaelschoenbaechler/parlwatch/commit/97e383e75beecad08b1cab3100cc8fe86937c4b1))
+* **layout:** introduce the app on a single screen ([265b4d2](https://github.com/michaelschoenbaechler/parlwatch/commit/265b4d24daabe955c88d09be7dd89f4707ffdbb5))
+* **parliament:** add cantonal theme, switcher, hint card and notice ([3b252d5](https://github.com/michaelschoenbaechler/parlwatch/commit/3b252d57c4349214d0d79a136dae45ba5f06af55))
+* **parliament:** add parliament key, OpenParlData boundary and routing ([defca5a](https://github.com/michaelschoenbaechler/parlwatch/commit/defca5ab8ec476ff16b7bede0cce118cb7911189))
+* **parliament:** follow at most four cantons ([39664d5](https://github.com/michaelschoenbaechler/parlwatch/commit/39664d5e765dd8758c1e6378ff61bf1eafe144e7))
+* **settings:** add canton selection, welcome step and cantonal i18n ([d4fece2](https://github.com/michaelschoenbaechler/parlwatch/commit/d4fece2909a8af5a89fe2babec7c807432cade08))
+* **settings:** reopen the intro from the settings ([e826c16](https://github.com/michaelschoenbaechler/parlwatch/commit/e826c161c8e8465ab5a07ba4babf109931546e4e))
+* **votes:** list and show cantonal votes from OpenParlData ([ca65c78](https://github.com/michaelschoenbaechler/parlwatch/commit/ca65c783498b942102fd0dae82dad72d46239474))
+
 ## [2026.9.12](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.4.1...2026.9.12) (2026-09-12)
 
 ### Bug Fixes
