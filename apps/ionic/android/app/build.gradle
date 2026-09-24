@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+
+// Release version information is provided through the environment so that CI can
+// stamp a build without touching checked-in files. Fastlane exports these before
+// it invokes Gradle (see fastlane/Fastfile).
+def envVersionName = System.getenv("ANDROID_VERSION_NAME")?.trim()
+def envVersionCode = System.getenv("ANDROID_VERSION_CODE")?.trim()
+
+// Release signing material is also provided through the environment so that no
+// keystore or password is ever committed. Either point ANDROID_KEYSTORE_PATH at an
+// existing keystore, or hand in the keystore base64-encoded as CI does.
+def resolveReleaseKeystore() {
+    def keystorePath = System.getenv("ANDROID_KEYSTORE_PATH")?.trim()
+    if (keystorePath) {
+        return file(keystorePath)
+    }
+
+    def keystoreBase64 = System.getenv("ANDROID_KEYSTORE_BASE64")?.trim()
+    if (!keystoreBase64) {
+        return null
+    }
+
+    def decodedKeystore = new File(buildDir, "signing/release.keystore")
+    decodedKeystore.parentFile.mkdirs()
+    decodedKeystore.bytes = keystoreBase64.decodeBase64()
+    return decodedKeystore
+}
+
+def releaseKeystore = resolveReleaseKeystore()
+
+android {
+    namespace = "ch.michaelschoenbaechler.parlwatch"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "ch.michaelschoenbaechler.parlwatch"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode envVersionCode ? envVersionCode.toInteger() : 1
+        versionName envVersionName ?: "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    signingConfigs {
+        release {
+            if (releaseKeystore != null) {
+                storeFile releaseKeystore
+                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("ANDROID_KEY_ALIAS")
+                keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+            }
+        }
+    }
+    buildTypes {
+        release {
+            // Without signing material in the environment the release build stays
+            // unsigned, so local debug builds keep working without a keystore.
+            if (releaseKeystore != null) {
+                signingConfig signingConfigs.release
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

@@ -31,6 +31,8 @@ The root scripts forward to `apps/ionic`, so the whole developer workflow stays 
 - `npm run test:ci`
 - `npm run ios:prepare`
 - `npm run ios:deploy:testflight`
+- `npm run android:prepare`
+- `npm run android:deploy:internal`
 
 ## iOS deployment
 
@@ -42,6 +44,17 @@ Automated iOS deployments (TestFlight/App Store) are available via Fastlane and 
   - `npm run ios:fastlane:install`
   - `npm run ios:deploy:testflight`
   - `npm run ios:deploy:appstore`
+
+## Android deployment
+
+Automated Android deployments (Play Store internal testing/production) are available via Fastlane and GitHub Actions.
+
+- Setup and usage guide: [docs/android-deployment.md](docs/android-deployment.md)
+- Local commands:
+  - `cp .env.example .env` and load env vars before deploy
+  - `npm run android:fastlane:install`
+  - `npm run android:deploy:internal`
+  - `npm run android:deploy:production`
 
 ## API
 
