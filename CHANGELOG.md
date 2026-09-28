@@ -1,3 +1,9 @@
+## [2026.9.28](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.9.23...2026.9.28) (2026-09-28)
+
+### Performance Improvements
+
+* **business:** search business titles only ([bbc842c](https://github.com/michaelschoenbaechler/parlwatch/commit/bbc842c447c537795d005a995f42d01f420a6742))
+
 ## [2026.9.23](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.9.12...2026.9.23) (2026-09-23)
 
 ### Bug Fixes
