@@ -49,12 +49,7 @@ describe('BusinessService', () => {
     const [, options] =
       swissParlServiceSpy.fetchCollection.calls.mostRecent().args;
     const filter = options.filter as any;
-    expect(filter.substringOf).toEqual([
-      {
-        Title: 'budget',
-        TagNames: 'budget'
-      }
-    ]);
+    expect(filter.substringOf).toEqual([{ Title: 'budget' }]);
   });
 
   it('should convert short business number and use ID filter', () => {

@@ -88,10 +88,7 @@ export class BusinessService {
     const filter: {
       eq: Record<string, string | number | boolean>[];
       ne: { BusinessShortNumber: string }[];
-      substringOf?: {
-        Title: string;
-        TagNames: string;
-      }[];
+      substringOf?: { Title: string }[];
     } = {
       eq: [
         { Language: this.translocoService.getActiveLang().toUpperCase() },
@@ -112,12 +109,11 @@ export class BusinessService {
         filter.eq.push({ ID: businessNumber });
         filter.ne.pop();
       } else {
-        filter.substringOf = [
-          {
-            Title: searchTerm,
-            TagNames: searchTerm
-          }
-        ];
+        // Title only: matching `TagNames` as well stalls the API past the
+        // request timeout once the search spans all sessions (45s+ versus
+        // under 1s for the title alone). Topics are still reachable through
+        // the suggestion panel, which filters by tag id.
+        filter.substringOf = [{ Title: searchTerm }];
       }
     }
 
