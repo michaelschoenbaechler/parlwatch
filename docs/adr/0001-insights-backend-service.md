@@ -1,6 +1,6 @@
 # 1. A nightly insights service next to the app
 
-- Status: proposed
+- Status: idea (brainstorming; only the proof of concept in `scripts/insights/` exists)
 - Date: 2026-10-08
 
 ## Context
@@ -91,15 +91,18 @@ Build a separate **insights service** that runs nightly and serves
 precomputed results to the app.
 
 - **Hosting:** a Hostinger KVM VPS (not shared hosting: we need cron, a
-  long-running worker and Postgres). Postgres with `pgvector` for embeddings.
+  long-running worker and Postgres). `pgvector` for embeddings only if they
+  turn out necessary; [ADR 0002](0002-llm-classification.md) suggests mapping
+  free-text interests to topics with the LLM instead.
 - **Nightly pipeline:**
   1. Ingest changed rows from `ws.parlament.ch` using `Modified`, plus
      openparldata, Lobbywatch (weekly) and the other sources above.
   2. Topic classification: use `TagNames` as the top level; an LLM assigns a
      fixed, versioned set of subtopics below it, and topics for cantonal
      businesses, which have no official tags. Only new or changed businesses
-     are classified, through a batch API.
-  3. Speech classification (LLM), per member speech:
+     are classified, through a batch API. Details in
+     [ADR 0002](0002-llm-classification.md).
+  3. Speech classification (LLM; see ADR 0002), per member speech:
      - stance on the motion at hand (for / against / neutral),
      - argument type (facts, costs and finances, sector or group interest,
        cantonal or regional interest, principle, procedure),
