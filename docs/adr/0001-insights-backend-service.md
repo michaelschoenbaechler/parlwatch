@@ -54,11 +54,33 @@ Findings from the proof of concept:
 
 | Source | Adds | Access |
 |---|---|---|
-| Lobbywatch | Mandates with remuneration where known, industry (Branche), lobby groups, badge holders | Weekly JSON dump and REST API, CC BY-SA 4.0 (attribution and share-alike apply to what we publish from it) |
+| Lobbywatch | See below | Weekly export (CSV, JSON, SQL), REST, GraphQL, SPARQL; CC BY-SA 4.0 |
 | Zutrittsberechtigte (parlament.ch) | Which lobbyists a member gave a badge to | PDF per council, must be parsed |
 | EFK Politikfinanzierung | Party and campaign financing, donors above CHF 15'000 | opendata.swiss |
 | Fedlex Vernehmlassungen | Who commented on a bill before it reached parliament | Public SPARQL endpoint |
 | Commission and Federal Council press releases | Early signals on decisions | RSS |
+
+Lobbywatch, checked against the export of 08.10.2026 (now read by the proof
+of concept):
+
+- Join key: Lobbywatch's `parlament_biografie_id` is the parliament's
+  `PersonNumber`; 232 of the 243 speakers of session 5215 match (the others
+  are mostly Federal Councillors).
+- Compensation per mandate and year (`interessenbindung_jahr.verguetung`:
+  below 0 paying member, 0 unpaid, 1 paid with unknown amount, above 1 CHF per
+  year). For 2026, 377 of 1097 paid mandates carry an amount.
+- 738 mandates that must be declared but are missing from the official
+  register, found by Lobbywatch, mostly in the commercial register.
+- 139 interest groups in 14 branches; the organisation of 6939 of 7580
+  mandates has a group. The broad branches (Wirtschaft has 37 groups) need a
+  group-level mapping to parliament topics.
+- 368 badge holders and their 2070 mandates.
+- Terms (Merkblatt zu den Lobbywatch-Daten): credit Lobbywatch; share-alike
+  applies when Lobbywatch is the main source, which it is for the interest
+  analysis. Historical data is not CC BY-SA and needs consent. They ask to be
+  told the project's start and expected end and welcome results they can
+  integrate. No partnership is required, but we should contact them before
+  launch.
 
 Zefix/SHAB is left out: the open API only searches by company, not by
 person, and matching people by name is error-prone and legally sensitive.
@@ -101,7 +123,8 @@ precomputed results to the app.
 - Results about individual members must show their method and uncertainty
   and must not claim causation. A correlation between mandates and votes is
   not evidence of being bought; wording in the app has to reflect that.
-- Lobbywatch data is CC BY-SA 4.0: anything derived from it that we publish
-  needs attribution and the same licence.
+- Lobbywatch data is CC BY-SA 4.0: the interest analysis builds mainly on it,
+  so what we publish from it needs attribution and the same licence. Using
+  historical Lobbywatch data needs their consent.
 - `scripts/insights/speaking-time.mjs` is the seed for steps 1, 3 (disclosure
   detection) and 4 (speaking time) and can move into the service.
