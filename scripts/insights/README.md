@@ -2,7 +2,7 @@
 
 Scripts that try out the nightly insights service proposed in
 [ADR 0001](../../docs/adr/0001-insights-backend-service.md). They only read
-public data from `ws.parlament.ch` and need nothing but Node.js.
+public data from `ws.parlament.ch` and Lobbywatch and need nothing but Node.js.
 
 ## Speaking time
 
