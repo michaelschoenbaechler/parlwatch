@@ -1,7 +1,7 @@
 # Insights proof of concept
 
-Scripts that try out the nightly insights service proposed in
-[ADR 0001](../../docs/adr/0001-insights-backend-service.md). They only read
+Scripts that try out a nightly insights service, charted in
+[Insights: first slice](https://github.com/michaelschoenbaechler/parlwatch/issues/44). They only read
 public data from `ws.parlament.ch` and Lobbywatch and need nothing but Node.js.
 
 ## Speaking time
