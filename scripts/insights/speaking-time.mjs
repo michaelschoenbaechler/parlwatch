@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Proof of concept for the insights service (see docs/adr/0001-insights-backend-service.md).
+ * Proof of concept for the insights service (see docs/research/poc-findings.md).
  *
  * For one session it measures how long each council member spoke on each
  * business, sets that against the member's paid interests, and flags the

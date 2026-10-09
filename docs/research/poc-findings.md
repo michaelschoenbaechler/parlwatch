@@ -1,6 +1,6 @@
 # What public data and the proof of concept show
 
-Findings from the speaking time proof of concept (`scripts/insights/`), checked against `ws.parlament.ch` and the Lobbywatch export of 08.10.2026. Previously the context of ADR 0001.
+Findings from the speaking time proof of concept (`scripts/insights/`), checked against `ws.parlament.ch` and the Lobbywatch export of 08.10.2026. Charted in the map [Insights: first slice](https://github.com/michaelschoenbaechler/parlwatch/issues/44).
 
 ## Why insights need more than the app
 
