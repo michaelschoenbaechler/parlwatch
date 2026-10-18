@@ -29,3 +29,11 @@ _Avoid_: Talk time, airtime
 **Disclosure**:
 A passage in a speech where a member declares their interests in the business, as Art. 11 Abs. 3 ParlG requires, including a declaration of having none.
 _Avoid_: Interest declaration, conflict notice
+
+**Device**:
+One installation of the app. It is the only identity the backend knows; there are no accounts and no users behind it.
+_Avoid_: User, subscriber, account
+
+**Registration**:
+What a device sends so it can be notified: its push token, language and follows. A device without follows or push permission has none, and a registration not renewed for 90 days is deleted.
+_Avoid_: Subscription, sign-up, profile

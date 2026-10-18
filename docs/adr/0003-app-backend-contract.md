@@ -71,4 +71,4 @@ has its own language setting (de, fr, it, en), identifies topics by numeric tag
   business. Rankings across a council would need another file.
 - Detected disclosures are not part of the contract; they were dropped from
   the first slice in [#48](https://github.com/michaelschoenbaechler/parlwatch/issues/48).
-- How long an idle device is kept stays with the privacy question on the map.
+- How long a device registration is kept is decided in [ADR 0004](0004-device-data-retention.md).
