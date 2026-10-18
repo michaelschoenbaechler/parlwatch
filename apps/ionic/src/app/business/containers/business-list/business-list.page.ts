@@ -60,6 +60,7 @@ import {
 import { FollowingAComponent } from '../../prototype-digest/following-a.component';
 import { FollowingBComponent } from '../../prototype-digest/following-b.component';
 import { FollowingCComponent } from '../../prototype-digest/following-c.component';
+import { FollowingDComponent } from '../../prototype-digest/following-d.component';
 import { PrototypeSwitcherComponent } from '../../prototype-digest/prototype-switcher.component';
 
 /** How many recent searches / businesses the suggestion panel lists. */
@@ -87,6 +88,7 @@ const MAX_VISIBLE_RECENTS = 3;
     FollowingAComponent,
     FollowingBComponent,
     FollowingCComponent,
+    FollowingDComponent,
     PrototypeSwitcherComponent
   ],
   hostDirectives: [CantonalThemeDirective],

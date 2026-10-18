@@ -41,7 +41,8 @@ type Fixture = {
 export const VARIANTS = [
   { key: 'A', name: 'Tabs: Geschäfte | Themen' },
   { key: 'B', name: 'Ein Feed' },
-  { key: 'C', name: 'Themen als Zeilen' }
+  { key: 'C', name: 'Themen als Zeilen' },
+  { key: 'D', name: 'B mit Chip «Geschäfte»' }
 ] as const;
 export type VariantKey = (typeof VARIANTS)[number]['key'];
 

@@ -6,7 +6,7 @@
 //   business once.
 // C one day per page with ‹ › between days, topics as collapsible groups,
 //   full cards with a follow button inside the card.
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -266,6 +266,14 @@ export class DigestPrototypePage {
   constructor() {
     const variant = this.route.snapshot.queryParamMap.get('variant');
     if (variant) this.proto.variant.set(variant as VariantKey);
+    // D has no digest page: the push opens the following view on a topic.
+    effect(() => {
+      if (this.proto.variant() !== 'D' || this.groups().length === 0) return;
+      void this.router.navigate(['/layout/business/ch'], {
+        queryParams: { variant: 'D', topic: this.groups()[0]?.tag.id },
+        replaceUrl: true
+      });
+    });
     const topic = this.route.snapshot.queryParamMap.get('topic');
     if (topic && variant === 'B') this.filter.set(+topic);
   }
