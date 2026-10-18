@@ -11,8 +11,16 @@ One of the 28 official subject areas parliament assigns to a business (`TagNames
 _Avoid_: Category, tag, theme
 
 **Follow**:
-A user's standing interest in a topic or a single business, used to notify them of changes.
-_Avoid_: Subscribe, watch, bookmark
+A user's standing interest in a topic or a single business, used to notify them of changes. German UI label: «beobachten».
+_Avoid_: Subscribe, bookmark
+
+**Finished business**:
+A followed business that parliament has settled (status «Erledigt»); it stays in the user's follows for quick access but receives no further updates.
+_Avoid_: Closed, archived, done
+
+**Topic digest**:
+The daily notification that lists the businesses newly submitted in a user's followed topics, sent only on days with something new.
+_Avoid_: Summary, newsletter, feed
 
 **Speaking time**:
 How long a member spoke for themselves in one council, excluding speeches as rapporteur, chair or Federal Council.
