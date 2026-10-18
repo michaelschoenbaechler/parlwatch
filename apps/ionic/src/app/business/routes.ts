@@ -46,6 +46,14 @@ export const BUSINESS_ROUTES: Route[] = [
         path: 'detail/:id',
         loadComponent: loadBusinessDetail
       },
+      // PROTOTYPE for #55: the list a topic digest push opens.
+      {
+        path: 'digest/:date',
+        loadComponent: () =>
+          import('./prototype-digest/digest-prototype.page').then(
+            (m) => m.DigestPrototypePage
+          )
+      },
       // Reached from the vote list on the business detail page.
       voteDetailRoute
     ]

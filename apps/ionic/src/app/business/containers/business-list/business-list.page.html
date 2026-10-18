@@ -112,7 +112,10 @@
       ></button>
     </div>
     } @if (view() === 'watched') {
-    <app-watched-list />
+    <!-- PROTOTYPE for #55 -->
+    @switch (digestProto.variant()) { @case ('A') { <app-following-a /> }
+    @case ('B') { <app-following-b /> } @case ('C') { <app-following-c /> } }
+    <app-prototype-switcher />
     } @else {
     <app-canton-hint-card />
     <app-watched-news-card

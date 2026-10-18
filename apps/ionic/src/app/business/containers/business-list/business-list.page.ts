@@ -53,6 +53,14 @@ import { BusinessFilterFormComponent } from '../../components/business-filter-fo
 import { BusinessCardComponent } from '../../components/business-card/business-card.component';
 import { WatchedNewsCardComponent } from '../../components/watched-news-card/watched-news-card.component';
 import { WatchedListComponent } from '../../components/watched-list/watched-list.component';
+import {
+  DigestPrototypeService,
+  VariantKey
+} from '../../prototype-digest/digest-prototype.service';
+import { FollowingAComponent } from '../../prototype-digest/following-a.component';
+import { FollowingBComponent } from '../../prototype-digest/following-b.component';
+import { FollowingCComponent } from '../../prototype-digest/following-c.component';
+import { PrototypeSwitcherComponent } from '../../prototype-digest/prototype-switcher.component';
 
 /** How many recent searches / businesses the suggestion panel lists. */
 const MAX_VISIBLE_RECENTS = 3;
@@ -75,7 +83,11 @@ const MAX_VISIBLE_RECENTS = 3;
     ParliamentTitleComponent,
     CantonHintCardComponent,
     WatchedNewsCardComponent,
-    WatchedListComponent
+    WatchedListComponent,
+    FollowingAComponent,
+    FollowingBComponent,
+    FollowingCComponent,
+    PrototypeSwitcherComponent
   ],
   hostDirectives: [CantonalThemeDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -90,6 +102,7 @@ export class BusinessListPage implements OnInit {
   readonly tagStore = inject(TagStore);
   readonly recentStore = inject(RecentBusinessStore);
   readonly watchedStore = inject(WatchedBusinessStore);
+  readonly digestProto = inject(DigestPrototypeService);
   readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly transloco = inject(TranslocoService);
@@ -182,6 +195,11 @@ export class BusinessListPage implements OnInit {
   }
 
   ngOnInit() {
+    const variant = this.route.snapshot.queryParamMap.get('variant');
+    if (variant) {
+      this.digestProto.variant.set(variant as VariantKey);
+      this.view.set('watched');
+    }
     this.presentingElement = document.querySelector('ion-router-outlet');
     this.businessStore.setParliament(this.parliament);
     this.businessTypesStore.setParliament(this.parliament);
