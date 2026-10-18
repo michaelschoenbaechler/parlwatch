@@ -1,0 +1,11 @@
+[Unit]
+Description=Snapshot parliament transcripts for the draft-to-final experiment
+Wants=network-online.target docker.service
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker run --rm \
+  -v /opt/transcript-snapshots:/app \
+  -w /app -e OUT=/app/data \
+  node:24-alpine node snapshot.mjs

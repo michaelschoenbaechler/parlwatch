@@ -1,0 +1,10 @@
+[Unit]
+Description=Nightly transcript snapshot
+
+[Timer]
+OnCalendar=*-*-* 03:30 Europe/Zurich
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target
