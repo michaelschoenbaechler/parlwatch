@@ -1,0 +1,35 @@
+name: parlwatch
+
+services:
+  serve:
+    image: traefik/whoami:v1.11.0
+    command: --port=3000
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.parlwatch-devices.rule: Host(`parlwatch.michaelschoenbaechler.ch`) && PathPrefix(`/api/v1/devices`)
+      traefik.http.routers.parlwatch-devices.priority: "200"
+      traefik.http.routers.parlwatch-devices.entrypoints: websecure
+      traefik.http.routers.parlwatch-devices.tls.certresolver: letsencrypt
+      traefik.http.routers.parlwatch-devices.service: parlwatch-serve
+      traefik.http.services.parlwatch-serve.loadbalancer.server.port: "3000"
+
+  files:
+    image: nginx:1.29-alpine
+    restart: unless-stopped
+    volumes:
+      - snapshots:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.parlwatch-files.rule: Host(`parlwatch.michaelschoenbaechler.ch`) && PathPrefix(`/api/v1`)
+      traefik.http.routers.parlwatch-files.priority: "100"
+      traefik.http.routers.parlwatch-files.entrypoints: websecure
+      traefik.http.routers.parlwatch-files.tls.certresolver: letsencrypt
+      traefik.http.routers.parlwatch-files.middlewares: parlwatch-strip-api
+      traefik.http.routers.parlwatch-files.service: parlwatch-files
+      traefik.http.middlewares.parlwatch-strip-api.stripprefix.prefixes: /api/v1
+      traefik.http.services.parlwatch-files.loadbalancer.server.port: "80"
+
+volumes:
+  snapshots:
