@@ -11,7 +11,7 @@ Base URL: `https://parlwatch.michaelschoenbaechler.ch/api/v1`
 
 | Path | Router | Container | Notes |
 |---|---|---|---|
-| `/api/v1/devices…` | `parlwatch-devices` (priority 200) | `serve`, port 3000 | Path passed through unchanged |
+| `/api/v1/devices…` | `parlwatch-devices` (priority 200) | `serve`, port 3000 | Path passed through unchanged; rate-limited to 10 requests a minute per client IP (burst 20) |
 | every other `/api/v1/…` | `parlwatch-files` (priority 100) | `files` (nginx), port 80 | `/api/v1` stripped; serves the `snapshots` volume |
 | everything else | none | — | Traefik answers 404 |
 
@@ -27,7 +27,7 @@ The host's Traefik provides:
 Snapshots are written to the `snapshots` volume (`parlwatch_snapshots`), with
 paths relative to `/api/v1`: `insights/speaking-time.json` is served at
 `/api/v1/insights/speaking-time.json`. nginx adds
-`Cache-Control: public, max-age=3600` and gzips JSON.
+`Cache-Control: no-cache` with an `ETag`, so the app revalidates each night's files, and gzips JSON.
 
 ## Placeholder state
 
