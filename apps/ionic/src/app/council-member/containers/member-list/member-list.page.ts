@@ -1,3 +1,4 @@
+import { InsightsPrototypeService } from '../../../shared/prototype-insights/insights-prototype.service';
 import {
   Component,
   computed,
@@ -67,6 +68,8 @@ export class MemberListPage implements OnInit {
 
   readonly store = inject(CouncilMemberStore);
   readonly router = inject(Router);
+  // PROTOTYPE #48
+  readonly insightsPrototype = inject(InsightsPrototypeService);
   private readonly route = inject(ActivatedRoute);
 
   readonly parliament: ParliamentKey = routeParliament(this.route);

@@ -53,6 +53,8 @@
     </app-text-card>
     } } @else {
     <app-business-detail-text [business]="business" />
+    <!-- PROTOTYPE #48 -->
+    <app-business-insights-prototype [businessId]="business.ID ?? 0" />
     @if (debateStore.isLoading()) {
     <app-text-card title="{{ t('business.debate.title') }}">
       <ion-spinner class="debate-spinner" />
@@ -63,6 +65,9 @@
         <small> {{ t('business.debate.error') }} </small>
       </p>
     </app-text-card>
+    } @else if (prototypeVariant() === 'B') {
+    <!-- PROTOTYPE #48 -->
+    <app-debate-chat-prototype [stages]="debateStore.stages()" />
     } @else { @for (stage of debateStore.stages(); track stage.key) {
     <app-text-card
       [title]="t('business.debate.stageTitle', { stage: stage.title })"

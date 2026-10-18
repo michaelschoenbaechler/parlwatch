@@ -46,6 +46,14 @@ export const COUNCIL_MEMBER_ROUTES: Route[] = [
         path: 'detail/:id',
         loadComponent: loadMemberDetail
       },
+      // PROTOTYPE #48
+      {
+        path: 'speaking-time',
+        loadComponent: () =>
+          import('../shared/prototype-insights/speaking-time-ranking-prototype.page').then(
+            (m) => m.SpeakingTimeRankingPrototypePage
+          )
+      },
       // Reached from the member detail page.
       businessDetailRoute,
       voteDetailRoute

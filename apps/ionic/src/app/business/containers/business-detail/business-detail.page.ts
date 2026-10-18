@@ -43,6 +43,9 @@ import {
   WatchedBusinessStore
 } from '../../store/watched/watched.store';
 import { VoteStore } from '../../../votes/store/vote';
+import { BusinessInsightsPrototypeComponent } from '../../../shared/prototype-insights/business-insights-prototype.component';
+import { DebateChatPrototypeComponent } from '../../../shared/prototype-insights/debate-chat-prototype.component';
+import { InsightsPrototypeService } from '../../../shared/prototype-insights/insights-prototype.service';
 import { BusinessDocument } from '../../models/cantonal-business';
 
 @Component({
@@ -65,7 +68,9 @@ import { BusinessDocument } from '../../models/cantonal-business';
     ErrorScreenComponent,
     TranslocoDirective,
     ParliamentTitleComponent,
-    RecordSourceFooterComponent
+    RecordSourceFooterComponent,
+    BusinessInsightsPrototypeComponent,
+    DebateChatPrototypeComponent
   ],
   hostDirectives: [CantonalThemeDirective]
 })
@@ -73,6 +78,7 @@ export class BusinessDetailPage implements OnInit {
   readonly store = inject(BusinessStore);
   readonly recentStore = inject(RecentBusinessStore);
   readonly debateStore = inject(DebateStore);
+  readonly prototypeVariant = inject(InsightsPrototypeService).variant;
   readonly watchedStore = inject(WatchedBusinessStore);
   private readonly voteStore = inject(VoteStore);
   private readonly transloco = inject(TranslocoService);

@@ -28,6 +28,7 @@ import { CouncilMemberStore } from '../../store/council-member/council-member.st
 import { InterestListComponent } from '../../components/interest-list/interest-list.component';
 import { MemberIdCardComponent } from '../../components/member-id-card/member-id-card.component';
 import { MemberMembershipListComponent } from '../../components/member-membership-list/member-membership-list.component';
+import { MemberInsightsPrototypeComponent } from '../../../shared/prototype-insights/member-insights-prototype.component';
 import { VotingRecordListComponent } from '../../components/voting-record-list/voting-record-list.component';
 
 @UntilDestroy()
@@ -47,7 +48,8 @@ import { VotingRecordListComponent } from '../../components/voting-record-list/v
     ParliamentTitleComponent,
     RecordSourceFooterComponent,
     MemberMembershipListComponent,
-    VotingRecordListComponent
+    VotingRecordListComponent,
+    MemberInsightsPrototypeComponent
   ],
   hostDirectives: [CantonalThemeDirective]
 })

@@ -7,6 +7,14 @@
           [title]="t('councilMember.list.title')"
         />
       </ion-title>
+      <!-- PROTOTYPE #48 -->
+      @if (insightsPrototype.variant() === 'C' && parliament === 'ch') {
+      <ion-buttons slot="end">
+        <ion-button (click)="router.navigate([router.url.split('?')[0], 'speaking-time'])">
+          <ion-icon slot="icon-only" name="podium-outline" />
+        </ion-button>
+      </ion-buttons>
+      }
     </ion-toolbar>
     <app-parliament-switcher feature="council-member" [selected]="parliament" />
     <ion-toolbar>

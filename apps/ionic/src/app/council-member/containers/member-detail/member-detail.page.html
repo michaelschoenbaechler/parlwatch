@@ -25,6 +25,10 @@
       [imageUrl]="cantonal()?.imageUrl ?? ''"
       [occupation]="cantonal()?.occupation ?? ''"
     />
+    @if (!isCantonal) {
+    <!-- PROTOTYPE #48 -->
+    <app-member-insights-prototype [personNumber]="councilMember.PersonNumber ?? 0" />
+    }
     @if (cantonal(); as cantonal) { @if (cantonal.fraktion.length > 0) {
     <app-text-card title="{{ t('councilMember.idCard.parlGroup') }}">
       <app-member-membership-list [memberships]="cantonal.fraktion" />
