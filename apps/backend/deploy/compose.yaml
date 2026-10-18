@@ -11,7 +11,11 @@ services:
       traefik.http.routers.parlwatch-devices.priority: "200"
       traefik.http.routers.parlwatch-devices.entrypoints: websecure
       traefik.http.routers.parlwatch-devices.tls.certresolver: letsencrypt
+      traefik.http.routers.parlwatch-devices.middlewares: parlwatch-devices-ratelimit
       traefik.http.routers.parlwatch-devices.service: parlwatch-serve
+      traefik.http.middlewares.parlwatch-devices-ratelimit.ratelimit.average: "10"
+      traefik.http.middlewares.parlwatch-devices-ratelimit.ratelimit.period: 1m
+      traefik.http.middlewares.parlwatch-devices-ratelimit.ratelimit.burst: "20"
       traefik.http.services.parlwatch-serve.loadbalancer.server.port: "3000"
 
   files:
