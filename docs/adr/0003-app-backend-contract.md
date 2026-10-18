@@ -3,6 +3,7 @@
 - Status: accepted
 - Date: 2026-10-18
 - Decided in: [#51](https://github.com/michaelschoenbaechler/parlwatch/issues/51)
+- Speaking time decided in: [#48](https://github.com/michaelschoenbaechler/parlwatch/issues/48)
 
 ## Context
 
@@ -45,6 +46,16 @@ has its own language setting (de, fr, it, en), identifies topics by numeric tag
   `{ date, generatedAt, businesses: [{ id, shortNumber, tagIds, submittedAt, title: { de, fr, it } }] }`.
   The app filters by its own topics and groups by topic; details still load
   from OData. Days with nothing new have no file. Files are kept 30 days.
+- Speaking time: `/api/v1/insights/speaking-time/{businessId}.json`, one file
+  per federal business debated in the current legislature:
+  `{ businessId, since, generatedAt, provisional, councils: { N: [member…], S: [member…] } }`
+  with `member = { personNumber, name, parlGroup, canton, seconds }`.
+  `since` is the first day of the legislature (`2023-12-04`). Only members
+  speaking for themselves count (`Function` `Mit-*`); a speech on an agenda
+  item covering several businesses is split evenly between them. Each list
+  is sorted by `seconds`, longest first, and a council nobody spoke in is an
+  empty list. A business without member speeches in the legislature has no
+  file, and the app hides the card.
 - Every snapshot carries `generatedAt`, and `provisional: true` where its
   numbers rest on sessions that are not final yet.
 - Served with `Cache-Control: no-cache` and an `ETag`.
@@ -56,7 +67,8 @@ has its own language setting (de, fr, it, en), identifies topics by numeric tag
 - The server can never drift from the device: each sync replaces the whole
   follow set.
 - A language switch in the app resends the registration.
-- The payloads for speaking time and disclosures are decided with their
-  screens in [#48](https://github.com/michaelschoenbaechler/parlwatch/issues/48),
-  under the rules above.
+- Speaking time is only shown on the business page, so it is cut per
+  business. Rankings across a council would need another file.
+- Detected disclosures are not part of the contract; they were dropped from
+  the first slice in [#48](https://github.com/michaelschoenbaechler/parlwatch/issues/48).
 - How long an idle device is kept stays with the privacy question on the map.
