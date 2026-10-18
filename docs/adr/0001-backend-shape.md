@@ -1,4 +1,4 @@
-# 1. Insights service: a small registration API, static snapshots and two scheduled jobs
+# 1. Backend: a small registration API, static snapshots and two scheduled jobs
 
 - Status: accepted
 - Date: 2026-10-18
@@ -13,14 +13,15 @@ through APNs with the device token as the only identity
 ([#46](https://github.com/michaelschoenbaechler/parlwatch/issues/46)), and
 background fetch is too unreliable for alerts. So a server has to know each
 device token and its follows: a static nightly build alone cannot do it.
+Insights is the first feature of a backend that will grow more.
 
 Speaking time, disclosures and the list of newly submitted businesses change at
 most once a night and are the same for every user.
 
 ## Decision
 
-The server holds state: device tokens and their follows. One codebase has three
-entrypoints:
+The backend holds state: device tokens and their follows. It is one codebase
+with three entrypoints:
 
 - **`serve`**: always on, tiny. Only registers and unregisters a device token
   with its follows. It serves no reads.
