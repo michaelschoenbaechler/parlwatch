@@ -39,7 +39,7 @@ Provide the keystore itself in one of two ways:
 
 Optional:
 
-- `ANDROID_PACKAGE_NAME` (default: `ch.michaelschoenbaechler.parlwatch`)
+- `ANDROID_PACKAGE_NAME` (default: `ch.michaelschoenbaechler.parlwatch.app`; deliberately different from the iOS bundle id `ch.michaelschoenbaechler.parlwatch`)
 - `ANDROID_VERSION_NAME` (overrides `versionName`)
 - `ANDROID_VERSION_CODE` (overrides `versionCode`)
 
@@ -78,7 +78,7 @@ Add these repository secrets before running the workflow:
 
 Google Play only accepts API uploads for an app that already exists and has had at least one bundle uploaded by hand. Before the first CI deploy can succeed:
 
-1. Create the app in the [Play Console](https://play.google.com/console) with package name `ch.michaelschoenbaechler.parlwatch`.
+1. Create the app in the [Play Console](https://play.google.com/console) with package name `ch.michaelschoenbaechler.parlwatch.app`.
 2. Complete the required app content declarations (privacy policy, data safety, content rating, target audience).
 3. Build a signed bundle locally (`npm run android:deploy:internal` fails at the upload step until this is done, so use `cd apps/ionic/android && ./gradlew bundleRelease` with the signing env vars set) and upload `app/build/outputs/bundle/release/app-release.aab` manually to the internal testing track.
 4. Enroll the app in Play App Signing (offered during that first upload) and keep the upload keystore safe — it is the key CI signs with.

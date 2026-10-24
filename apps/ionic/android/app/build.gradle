@@ -32,7 +32,7 @@ android {
     namespace = "ch.michaelschoenbaechler.parlwatch"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "ch.michaelschoenbaechler.parlwatch"
+        applicationId "ch.michaelschoenbaechler.parlwatch.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode envVersionCode ? envVersionCode.toInteger() : 1
