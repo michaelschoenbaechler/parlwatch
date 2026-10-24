@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TZ: Europe/Zurich
-      ANDROID_PACKAGE_NAME: ch.michaelschoenbaechler.parlwatch
+      ANDROID_PACKAGE_NAME: ch.michaelschoenbaechler.parlwatch.app
       ANDROID_VERSION_NAME: ${{ github.event.inputs.version_name }}
       ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
       ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
