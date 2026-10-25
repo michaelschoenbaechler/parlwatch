@@ -108,6 +108,13 @@ platform :android do
     )
   end
 
+  desc "Build a signed Android App Bundle without uploading it (for the first manual upload)"
+  lane :build_bundle do
+    set_ci_version_name
+    set_ci_version_code
+    build_release
+  end
+
   desc "Build and upload an Android App Bundle to the Play Store internal testing track"
   lane :deploy_internal do
     json_key = play_store_json_key_from_env
