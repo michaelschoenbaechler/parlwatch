@@ -63,13 +63,22 @@ jobs:
           : "${ANDROID_KEYSTORE_PASSWORD:?Missing ANDROID_KEYSTORE_PASSWORD}"
           : "${ANDROID_KEY_ALIAS:?Missing ANDROID_KEY_ALIAS}"
           : "${ANDROID_KEY_PASSWORD:?Missing ANDROID_KEY_PASSWORD}"
-          : "${PLAY_STORE_SERVICE_ACCOUNT_JSON:?Missing PLAY_STORE_SERVICE_ACCOUNT_JSON}"
 
           KEYSTORE_PATH="$RUNNER_TEMP/parlwatch-release.keystore"
           SERVICE_ACCOUNT_PATH="$RUNNER_TEMP/play-store-service-account.json"
 
           umask 077
           echo -n "$ANDROID_KEYSTORE_BASE64" | openssl base64 -d -A > "$KEYSTORE_PATH"
+          echo "ANDROID_KEYSTORE_PATH=$KEYSTORE_PATH" >> "$GITHUB_ENV"
+
+          # The bundle target never talks to Google Play. It exists for the first
+          # manual upload, which happens before the service account can be used,
+          # so it must not require that secret.
+          if [[ "${{ github.event.inputs.target }}" == "bundle" ]]; then
+            exit 0
+          fi
+
+          : "${PLAY_STORE_SERVICE_ACCOUNT_JSON:?Missing PLAY_STORE_SERVICE_ACCOUNT_JSON}"
           echo -n "$PLAY_STORE_SERVICE_ACCOUNT_JSON" | openssl base64 -d -A > "$SERVICE_ACCOUNT_PATH"
 
           if ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$SERVICE_ACCOUNT_PATH"; then
@@ -77,7 +86,6 @@ jobs:
             exit 1
           fi
 
-          echo "ANDROID_KEYSTORE_PATH=$KEYSTORE_PATH" >> "$GITHUB_ENV"
           echo "PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH=$SERVICE_ACCOUNT_PATH" >> "$GITHUB_ENV"
 
       - name: Install Fastlane dependencies
