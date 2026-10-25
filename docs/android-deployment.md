@@ -67,7 +67,7 @@ Use the `Android Deploy` workflow (`.github/workflows/android-deploy.yml`) and c
 - `production` to upload a build as a production draft
 - `bundle` to only build a signed bundle and attach it to the run (for the first manual upload)
 
-Add these repository secrets before running the workflow:
+Add these repository secrets before running the workflow (the `bundle` target needs only the four `ANDROID_*` ones, since it never talks to Google Play):
 
 - `ANDROID_KEYSTORE_BASE64`
 - `ANDROID_KEYSTORE_PASSWORD`
