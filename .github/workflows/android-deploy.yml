@@ -99,7 +99,8 @@ jobs:
           echo "key password length: ${#ANDROID_KEY_PASSWORD}"
           echo "key alias length: ${#ANDROID_KEY_ALIAS}"
           if [[ "$ANDROID_KEY_PASSWORD" == "$ANDROID_KEYSTORE_PASSWORD" ]]; then echo "passwords identical: yes"; else echo "passwords identical: no"; fi
-          keytool -list -v -keystore "$ANDROID_KEYSTORE_PATH" -storepass "$ANDROID_KEYSTORE_PASSWORD" | grep -E "Alias name|SHA256:" || true
+          echo "decoded keystore sha256: $(sha256sum "$ANDROID_KEYSTORE_PATH" | cut -d' ' -f1)"
+          keytool -list -v -keystore "$ANDROID_KEYSTORE_PATH" -storepass "$ANDROID_KEYSTORE_PASSWORD" 2>&1 | grep -E "Alias name|SHA256:|keytool error" || true
           for label in key keystore; do
             if [[ $label == key ]]; then pw="$ANDROID_KEY_PASSWORD"; else pw="$ANDROID_KEYSTORE_PASSWORD"; fi
             if keytool -certreq -keystore "$ANDROID_KEYSTORE_PATH" -storepass "$ANDROID_KEYSTORE_PASSWORD" \
