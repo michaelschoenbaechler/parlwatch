@@ -1,6 +1,10 @@
 name: Android Deploy
 
 on:
+  # TEMPORARY: builds the bundle on pushes to the PR branch so the workflow can be
+  # tested before it reaches main. Remove before merging.
+  push:
+    branches: [claude/android-support]
   workflow_dispatch:
     inputs:
       target:
@@ -74,7 +78,7 @@ jobs:
           # The bundle target never talks to Google Play. It exists for the first
           # manual upload, which happens before the service account can be used,
           # so it must not require that secret.
-          if [[ "${{ github.event.inputs.target }}" == "bundle" ]]; then
+          if [[ "${{ github.event.inputs.target || 'bundle' }}" == "bundle" ]]; then
             exit 0
           fi
 
@@ -112,7 +116,7 @@ jobs:
 
       - name: Deploy to Google Play
         run: |
-          case "${{ github.event.inputs.target }}" in
+          case "${{ github.event.inputs.target || 'bundle' }}" in
             internal) bundle exec fastlane deploy_internal ;;
             production) bundle exec fastlane deploy_production ;;
             bundle) bundle exec fastlane build_bundle ;;
@@ -120,7 +124,7 @@ jobs:
         working-directory: apps/ionic/android
 
       - name: Attach signed bundle to the run
-        if: github.event.inputs.target == 'bundle'
+        if: (github.event.inputs.target || 'bundle') == 'bundle'
         uses: actions/upload-artifact@v7
         with:
           name: parlwatch-android-bundle
