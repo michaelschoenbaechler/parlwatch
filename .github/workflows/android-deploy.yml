@@ -1,7 +1,7 @@
 name: Android Deploy
 
 on:
-  # TEMPORARY: builds the bundle on pushes to the PR branch so the workflow can be
+  # TEMPORARY: deploys to internal testing on pushes to the PR branch so the workflow can be
   # tested before it reaches main. Remove before merging.
   push:
     branches: [claude/android-support]
@@ -78,7 +78,7 @@ jobs:
           # The bundle target never talks to Google Play. It exists for the first
           # manual upload, which happens before the service account can be used,
           # so it must not require that secret.
-          if [[ "${{ github.event.inputs.target || 'bundle' }}" == "bundle" ]]; then
+          if [[ "${{ github.event.inputs.target || 'internal' }}" == "bundle" ]]; then
             exit 0
           fi
 
@@ -92,32 +92,13 @@ jobs:
 
           echo "PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH=$SERVICE_ACCOUNT_PATH" >> "$GITHUB_ENV"
 
-      # TEMPORARY: diagnoses the signing failure without printing any secret. Remove before merging.
-      - name: Diagnose signing secrets
-        run: |
-          echo "keystore password length: ${#ANDROID_KEYSTORE_PASSWORD}"
-          echo "key password length: ${#ANDROID_KEY_PASSWORD}"
-          echo "key alias length: ${#ANDROID_KEY_ALIAS}"
-          if [[ "$ANDROID_KEY_PASSWORD" == "$ANDROID_KEYSTORE_PASSWORD" ]]; then echo "passwords identical: yes"; else echo "passwords identical: no"; fi
-          echo "decoded keystore sha256: $(sha256sum "$ANDROID_KEYSTORE_PATH" | cut -d' ' -f1)"
-          keytool -list -v -keystore "$ANDROID_KEYSTORE_PATH" -storepass "$ANDROID_KEYSTORE_PASSWORD" 2>&1 | grep -E "Alias name|SHA256:|keytool error" || true
-          for label in key keystore; do
-            if [[ $label == key ]]; then pw="$ANDROID_KEY_PASSWORD"; else pw="$ANDROID_KEYSTORE_PASSWORD"; fi
-            if keytool -certreq -keystore "$ANDROID_KEYSTORE_PATH" -storepass "$ANDROID_KEYSTORE_PASSWORD" \
-                 -alias "$ANDROID_KEY_ALIAS" -keypass "$pw" -file /dev/null >/dev/null 2>&1; then
-              echo "$label password unlocks the key: yes"
-            else
-              echo "$label password unlocks the key: no"
-            fi
-          done
-
       - name: Install Fastlane dependencies
         run: bundle install
         working-directory: apps/ionic/android
 
       - name: Deploy to Google Play
         run: |
-          case "${{ github.event.inputs.target || 'bundle' }}" in
+          case "${{ github.event.inputs.target || 'internal' }}" in
             internal) bundle exec fastlane deploy_internal ;;
             production) bundle exec fastlane deploy_production ;;
             bundle) bundle exec fastlane build_bundle ;;
@@ -125,7 +106,7 @@ jobs:
         working-directory: apps/ionic/android
 
       - name: Attach signed bundle to the run
-        if: (github.event.inputs.target || 'bundle') == 'bundle'
+        if: (github.event.inputs.target || 'internal') == 'bundle'
         uses: actions/upload-artifact@v7
         with:
           name: parlwatch-android-bundle
