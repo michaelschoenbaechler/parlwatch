@@ -65,6 +65,7 @@ Use the `Android Deploy` workflow (`.github/workflows/android-deploy.yml`) and c
 
 - `internal` to upload a build for internal testers
 - `production` to upload a build as a production draft
+- `bundle` to only build a signed bundle and attach it to the run (for the first manual upload)
 
 Add these repository secrets before running the workflow:
 
@@ -80,7 +81,7 @@ Google Play only accepts API uploads for an app that already exists and has had 
 
 1. Create the app in the [Play Console](https://play.google.com/console) with package name `ch.michaelschoenbaechler.parlwatch.app`.
 2. Complete the required app content declarations (privacy policy, data safety, content rating, target audience).
-3. Build a signed bundle locally (`npm run android:deploy:internal` fails at the upload step until this is done, so use `cd apps/ionic/android && ./gradlew bundleRelease` with the signing env vars set) and upload `app/build/outputs/bundle/release/app-release.aab` manually to the internal testing track.
+3. Build a signed bundle without uploading it (`deploy_internal` fails at the upload step until this is done): run the `Android Deploy` workflow with target `bundle` and download the `parlwatch-android-bundle` artifact from the run, or locally run `bundle exec fastlane build_bundle` in `apps/ionic/android` with the signing env vars set. Upload the `.aab` manually to the internal testing track.
 4. Enroll the app in Play App Signing (offered during that first upload) and keep the upload keystore safe — it is the key CI signs with.
 5. Only after that first manual release exists will `supply` accept uploads through the API.
 

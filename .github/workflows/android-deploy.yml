@@ -10,6 +10,7 @@ on:
         options:
           - internal
           - production
+          - bundle
         default: internal
       version_name:
         description: Optional version name (versionName), e.g. 2026.3.3
@@ -85,12 +86,20 @@ jobs:
 
       - name: Deploy to Google Play
         run: |
-          if [[ "${{ github.event.inputs.target }}" == "internal" ]]; then
-            bundle exec fastlane deploy_internal
-          else
-            bundle exec fastlane deploy_production
-          fi
+          case "${{ github.event.inputs.target }}" in
+            internal) bundle exec fastlane deploy_internal ;;
+            production) bundle exec fastlane deploy_production ;;
+            bundle) bundle exec fastlane build_bundle ;;
+          esac
         working-directory: apps/ionic/android
+
+      - name: Attach signed bundle to the run
+        if: github.event.inputs.target == 'bundle'
+        uses: actions/upload-artifact@v7
+        with:
+          name: parlwatch-android-bundle
+          path: apps/ionic/android/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
 
       - name: Remove decoded signing assets
         if: always()
