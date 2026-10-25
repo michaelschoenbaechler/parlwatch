@@ -88,6 +88,24 @@ jobs:
 
           echo "PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH=$SERVICE_ACCOUNT_PATH" >> "$GITHUB_ENV"
 
+      # TEMPORARY: diagnoses the signing failure without printing any secret. Remove before merging.
+      - name: Diagnose signing secrets
+        run: |
+          echo "keystore password length: ${#ANDROID_KEYSTORE_PASSWORD}"
+          echo "key password length: ${#ANDROID_KEY_PASSWORD}"
+          echo "key alias length: ${#ANDROID_KEY_ALIAS}"
+          if [[ "$ANDROID_KEY_PASSWORD" == "$ANDROID_KEYSTORE_PASSWORD" ]]; then echo "passwords identical: yes"; else echo "passwords identical: no"; fi
+          keytool -list -v -keystore "$ANDROID_KEYSTORE_PATH" -storepass "$ANDROID_KEYSTORE_PASSWORD" | grep -E "Alias name|SHA256:" || true
+          for label in key keystore; do
+            if [[ $label == key ]]; then pw="$ANDROID_KEY_PASSWORD"; else pw="$ANDROID_KEYSTORE_PASSWORD"; fi
+            if keytool -certreq -keystore "$ANDROID_KEYSTORE_PATH" -storepass "$ANDROID_KEYSTORE_PASSWORD" \
+                 -alias "$ANDROID_KEY_ALIAS" -keypass "$pw" -file /dev/null >/dev/null 2>&1; then
+              echo "$label password unlocks the key: yes"
+            else
+              echo "$label password unlocks the key: no"
+            fi
+          done
+
       - name: Install Fastlane dependencies
         run: bundle install
         working-directory: apps/ionic/android
