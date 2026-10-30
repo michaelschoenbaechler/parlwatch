@@ -1,7 +1,7 @@
 .intro {
   max-width: 32rem;
   margin: 0 auto;
-  padding: calc(env(safe-area-inset-top) + 2.5rem) 1.5rem 1rem 1.5rem;
+  padding: calc(var(--ion-safe-area-top, 0px) + 2.5rem) 1.5rem 1rem 1.5rem;
 }
 
 :host-context(ion-modal) .intro {
@@ -64,7 +64,7 @@ ion-footer {
 .actions {
   max-width: 32rem;
   margin: 0 auto;
-  padding: 0.75rem 1.5rem calc(env(safe-area-inset-bottom) + 0.75rem) 1.5rem;
+  padding: 0.75rem 1.5rem calc(var(--ion-safe-area-bottom, 0px) + 0.75rem) 1.5rem;
 
   ion-button {
     margin: 0;
