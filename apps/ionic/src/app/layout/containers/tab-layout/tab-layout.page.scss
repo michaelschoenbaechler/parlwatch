@@ -10,3 +10,18 @@
   padding: 0;
   border-radius: 50%;
 }
+
+/* Material's 12px padding and content-sized minimum overflow four German labels on 360px-wide phones. */
+ion-tab-button.md {
+  flex: 1 1 auto;
+  min-width: 0;
+  --padding-start: 4px;
+  --padding-end: 4px;
+}
+
+ion-tab-button ion-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
