@@ -36,8 +36,10 @@ has its own language setting (de, fr, it, en), identifies topics by numeric tag
   the app does when a business title is missing in that language.
 - Custom data routes the tap: `{ kind: 'business', id }` opens the business,
   `{ kind: 'businesses' }` (the summary for more than 3 changed businesses)
-  opens the following list, `{ kind: 'digest', date }` opens that day's topic
-  digest list. No badge.
+  opens the following list, `{ kind: 'digest', date }` opens the following
+  view on the first followed topic with something new that day
+  ([#55](https://github.com/michaelschoenbaechler/parlwatch/issues/55)). No
+  badge.
 
 ### Snapshots
 
