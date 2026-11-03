@@ -48,6 +48,14 @@ export interface WatchedBusiness extends BusinessRef {
   snapshot: BusinessSnapshot;
   changes: BusinessChange[];
   unseen: boolean;
+  /** OData date; set once parliament has settled the business. */
+  finishedAt?: string;
+}
+
+export interface FollowGroups {
+  federal: WatchedBusiness[];
+  cantonal: WatchedBusiness[];
+  finished: WatchedBusiness[];
 }
 
 export interface WatchCheck {
@@ -57,6 +65,19 @@ export interface WatchCheck {
 
 export function isSameBusiness(a: BusinessRef, b: BusinessRef): boolean {
   return a.id === b.id && a.parliament === b.parliament;
+}
+
+export function groupFollows(entries: WatchedBusiness[]): FollowGroups {
+  const open = entries.filter((entry) => !entry.finishedAt);
+  return {
+    federal: open.filter((entry) => entry.parliament === 'ch'),
+    cantonal: open.filter((entry) => entry.parliament !== 'ch'),
+    finished: entries
+      .filter((entry) => !!entry.finishedAt)
+      .sort(
+        (a, b) => odataTimestamp(b.finishedAt) - odataTimestamp(a.finishedAt)
+      )
+  };
 }
 
 export function statusKeyOf(business: LoadedBusiness): string {
@@ -74,6 +95,25 @@ export function snapshotOf(business: LoadedBusiness): BusinessSnapshot {
     documents: documentFacts(business).map((fact) => fact.id),
     speeches: speechCount(business)
   };
+}
+
+const FINISHED_FEDERAL = ['27', '229'];
+const FINISHED_CANTONAL = ['erledigt', 'liquidé', 'evaso'];
+
+export function isFinishedStatus(
+  parliament: ParliamentKey,
+  status: string
+): boolean {
+  return parliament === 'ch'
+    ? FINISHED_FEDERAL.includes(status)
+    : FINISHED_CANTONAL.includes(status.toLowerCase());
+}
+
+export function finishedAtOf(business: LoadedBusiness): string | undefined {
+  const parliament = business.cantonal?.parliament ?? 'ch';
+  return isFinishedStatus(parliament, statusKeyOf(business))
+    ? business.BusinessStatusDate || modifiedOf(business)
+    : undefined;
 }
 
 export function modifiedOf(business: LoadedBusiness): string {
