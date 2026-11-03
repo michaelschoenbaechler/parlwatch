@@ -1,35 +1,75 @@
-.changes {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  color: var(--ion-color-primary);
-  font-size: 14px;
-  font-weight: 600;
+.chip-row {
+  display: flex;
+  overflow-x: auto;
+  margin: 0 -1rem 0.5rem -1rem;
+  padding: 0 1rem;
 
-  li {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
+  ion-chip {
+    flex-shrink: 0;
   }
 
-  li::before {
-    content: '';
-    flex-shrink: 0;
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-top: 0.4rem;
-    border-radius: 50%;
-    background: var(--ion-color-danger);
+  ion-chip.selected {
+    --background: var(--ion-color-primary);
+    --color: #ffffff;
+    font-weight: 600;
+
+    .count {
+      background: #ffffff;
+      color: var(--ion-color-primary);
+    }
   }
 }
 
-ion-item.seen .changes {
-  color: #666666;
-  font-weight: 400;
+.count {
+  margin-left: 0.4rem;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--ion-color-danger);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
 
-  li::before {
-    background: #cccccc;
+.compact {
+  .meta {
+    font-size: 12px;
   }
+
+  h3 {
+    font-weight: 600;
+  }
+
+  .change {
+    color: var(--ion-color-danger);
+    font-weight: 600;
+  }
+
+  ion-item.seen .change {
+    color: #666666;
+    font-weight: 400;
+  }
+}
+
+.compact.finished h3 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  color: #666666;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1.5rem 0 0 0;
+  font-size: 17px;
+}
+
+.group-note {
+  margin: 0.25rem 0 0.5rem 0;
+  font-size: 13px;
+  color: #666666;
 }
 
 .empty-state {
