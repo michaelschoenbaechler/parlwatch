@@ -98,7 +98,7 @@ export function snapshotOf(business: LoadedBusiness): BusinessSnapshot {
 }
 
 const FINISHED_FEDERAL = ['27', '229'];
-const FINISHED_CANTONAL = ['erledigt', 'liquidé', 'evaso'];
+const FINISHED_CANTONAL = ['erledigt', 'liquidé', 'liquidato', 'evaso'];
 
 export function isFinishedStatus(
   parliament: ParliamentKey,
