@@ -171,6 +171,7 @@
   "settings.language.italian": "Missing value for 'settings.language.italian'",
   "settings.openSource.text": "Missing value for 'settings.openSource.text'",
   "settings.openSource.title": "Missing value for 'settings.openSource.title'",
+  "settings.privacyPolicy": "Missing value for 'settings.privacyPolicy'",
   "settings.title": "Missing value for 'settings.title'",
   "shared.errorScreen.retry.button": "Missing value for 'shared.errorScreen.retry.button'",
   "shared.errorScreen.retryLater": "Missing value for 'shared.errorScreen.retryLater'",

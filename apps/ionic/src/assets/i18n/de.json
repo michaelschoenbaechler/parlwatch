@@ -171,6 +171,7 @@
   "settings.language.italian": "Italienisch",
   "settings.openSource.text": "Diese App ist ein Open-Source-Projekt und steht unter der GPLv3-Lizenz. Jeder ist ermutigt, sich an der Weiterentwicklung zu beteiligen und so dazu beizutragen, tiefere Einblicke in die politische Landschaft zu ermöglichen. Der Quellcode ist öffentlich zugänglich und jede Unterstützung ist willkommen. Das Bestreben ist, dass die App stets open source bleibt.",
   "settings.openSource.title": "Open-Source und Mitwirkung",
+  "settings.privacyPolicy": "Datenschutzerklärung",
   "settings.title": "Einstellungen",
   "shared.errorScreen.retry.button": "Erneut versuchen",
   "shared.errorScreen.retryLater": "Leider konnte Ihre Anfrage nicht bearbeitet werden. Bitte versuchen Sie es später noch einmal.",
