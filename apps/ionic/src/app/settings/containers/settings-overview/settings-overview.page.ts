@@ -35,6 +35,13 @@ export class SettingsOverviewPage implements OnInit {
     });
   }
 
+  privacyPolicyClicked() {
+    Browser.open({
+      url: 'https://github.com/michaelschoenbaechler/parlwatch/blob/main/PRIVACY.md',
+      presentationStyle: 'popover'
+    });
+  }
+
   languageChanged(event: any) {
     this.translocoService.setActiveLang(event.target.value);
   }
