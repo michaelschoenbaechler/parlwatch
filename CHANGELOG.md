@@ -1,3 +1,24 @@
+## [2026.11.9](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.9.28...2026.11.9) (2026-11-09)
+
+### Bug Fixes
+
+* **android:** align workspace env example with the new package name ([7d156a0](https://github.com/michaelschoenbaechler/parlwatch/commit/7d156a08224d072e489efb5492a8e153f9bb22f9))
+* **android:** fit the tab labels on narrow phones ([e15e4f8](https://github.com/michaelschoenbaechler/parlwatch/commit/e15e4f8b60efbaa07969fe24fd0e33d9a76b6db6))
+* **android:** keep the navigation bar from covering the app before android 15 ([3e5b134](https://github.com/michaelschoenbaechler/parlwatch/commit/3e5b13496351da7e27dfd2235a48135186ce8ecf))
+* **android:** let the bundle target run without the play store key ([029fc62](https://github.com/michaelschoenbaechler/parlwatch/commit/029fc62ac2526c5053b3c47ffde4868af51f2875))
+* **android:** trim the signing key alias from the environment ([ea7be0f](https://github.com/michaelschoenbaechler/parlwatch/commit/ea7be0f0dbfb60f0c097606d01590293d001d141))
+* **android:** use ch.michaelschoenbaechler.parlwatch.app as the package name ([da54543](https://github.com/michaelschoenbaechler/parlwatch/commit/da5454317918df628eb1b01ca2369591c80416a1))
+* **android:** use the ios segment style in the parliament switcher ([4af616b](https://github.com/michaelschoenbaechler/parlwatch/commit/4af616b4ef229cb9ae8481cb4cbfe7fd07f2ae05))
+* **deps:** resolve open dependabot security alerts ([1271a6e](https://github.com/michaelschoenbaechler/parlwatch/commit/1271a6ed0dbd49fd1da6e9722dae3330c3671e6b))
+
+### Features
+
+* **android:** add capacitor android platform ([e99eec3](https://github.com/michaelschoenbaechler/parlwatch/commit/e99eec349ab9b58878a467ce847c8b9b2e8c68a9))
+* **android:** add fastlane play store deployment ([203f048](https://github.com/michaelschoenbaechler/parlwatch/commit/203f0483afcf6d792e9558e4d75e899fc1518fa9))
+* **android:** use the ParlWatch logo as the launcher icon ([ce8a191](https://github.com/michaelschoenbaechler/parlwatch/commit/ce8a191dc0e49e740cb57f4e9965b61781d6b520))
+* **android:** use the ParlWatch splash screen ([40318c1](https://github.com/michaelschoenbaechler/parlwatch/commit/40318c1d83db0999b03192a26f406c59f730a027))
+* **app:** state that ParlWatch is not an official government app ([84e2c23](https://github.com/michaelschoenbaechler/parlwatch/commit/84e2c23ac1518387c690832f78e88554c4079baf))
+
 ## [2026.9.28](https://github.com/michaelschoenbaechler/parlwatch/compare/2026.9.23...2026.9.28) (2026-09-28)
 
 ### Performance Improvements
