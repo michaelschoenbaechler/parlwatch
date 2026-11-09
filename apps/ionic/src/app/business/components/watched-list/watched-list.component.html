@@ -3,6 +3,19 @@
     <ion-refresher-content />
   </ion-refresher>
 
+  <div class="chip-row">
+    <ion-chip
+      [class.selected]="selected() === 'businesses'"
+      (click)="selected.set('businesses')"
+    >
+      <ion-icon name="eye" />
+      <ion-label>{{ t('chip.businesses') }}</ion-label>
+      @if (store.changedCount() > 0) {
+        <span class="count">{{ store.changedCount() }}</span>
+      }
+    </ion-chip>
+  </div>
+
   @if (store.entries().length === 0) {
     <div class="empty-state">
       <ion-icon name="eye-outline" size="large" />
@@ -10,42 +23,89 @@
       <p class="empty-text">{{ t('empty.text') }}</p>
     </div>
   } @else {
-    <div class="watched-list">
-      @for (
-        card of cards();
-        track card.entry.parliament + '-' + card.entry.id
-      ) {
-        <ion-item-sliding #sliding class="card-sliding">
-          <ion-item
-            button
-            detail="false"
-            [class.seen]="!card.entry.unseen"
-            (click)="open(card.entry)"
-          >
-            <app-business-card
-              [business]="card.business"
-              [parliament]="card.entry.parliament"
+    @let groups = store.groups();
+
+    @if (groups.federal.length > 0) {
+      <ion-list lines="full" class="compact">
+        @for (entry of groups.federal; track entry.parliament + entry.id) {
+          <ng-container
+            *ngTemplateOutlet="row; context: { $implicit: entry }"
+          />
+        }
+      </ion-list>
+    }
+
+    @if (groups.cantonal.length > 0) {
+      <h3 class="group">
+        <ion-icon name="notifications-off-outline" aria-hidden="true" />
+        {{ t('group.cantonal') }}
+      </h3>
+      <p class="group-note">{{ t('group.cantonalNote') }}</p>
+      <ion-list lines="full" class="compact">
+        @for (entry of groups.cantonal; track entry.parliament + entry.id) {
+          <ng-container
+            *ngTemplateOutlet="row; context: { $implicit: entry }"
+          />
+        }
+      </ion-list>
+    }
+
+    @if (groups.finished.length > 0) {
+      <h3 class="group">
+        <ion-icon name="checkmark-done-outline" aria-hidden="true" />
+        {{ t('group.finished') }}
+      </h3>
+      <p class="group-note">{{ t('group.finishedNote') }}</p>
+      <ion-list lines="full" class="compact finished">
+        @for (entry of groups.finished; track entry.parliament + entry.id) {
+          <ion-item button detail="false" (click)="open(entry)">
+            <ion-label>
+              <h3>{{ meta(entry, false) }} · {{ entry.title }}</h3>
+              <p>
+                {{
+                  t('finishedAt', {
+                    date: entry.finishedAt | oDataDateTime
+                  })
+                }}
+              </p>
+            </ion-label>
+            <ion-button
+              slot="end"
+              fill="clear"
+              [attr.aria-label]="t('unwatch')"
+              (click)="$event.stopPropagation(); unfollow(entry)"
             >
-              @if (card.lines.length > 0) {
-                <ul class="changes">
-                  @for (line of card.lines; track line) {
-                    <li>{{ line }}</li>
-                  }
-                </ul>
-              }
-            </app-business-card>
+              <ion-icon slot="icon-only" name="eye" />
+            </ion-button>
           </ion-item>
-          <ion-item-options side="end">
-            <ion-item-option
-              color="danger"
-              (click)="unfollow(card.entry, sliding)"
-            >
-              <ion-icon slot="icon-only" name="eye-off-outline" />
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
-      }
-    </div>
+        }
+      </ion-list>
+    }
+
+    <ng-template #row let-entry>
+      <ion-item
+        button
+        detail="false"
+        [class.seen]="!entry.unseen"
+        (click)="open(entry)"
+      >
+        <ion-label class="ion-text-wrap">
+          <p class="meta">{{ meta(entry, true) }}</p>
+          <h3>{{ entry.title }}</h3>
+          @for (line of changeLines(entry); track line) {
+            <p class="change">{{ line }}</p>
+          }
+        </ion-label>
+        <ion-button
+          slot="end"
+          fill="clear"
+          [attr.aria-label]="t('unwatch')"
+          (click)="$event.stopPropagation(); unfollow(entry)"
+        >
+          <ion-icon slot="icon-only" name="eye" />
+        </ion-button>
+      </ion-item>
+    </ng-template>
   }
 
   <footer class="last-check">

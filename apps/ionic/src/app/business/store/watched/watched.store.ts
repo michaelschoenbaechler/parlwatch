@@ -20,6 +20,9 @@ import { LoadedBusiness } from '../../models/cantonal-business';
 import {
   BusinessHead,
   diffBusiness,
+  finishedAtOf,
+  groupFollows,
+  isFinishedStatus,
   isSameBusiness,
   modifiedOf,
   snapshotOf,
@@ -48,18 +51,27 @@ export const WatchedBusinessStore = signalStore(
   { providedIn: 'root' },
   withDevtools('WatchedBusinessStore'),
   withState(initialState),
-  withComputed((store) => ({
-    entries: computed(() =>
+  withComputed((store) => {
+    const entries = computed(() =>
       [...store.watched()].sort(
         (a, b) =>
           Number(b.unseen) - Number(a.unseen) || changedAt(b) - changedAt(a)
       )
-    ),
-    unseenCount: computed(
-      () => store.watched().filter((entry) => entry.unseen).length
-    ),
-    canFollow: computed(() => store.watched().length < MAX_WATCHED_BUSINESSES)
-  })),
+    );
+    return {
+      entries,
+      groups: computed(() => groupFollows(entries())),
+      changedCount: computed(
+        () =>
+          store.watched().filter((entry) => entry.unseen && !entry.finishedAt)
+            .length
+      ),
+      unseenCount: computed(
+        () => store.watched().filter((entry) => entry.unseen).length
+      ),
+      canFollow: computed(() => store.watched().length < MAX_WATCHED_BUSINESSES)
+    };
+  }),
   withMethods((store) => {
     const storage = inject(StorageService);
     const facade = inject(BusinessFacade);
@@ -80,13 +92,16 @@ export const WatchedBusinessStore = signalStore(
 
     const patchEntry = (
       ref: WatchedBusiness,
-      patch: Partial<WatchedBusiness>
+      patch: Partial<WatchedBusiness>,
+      business: LoadedBusiness
     ) =>
       setWatched(
         store
           .watched()
           .map((entry) =>
-            isSameBusiness(entry, ref) ? { ...entry, ...patch } : entry
+            isSameBusiness(entry, ref)
+              ? settled({ ...entry, ...patch }, business)
+              : entry
           )
       );
 
@@ -107,18 +122,23 @@ export const WatchedBusinessStore = signalStore(
       business: LoadedBusiness
     ): boolean => {
       if (business.ID === undefined) return false;
-      return add({
-        parliament,
-        id: business.ID,
-        title: business.Title ?? '',
-        shortNumber: business.BusinessShortNumber ?? '',
-        typeName: business.BusinessTypeName ?? '',
-        followedAt: Date.now(),
-        modified: modifiedOf(business),
-        snapshot: snapshotOf(business),
-        changes: [],
-        unseen: false
-      });
+      return add(
+        settled(
+          {
+            parliament,
+            id: business.ID,
+            title: business.Title ?? '',
+            shortNumber: business.BusinessShortNumber ?? '',
+            typeName: business.BusinessTypeName ?? '',
+            followedAt: Date.now(),
+            modified: modifiedOf(business),
+            snapshot: snapshotOf(business),
+            changes: [],
+            unseen: false
+          },
+          business
+        )
+      );
     };
 
     const inspect = async (
@@ -149,7 +169,8 @@ export const WatchedBusinessStore = signalStore(
         current,
         changes.length
           ? { modified: modifiedOf(business), changes, unseen: true }
-          : { modified: modifiedOf(business), snapshot: snapshotOf(business) }
+          : { modified: modifiedOf(business), snapshot: snapshotOf(business) },
+        business
       );
       return true;
     };
@@ -185,10 +206,12 @@ export const WatchedBusinessStore = signalStore(
           storage.get<WatchCheck | null>(WATCH_CHECK_KEY, null)
         ]);
         patchState(store, {
-          watched: watched.slice(0, MAX_WATCHED_BUSINESSES).map((entry) => ({
-            ...entry,
-            parliament: toParliamentKey(entry.parliament)
-          })),
+          watched: watched.slice(0, MAX_WATCHED_BUSINESSES).map((entry) =>
+            datedIfFinished({
+              ...entry,
+              parliament: toParliamentKey(entry.parliament)
+            })
+          ),
           lastCheck
         });
         resolveReady();
@@ -241,14 +264,18 @@ export const WatchedBusinessStore = signalStore(
       ): void {
         const entry = find(parliament, id);
         if (!entry) return;
-        patchEntry(entry, {
-          title: business.Title || entry.title,
-          shortNumber: business.BusinessShortNumber || entry.shortNumber,
-          typeName: business.BusinessTypeName || entry.typeName,
-          modified: modifiedOf(business),
-          snapshot: snapshotOf(business),
-          unseen: false
-        });
+        patchEntry(
+          entry,
+          {
+            title: business.Title || entry.title,
+            shortNumber: business.BusinessShortNumber || entry.shortNumber,
+            typeName: business.BusinessTypeName || entry.typeName,
+            modified: modifiedOf(business),
+            snapshot: snapshotOf(business),
+            unseen: false
+          },
+          business
+        );
       },
 
       async check({ force = false } = {}): Promise<void> {
@@ -271,6 +298,27 @@ export const WatchedBusinessStore = signalStore(
     }
   })
 );
+
+function settled(
+  entry: WatchedBusiness,
+  business: LoadedBusiness
+): WatchedBusiness {
+  const finishedAt = finishedAtOf(business);
+  if (finishedAt) {
+    return { ...entry, finishedAt: entry.finishedAt ?? finishedAt };
+  }
+  const open = { ...entry };
+  delete open.finishedAt;
+  return open;
+}
+
+/** Entries stored before finishing was tracked carry no date of their own. */
+function datedIfFinished(entry: WatchedBusiness): WatchedBusiness {
+  return !entry.finishedAt &&
+    isFinishedStatus(entry.parliament, entry.snapshot.status)
+    ? { ...entry, finishedAt: entry.modified }
+    : entry;
+}
 
 function changedAt(entry: WatchedBusiness): number {
   return entry.changes.length

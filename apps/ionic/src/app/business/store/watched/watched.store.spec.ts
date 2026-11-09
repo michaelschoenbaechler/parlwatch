@@ -488,6 +488,86 @@ describe('WatchedBusinessStore', () => {
     });
   });
 
+  describe('groups', () => {
+    it('files a business that is already finished under finished, dated by its status', async () => {
+      const store = await createStore();
+
+      store.follow('ch', federalA);
+      store.follow('ch', { ...federalB, ID: 1 });
+      store.follow('ZH', cantonalA);
+
+      const { federal, cantonal, finished } = store.groups();
+      expect(federal.map((e) => e.id)).toEqual([20233456]);
+      expect(cantonal.map((e) => e.id)).toEqual([91382]);
+      expect(finished.map((e) => e.id)).toEqual([1]);
+      expect(finished[0].finishedAt).toBe('/Date(1710000000000)/');
+    });
+
+    it('moves a federal business to finished when a check finds it settled, keeping its changes', async () => {
+      const store = await createStore();
+      store.follow('ch', federalA);
+      answerWith([headOf(federalB)], federalB);
+
+      await store.check();
+
+      const { federal, finished } = store.groups();
+      expect(federal).toEqual([]);
+      expect(finished[0].finishedAt).toBe('/Date(1710000000000)/');
+      expect(finished[0].changes.length).toBe(5);
+    });
+
+    it('moves a cantonal business to finished when a check finds it settled', async () => {
+      const store = await createStore();
+      store.follow('ZH', cantonalA);
+      answerWith([headOf(cantonalB, 'ZH')], cantonalB);
+
+      await store.check();
+
+      const { cantonal, finished } = store.groups();
+      expect(cantonal).toEqual([]);
+      expect(finished[0].finishedAt).toBe(cantonalB.cantonal?.source.updatedAt);
+    });
+
+    it('counts only open businesses with unseen changes', async () => {
+      const store = await createStore();
+      store.follow('ch', federalA);
+      store.follow('ZH', cantonalA);
+      answerWith([headOf(cantonalB, 'ZH')], cantonalB);
+      await store.check();
+      expect(store.changedCount()).toBe(0);
+
+      const touched = {
+        ...federalA,
+        Modified: '/Date(1705000000000)/',
+        Votes: [...(federalA.Votes ?? []), { ID: 9, VoteEnd: '' }]
+      } as LoadedBusiness;
+      answerWith([headOf(touched)], touched);
+      await store.check({ force: true });
+
+      expect(store.changedCount()).toBe(1);
+    });
+
+    it('dates a finished business stored before finishing was tracked by its last change', async () => {
+      const stored: WatchedBusiness = {
+        parliament: 'ch',
+        id: 1,
+        title: 'Stored',
+        shortNumber: '',
+        typeName: '',
+        followedAt: 1,
+        modified: '/Date(1710000000000)/',
+        snapshot: snapshotOf(federalB),
+        changes: [],
+        unseen: false
+      };
+      const store = await createStore({ [WATCHED_BUSINESSES_KEY]: [stored] });
+
+      expect(store.groups().finished[0].finishedAt).toBe(
+        '/Date(1710000000000)/'
+      );
+    });
+  });
+
   describe('markSeen', () => {
     it('clears the unseen flag, keeps the change lines and snapshots what was shown', async () => {
       const store = await createStore();

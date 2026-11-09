@@ -3,19 +3,19 @@ import {
   Component,
   computed,
   effect,
-  inject
+  inject,
+  signal
 } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { Router } from '@angular/router';
 import {
   IonicModule,
-  IonItemSliding,
   RefresherCustomEvent,
   ToastController
 } from '@ionic/angular';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { Business } from 'swissparl';
 import { detailPath } from '@parlwatch/shared/parliament/models';
-import { BusinessCardComponent } from '../business-card/business-card.component';
+import { ODataDateTimePipe } from '@parlwatch/shared/common/pipes';
 import { BusinessChange, WatchedBusiness } from '../../models/watched-business';
 import { WatchedBusinessStore } from '../../store/watched/watched.store';
 
@@ -33,7 +33,12 @@ const KIND_KEYS: Record<BusinessChange['kind'], [string, string]> = {
   selector: 'app-watched-list',
   templateUrl: './watched-list.component.html',
   styleUrls: ['./watched-list.component.scss'],
-  imports: [IonicModule, TranslocoDirective, BusinessCardComponent],
+  imports: [
+    IonicModule,
+    NgTemplateOutlet,
+    TranslocoDirective,
+    ODataDateTimePipe
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WatchedListComponent {
@@ -43,6 +48,8 @@ export class WatchedListComponent {
   private readonly toastController = inject(ToastController);
 
   private refreshEvent?: RefresherCustomEvent;
+
+  readonly selected = signal<'businesses'>('businesses');
 
   readonly lastCheckDate = computed(() => {
     const check = this.store.lastCheck();
@@ -66,20 +73,17 @@ export class WatchedListComponent {
     });
   }
 
-  readonly cards = computed(() =>
-    this.store.entries().map((entry) => ({
-      entry,
-      business: {
-        ID: entry.id,
-        Title: entry.title,
-        BusinessShortNumber: entry.shortNumber,
-        BusinessTypeName: entry.typeName
-      } as Business,
-      lines: this.changeLines(entry.changes)
-    }))
-  );
+  meta(entry: WatchedBusiness, withType: boolean): string {
+    return [
+      entry.parliament === 'ch' ? '' : entry.parliament,
+      entry.shortNumber,
+      withType ? entry.typeName : ''
+    ]
+      .filter(Boolean)
+      .join(' · ');
+  }
 
-  private changeLines(changes: BusinessChange[]): string[] {
+  changeLines({ changes }: WatchedBusiness): string[] {
     const byKind = new Map<BusinessChange['kind'], BusinessChange[]>();
     for (const change of changes) {
       byKind.set(change.kind, [...(byKind.get(change.kind) ?? []), change]);
@@ -105,8 +109,7 @@ export class WatchedListComponent {
       .catch(console.error);
   }
 
-  async unfollow(entry: WatchedBusiness, sliding: IonItemSliding) {
-    await sliding.close();
+  async unfollow(entry: WatchedBusiness) {
     this.store.unfollow(entry.parliament, entry.id);
 
     const toast = await this.toastController.create({
